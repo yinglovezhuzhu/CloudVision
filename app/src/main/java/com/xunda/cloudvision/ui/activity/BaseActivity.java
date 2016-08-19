@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/**
+ * Activity基类
+ * Created by yinglovezhuzhu@gmail.com on 2016/8/19.
+ */
 public class BaseActivity extends FragmentActivity implements View.OnClickListener {
 	
 	protected final String TAG = getClass().getSimpleName();
