@@ -23,7 +23,7 @@ import android.net.NetworkInfo;
 
 /**
  * 网络状态观察者
- * Created by yinglovezhuzhu@gmail.com on 2016/08/19.
+ * Created by yinglovezhuzhu@gmail.com on 2016/08/20.
  */
 public abstract class NetworkObserver {
 
