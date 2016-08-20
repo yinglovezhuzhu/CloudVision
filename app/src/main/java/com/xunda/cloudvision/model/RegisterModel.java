@@ -5,7 +5,7 @@ import com.xunda.cloudvision.bean.resp.BaseResp;
 /**
  * Created by yinglovezhuzhu@gmail.com on 2016/8/20.
  */
-public class RegisterModel implements IRegisterModel {
+public class RegisterModel extends AbsModel implements IRegisterModel {
     @Override
     public void register(String code) {
 
