@@ -13,7 +13,10 @@
     <EditText
         android:id="@+id/et_register_dialog_code"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_black"
+        android:textColorHint="@color/colorTextHint"
+        android:hint="@string/str_please_input_verify_code"/>
     <Button
         android:id="@+id/btn_register_dialog_register"
         android:layout_width="wrap_content"
