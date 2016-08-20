@@ -2,5 +2,6 @@
     <string name="app_name">云展视</string>
 
     <!-- 激活 -->
-    <string name="str_please_input_verify_code">请输入激活码</string>
+    <string name="str_please_input_activation_code">请输入激活码</string>
+    <string name="str_activate">激活</string>
 </resources>

@@ -18,12 +18,12 @@ public class ActivatePresenter {
         this.mRegisterModel = new ActivateModel();
     }
 
-    public void register() {
+    public void activate() {
         final String code = mRegisterView.getCodeText();
         if(StringUtils.isEmpty(code)) {
             mRegisterView.onCodeEmpty();
             return;
         }
-        mRegisterModel.register(code);
+        mRegisterModel.activate(code);
     }
 }

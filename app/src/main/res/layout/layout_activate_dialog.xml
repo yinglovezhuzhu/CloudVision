@@ -9,16 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/str_please_input_verify_code"/>
+        android:text="@string/str_please_input_activation_code"/>
     <EditText
         android:id="@+id/et_register_dialog_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/text_color_black"
         android:textColorHint="@color/colorTextHint"
-        android:hint="@string/str_please_input_verify_code"/>
+        android:hint="@string/str_please_input_activation_code"/>
     <Button
         android:id="@+id/btn_register_dialog_register"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:minEms="8"
+        android:textColor="@color/text_color_black"
+        android:text="@string/str_activate"/>
 </LinearLayout>

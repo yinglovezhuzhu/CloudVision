@@ -7,7 +7,7 @@ import com.xunda.cloudvision.bean.resp.BaseResp;
  */
 public class ActivateModel extends AbsModel implements IActivateModel {
     @Override
-    public void register(String code) {
+    public void activate(String code) {
 
     }
 

@@ -5,6 +5,6 @@ package com.xunda.cloudvision.model;
  */
 public interface IActivateModel {
 
-    public void register(String code);
+    public void activate(String code);
 
 }
