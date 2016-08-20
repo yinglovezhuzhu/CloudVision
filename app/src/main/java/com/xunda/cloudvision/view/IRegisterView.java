@@ -5,5 +5,5 @@ package com.xunda.cloudvision.view;
  */
 public interface IRegisterView {
 
-
+    public String getCodeText();
 }
