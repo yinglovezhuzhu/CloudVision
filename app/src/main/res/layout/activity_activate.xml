@@ -25,7 +25,7 @@
             android:src="@mipmap/ic_launcher"
             android:contentDescription="@null"/>
         <EditText
-            android:id="@+id/et_register_dialog_code"
+            android:id="@+id/et_activate_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activate_widget_margin"
@@ -39,7 +39,7 @@
             android:textSize="@dimen/textSize_level4"
             android:hint="@string/str_please_input_activation_code"/>
         <Button
-            android:id="@+id/btn_register_dialog_register"
+            android:id="@+id/btn_activate_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activate_widget_margin"

@@ -3,17 +3,18 @@ package com.xunda.cloudvision.presenter;
 import com.xunda.cloudvision.model.IActivateModel;
 import com.xunda.cloudvision.model.ActivateModel;
 import com.xunda.cloudvision.utils.StringUtils;
-import com.xunda.cloudvision.view.IRegisterView;
+import com.xunda.cloudvision.view.IActivateView;
 
 /**
+ * 激活Presenter
  * Created by yinglovezhuzhu@gmail.com on 2016/8/19.
  */
 public class ActivatePresenter {
 
-    private IRegisterView mRegisterView;
+    private IActivateView mRegisterView;
     private IActivateModel mRegisterModel;
 
-    public ActivatePresenter(IRegisterView registerView) {
+    public ActivatePresenter(IActivateView registerView) {
         this.mRegisterView = registerView;
         this.mRegisterModel = new ActivateModel();
     }
