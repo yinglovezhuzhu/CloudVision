@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- 白色 -->
+    <color name="colorWhite">#FFFFFFFF</color>
+
     <!-- 文字黑色 -->
     <color name="colorTextBlack">#FF202020</color>
     <!-- 文字灰色 -->
     <color name="colorTextGray">#FF808080</color>
     <!-- 水印文字颜色 -->
     <color name="colorTextHint">#FFBEBEBE</color>
+
+
+    <!-- 激活按钮通常颜色 -->
+    <color name="colorActivateBtnNormal">#FF56BCA7</color>
+    <!-- 激活按钮按下颜色 -->
+    <color name="colorActivateBtnPressed">#FF72D7C2</color>
+    <!-- 激活按钮禁用颜色 -->
+    <color name="colorActivateBtnDisabled">#FFABABAB</color>
 </resources>

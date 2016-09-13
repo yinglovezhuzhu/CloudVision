@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_activate_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_activate"
+        android:contentDescription="@null"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/contentPadding_max"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/activate_logo_minSize"
+            android:minHeight="@dimen/activate_logo_minSize"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@null"/>
+        <EditText
+            android:id="@+id/et_register_dialog_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activate_widget_margin"
+            android:padding="@dimen/contentPadding_max"
+            android:minEms="12"
+            android:maxEms="12"
+            android:gravity="center"
+            android:textColor="@color/text_color_white"
+            android:textColorHint="@color/colorWhite"
+            android:background="@drawable/selector_activate_input"
+            android:textSize="@dimen/textSize_level4"
+            android:hint="@string/str_please_input_activation_code"/>
+        <Button
+            android:id="@+id/btn_register_dialog_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activate_widget_margin"
+            android:padding="@dimen/contentPadding_max"
+            android:minEms="12"
+            android:background="@drawable/selector_btn_activate"
+            android:textColor="@color/text_color_white"
+            android:textSize="@dimen/textSize_level3"
+            android:text="@string/str_activate"/>
+    </LinearLayout>
+</FrameLayout>
+

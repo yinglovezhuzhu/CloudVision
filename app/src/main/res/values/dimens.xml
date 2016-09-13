@@ -1,19 +1,25 @@
 <resources>
 
     <!-- 字体大小 -->
-    <dimen name="textSize_level1">22dp</dimen>
-    <dimen name="textSize_level2">20dp</dimen>
-    <dimen name="textSize_level3">18dp</dimen>
-    <dimen name="textSize_level4">16dp</dimen>
-    <dimen name="textSize_level5">14dp</dimen>
-    <dimen name="textSize_level6">12dp</dimen>
-    <dimen name="textSize_level7">10dp</dimen>
-    <dimen name="textSize_level8">8dp</dimen>
+    <dimen name="textSize_level1">22sp</dimen>
+    <dimen name="textSize_level2">20sp</dimen>
+    <dimen name="textSize_level3">18sp</dimen>
+    <dimen name="textSize_level4">16sp</dimen>
+    <dimen name="textSize_level5">14sp</dimen>
+    <dimen name="textSize_level6">12sp</dimen>
+    <dimen name="textSize_level7">10sp</dimen>
+    <dimen name="textSize_level8">8sp</dimen>
 
 
     <dimen name="contentPadding_max">12dp</dimen>
     <dimen name="contentPadding_middle">8dp</dimen>
     <dimen name="contentPadding_small">5dp</dimen>
+
+
+    <!-- 激活页面 -->
+    <dimen name="activate_logo_minSize">120dp</dimen>
+    <dimen name="activate_widget_margin">50dp</dimen>
+    <dimen name="activate_btn_height">55dp</dimen>
 
 
 </resources>
