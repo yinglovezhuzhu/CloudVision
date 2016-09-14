@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/bg_activate"
+        android:src="@drawable/bg_activate"
         android:contentDescription="@null"/>
 
     <LinearLayout
@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:minWidth="@dimen/activate_logo_minSize"
             android:minHeight="@dimen/activate_logo_minSize"
-            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_full"
             android:contentDescription="@null"/>
         <EditText
             android:id="@+id/et_activate_code"
@@ -48,7 +49,7 @@
             android:minEms="12"
             android:background="@drawable/selector_btn_activate"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/textSize_level3"
+            android:textSize="@dimen/textSize_level4"
             android:text="@string/str_activate"/>
     </LinearLayout>
 </FrameLayout>

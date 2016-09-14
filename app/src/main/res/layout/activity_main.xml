@@ -10,73 +10,153 @@
             android:id="@+id/ll_main_top_bar"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_main_top_bar">
         </LinearLayout>
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/ll_main_content1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        </LinearLayout>
-        <LinearLayout
+            <ImageView
+                android:id="@+id/iv_main_content1_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_activate"
+                android:contentDescription="@null"/>
+            <ImageView
+                style="@style/MainPlayIconTheme"
+                android:id="@+id/iv_main_content1_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"/>
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite" />
+        <FrameLayout
             android:id="@+id/ll_main_content2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
-        </LinearLayout>
-        <LinearLayout
+            <ImageView
+                android:id="@+id/iv_main_content2_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_activate"
+                android:contentDescription="@null"/>
+            <ImageView
+                style="@style/MainPlayIconTheme"
+                android:id="@+id/iv_main_content2_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"/>
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite" />
+        <FrameLayout
             android:id="@+id/ll_main_content3"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_main_content3_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_activate"
+                android:contentDescription="@null"/>
+            <ImageView
+                style="@style/MainPlayIconTheme"
+                android:id="@+id/iv_main_content3_video_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"/>
+        </FrameLayout>
         <LinearLayout
             android:id="@+id/ll_main_bottom_bar"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@color/darkGray">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical"
-        android:background="#99000000">
-        <Button
+        android:gravity="left"
+        android:layout_marginTop="@dimen/main_menu_marginTop"
+        android:background="@drawable/shape_bg_main_menu">
+        <ImageButton
             android:id="@+id/btn_main_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="@dimen/main_menu_btn_width"
+            android:minHeight="@dimen/main_menu_btn_width"
+            android:padding="@dimen/contentPadding_small"
             android:background="@color/transparent"
-            android:drawableTop="@mipmap/ic_launcher"/>
+            android:src="@drawable/selector_ic_main_menu"
+            android:contentDescription="@null"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/contentPadding_middle"
+                android:layout_marginRight="@dimen/contentPadding_middle"
+                android:background="@color/colorMainMenuBorder"/>
             <Button
+                style="@style/MainMenuBtnTheme"
                 android:id="@+id/btn_main_menu_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/ic_launcher"
-                android:text="语\n音"/>
+                android:drawableTop="@drawable/selector_ic_main_menu_voice"
+                android:text="@string/str_home"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/contentPadding_middle"
+                android:layout_marginRight="@dimen/contentPadding_middle"
+                android:background="@color/colorMainMenuBorder"/>
+
             <Button
+                style="@style/MainMenuBtnTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/ic_launcher"
-                android:text="首\n页" />
+                android:drawableTop="@drawable/selector_ic_main_menu_home"
+                android:text="@string/str_home" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/contentPadding_middle"
+                android:layout_marginRight="@dimen/contentPadding_middle"
+                android:background="@color/colorMainMenuBorder"/>
+
             <Button
+                style="@style/MainMenuBtnTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/ic_launcher"
-                android:text="设\n置" />
+                android:drawableTop="@drawable/selector_ic_main_menu_setting"
+                android:text="@string/str_setting" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

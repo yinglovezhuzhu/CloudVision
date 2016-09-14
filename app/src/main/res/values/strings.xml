@@ -4,4 +4,9 @@
     <!-- 激活 -->
     <string name="str_please_input_activation_code">请输入激活码</string>
     <string name="str_activate">激活</string>
+
+    <!-- 主界面 -->
+    <string name="str_voice">语\n音</string>
+    <string name="str_home">首\n页</string>
+    <string name="str_setting">设\n置</string>
 </resources>

@@ -3,6 +3,8 @@
 
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
+    <!-- 深灰色（背景） -->
+    <color name="darkGray">#FF353535</color>
 
     <!-- 白色 -->
     <color name="colorWhite">#FFFFFFFF</color>
@@ -18,7 +20,12 @@
     <!-- 激活按钮通常颜色 -->
     <color name="colorActivateBtnNormal">#FF56BCA7</color>
     <!-- 激活按钮按下颜色 -->
-    <color name="colorActivateBtnPressed">#FF72D7C2</color>
+    <color name="colorActivateBtnPressed">#FF41A590</color>
     <!-- 激活按钮禁用颜色 -->
     <color name="colorActivateBtnDisabled">#FFABABAB</color>
+
+    <!-- 主界面菜单背景颜色 -->
+    <color name="colorMainMenuBackground">#A0000000</color>
+    <!-- 主界面菜单边框/分隔线颜色 -->
+    <color name="colorMainMenuBorder">#A0808080</color>
 </resources>
