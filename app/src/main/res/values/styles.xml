@@ -8,15 +8,15 @@
     <!-- 主页菜单按钮样式 -->
     <style name="MainMenuBtnTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
-        <item name="android:padding">@dimen/contentPadding_small</item>
+        <item name="android:padding">@dimen/contentPadding_level4</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/textSize_level6</item>
-        <item name="android:drawablePadding">@dimen/contentPadding_min</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level5</item>
     </style>
 
     <style name="MainPlayIconTheme">
-        <item name="android:layout_margin">@dimen/contentPadding_max</item>
+        <item name="android:layout_margin">@dimen/contentPadding_level1</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:minWidth">@dimen/main_video_play_icon_size</item>
         <item name="android:minHeight">@dimen/main_video_play_icon_size</item>

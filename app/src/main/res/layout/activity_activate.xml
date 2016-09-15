@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/contentPadding_max"
+        android:padding="@dimen/contentPadding_level1"
         android:gravity="center">
         <ImageView
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activate_widget_margin"
-            android:padding="@dimen/contentPadding_max"
+            android:padding="@dimen/contentPadding_level1"
             android:minEms="12"
             android:maxEms="12"
             android:gravity="center_horizontal"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activate_widget_margin"
-            android:padding="@dimen/contentPadding_max"
+            android:padding="@dimen/contentPadding_level1"
             android:minEms="12"
             android:background="@drawable/selector_btn_activate"
             android:textColor="@color/text_color_white"

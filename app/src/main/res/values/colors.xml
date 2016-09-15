@@ -15,6 +15,8 @@
     <color name="colorTextGray">#FF808080</color>
     <!-- 水印文字颜色 -->
     <color name="colorTextHint">#FFBEBEBE</color>
+    <!-- 文字红色 -->
+    <color name="colorTextRed">#FFFB2525</color>
 
 
     <!-- 激活按钮通常颜色 -->

@@ -101,17 +101,40 @@
         android:gravity="left"
         android:layout_marginTop="@dimen/main_menu_marginTop"
         android:background="@drawable/shape_bg_main_menu">
-        <ImageButton
-            android:id="@+id/btn_main_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:minWidth="@dimen/main_menu_btn_width"
-            android:minHeight="@dimen/main_menu_btn_width"
-            android:padding="@dimen/contentPadding_small"
-            android:background="@color/transparent"
-            android:src="@drawable/selector_ic_main_menu"
-            android:contentDescription="@null"/>
-        <LinearLayout
+            android:minHeight="@dimen/main_menu_btn_width">
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:minWidth="@dimen/main_menu_btn_width"-->
+                <!--android:minHeight="@dimen/main_menu_btn_width"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:src="@drawable/selector_ic_main_menu"-->
+                <!--android:checked="false"-->
+                <!--android:contentDescription="@null"/>-->
+            <ToggleButton
+                android:id="@+id/tbtn_main_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minWidth="@dimen/main_menu_btn_width"
+                android:minHeight="@dimen/main_menu_btn_width"
+                android:maxWidth="@dimen/main_menu_btn_width"
+                android:maxHeight="@dimen/main_menu_btn_width"
+                android:padding="@dimen/contentPadding_level2"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:button="@null"
+                android:textOn="@null"
+                android:textOff="@null"
+                android:drawableTop="@drawable/selector_ic_main_menu"
+                android:gravity="center"/>
+        </FrameLayout>
+        <RadioGroup
+            android:id="@+id/rg_main_menu_items"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,44 +142,51 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/contentPadding_middle"
-                android:layout_marginRight="@dimen/contentPadding_middle"
+                android:layout_marginLeft="@dimen/contentPadding_level3"
+                android:layout_marginRight="@dimen/contentPadding_level3"
                 android:background="@color/colorMainMenuBorder"/>
+            <RadioButton
+                style="@style/MainMenuBtnTheme"
+                android:id="@+id/rbtn_main_menu_vice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_ic_main_menu_voice"
+                android:text="@string/str_voice"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/contentPadding_level3"
+                android:layout_marginRight="@dimen/contentPadding_level3"
+                android:background="@color/colorMainMenuBorder"/>
+
             <Button
                 style="@style/MainMenuBtnTheme"
                 android:id="@+id/btn_main_menu_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/selector_ic_main_menu_voice"
-                android:text="@string/str_home"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/contentPadding_middle"
-                android:layout_marginRight="@dimen/contentPadding_middle"
-                android:background="@color/colorMainMenuBorder"/>
-
-            <Button
-                style="@style/MainMenuBtnTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:drawableTop="@drawable/selector_ic_main_menu_home"
                 android:text="@string/str_home" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="@dimen/contentPadding_middle"
-                android:layout_marginRight="@dimen/contentPadding_middle"
+                android:layout_marginLeft="@dimen/contentPadding_level3"
+                android:layout_marginRight="@dimen/contentPadding_level3"
                 android:background="@color/colorMainMenuBorder"/>
 
-            <Button
+            <RadioButton
                 style="@style/MainMenuBtnTheme"
+                android:id="@+id/rbtn_main_menu_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:button="@null"
                 android:drawableTop="@drawable/selector_ic_main_menu_setting"
                 android:text="@string/str_setting" />
-        </LinearLayout>
+        </RadioGroup>
     </LinearLayout>
 </FrameLayout>
