@@ -88,10 +88,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
+            android:padding="@dimen/contentPadding_level2"
+            android:gravity="center_vertical"
             android:background="@color/darkGray">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_notice"
+                android:drawablePadding="@dimen/contentPadding_level4"
+                android:textSize="@dimen/textSize_level6"
+                android:textColor="@color/text_color_white"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
