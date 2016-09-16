@@ -3,15 +3,10 @@ package com.xunda.cloudvision.model;
 import com.xunda.cloudvision.bean.resp.BaseResp;
 
 /**
- * 激活页面Model
- * Created by yinglovezhuzhu@gmail.com on 2016/8/20.
+ * 主页面Model
+ * Created by yinglovezhuzhu@gmail.com on 2016/9/16.
  */
-public class ActivateModel extends AbsModel implements IActivateModel {
-    @Override
-    public void activate(String code) {
-
-    }
-
+public class MainModel extends AbsModel implements IMainModel {
     @Override
     public void onPreExecute(String key) {
 

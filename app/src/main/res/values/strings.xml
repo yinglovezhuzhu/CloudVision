@@ -6,7 +6,11 @@
     <string name="str_activate">激活</string>
 
     <!-- 主界面 -->
-    <string name="str_voice">语\n音</string>
-    <string name="str_home">首\n页</string>
-    <string name="str_setting">设\n置</string>
+    <string name="str_voice_vertical">语\n音</string>
+    <string name="str_home_vertical">首\n页</string>
+    <string name="str_setting_vertical">设\n置</string>
+    <string name="str_notice_vertical">公\n告</string>
+    <string name="str_weather_vertical">天\n气</string>
+    <string name="str_logout_vertical">注\n消</string>
+    <string name="str_switch_vertical">切\n换</string>
 </resources>

@@ -11,11 +11,12 @@
     <dimen name="textSize_level8">8sp</dimen>
 
 
-    <dimen name="contentPadding_level1">12dp</dimen>
-    <dimen name="contentPadding_level2">10dp</dimen>
-    <dimen name="contentPadding_level3">8dp</dimen>
-    <dimen name="contentPadding_level4">5dp</dimen>
-    <dimen name="contentPadding_level5">3dp</dimen>
+    <dimen name="contentPadding_level1">15dp</dimen>
+    <dimen name="contentPadding_level2">12dp</dimen>
+    <dimen name="contentPadding_level3">10dp</dimen>
+    <dimen name="contentPadding_level4">8dp</dimen>
+    <dimen name="contentPadding_level5">5dp</dimen>
+    <dimen name="contentPadding_level6">3dp</dimen>
 
 
     <!-- 激活页面 -->

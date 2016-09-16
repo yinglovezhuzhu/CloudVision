@@ -5,23 +5,52 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!-- 主页菜单按钮样式 -->
-    <style name="MainMenuBtnTheme">
+    <style name="SingleLine">
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- 主页菜单样式 -->
+    <style name="MainMenuItemTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
-        <item name="android:padding">@dimen/contentPadding_level4</item>
+        <item name="android:padding">@dimen/contentPadding_level5</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/text_color_white</item>
         <item name="android:textSize">@dimen/textSize_level6</item>
-        <item name="android:drawablePadding">@dimen/contentPadding_level5</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
     </style>
 
-    <style name="MainPlayIconTheme">
-        <item name="android:layout_margin">@dimen/contentPadding_level1</item>
+    <!-- 主页菜单子菜单样式 -->
+    <style name="MainMenuSubItemTheme">
+        <item name="android:minWidth">@dimen/main_menu_btn_width</item>
+        <item name="android:paddingLeft">@dimen/contentPadding_level2</item>
+        <item name="android:paddingRight">@dimen/contentPadding_level2</item>
+        <item name="android:paddingTop">@dimen/contentPadding_level5</item>
+        <item name="android:paddingBottom">@dimen/contentPadding_level5</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/text_color_white</item>
+        <item name="android:textSize">@dimen/textSize_level6</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
+    </style>
+
+    <!-- 主页标题栏文字样式 -->
+    <style name="MainTopBarTextTheme" parent="SingleLine">
+        <item name="android:textSize">@dimen/textSize_level5</item>
+        <item name="android:textColor">@color/text_color_white</item>
+    </style>
+
+    <!-- 视屏播放图标样式 -->
+    <style name="PlayIconTheme">
+        <item name="android:layout_margin">@dimen/contentPadding_level2</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:minWidth">@dimen/main_video_play_icon_size</item>
         <item name="android:minHeight">@dimen/main_video_play_icon_size</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/ic_video_play</item>
+    </style>
+
+    <style name="AnimStyle">
+        <item name="android:windowEnterAnimation">@anim/anim_main_menu_sub_items_show</item>
+        <item name="android:windowExitAnimation">@anim/anim_main_menu_sub_items_hide</item>
     </style>
 
 </resources>

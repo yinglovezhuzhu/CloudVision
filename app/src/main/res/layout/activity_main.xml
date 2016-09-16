@@ -6,13 +6,42 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/ll_main_top_bar"
+        <RelativeLayout
+            android:id="@+id/rl_main_top_bar"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/contentPadding_level5"
             android:background="@drawable/bg_main_top_bar">
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_main_top_bar_time"
+                style="@style/MainTopBarTextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="2016/09/15 21:37:22"/>
+            <TextView
+                style="@style/MainTopBarTextTheme"
+                android:id="@+id/tv_main_top_bar_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="佛山"/>
+            <TextView
+                android:id="@+id/tv_main_top_bar_weather"
+                style="@style/MainTopBarTextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_weather_lot_cloud"
+                android:drawablePadding="@dimen/contentPadding_level6"
+                android:text="晴 33℃~36℃"/>
+        </RelativeLayout>
         <FrameLayout
             android:id="@+id/ll_main_content1"
             android:orientation="horizontal"
@@ -28,7 +57,7 @@
                 android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
-                style="@style/MainPlayIconTheme"
+                style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content1_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +81,7 @@
                 android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
-                style="@style/MainPlayIconTheme"
+                style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content2_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +105,7 @@
                 android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
-                style="@style/MainPlayIconTheme"
+                style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content3_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,14 +117,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
-            android:padding="@dimen/contentPadding_level2"
+            android:padding="@dimen/contentPadding_level3"
             android:gravity="center_vertical"
             android:background="@color/darkGray">
             <TextView
+                android:id="@+id/tv_main_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_notice"
-                android:drawablePadding="@dimen/contentPadding_level4"
+                android:drawablePadding="@dimen/contentPadding_level5"
                 android:textSize="@dimen/textSize_level6"
                 android:textColor="@color/text_color_white"/>
         </LinearLayout>
@@ -115,7 +145,7 @@
             android:minHeight="@dimen/main_menu_btn_width"
             android:maxWidth="@dimen/main_menu_btn_width"
             android:maxHeight="@dimen/main_menu_btn_width"
-            android:padding="@dimen/contentPadding_level2"
+            android:padding="@dimen/contentPadding_level3"
             android:layout_gravity="center"
             android:background="@drawable/layer_list_bg_main_menu"
             android:button="@null"
@@ -127,8 +157,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <RadioGroup
-                android:id="@+id/rg_main_menu_items"
+            <LinearLayout
+                android:id="@+id/ll_main_menu_items"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,52 +167,52 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level3"
-                    android:layout_marginRight="@dimen/contentPadding_level3"
+                    android:layout_marginLeft="@dimen/contentPadding_level4"
+                    android:layout_marginRight="@dimen/contentPadding_level4"
                     android:background="@color/colorMainMenuBorder"/>
-                <RadioButton
-                    style="@style/MainMenuBtnTheme"
-                    android:id="@+id/rbtn_main_menu_vice"
+                <CheckBox
+                    style="@style/MainMenuItemTheme"
+                    android:id="@+id/cb_main_menu_vice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:button="@null"
                     android:drawableTop="@drawable/selector_ic_main_menu_voice"
-                    android:text="@string/str_voice"/>
+                    android:text="@string/str_voice_vertical"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level3"
-                    android:layout_marginRight="@dimen/contentPadding_level3"
+                    android:layout_marginLeft="@dimen/contentPadding_level4"
+                    android:layout_marginRight="@dimen/contentPadding_level4"
                     android:background="@color/colorMainMenuBorder"/>
 
                 <Button
-                    style="@style/MainMenuBtnTheme"
+                    style="@style/MainMenuItemTheme"
                     android:id="@+id/btn_main_menu_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:drawableTop="@drawable/selector_ic_main_menu_home"
-                    android:text="@string/str_home" />
+                    android:text="@string/str_home_vertical" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level3"
-                    android:layout_marginRight="@dimen/contentPadding_level3"
+                    android:layout_marginLeft="@dimen/contentPadding_level4"
+                    android:layout_marginRight="@dimen/contentPadding_level4"
                     android:background="@color/colorMainMenuBorder"/>
 
-                <RadioButton
-                    style="@style/MainMenuBtnTheme"
-                    android:id="@+id/rbtn_main_menu_setting"
+                <CheckBox
+                    style="@style/MainMenuItemTheme"
+                    android:id="@+id/cb_main_menu_setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:button="@null"
                     android:drawableTop="@drawable/selector_ic_main_menu_setting"
-                    android:text="@string/str_setting" />
-            </RadioGroup>
+                    android:text="@string/str_setting_vertical" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
