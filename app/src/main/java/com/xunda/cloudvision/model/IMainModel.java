@@ -8,15 +8,15 @@ public interface IMainModel extends IModel {
 
     /**
      * 公告设置改变
-     * @param enabled 是否开启， true 开启，false关闭
+     * @param disabled 是否关闭， true 关闭，false 开启
      */
-    void onNoticeSettingsChanged(boolean enabled);
+    void onNoticeSettingsChanged(boolean disabled);
 
     /**
      * 天气设置改变
-     * @param enabled 是否开启， true开启， false关闭
+     * @param disabled 是否关闭， true 关闭， false 开启
      */
-    void onWeatherSettingsChanged(boolean enabled);
+    void onWeatherSettingsChanged(boolean disabled);
 
     /**
      * 公告是否启用
@@ -29,4 +29,9 @@ public interface IMainModel extends IModel {
      * @return true 启用， false禁用（默认启用）
      */
     boolean isWeatherEnabled();
+
+    /**
+     * 下一条通知， 如果通知栏禁用或者没有通知，返回null
+     */
+    String nextNotice();
 }

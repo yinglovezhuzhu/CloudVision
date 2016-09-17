@@ -20,6 +20,9 @@ public class MainPresenter implements Handler.Callback {
     /** 公告更新消息 **/
     public static final int MSG_NOTICE_UPDATE = 0x01;
 
+    /** 公告更新时间间隔 **/
+    private static final int NOTICE_UPDATE_TIME = 1000 * 5;
+
     private Context mContext;
     private IMainView mMainView;
     private IMainModel mMainModel;
@@ -40,6 +43,10 @@ public class MainPresenter implements Handler.Callback {
             if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
                 mHandler.removeMessages(MSG_TIME_UPDATE);
             }
+
+            if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
+                mHandler.removeMessages(MSG_NOTICE_UPDATE);
+            }
         }
     }
 
@@ -48,29 +55,37 @@ public class MainPresenter implements Handler.Callback {
      */
     public void onResume() {
         mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
+        mMainView.onNoticeUpdate(mMainModel.nextNotice());
         if(null != mHandler) {
             if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
                 mHandler.removeMessages(MSG_TIME_UPDATE);
             }
             // 延迟一秒
             mHandler.sendEmptyMessageDelayed(MSG_TIME_UPDATE, 1000);
+
+            if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
+                mHandler.removeMessages(MSG_NOTICE_UPDATE);
+            }
+            mHandler.sendEmptyMessageDelayed(MSG_NOTICE_UPDATE, NOTICE_UPDATE_TIME);
         }
+
+
     }
 
     /**
      * 公告设置改变
-     * @param enabled 是否开启， true 开启，false关闭
+     * @param disabled 是否关闭， true 关闭，false 开启
      */
-    public void onNoticeSettingsChanged(boolean enabled) {
-        mMainModel.onNoticeSettingsChanged(enabled);
+    public void onNoticeSettingsChanged(boolean disabled) {
+        mMainModel.onNoticeSettingsChanged(disabled);
     }
 
     /**
      * 天气设置改变
-     * @param enabled 是否开启， true开启， false关闭
+     * @param disabled 是否关闭， true 关闭， false 开启
      */
-    public void onWeatherSettingsChanged(boolean enabled) {
-        mMainModel.onWeatherSettingsChanged(enabled);
+    public void onWeatherSettingsChanged(boolean disabled) {
+        mMainModel.onWeatherSettingsChanged(disabled);
     }
 
     /**
@@ -96,6 +111,10 @@ public class MainPresenter implements Handler.Callback {
                 mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
                 mHandler.sendEmptyMessageDelayed(MSG_TIME_UPDATE, 1000);
                 return true;
+            case MSG_NOTICE_UPDATE:
+                mMainView.onNoticeUpdate(mMainModel.nextNotice());
+                mHandler.sendEmptyMessageDelayed(MSG_NOTICE_UPDATE, NOTICE_UPDATE_TIME);
+                break;
             default:
                 break;
         }

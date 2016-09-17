@@ -14,14 +14,20 @@ public interface IMainView {
 
     /**
      * 公告设置改变
-     * @param enabled 是否开启， true 开启，false关闭
+     * @param disabled 是否关闭， true 关闭，false 开启
      */
-    void onNoticeSettingsChanged(boolean enabled);
+    void onNoticeSettingsChanged(boolean disabled);
 
     /**
      * 天气设置改变
-     * @param enabled 是否开启， true开启， false关闭
+     * @param disabled 是否关闭， true 关闭， false 开启
      */
-    void onWeatherSettingsChanged(boolean enabled);
+    void onWeatherSettingsChanged(boolean disabled);
+
+    /**
+     * 公告数据更新
+     * @param notice 公告内容
+     */
+    void onNoticeUpdate(String notice);
 
 }

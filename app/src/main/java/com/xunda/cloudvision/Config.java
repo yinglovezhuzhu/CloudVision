@@ -12,8 +12,8 @@ public class Config {
     /** SP文件名称：缓存 **/
     public static final String SP_FILE_CACHE = "sp_file_cache";
 
-    /** SP配置文件key：是否启用首页天气（boolean）true 启用， false 关闭 **/
-    public static final String SP_KEY_MAIN_WEATHER_ENABLED = "enable_main_weather";
-    /** SP配置文件key：是否启用首页公告（boolean）true 启用， false 关闭 **/
-    public static final String SP_KEY_MAIN_NOTICE_ENABLED = "enable_main_notice";
+    /** SP配置文件key：是否禁用用首页天气（boolean）true 禁用， false 启用 **/
+    public static final String SP_KEY_MAIN_WEATHER_DISABLED = "disable_main_weather";
+    /** SP配置文件key：是否禁用首页公告（boolean）true 禁用， false 启用 **/
+    public static final String SP_KEY_MAIN_NOTICE_DISABLED = "disable_main_notice";
 }

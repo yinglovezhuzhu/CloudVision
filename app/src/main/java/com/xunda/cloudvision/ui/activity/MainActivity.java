@@ -80,13 +80,18 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void onNoticeSettingsChanged(boolean enabled) {
-        mViewBottomBar.setVisibility(enabled ? View.VISIBLE : View.GONE);
+    public void onNoticeSettingsChanged(boolean disabled) {
+        mViewBottomBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
     }
 
     @Override
-    public void onWeatherSettingsChanged(boolean enabled) {
-        mTvTopBarWeather.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
+    public void onWeatherSettingsChanged(boolean disabled) {
+        mTvTopBarWeather.setVisibility(disabled ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @Override
+    public void onNoticeUpdate(String notice) {
+        mTvNotice.setText(notice);
     }
 
     /**
