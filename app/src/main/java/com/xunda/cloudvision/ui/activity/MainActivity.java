@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -19,7 +20,14 @@ import com.xunda.cloudvision.presenter.MainPresenter;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
 
+/**
+ * 主界面Activity
+ * Created by yinglovezhuzhu@gmail.com on 2016/8/19.
+ */
 public class MainActivity extends BaseActivity implements IMainView {
+
+    /** 打开语音界面的RequestCode **/
+    private static final int RC_VOICE_PAGE = 0x001;
 
     private View mViewTopBar;
     private TextView mTvTopBarTime;
@@ -51,22 +59,30 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         initView();
 
+        if(null != mMainPresenter) {
+            mMainPresenter.onCreate();
+        }
 //        startActivity(new Intent(this, ActivateActivity.class));
     }
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         if(null != mMainPresenter) {
-            mMainPresenter.onPause();
+            mMainPresenter.onDestroy();
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(null != mMainPresenter) {
-            mMainPresenter.onResume();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RC_VOICE_PAGE:
+                mCbVoice.setChecked(false);
+                break;
+            default:
+                break;
         }
     }
 
@@ -74,6 +90,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_main_menu_home:
+                break;
+            case R.id.btn_main_menu_setting_logout:
+                break;
+            case R.id.btn_main_menu_setting_switch:
                 break;
             default:
                 break;
@@ -189,6 +209,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                     case R.id.cb_main_menu_vice:
                         if(checked) {
                             mCbSetting.setChecked(false);
+                            startActivityForResult(new Intent(MainActivity.this, VoiceActivity.class),
+                                    RC_VOICE_PAGE);
                         }
                         break;
                     case R.id.cb_main_menu_setting:

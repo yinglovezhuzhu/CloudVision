@@ -5,6 +5,17 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- 语音界面Activity样式 -->
+    <style name="VoiceActivityTheme" parent="AppTheme">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
     <style name="SingleLine">
         <item name="android:singleLine">true</item>
     </style>

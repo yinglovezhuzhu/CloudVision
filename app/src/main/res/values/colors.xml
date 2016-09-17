@@ -5,6 +5,8 @@
     <color name="transparent">#00000000</color>
     <!-- 深灰色（背景） -->
     <color name="darkGray">#FF353535</color>
+    <!-- 黑色 -->
+    <color name="colorBlack">#FF000000</color>
 
     <!-- 白色 -->
     <color name="colorWhite">#FFFFFFFF</color>

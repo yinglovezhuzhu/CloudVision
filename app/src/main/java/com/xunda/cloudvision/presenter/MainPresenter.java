@@ -38,7 +38,7 @@ public class MainPresenter implements Handler.Callback {
     /**
      * Activity放到后台
      */
-    public void onPause() {
+    public void onDestroy() {
         if(null != mHandler) {
             if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
                 mHandler.removeMessages(MSG_TIME_UPDATE);
@@ -53,7 +53,7 @@ public class MainPresenter implements Handler.Callback {
     /**
      * Activity回到前台
      */
-    public void onResume() {
+    public void onCreate() {
         mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
         mMainView.onNoticeUpdate(mMainModel.nextNotice());
         if(null != mHandler) {

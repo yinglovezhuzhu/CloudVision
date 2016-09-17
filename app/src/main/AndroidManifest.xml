@@ -19,6 +19,10 @@
 
         <activity android:name=".ui.activity.ActivateActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.VoiceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/VoiceActivityTheme" />
     </application>
 
 </manifest>
