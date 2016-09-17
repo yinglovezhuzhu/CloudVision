@@ -48,7 +48,8 @@
         <item name="android:src">@drawable/ic_video_play</item>
     </style>
 
-    <style name="AnimStyle">
+    <!-- 主页面子菜单动画效果 -->
+    <style name="MainMenuSubItemAnimStyle">
         <item name="android:windowEnterAnimation">@anim/anim_main_menu_sub_items_show</item>
         <item name="android:windowExitAnimation">@anim/anim_main_menu_sub_items_hide</item>
     </style>

@@ -3,14 +3,11 @@ package com.xunda.cloudvision.ui.activity;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.PopupWindow;
@@ -159,11 +156,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                             mCbSetting.getGlobalVisibleRect(rect);
                             int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level6);
                             mPwSettingMenu.showAsDropDown(mCbSetting, rect.right + padding, -(rect.bottom - rect.top));
-                            View contentView = mPwSettingMenu.getContentView();
-                            Utils.measureView(contentView);
-                            LogUtils.e("WWWWWWWWWWWWW", contentView.getWidth() + "<>" + contentView.getHeight());
-                            mPwSettingMenu.getContentView().getGlobalVisibleRect(rect);
-                            LogUtils.e("CCCCCCCCCCCC", rect.left + "<>" + rect.top + "<>" + rect.right + "<>" + rect.bottom);
                         }
                         break;
                     default:
@@ -175,16 +167,19 @@ public class MainActivity extends BaseActivity implements IMainView {
         mCbVoice.setOnCheckedChangeListener(onCheckedChangeListener);
         mCbSetting.setOnCheckedChangeListener(onCheckedChangeListener);
 
-        init();
+        initSettingsSubItems();
     }
 
-    private void init() {
-        View settingMenuContentView = View.inflate(this, R.layout.layout_main_setting_items, null);
+    /**
+     * 设置子菜单初始化
+     */
+    private void initSettingsSubItems() {
+        final View settingMenuContentView = View.inflate(this, R.layout.layout_main_setting_items, null);
         mPwSettingMenu = new PopupWindow(settingMenuContentView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPwSettingMenu.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mPwSettingMenu.setOutsideTouchable(true);
-        mPwSettingMenu.setAnimationStyle(R.style.AnimStyle);
+        mPwSettingMenu.setAnimationStyle(R.style.MainMenuSubItemAnimStyle);
         mPwSettingMenu.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
