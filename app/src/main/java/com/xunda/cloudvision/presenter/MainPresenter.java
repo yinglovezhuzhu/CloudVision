@@ -21,7 +21,7 @@ public class MainPresenter implements Handler.Callback {
     public static final int MSG_NOTICE_UPDATE = 0x01;
 
     /** 公告更新时间间隔 **/
-    private static final int NOTICE_UPDATE_TIME = 1000 * 5;
+    private static final int NOTICE_UPDATE_TIME = 1000 * 6;
 
     private Context mContext;
     private IMainView mMainView;
@@ -78,6 +78,7 @@ public class MainPresenter implements Handler.Callback {
      */
     public void onNoticeSettingsChanged(boolean disabled) {
         mMainModel.onNoticeSettingsChanged(disabled);
+        mMainView.onNoticeSettingsChanged(disabled);
     }
 
     /**
@@ -86,6 +87,7 @@ public class MainPresenter implements Handler.Callback {
      */
     public void onWeatherSettingsChanged(boolean disabled) {
         mMainModel.onWeatherSettingsChanged(disabled);
+        mMainView.onWeatherSettingsChanged(disabled);
     }
 
     /**

@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.MainPresenter;
+import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
 
 public class MainActivity extends BaseActivity implements IMainView {
@@ -35,6 +36,9 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     private MainPresenter mMainPresenter;
 
+    private Animation mNoticeEnterAnim;
+    private Animation mNoticeExitAnim;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         setContentView(R.layout.activity_main);
 
         mMainPresenter = new MainPresenter(this, this);
+        mNoticeEnterAnim = AnimationUtils.loadAnimation(this, R.anim.anim_main_menu_notice_enter);
+        mNoticeExitAnim = AnimationUtils.loadAnimation(this, R.anim.anim_main_menu_notice_exit);
 
         initView();
 
@@ -90,8 +96,28 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void onNoticeUpdate(String notice) {
-        mTvNotice.setText(notice);
+    public void onNoticeUpdate(final String notice) {
+        if(StringUtils.isEmpty(notice)) {
+            return;
+        }
+        mNoticeExitAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mTvNotice.setText(notice);
+                mTvNotice.startAnimation(mNoticeEnterAnim);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        mTvNotice.startAnimation(mNoticeExitAnim);
     }
 
     /**
@@ -221,9 +247,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         };
         cbNoticeSettings.setOnCheckedChangeListener(onCheckedChangeListener);
         cbWeatherSettings.setOnCheckedChangeListener(onCheckedChangeListener);
-        cbNoticeSettings.setChecked(mMainPresenter.isNoticeEnabled());
-        cbWeatherSettings.setChecked(mMainPresenter.isWeatherEnabled());
-        mViewBottomBar.setVisibility(mMainPresenter.isNoticeEnabled() ? View.VISIBLE : View.GONE);
-        mTvTopBarWeather.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.INVISIBLE);
+        cbNoticeSettings.setChecked(!mMainPresenter.isNoticeEnabled());
+        cbWeatherSettings.setChecked(!mMainPresenter.isWeatherEnabled());
     }
 }
