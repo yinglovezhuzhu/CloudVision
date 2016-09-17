@@ -6,7 +6,7 @@ import com.xunda.cloudvision.bean.resp.BaseResp;
  * 激活页面Model
  * Created by yinglovezhuzhu@gmail.com on 2016/8/20.
  */
-public class ActivateModel extends AbsModel implements IActivateModel {
+public class ActivateModel implements IActivateModel {
     @Override
     public void activate(String code) {
 

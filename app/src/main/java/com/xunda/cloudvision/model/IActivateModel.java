@@ -3,8 +3,8 @@ package com.xunda.cloudvision.model;
 /**
  * Created by yinglovezhuzhu@gmail.com on 2016/8/19.
  */
-public interface IActivateModel {
+public interface IActivateModel extends IModel {
 
-    public void activate(String code);
+    void activate(String code);
 
 }

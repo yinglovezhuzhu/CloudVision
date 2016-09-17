@@ -16,8 +16,6 @@ import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.MainPresenter;
-import com.xunda.cloudvision.utils.LogUtils;
-import com.xunda.cloudvision.utils.Utils;
 import com.xunda.cloudvision.view.IMainView;
 
 public class MainActivity extends BaseActivity implements IMainView {
@@ -43,7 +41,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMainPresenter = new MainPresenter(this);
+        mMainPresenter = new MainPresenter(this, this);
 
         initView();
 
@@ -81,6 +79,19 @@ public class MainActivity extends BaseActivity implements IMainView {
         mTvTopBarTime.setText(time);
     }
 
+    @Override
+    public void onNoticeSettingsChanged(boolean enabled) {
+        mViewBottomBar.setVisibility(enabled ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onWeatherSettingsChanged(boolean enabled) {
+        mTvTopBarWeather.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    /**
+     * 初始化视图
+     */
     private void initView() {
 
         mViewTopBar = findViewById(R.id.rl_main_top_bar);
@@ -186,5 +197,28 @@ public class MainActivity extends BaseActivity implements IMainView {
                 mCbSetting.setChecked(false);
             }
         });
+        final CheckBox cbNoticeSettings = (CheckBox) settingMenuContentView.findViewById(R.id.cb_main_menu_setting_notice);
+        final CheckBox cbWeatherSettings = (CheckBox) settingMenuContentView.findViewById(R.id.cb_main_menu_setting_weather);
+        CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                switch (compoundButton.getId()) {
+                    case R.id.cb_main_menu_setting_notice:
+                        mMainPresenter.onNoticeSettingsChanged(checked);
+                        break;
+                    case R.id.cb_main_menu_setting_weather:
+                        mMainPresenter.onWeatherSettingsChanged(checked);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        cbNoticeSettings.setOnCheckedChangeListener(onCheckedChangeListener);
+        cbWeatherSettings.setOnCheckedChangeListener(onCheckedChangeListener);
+        cbNoticeSettings.setChecked(mMainPresenter.isNoticeEnabled());
+        cbWeatherSettings.setChecked(mMainPresenter.isWeatherEnabled());
+        mViewBottomBar.setVisibility(mMainPresenter.isNoticeEnabled() ? View.VISIBLE : View.GONE);
+        mTvTopBarWeather.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.INVISIBLE);
     }
 }
