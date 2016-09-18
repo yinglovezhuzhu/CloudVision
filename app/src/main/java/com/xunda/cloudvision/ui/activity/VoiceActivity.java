@@ -40,6 +40,15 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         }
     }
 
+    @Override
+    public void onNewVoiceData(int type, String text, int action) {
+        mAdapter.add(new VoiceBean(type, text), true);
+        switch (action) {
+            default:
+                break;
+        }
+    }
+
     private void initView() {
         findViewById(R.id.ibtn_voice_close).setOnClickListener(this);
 
