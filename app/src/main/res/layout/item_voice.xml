@@ -28,7 +28,7 @@
                 android:layout_marginRight="@dimen/contentPadding_level2"
                 android:background="@drawable/shape_bg_voice_android"
                 android:textSize="@dimen/textSize_level6"
-                android:textColor="@color/text_color_black"/>
+                android:textColor="@color/colorTextBlack"/>
             <ImageView
                 android:layout_width="@dimen/voice_android_icon_size"
                 android:layout_height="@dimen/voice_android_icon_size"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_bg_voice_human"
                 android:textSize="@dimen/textSize_level6"
-                android:textColor="@color/text_color_white"/>
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
