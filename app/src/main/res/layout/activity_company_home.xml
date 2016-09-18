@@ -17,7 +17,11 @@
         <Button
             android:id="@+id/btn_company_home_back"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/contentPadding_level5"
+            android:paddingTop="@dimen/contentPadding_level2"
+            android:paddingRight="@dimen/contentPadding_level5"
+            android:paddingBottom="@dimen/contentPadding_level4"
             android:layout_weight="1"
             android:minHeight="@dimen/contentPadding_level1"
             android:background="@drawable/selector_bg_company_home_tab_item"

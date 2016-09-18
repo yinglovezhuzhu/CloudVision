@@ -2,6 +2,7 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.view.View;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.fragment.WebViewFragment;
@@ -22,11 +23,24 @@ public class CompanyHomeActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_company_home_back:
+                finish(RESULT_CANCELED, null);
+                break;
+            default:
+                break;
+        }
+    }
+
     private void initView() {
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_company_home_tabs);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_company_home_container);
 
         addTabs(tabHost);
+
+        findViewById(R.id.btn_company_home_back).setOnClickListener(this);
     }
 
     /**
