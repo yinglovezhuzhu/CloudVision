@@ -17,7 +17,6 @@ import com.xunda.cloudvision.view.IVoiceView;
  */
 public class VoiceActivity extends BaseActivity implements IVoiceView {
 
-    private ListView mLvVoice;
     private VoiceAdapter mAdapter;
 
     @Override
@@ -52,9 +51,9 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     private void initView() {
         findViewById(R.id.ibtn_voice_close).setOnClickListener(this);
 
-        mLvVoice = (ListView) findViewById(R.id.lv_voice_list);
+        final ListView lvVoice = (ListView) findViewById(R.id.lv_voice_list);
         mAdapter = new VoiceAdapter(this);
-        mLvVoice.setAdapter(mAdapter);
+        lvVoice.setAdapter(mAdapter);
 
         mAdapter.add(new VoiceBean(VoiceBean.TYPE_ANDROID, "我有什么可以帮到您？"), false);
         mAdapter.add(new VoiceBean(VoiceBean.TYPE_HUMAN, "我查找沙发产品"), false);
