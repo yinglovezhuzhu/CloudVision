@@ -19,59 +19,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/transparent"
-            android:textColor="@color/text_color_black"
-            android:textSize="@dimen/textSize_level6"
-            android:text="@string/str_back_with_arrow_left"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/selector_bg_company_home_tab_item"
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/textSize_level6"
             android:text="@string/str_back_with_arrow_left"/>
-        <Button
+        <android.support.v4.app.FragmentTabHost
+            android:id="@+id/fth_company_home_tabs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector_bg_company_home_tab_item"
-            android:textColor="@color/text_color_black"
-            android:textSize="@dimen/textSize_level6"
-            android:text="@string/str_back_with_arrow_left"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector_bg_company_home_tab_item"
-            android:textColor="@color/text_color_black"
-            android:textSize="@dimen/textSize_level6"
-            android:text="@string/str_back_with_arrow_left"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector_bg_company_home_tab_item"
-            android:textColor="@color/text_color_black"
-            android:textSize="@dimen/textSize_level6"
-            android:text="企业文化"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector_bg_company_home_tab_item"
-            android:textColor="@color/text_color_black"
-            android:textSize="@dimen/textSize_level6"
-            android:text="@string/str_back_with_arrow_left"/>
-        <!--<android.support.v4.app.FragmentTabHost-->
-            <!--android:id="@+id/fth_company_home_tabs"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="5">-->
-            <!--<TabWidget-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-            <!--</TabWidget>-->
-        <!--</android.support.v4.app.FragmentTabHost>-->
+            android:layout_weight="5">
+            <TabWidget
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TabWidget>
+        </android.support.v4.app.FragmentTabHost>
     </LinearLayout>
 </LinearLayout>

@@ -16,4 +16,9 @@
 
     <!-- 企业主界面 -->
     <string name="str_back_with_arrow_left">&lt; 返回</string>
+    <string name="str_corporate_honor">企业荣誉</string>
+    <string name="str_corporate_culture">企业文化</string>
+    <string name="str_corporate_image">企业形象</string>
+    <string name="str_corporate_intro">企业简介</string>
+    <string name="str_corporate_environment">企业环境</string>
 </resources>
