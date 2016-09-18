@@ -32,4 +32,9 @@
     <color name="colorMainMenuBackground">#A0000000</color>
     <!-- 主界面菜单边框/分隔线颜色 -->
     <color name="colorMainMenuBorder">#A0808080</color>
+
+    <!-- 语音界面人语言背景颜色 -->
+    <color name="colorVoiceHumanBackground">#FF3E84E0</color>
+    <!-- 语音界面机器人语言背景颜色 -->
+    <color name="colorVoiceAndroidBackground">#FFEEEEEE</color>
 </resources>
