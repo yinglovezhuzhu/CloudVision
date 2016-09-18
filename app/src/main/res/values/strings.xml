@@ -13,4 +13,7 @@
     <string name="str_weather_vertical">天\n气</string>
     <string name="str_logout_vertical">注\n消</string>
     <string name="str_switch_vertical">切\n换</string>
+
+    <!-- 企业主界面 -->
+    <string name="str_back_with_arrow_left">&lt; 返回</string>
 </resources>

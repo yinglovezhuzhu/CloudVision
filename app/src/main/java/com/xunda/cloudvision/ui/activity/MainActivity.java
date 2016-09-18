@@ -90,6 +90,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_main_menu_home:
+                startActivity(new Intent(this, CompanyHomeActivity.class));
                 break;
             case R.id.btn_main_menu_setting_logout:
                 break;

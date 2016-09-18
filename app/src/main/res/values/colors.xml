@@ -7,6 +7,8 @@
     <color name="darkGray">#FF353535</color>
     <!-- 黑色 -->
     <color name="colorBlack">#FF000000</color>
+    <!-- 淡灰色 -->
+    <color name="colorLightGray">#FFEEEEEE</color>
 
     <!-- 白色 -->
     <color name="colorWhite">#FFFFFFFF</color>
