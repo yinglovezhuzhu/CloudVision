@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:minHeight="@dimen/contentPadding_level1"
             android:background="@drawable/selector_bg_company_home_tab_item"
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/textSize_level6"
