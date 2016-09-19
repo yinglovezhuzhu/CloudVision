@@ -37,6 +37,7 @@ public class CompanyHomeActivity extends BaseActivity {
     private void initView() {
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_company_home_tabs);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_company_home_container);
+        tabHost.getTabWidget().setDividerDrawable(null);
 
         addTabs(tabHost);
 
