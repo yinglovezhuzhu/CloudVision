@@ -7,13 +7,14 @@ import android.view.View;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.fragment.WebViewFragment;
-import com.xunda.cloudvision.ui.widget.CompanyHomeTabItem;
+import com.xunda.cloudvision.ui.widget.CompanyTabItem;
+import com.xunda.cloudvision.view.ICorporateView;
 
 /**
  * 企业首页
  * Created by yinglovezhuzhu@gmail.com on 2016/9/18.
  */
-public class CorporateActivity extends BaseActivity {
+public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,11 @@ public class CorporateActivity extends BaseActivity {
      * @param tabHost
      */
     private void addTabs(FragmentTabHost tabHost) {
-        CompanyHomeTabItem honorTab = new CompanyHomeTabItem(this, R.string.str_corporate_honor);
-        CompanyHomeTabItem cultureTab = new CompanyHomeTabItem(this, R.string.str_corporate_culture);
-        CompanyHomeTabItem imageTab = new CompanyHomeTabItem(this, R.string.str_corporate_image);
-        CompanyHomeTabItem introTab = new CompanyHomeTabItem(this, R.string.str_corporate_intro);
-        CompanyHomeTabItem environmentTab = new CompanyHomeTabItem(this, R.string.str_corporate_environment);
+        CompanyTabItem honorTab = new CompanyTabItem(this, R.string.str_corporate_honor);
+        CompanyTabItem cultureTab = new CompanyTabItem(this, R.string.str_corporate_culture);
+        CompanyTabItem imageTab = new CompanyTabItem(this, R.string.str_corporate_image);
+        CompanyTabItem introTab = new CompanyTabItem(this, R.string.str_corporate_intro);
+        CompanyTabItem environmentTab = new CompanyTabItem(this, R.string.str_corporate_environment);
 
         // 企业荣誉
         final Bundle honorArgs = new Bundle();

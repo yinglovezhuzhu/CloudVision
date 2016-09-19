@@ -12,32 +12,32 @@ import com.xunda.cloudvision.R;
  * 公司主页Tab项
  * Created by yinglovezhuzhu@gmail.com on 2016/9/19.
  */
-public class CompanyHomeTabItem extends LinearLayout {
+public class CompanyTabItem extends LinearLayout {
 
     private TextView mTvText;
 
-    public CompanyHomeTabItem(Context context) {
+    public CompanyTabItem(Context context) {
         super(context);
         initView(context);
     }
 
-    public CompanyHomeTabItem(Context context, int resId) {
+    public CompanyTabItem(Context context, int resId) {
         this(context);
         setText(resId);
     }
 
-    public CompanyHomeTabItem(Context context, AttributeSet attrs) {
+    public CompanyTabItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public CompanyHomeTabItem(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CompanyTabItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
 
     @TargetApi(21)
-    public CompanyHomeTabItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CompanyTabItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initView(context);
     }
