@@ -12,13 +12,13 @@ import com.xunda.cloudvision.ui.widget.CompanyHomeTabItem;
  * 企业首页
  * Created by yinglovezhuzhu@gmail.com on 2016/9/18.
  */
-public class CompanyHomeActivity extends BaseActivity {
+public class CorporateActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_company_home);
+        setContentView(R.layout.activity_corporate);
 
         initView();
     }
@@ -26,7 +26,7 @@ public class CompanyHomeActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_company_home_back:
+            case R.id.btn_corporate_back:
                 finish(RESULT_CANCELED, null);
                 break;
             default:
@@ -35,13 +35,13 @@ public class CompanyHomeActivity extends BaseActivity {
     }
 
     private void initView() {
-        FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_company_home_tabs);
-        tabHost.setup(this, getSupportFragmentManager(), R.id.fl_company_home_container);
+        FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_corporate_tabs);
+        tabHost.setup(this, getSupportFragmentManager(), R.id.fl_corporate_container);
         tabHost.getTabWidget().setDividerDrawable(null);
 
         addTabs(tabHost);
 
-        findViewById(R.id.btn_company_home_back).setOnClickListener(this);
+        findViewById(R.id.btn_corporate_back).setOnClickListener(this);
     }
 
     /**

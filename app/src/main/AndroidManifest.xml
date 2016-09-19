@@ -24,7 +24,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/VoiceActivityTheme" />
 
-        <activity android:name=".ui.activity.CompanyHomeActivity"
+        <activity android:name=".ui.activity.CorporateActivity"
             android:screenOrientation="portrait" />
     </application>
 

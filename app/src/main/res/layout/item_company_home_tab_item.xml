@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/contentPadding_level2"
     android:paddingRight="@dimen/contentPadding_level5"
     android:paddingBottom="@dimen/contentPadding_level4"
-    android:background="@drawable/selector_bg_company_home_tab_item">
+    android:background="@drawable/selector_bg_corporate_tab_item">
     <TextView
         android:id="@+id/tv_company_home_tab_text"
         android:layout_width="match_parent"

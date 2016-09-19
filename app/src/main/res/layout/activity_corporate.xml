@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
-        android:id="@+id/fl_company_home_container"
+        android:id="@+id/fl_corporate_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/btn_company_home_back"
+            android:id="@+id/btn_corporate_back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/contentPadding_level5"
@@ -24,12 +24,12 @@
             android:paddingBottom="@dimen/contentPadding_level4"
             android:layout_weight="1"
             android:minHeight="@dimen/contentPadding_level1"
-            android:background="@drawable/selector_bg_company_home_tab_item"
+            android:background="@drawable/selector_bg_corporate_tab_item"
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/textSize_level6"
             android:text="@string/str_back_with_arrow_left"/>
         <android.support.v4.app.FragmentTabHost
-            android:id="@+id/fth_company_home_tabs"
+            android:id="@+id/fth_corporate_tabs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5">
