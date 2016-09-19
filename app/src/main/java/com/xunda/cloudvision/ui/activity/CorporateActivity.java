@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 
+import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.fragment.WebViewFragment;
 import com.xunda.cloudvision.ui.widget.CompanyHomeTabItem;
@@ -55,10 +56,34 @@ public class CorporateActivity extends BaseActivity {
         CompanyHomeTabItem introTab = new CompanyHomeTabItem(this, R.string.str_corporate_intro);
         CompanyHomeTabItem environmentTab = new CompanyHomeTabItem(this, R.string.str_corporate_environment);
 
-        tabHost.addTab(tabHost.newTabSpec("honorTab").setIndicator(honorTab), WebViewFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("cultureTab").setIndicator(cultureTab), WebViewFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("imageTab").setIndicator(imageTab), WebViewFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("introTab").setIndicator(introTab), WebViewFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec("environmentTab").setIndicator(environmentTab), WebViewFragment.class, null);
+        // 企业荣誉
+        final Bundle honorArgs = new Bundle();
+        honorArgs.putString(Config.EXTRA_DATA, "https://www.baidu.com");
+        tabHost.addTab(tabHost.newTabSpec("honorTab").setIndicator(honorTab),
+                WebViewFragment.class, honorArgs);
+
+        // 企业文化
+        final Bundle cultureArgs = new Bundle();
+        cultureArgs.putString(Config.EXTRA_DATA, "https://www.so.com/");
+        tabHost.addTab(tabHost.newTabSpec("cultureTab").setIndicator(cultureTab),
+                WebViewFragment.class, cultureArgs);
+
+        // 企业形象
+        final Bundle imageArgs = new Bundle();
+        imageArgs.putString(Config.EXTRA_DATA, "http://dict.youdao.com/");
+        tabHost.addTab(tabHost.newTabSpec("imageTab").setIndicator(imageTab),
+                WebViewFragment.class, imageArgs);
+
+        // 企业简介
+        final Bundle introArgs = new Bundle();
+        introArgs.putString(Config.EXTRA_DATA, "http://www.liantu.com/");
+        tabHost.addTab(tabHost.newTabSpec("introTab").setIndicator(introTab),
+                WebViewFragment.class, introArgs);
+
+        // 企业环境
+        final Bundle environmentArgs = new Bundle();
+        environmentArgs.putString(Config.EXTRA_DATA, "http://www.express8.cn/");
+        tabHost.addTab(tabHost.newTabSpec("environmentTab").setIndicator(environmentTab),
+                WebViewFragment.class, environmentArgs);
     }
 }

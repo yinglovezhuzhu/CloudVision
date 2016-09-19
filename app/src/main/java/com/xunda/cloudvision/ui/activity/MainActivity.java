@@ -17,6 +17,7 @@ import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.MainPresenter;
+import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
 
@@ -65,6 +66,11 @@ public class MainActivity extends BaseActivity implements IMainView {
 //        startActivity(new Intent(this, ActivateActivity.class));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NetworkManager.getInstance().updateNetworkState();
+    }
 
     @Override
     protected void onDestroy() {

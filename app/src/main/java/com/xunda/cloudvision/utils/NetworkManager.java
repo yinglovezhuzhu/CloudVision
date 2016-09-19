@@ -16,9 +16,9 @@ import com.xunda.cloudvision.observer.NetworkObserver;
  */
 public class NetworkManager {
 
-    private final Context mAppContext;
+    private Context mAppContext;
 
-    private final ConnectivityManager mConnectivityManager;
+    private ConnectivityManager mConnectivityManager;
 
     private final NetworkObservable mNetworkObservable = new NetworkObservable();
 
@@ -26,25 +26,47 @@ public class NetworkManager {
 
     private NetworkInfo mCurrentNetwork = null;
 
+    private boolean mInitialized = false;
+
     private static NetworkManager mInstance = null;
 
-    private NetworkManager(Context context) {
-        mAppContext = context.getApplicationContext();
-        mConnectivityManager = (ConnectivityManager) mAppContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        mAppContext.registerReceiver(new NetworkReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    private NetworkManager() {
 
-        // 初始化网络状态
-        mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
-        mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
     }
 
-    public static NetworkManager getInstance(Context context) {
+    public static NetworkManager getInstance() {
         synchronized (NetworkManager.class) {
             if(null == mInstance) {
-                mInstance = new NetworkManager(context);
+                mInstance = new NetworkManager();
             }
             return mInstance;
         }
+    }
+
+    /**
+     * 初始化
+     * @param context Context对象
+     */
+    public void initialized(Context context) {
+        if(!mInitialized) {
+            mAppContext = context.getApplicationContext();
+            mConnectivityManager = (ConnectivityManager) mAppContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            mAppContext.registerReceiver(new NetworkReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
+            mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
+            mInitialized = true;
+        }
+    }
+
+    /**
+     * 重新初始化网络状态，因为在android 7.0 API 24的时候程序关闭后（单例依旧存在），程序无法接收网络状态广播
+     */
+    public void updateNetworkState() {
+        if(!mInitialized) {
+            return;
+        }
+        mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
+        mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
     }
 
     /**
