@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.fragment.WebViewFragment;
 import com.xunda.cloudvision.ui.widget.CompanyTabItem;
 import com.xunda.cloudvision.view.ICorporateView;
@@ -16,11 +17,15 @@ import com.xunda.cloudvision.view.ICorporateView;
  */
 public class CorporateActivity extends BaseActivity implements ICorporateView {
 
+    private CorporatePresenter mCorporatePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_corporate);
+
+        mCorporatePresenter = new CorporatePresenter(this);
 
         initView();
     }
