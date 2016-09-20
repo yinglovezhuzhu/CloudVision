@@ -59,7 +59,7 @@ public class CompanyTabItem extends LinearLayout {
     }
 
     private void initView(Context context) {
-        inflate(context, R.layout.item_company_home_tab_item, this);
+        inflate(context, R.layout.item_corporate_tab_item, this);
 
         mTvText = (TextView) findViewById(R.id.tv_company_home_tab_text);
     }
