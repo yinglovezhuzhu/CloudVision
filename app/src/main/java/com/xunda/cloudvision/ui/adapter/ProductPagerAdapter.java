@@ -64,5 +64,6 @@ public class ProductPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public float getPageWidth(int position) {
         return super.getPageWidth(position);
+//        return 0.8f;
     }
 }
