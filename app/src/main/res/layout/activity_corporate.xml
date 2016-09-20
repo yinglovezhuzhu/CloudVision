@@ -148,11 +148,11 @@
             android:id="@+id/btn_corporate_all_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/contentPadding_level4"
+            android:layout_margin="@dimen/contentPadding_level2"
             android:minHeight="@dimen/corporate_btn_more_product_height"
             android:background="@drawable/selector_btn_corporate_all_product"
             android:textColor="@color/colorTextRed"
-            android:textSize="@dimen/textSize_level5"
+            android:textSize="@dimen/textSize_level6"
             android:text="@string/str_view_all_product"/>
         <FrameLayout
             android:layout_width="match_parent"
