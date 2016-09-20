@@ -48,13 +48,66 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite">
         <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_culture"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/contentPadding_level1"
+            android:background="@color/transparent"
             android:drawableTop="@drawable/ic_corporate_culture"
-            android:drawablePadding="@dimen/contentPadding_level5"
-            android:textSize="@dimen/textSize_level6"
             android:text="@string/str_corporate_culture"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_honor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_honor"
+            android:text="@string/str_corporate_honor"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_environment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_environment"
+            android:text="@string/str_corporate_environment"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_image"
+            android:text="@string/str_corporate_image"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_intro"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_intro"
+            android:text="@string/str_corporate_intro"/>
     </LinearLayout>
+
 </LinearLayout>
