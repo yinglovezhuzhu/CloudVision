@@ -45,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_product_pager_price"
             android:layout_toEndOf="@+id/tv_product_pager_price"
-            android:textSize="@dimen/textSize_level6"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize_level7"
             android:textColor="@color/colorTextRed"
             android:text="RMB"/>
     </RelativeLayout>
