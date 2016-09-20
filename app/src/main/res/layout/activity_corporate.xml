@@ -129,18 +129,21 @@
             android:layout_height="0.5dp"
             android:layout_marginBottom="@dimen/contentPadding_level4"
             android:background="@color/colorTextRed" />
-        <FrameLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="5"
             android:clipChildren="false">
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_corporate_recommend_product"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_weight="3"
                 android:clipChildren="false"/>
-        </FrameLayout>
+        </LinearLayout>
         <Button
             android:id="@+id/btn_corporate_all_product"
             android:layout_width="wrap_content"

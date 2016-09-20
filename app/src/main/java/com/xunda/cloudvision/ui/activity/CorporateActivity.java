@@ -78,16 +78,6 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level2));
         viewPager.setAdapter(new ProductPagerAdapter(getSupportFragmentManager()));
-
-        // 设置ViewPager的宽度，小于屏幕宽度，使得两边可以看到临近的项
-        ViewGroup.LayoutParams lp = viewPager.getLayoutParams();
-        if(null == lp) {
-            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        final int dmWidth = getResources().getDisplayMetrics().widthPixels;
-        lp.width = dmWidth * 3 / 5;
-        viewPager.setLayoutParams(lp);
     }
 
     /**
