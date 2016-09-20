@@ -21,4 +21,7 @@
     <string name="str_corporate_image">企业形象</string>
     <string name="str_corporate_intro">企业简介</string>
     <string name="str_corporate_environment">企业环境</string>
+    <string name="str_recommend_product">推荐产品</string>
+    <string name="str_view_all_product">查看所有产品</string>
+    <string name="str_cloud_video">云展视频</string>
 </resources>

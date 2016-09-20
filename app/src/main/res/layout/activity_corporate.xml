@@ -110,4 +110,80 @@
             android:text="@string/str_corporate_intro"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/contentPadding_level4"
+            android:paddingBottom="@dimen/contentPadding_level6"
+            android:textColor="@color/colorTextRed"
+            android:textSize="@dimen/textSize_level5"
+            android:text="@string/str_recommend_product"/>
+        <View
+            android:layout_width="@dimen/corporate_red_divider_width"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="@dimen/contentPadding_level4"
+            android:background="@color/colorTextRed" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipChildren="false">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_corporate_recommend_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clipChildren="false"/>
+        </FrameLayout>
+        <Button
+            android:id="@+id/btn_corporate_all_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/contentPadding_level4"
+            android:minHeight="@dimen/corporate_btn_more_product_height"
+            android:background="@drawable/selector_btn_corporate_all_product"
+            android:textColor="@color/colorTextRed"
+            android:textSize="@dimen/textSize_level5"
+            android:text="@string/str_view_all_product"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 背景，防止拉伸变形 -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_corporate_footer"
+                android:contentDescription="@null"/>
+            <Button
+                android:id="@+id/btn_corporate_cloud_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/contentPadding_level4"
+                android:padding="@dimen/contentPadding_level4"
+                android:background="@color/transparent"
+                android:drawableTop="@drawable/ic_corporate_video"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textSize_level5"
+                android:text="@string/str_cloud_video"/>
+            <ImageButton
+                android:id="@+id/ibtn_corporate_back"
+                android:layout_width="@dimen/corporate_ibtn_back_size"
+                android:layout_height="@dimen/corporate_ibtn_back_size"
+                android:layout_gravity="start|bottom"
+                android:layout_margin="@dimen/contentPadding_level2"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back_round"
+                android:contentDescription="@null"/>
+        </FrameLayout>
+    </LinearLayout>
+
 </LinearLayout>

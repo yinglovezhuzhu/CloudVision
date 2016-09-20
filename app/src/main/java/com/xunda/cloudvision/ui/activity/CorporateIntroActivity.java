@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
@@ -17,6 +18,17 @@ import com.xunda.cloudvision.ui.widget.CompanyTabItem;
  */
 
 public class CorporateIntroActivity extends BaseActivity implements ICorporateIntroView {
+
+    /** 企业荣誉页面 **/
+    public static final int PAGE_CORPORATE_HONOR = 0;
+    /** 企业文化页面 **/
+    public static final int PAGE_CORPORATE_CULTURE = 1;
+    /** 企业形象页面 **/
+    public static final int PAGE_CORPORATE_IMAGE = 2;
+    /** 企业简介页面 **/
+    public static final int PAGE_CORPORATE_INTRO = 3;
+    /** 企业环境页面 **/
+    public static final int PAGE_CORPORATE_ENVIRONMENT = 4;
 
     private CorporateIntroPresenter mCorporateIntroPresenter;
 
@@ -42,6 +54,11 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish(RESULT_CANCELED, null);
+    }
+
     private void initView() {
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_corporate_intro_tabs);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_corporate_intro_container);
@@ -50,6 +67,12 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         addTabs(tabHost);
 
         findViewById(R.id.btn_corporate_intro_back).setOnClickListener(this);
+
+        Intent intent = getIntent();
+        if(null != intent && intent.hasExtra(Config.EXTRA_DATA)) {
+            int page = intent.getIntExtra(Config.EXTRA_DATA, PAGE_CORPORATE_CULTURE);
+            tabHost.setCurrentTab(page);
+        }
     }
 
     /**

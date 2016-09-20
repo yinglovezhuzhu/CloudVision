@@ -67,10 +67,10 @@
 
     <!-- 企业顶部导航按钮样式 -->
     <style name="CorporateTopBarTheme" parent="SingleLine">
-        <item name="android:paddingTop">@dimen/contentPadding_level1</item>
-        <item name="android:paddingBottom">@dimen/contentPadding_level1</item>
-        <item name="android:paddingLeft">@dimen/contentPadding_level4</item>
-        <item name="android:paddingRight">@dimen/contentPadding_level4</item>
+        <item name="android:paddingTop">@dimen/contentPadding_level2</item>
+        <item name="android:paddingBottom">@dimen/contentPadding_level2</item>
+        <item name="android:paddingLeft">@dimen/contentPadding_level5</item>
+        <item name="android:paddingRight">@dimen/contentPadding_level5</item>
         <item name="android:drawablePadding">@dimen/contentPadding_level4</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textSize">@dimen/textSize_level6</item>
