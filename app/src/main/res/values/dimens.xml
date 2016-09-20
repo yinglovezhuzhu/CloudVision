@@ -33,7 +33,7 @@
     <dimen name="voice_android_icon_size">25dp</dimen>
     
     <!-- 企业首页 -->
-    <dimen name="corporate_header_logo_size">60dp</dimen>
+    <dimen name="corporate_header_logo_size">55dp</dimen>
     <dimen name="corporate_red_divider_width">40dp</dimen>
     <dimen name="corporate_btn_more_product_height">30dp</dimen>
     <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
