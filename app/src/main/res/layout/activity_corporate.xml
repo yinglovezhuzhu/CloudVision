@@ -114,7 +114,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.99"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
             android:paddingBottom="@dimen/contentPadding_level6"
             android:textColor="@color/colorTextRed"
             android:textSize="@dimen/textSize_level5"
-            android:text="@string/str_recommend_product"/>
+            android:text="@string/str_recommended_product"/>
         <View
             android:layout_width="@dimen/corporate_red_divider_width"
             android:layout_height="0.5dp"
@@ -138,7 +138,7 @@
             android:weightSum="5"
             android:clipChildren="false">
             <android.support.v4.view.ViewPager
-                android:id="@+id/vp_corporate_recommend_product"
+                android:id="@+id/vp_corporate_recommended_product"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"

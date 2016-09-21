@@ -2,17 +2,13 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.ProductPagerAdapter;
-import com.xunda.cloudvision.ui.fragment.WebViewFragment;
-import com.xunda.cloudvision.ui.widget.CompanyTabItem;
 import com.xunda.cloudvision.view.ICorporateView;
 
 /**
@@ -74,7 +70,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         findViewById(R.id.btn_corporate_cloud_video).setOnClickListener(this);
         findViewById(R.id.ibtn_corporate_back).setOnClickListener(this);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommend_product);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommended_product);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level2));
         viewPager.setAdapter(new ProductPagerAdapter(getSupportFragmentManager()));
