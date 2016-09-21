@@ -35,7 +35,7 @@
             android:gravity="center">
 
             <ImageButton
-                android:id="@+id/ibtn_product_pager_view_last_page"
+                android:id="@+id/ibtn_product_pager_view_pre_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/contentPadding_level1"
