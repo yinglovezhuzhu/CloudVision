@@ -30,6 +30,9 @@ public class ProductActivity extends BaseActivity implements IProductView {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_product_back:
+                finish(RESULT_CANCELED, null);
+                break;
             default:
                 break;
         }
@@ -46,6 +49,6 @@ public class ProductActivity extends BaseActivity implements IProductView {
     }
 
     private void initView() {
-
+        findViewById(R.id.btn_product_back).setOnClickListener(this);
     }
 }
