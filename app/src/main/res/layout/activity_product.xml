@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/fl_product_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:padding="@dimen/contentPadding_level5">
+        <Button
+            style="@style/ProductBottomBtnTheme"
+            android:id="@+id/btn_product_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level2"
+            android:layout_marginRight="@dimen/contentPadding_level2"
+            android:text="@string/str_back_with_arrow_left"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                style="@style/ProductBottomBtnTheme"
+                android:id="@+id/btn_product_view_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_view_mode_page"
+                android:drawableStart="@drawable/ic_view_mode_page"
+                android:text="@string/str_to_page_view"/>
+        </LinearLayout>
+        <Button
+            style="@style/ProductBottomBtnTheme"
+            android:id="@+id/btn_product_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level2"
+            android:layout_marginRight="@dimen/contentPadding_level2"
+            android:drawableLeft="@drawable/ic_search_white"
+            android:drawableStart="@drawable/ic_search_white"
+            android:text="@string/str_search"/>
+    </LinearLayout>
+</LinearLayout>

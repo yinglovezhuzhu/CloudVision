@@ -50,6 +50,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_INTRO);
                 break;
             case R.id.btn_corporate_all_product:
+                startActivity(new Intent(this, ProductActivity.class));
                 break;
             case R.id.btn_corporate_cloud_video:
                 break;

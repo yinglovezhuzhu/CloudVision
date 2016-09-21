@@ -77,4 +77,15 @@
         <item name="android:textColor">@color/colorTextGray</item>
     </style>
 
+    <!-- 产品底部导航按钮样式 -->
+    <style name="ProductBottomBtnTheme" parent="SingleLine">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:minWidth">@dimen/product_bottom_btn_minSize</item>
+        <item name="android:minHeight">@dimen/product_bottom_btn_minSize</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/textSize_level6</item>
+        <item name="android:padding">@dimen/contentPadding_level5</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
+    </style>
+
 </resources>

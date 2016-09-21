@@ -39,5 +39,7 @@
     <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
     <dimen name="corporate_ibtn_back_size">35dp</dimen>
 
+    <!-- 产品界面 -->
+    <dimen name="product_bottom_btn_minSize">30dp</dimen>
 
 </resources>
