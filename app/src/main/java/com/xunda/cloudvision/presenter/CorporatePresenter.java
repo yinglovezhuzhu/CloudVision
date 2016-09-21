@@ -17,4 +17,18 @@ public class CorporatePresenter {
         this.mView = view;
         this.mModel = new CorporateModel();
     }
+
+    /**
+     * 获取缓存的推荐产品列表数据
+     */
+    public void getCachedRecommendedProduct() {
+
+    }
+
+    /**
+     * 查询推荐产品列表
+     */
+    public void queryRecommendedProduct() {
+
+    }
 }

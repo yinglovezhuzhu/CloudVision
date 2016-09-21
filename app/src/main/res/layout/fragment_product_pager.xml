@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:layout_margin="@dimen/contentPadding_level2"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         android:src="@drawable/bg_activate"
         android:contentDescription="@null"/>
 
@@ -24,9 +24,9 @@
         android:textSize="@dimen/textSize_level6"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
-        android:maxLines="2"
+        android:maxLines="3"
         android:ellipsize="end"
-        android:text="中国黄金500g,绝对真金，柜台验货，带证书"/>
+        android:text="中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

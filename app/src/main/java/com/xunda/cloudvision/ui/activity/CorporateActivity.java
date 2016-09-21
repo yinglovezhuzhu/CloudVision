@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryRecommendedProductResp;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.ProductPagerAdapter;
 import com.xunda.cloudvision.view.ICorporateView;
@@ -60,6 +61,21 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         }
     }
 
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onQueryRecommendedProductResult(QueryRecommendedProductResp result) {
+
+    }
+
     private void initView() {
         findViewById(R.id.btn_corporate_culture).setOnClickListener(this);
         findViewById(R.id.btn_corporate_honor).setOnClickListener(this);
@@ -90,5 +106,4 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         intent.putExtra(Config.EXTRA_DATA, page);
         startActivity(intent);
     }
-
 }
