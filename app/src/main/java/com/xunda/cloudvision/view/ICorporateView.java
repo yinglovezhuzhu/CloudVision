@@ -1,6 +1,6 @@
 package com.xunda.cloudvision.view;
 
-import com.xunda.cloudvision.bean.resp.QueryRecommendedProductResp;
+import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
 
 /**
  * Corporate View
@@ -8,5 +8,5 @@ import com.xunda.cloudvision.bean.resp.QueryRecommendedProductResp;
  */
 public interface ICorporateView extends IView {
 
-    void onQueryRecommendedProductResult(QueryRecommendedProductResp result);
+    void onQueryRecommendedProductResult(RecommendedProductResp result);
 }

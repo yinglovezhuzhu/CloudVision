@@ -1,5 +1,8 @@
 package com.xunda.cloudvision.presenter;
 
+import android.content.Context;
+
+import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
 import com.xunda.cloudvision.model.CorporateModel;
 import com.xunda.cloudvision.model.ICorporateModel;
 import com.xunda.cloudvision.view.ICorporateView;
@@ -13,16 +16,16 @@ public class CorporatePresenter {
     private ICorporateView mView;
     private ICorporateModel mModel;
 
-    public CorporatePresenter(ICorporateView view) {
+    public CorporatePresenter(Context context, ICorporateView view) {
         this.mView = view;
-        this.mModel = new CorporateModel();
+        this.mModel = new CorporateModel(context);
     }
 
     /**
      * 获取缓存的推荐产品列表数据
      */
-    public void getCachedRecommendedProduct() {
-
+    public RecommendedProductResp getCachedRecommendedProduct() {
+        return null;
     }
 
     /**
