@@ -11,13 +11,13 @@ import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
 
 /**
- * 产品浏览模式信息Pager页面Fragment
+ * 推荐产品信息Pager页面Fragment
  * Created by yinglovezhuzhu@gmail.com on 2016/9/20.
  */
-public class ProductPagerFragment extends BaseFragment {
+public class RecommendedProductPagerFragment extends BaseFragment {
 
-    public static ProductPagerFragment newInstance(ProductBean product) {
-        ProductPagerFragment fragment = new ProductPagerFragment();
+    public static RecommendedProductPagerFragment newInstance(ProductBean product) {
+        RecommendedProductPagerFragment fragment = new RecommendedProductPagerFragment();
         if(null != product) {
             Bundle args = new Bundle();
             args.putParcelable(Config.EXTRA_DATA, product);
@@ -33,7 +33,7 @@ public class ProductPagerFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_product_pager, container, false);
+        View contentView = inflater.inflate(R.layout.fragment_recommended_product_pager, container, false);
         return contentView;
     }
 }

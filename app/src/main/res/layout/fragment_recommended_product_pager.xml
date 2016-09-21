@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/contentPadding_level2"
+    android:background="@color/colorWhite"
+    android:weightSum="6">
+    <ImageView
+        android:id="@+id/iv_recommended_product_pager_img"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:layout_margin="@dimen/contentPadding_level2"
+        android:scaleType="centerInside"
+        android:src="@drawable/bg_activate"
+        android:contentDescription="@null"/>
+
+    <TextView
+        android:id="@+id/tv_recommended_product_pager_desc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="@dimen/textSize_level6"
+        android:textColor="@color/colorTextBlack"
+        android:gravity="center_horizontal"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:text="中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="top|center_horizontal">
+        <TextView
+            android:id="@+id/tv_recommended_product_pager_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/contentPadding_level6"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize_level1"
+            android:textColor="@color/colorTextRed"
+            android:text="100"/>
+        <TextView
+            android:id="@+id/tv_recommended_product_pager_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_recommended_product_pager_price"
+            android:layout_toEndOf="@+id/tv_recommended_product_pager_price"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize_level7"
+            android:textColor="@color/colorTextRed"
+            android:text="RMB"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -88,4 +88,11 @@
         <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
     </style>
 
+    <style name="ProductPagerViewIndexTextTheme" parent="SingleLine">
+        <item name="android:textSize">@dimen/textSize_level5</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:maxLength">6</item>
+        <item name="android:minEms">2</item>
+    </style>
+
 </resources>

@@ -9,7 +9,7 @@ import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
-import com.xunda.cloudvision.ui.adapter.ProductPagerAdapter;
+import com.xunda.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
 import com.xunda.cloudvision.view.ICorporateView;
 
 /**
@@ -90,7 +90,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommended_product);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level2));
-        viewPager.setAdapter(new ProductPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new RecommendedProductPagerAdapter(getSupportFragmentManager()));
     }
 
     /**

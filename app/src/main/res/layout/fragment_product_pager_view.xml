@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_product_pager_view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_activate"
+        android:contentDescription="@null"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/contentPadding_level4">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_product_pager_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/contentPadding_level0"
+            android:paddingLeft="@dimen/contentPadding_level0"
+            android:paddingRight="@dimen/contentPadding_level0"
+            android:paddingBottom="@dimen/contentPadding_level5"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/contentPadding_level4"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/ibtn_product_pager_view_last_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/contentPadding_level1"
+                android:padding="@dimen/contentPadding_level1"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_arrow_left_white"
+                android:contentDescription="@null"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="@dimen/product_pager_view_index_view_size"
+                android:layout_height="@dimen/product_pager_view_index_view_size"
+                android:background="@drawable/shape_circle_transparent_with_white_border"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/ProductPagerViewIndexTextTheme"
+                    android:id="@+id/tv_product_pager_view_page_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="@dimen/contentPadding_level5"
+                    android:gravity="center"
+                    android:text="2"/>
+
+                <View
+                    android:layout_width="@dimen/product_pager_view_index_view_size"
+                    android:layout_height="1dp"
+                    android:background="@color/colorWhite"
+                    android:rotation="-15"/>
+
+                <TextView
+                    style="@style/ProductPagerViewIndexTextTheme"
+                    android:id="@+id/tv_product_pager_view_page_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/contentPadding_level5"
+                    android:gravity="center"
+                    android:text="2000"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ibtn_product_pager_view_next_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/contentPadding_level1"
+                android:padding="@dimen/contentPadding_level1"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_arrow_right_white"
+                android:contentDescription="@null"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
