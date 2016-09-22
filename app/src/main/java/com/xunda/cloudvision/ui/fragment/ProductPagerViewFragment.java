@@ -26,6 +26,12 @@ public class ProductPagerViewFragment extends BaseFragment {
     private TextView mTvPageCount;
     private ProductPagerViewAdapter mAdapter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAdapter = new ProductPagerViewAdapter(getChildFragmentManager());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,13 +58,10 @@ public class ProductPagerViewFragment extends BaseFragment {
     }
 
     private void initView(View contentView) {
-//        mViewPager = (ViewPager) contentView.findViewById(R.id.vp_product_pager_view);
         mViewPager = (OrientedViewPager) contentView.findViewById(R.id.vp_product_pager_view);
         mViewPager.setOrientation(OrientedViewPager.Orientation.VERTICAL);
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setPageTransformer(true, new VerticalStackTransformer(getActivity()));
-//        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level0));
-        mAdapter = new ProductPagerViewAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mAdapter);
 
         mTvPageNum = (TextView) contentView.findViewById(R.id.tv_product_pager_view_page_num);

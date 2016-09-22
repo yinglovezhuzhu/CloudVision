@@ -1,5 +1,7 @@
 package com.xunda.cloudvision.view;
 
+import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
+
 /**
  * 产品列表视图接口
  * Created by yinglovezhuzhu@gmail.com on 2016/9/21.
@@ -7,4 +9,9 @@ package com.xunda.cloudvision.view;
 
 public interface IProductView extends IView {
 
+    /**
+     * 查询产品结果
+     * @param result
+     */
+    void onQueryProductResult(RecommendedProductResp result);
 }
