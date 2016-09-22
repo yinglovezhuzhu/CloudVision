@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <!-- 语音界面Activity样式 -->
@@ -10,6 +11,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowBackground">@color/transparent</item>
