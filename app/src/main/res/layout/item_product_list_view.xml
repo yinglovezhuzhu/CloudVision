@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/contentPadding_level2"
-    android:background="@color/colorWhite"
-    android:weightSum="6">
+    android:background="@color/colorWhite">
+
     <ImageView
-        android:id="@+id/iv_product_pager_img"
+        android:id="@+id/iv_item_product_list_view_img"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
@@ -17,39 +17,37 @@
         android:contentDescription="@null"/>
 
     <TextView
-        android:id="@+id/tv_product_pager_desc"
+        android:id="@+id/tv_product_list_view_desc"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="@dimen/textSize_level6"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize_level2"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
-        android:maxLines="2"
+        android:minLines="2"
         android:ellipsize="end"
         android:text="中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="top|center_horizontal">
         <TextView
-            android:id="@+id/tv_product_pager_price"
+            android:id="@+id/tv_product_list_view_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/contentPadding_level6"
             android:textStyle="bold"
-            android:textSize="@dimen/textSize_level1"
+            android:textSize="@dimen/textSize_level0"
             android:textColor="@color/colorTextRed"
             android:text="100"/>
         <TextView
-            android:id="@+id/tv_product_pager_currency"
+            android:id="@+id/tv_product_list_view_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_product_pager_price"
-            android:layout_toEndOf="@+id/tv_product_pager_price"
+            android:layout_toRightOf="@+id/tv_product_list_view_price"
+            android:layout_toEndOf="@+id/tv_product_list_view_price"
             android:textStyle="bold"
-            android:textSize="@dimen/textSize_level7"
+            android:textSize="@dimen/textSize_level4"
             android:textColor="@color/colorTextRed"
             android:text="RMB"/>
     </RelativeLayout>

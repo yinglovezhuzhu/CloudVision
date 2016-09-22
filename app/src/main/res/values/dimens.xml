@@ -1,6 +1,7 @@
 <resources>
 
     <!-- 字体大小 -->
+    <dimen name="textSize_level0">28sp</dimen>
     <dimen name="textSize_level1">22sp</dimen>
     <dimen name="textSize_level2">20sp</dimen>
     <dimen name="textSize_level3">18sp</dimen>
@@ -11,6 +12,7 @@
     <dimen name="textSize_level8">8sp</dimen>
 
 
+    <dimen name="contentPadding_level0">20dp</dimen>
     <dimen name="contentPadding_level1">15dp</dimen>
     <dimen name="contentPadding_level2">12dp</dimen>
     <dimen name="contentPadding_level3">10dp</dimen>
@@ -41,5 +43,6 @@
 
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">30dp</dimen>
+    <dimen name="product_pager_view_index_view_size">70dp</dimen>
 
 </resources>

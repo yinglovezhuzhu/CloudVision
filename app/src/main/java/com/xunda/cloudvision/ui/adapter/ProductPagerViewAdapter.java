@@ -14,11 +14,11 @@ import java.util.List;
  * 推荐产品ViewPager适配器
  * Created by yinglovezhuzhu@gmail.com on 2016/9/20.
  */
-public class ProductPagerAdapter extends FragmentStatePagerAdapter {
+public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
 
     private List<ProductBean> mData = new ArrayList<>();
 
-    public ProductPagerAdapter(FragmentManager fm) {
+    public ProductPagerViewAdapter(FragmentManager fm) {
         super(fm);
     }
 

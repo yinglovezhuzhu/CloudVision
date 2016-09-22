@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     android:weightSum="6">
     <ImageView
-        android:id="@+id/iv_product_pager_img"
+        android:id="@+id/iv_recommended_product_pager_img"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
@@ -17,7 +17,7 @@
         android:contentDescription="@null"/>
 
     <TextView
-        android:id="@+id/tv_product_pager_desc"
+        android:id="@+id/tv_recommended_product_pager_desc"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:gravity="top|center_horizontal">
         <TextView
-            android:id="@+id/tv_product_pager_price"
+            android:id="@+id/tv_recommended_product_pager_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/contentPadding_level6"
@@ -43,11 +43,11 @@
             android:textColor="@color/colorTextRed"
             android:text="100"/>
         <TextView
-            android:id="@+id/tv_product_pager_currency"
+            android:id="@+id/tv_recommended_product_pager_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_product_pager_price"
-            android:layout_toEndOf="@+id/tv_product_pager_price"
+            android:layout_toRightOf="@+id/tv_recommended_product_pager_price"
+            android:layout_toEndOf="@+id/tv_recommended_product_pager_price"
             android:textStyle="bold"
             android:textSize="@dimen/textSize_level7"
             android:textColor="@color/colorTextRed"
