@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.opensource.transformer.VerticalStackTransformer;
+import com.opensource.view.OrientedViewPager;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.adapter.ProductPagerViewAdapter;
 
@@ -18,7 +20,8 @@ import com.xunda.cloudvision.ui.adapter.ProductPagerViewAdapter;
 
 public class ProductPagerViewFragment extends BaseFragment {
 
-    private ViewPager mViewPager;
+//    private ViewPager mViewPager;
+    private OrientedViewPager mViewPager;
     private TextView mTvPageNum;
     private TextView mTvPageCount;
     private ProductPagerViewAdapter mAdapter;
@@ -49,14 +52,18 @@ public class ProductPagerViewFragment extends BaseFragment {
     }
 
     private void initView(View contentView) {
-        mViewPager = (ViewPager) contentView.findViewById(R.id.vp_product_pager_view);
-        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level0));
+//        mViewPager = (ViewPager) contentView.findViewById(R.id.vp_product_pager_view);
+        mViewPager = (OrientedViewPager) contentView.findViewById(R.id.vp_product_pager_view);
+        mViewPager.setOrientation(OrientedViewPager.Orientation.VERTICAL);
+        mViewPager.setOffscreenPageLimit(4);
+        mViewPager.setPageTransformer(true, new VerticalStackTransformer(getActivity()));
+//        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level0));
         mAdapter = new ProductPagerViewAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mAdapter);
 
         mTvPageNum = (TextView) contentView.findViewById(R.id.tv_product_pager_view_page_num);
         mTvPageCount = (TextView) contentView.findViewById(R.id.tv_product_pager_view_page_count);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

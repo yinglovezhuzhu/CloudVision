@@ -16,15 +16,15 @@
         android:layout_height="match_parent"
         android:padding="@dimen/contentPadding_level4">
 
-        <android.support.v4.view.ViewPager
+        <com.opensource.view.OrientedViewPager
             android:id="@+id/vp_product_pager_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
             android:layout_marginTop="@dimen/contentPadding_level0"
-            android:paddingLeft="@dimen/contentPadding_level0"
-            android:paddingRight="@dimen/contentPadding_level0"
-            android:paddingBottom="@dimen/contentPadding_level5"/>
+            android:layout_marginLeft="@dimen/contentPadding_level0"
+            android:layout_marginRight="@dimen/contentPadding_level0"
+            android:layout_marginBottom="@dimen/contentPadding_level5"/>
 
         <LinearLayout
             android:orientation="horizontal"

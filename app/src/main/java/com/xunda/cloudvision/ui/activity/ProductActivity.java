@@ -6,13 +6,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
-import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.ProductPresenter;
 import com.xunda.cloudvision.ui.fragment.ProductListViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductPagerViewFragment;
-import com.xunda.cloudvision.ui.fragment.WebViewFragment;
-import com.xunda.cloudvision.ui.widget.CompanyTabItem;
 import com.xunda.cloudvision.view.IProductView;
 
 /**
