@@ -29,4 +29,9 @@
     <string name="str_search">搜索</string>
     <string name="str_to_list_view">转列表模式</string>
     <string name="str_to_page_view">转浏览模式</string>
+    <string name="str_currency_rmb">RMB</string>
+    <string name="str_specification_parameter_label">规格参数：</string>
+    <string name="str_image_text_detail_label">图文详情：</string>
+    <string name="str_color_label">颜色：</string>
+    <string name="str_size_label">尺寸：</string>
 </resources>

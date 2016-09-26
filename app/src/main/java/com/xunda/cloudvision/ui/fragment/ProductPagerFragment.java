@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
+import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
 
 /**
  * 产品浏览模式信息Pager页面Fragment
