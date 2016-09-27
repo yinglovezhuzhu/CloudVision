@@ -3,6 +3,7 @@ package com.xunda.cloudvision.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.xunda.cloudvision.bean.ProductBean;
@@ -10,6 +11,7 @@ import com.xunda.cloudvision.ui.fragment.ProductPagerFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 推荐产品ViewPager适配器
@@ -66,10 +68,5 @@ public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
     public float getPageWidth(int position) {
         return super.getPageWidth(position);
 //        return 0.8f;
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
     }
 }

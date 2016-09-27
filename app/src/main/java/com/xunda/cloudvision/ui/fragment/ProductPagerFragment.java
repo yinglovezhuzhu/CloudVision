@@ -3,6 +3,7 @@ package com.xunda.cloudvision.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,14 @@ public class ProductPagerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_product_pager, container, false);
+        contentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 点击事件
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+            }
+        });
+        contentView.requestFocus();
         return contentView;
     }
 }

@@ -30,12 +30,10 @@ public class VerticalStackTransformer extends VerticalBaseTransformer {
     protected void onTransform(View page, float position) {
         if (position <= 0.0f) {
             page.setAlpha(1.0f);
-            Log.e("onTransform", "position <= 0.0f ==>" + position);
             page.setTranslationY(0f);
             //控制停止滑动切换的时候，只有最上面的一张卡片可以点击
             page.setClickable(true);
         } else if (position <= 3.0f) {
-            Log.e("onTransform", "position <= 3.0f ==>" + position);
             float scale = (float) (page.getWidth() - ScreenUtils.dp2px(context, spaceBetweenFirAndSecWith * position)) / (float) (page.getWidth());
             //控制下面卡片的可见度
             page.setAlpha(1.0f);

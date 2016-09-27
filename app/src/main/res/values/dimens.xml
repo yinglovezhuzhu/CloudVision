@@ -45,4 +45,7 @@
     <dimen name="product_bottom_btn_minSize">30dp</dimen>
     <dimen name="product_pager_view_index_view_size">70dp</dimen>
 
+    <!-- 产品详情 -->
+    <dimen name="product_detail_img_page_margin">0dp</dimen>
+
 </resources>

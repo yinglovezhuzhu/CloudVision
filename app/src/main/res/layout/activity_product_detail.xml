@@ -59,7 +59,7 @@
                 android:layout_alignTop="@+id/tv_product_detail_price"
                 android:minEms="1"
                 android:textColor="@color/colorTextRed"
-                android:textSize="@dimen/textSize_level5"
+                android:textSize="@dimen/textSize_level6"
                 android:text="@string/str_currency_rmb"/>
         </RelativeLayout>
     </LinearLayout>
@@ -74,9 +74,12 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <FrameLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/contentPadding_level2"
+                    android:paddingBottom="@dimen/contentPadding_level2"
                     android:background="@color/colorLightGray">
                     <LinearLayout
                         android:orientation="horizontal"
@@ -99,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|bottom"
                         android:layout_margin="@dimen/contentPadding_level4"/>
-                </FrameLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,7 +173,7 @@
                 android:src="@drawable/ic_back_round"
                 android:contentDescription="@null"/>
             <ImageButton
-                android:id="@+id/ibtn_product_view_img"
+                android:id="@+id/ibtn_product_720_view_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/ibtn_product_detail_back"
