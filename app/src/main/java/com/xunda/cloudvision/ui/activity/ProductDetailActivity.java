@@ -96,11 +96,11 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
             @Override
             public void transformPage(View page, float position) {
-                if (position < -1) { // [-Infinity,-1)
+                if (position < -1) {
                     page.setAlpha(PAGE_MIN_ALPHA);
                     page.setScaleX(PAGE_MIN_SCALE);
                     page.setScaleY(PAGE_MIN_SCALE);
-                } else if (position <= 1) { // [-1,1]
+                } else if (position <= 1) {
                     float scaleFactor = Math.max(PAGE_MIN_SCALE, 1 - Math.abs(position));
                     page.setScaleX(scaleFactor);
                     page.setScaleY(scaleFactor);
