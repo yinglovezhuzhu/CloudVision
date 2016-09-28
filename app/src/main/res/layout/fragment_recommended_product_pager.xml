@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:padding="@dimen/contentPadding_level2"
     android:background="@color/colorWhite"
-    android:weightSum="6">
+    android:weightSum="6"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
     <ImageView
         android:id="@+id/iv_recommended_product_pager_img"
         android:layout_width="match_parent"

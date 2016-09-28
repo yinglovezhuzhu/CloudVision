@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
@@ -40,6 +41,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
                 finish(RESULT_CANCELED, null);
                 break;
             case R.id.btn_product_search:
+                startActivity(new Intent(this, ProductSearchActivity.class));
                 break;
             default:
                 break;

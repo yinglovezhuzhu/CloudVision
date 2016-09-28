@@ -38,6 +38,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ProductDetailActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.ProductSearchActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

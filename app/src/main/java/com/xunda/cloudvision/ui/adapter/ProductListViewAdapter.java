@@ -25,9 +25,13 @@ public class ProductListViewAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<ProductBean> mData = new ArrayList<>();
+    private int mWidth = 200;
+    private int mHeight = 430;
 
-    public ProductListViewAdapter(Context context) {
+    public ProductListViewAdapter(Context context, int width, int height) {
         mContext = context;
+        this.mWidth = width;
+        this.mHeight = height;
     }
 
     @Override
@@ -60,7 +64,8 @@ public class ProductListViewAdapter extends BaseAdapter {
             if(null == lp) {
                 lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             }
-            lp.height = mContext.getResources().getDisplayMetrics().widthPixels * 2 / 3;
+            lp.width = mWidth;
+            lp.height = mHeight;
             view.setLayoutParams(lp);
             view.setTag(viewHolder);
         } else {

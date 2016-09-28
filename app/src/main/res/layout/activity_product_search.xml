@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/contentPadding_level4"
+            android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/et_product_search_keyword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:minHeight="@dimen/contentPadding_level2"
+                android:padding="@dimen/contentPadding_level3"
+                android:inputType="text"
+                android:textColor="@color/text_color_black"
+                android:textSize="@dimen/textSize_level5"
+                android:drawableLeft="@drawable/ic_search_black"
+                android:drawableStart="@drawable/ic_search_black"
+                android:drawablePadding="@dimen/contentPadding_level6"
+                android:hint="@string/str_input_keyword"
+                android:background="@drawable/selector_bg_et_search_left"/>
+
+            <Button
+                android:id="@+id/btn_product_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/contentPadding_level2"
+                android:minWidth="@dimen/contentPadding_level2"
+                android:padding="@dimen/contentPadding_level3"
+                android:minEms="4"
+                android:background="@drawable/selector_bg_btn_search_right"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textSize_level5"
+                android:text="@string/str_search"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/contentPadding_level2"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/textSize_level4"
+            android:text="@string/str_search_result_label"/>
+        <GridView
+            android:id="@+id/gv_product_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:numColumns="2"
+            android:horizontalSpacing="@dimen/contentPadding_level4"
+            android:verticalSpacing="@dimen/contentPadding_level4"
+            android:padding="@dimen/contentPadding_level4"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ibtn_product_search_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contentPadding_level2"
+        android:layout_gravity="start|bottom"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back_round"/>
+</FrameLayout>

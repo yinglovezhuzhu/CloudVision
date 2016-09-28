@@ -26,7 +26,9 @@ public class ProductListViewFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new ProductListViewAdapter(getActivity());
+        int width = getResources().getDisplayMetrics().widthPixels / 2;
+        int height = width * 3 / 2;
+        mAdapter = new ProductListViewAdapter(getActivity(), width, height);
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
+import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
 
 /**
  * 推荐产品信息Pager页面Fragment
@@ -34,6 +36,17 @@ public class RecommendedProductPagerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_recommended_product_pager, container, false);
+        initView(contentView);
         return contentView;
+    }
+
+    private void initView(View contentView) {
+        contentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 点击事件
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+            }
+        });
     }
 }
