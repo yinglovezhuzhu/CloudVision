@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 
 import com.xunda.cloudvision.R;
@@ -19,6 +20,8 @@ import com.xunda.cloudvision.view.IProductSearchView;
 public class ProductSearchActivity extends BaseActivity implements IProductSearchView {
 
     private ProductSearchPresenter mProductSearchPresenter;
+
+    private EditText mEtKeyword;
 
     private ProductListViewAdapter mAdapter;
 
@@ -40,13 +43,28 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                 finish(RESULT_CANCELED, null);
                 break;
             case R.id.btn_product_search:
+                mProductSearchPresenter.search();
                 break;
             default:
                 break;
         }
     }
 
+    @Override
+    public String getKeyword() {
+        if(null == mEtKeyword) {
+            return null;
+        }
+        return mEtKeyword.getText().toString().trim();
+    }
+
+    @Override
+    public void onKeywordEmptyError() {
+        showShortToast(R.string.str_input_keyword);
+    }
+
     private void initView() {
+        mEtKeyword = (EditText) findViewById(R.id.et_product_search_keyword);
         findViewById(R.id.btn_product_search).setOnClickListener(this);
         findViewById(R.id.ibtn_product_search_back).setOnClickListener(this);
 

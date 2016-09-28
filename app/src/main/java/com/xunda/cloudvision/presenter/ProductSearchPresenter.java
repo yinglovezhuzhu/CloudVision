@@ -2,6 +2,7 @@ package com.xunda.cloudvision.presenter;
 
 import com.xunda.cloudvision.model.IProductSearchModel;
 import com.xunda.cloudvision.model.ProductSearchModel;
+import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IProductSearchView;
 
 /**
@@ -17,5 +18,13 @@ public class ProductSearchPresenter {
     public ProductSearchPresenter(IProductSearchView view) {
         this.mView = view;
         mModel = new ProductSearchModel();
+    }
+
+    public void search() {
+        String keyword = mView.getKeyword();
+        if(StringUtils.isEmpty(keyword)) {
+            mView.onKeywordEmptyError();
+            return;
+        }
     }
 }

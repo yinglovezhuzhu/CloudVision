@@ -6,4 +6,15 @@ package com.xunda.cloudvision.view;
  */
 
 public interface IProductSearchView {
+
+    /**
+     * 获取搜索关键字
+     * @return 关键字
+     */
+    String getKeyword();
+
+    /**
+     * 关键字为空错误
+     */
+    void onKeywordEmptyError();
 }
