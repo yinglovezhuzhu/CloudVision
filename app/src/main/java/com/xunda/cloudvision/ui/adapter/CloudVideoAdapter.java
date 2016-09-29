@@ -25,9 +25,11 @@ public class CloudVideoAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VideoBean> mData = new ArrayList<>();
+    private int mWidth = 700;
 
-    public CloudVideoAdapter(Context context) {
+    public CloudVideoAdapter(Context context, int width) {
         mContext = context;
+        mWidth = width;
     }
 
     @Override
@@ -60,8 +62,7 @@ public class CloudVideoAdapter extends BaseAdapter {
             if(null == lp) {
                 lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             }
-            int dmWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-            lp.height = dmWidth * 4 / 7;
+            lp.height = mWidth * 4 / 7;
             viewHolder.flContainer.setLayoutParams(lp);
             view.setTag(viewHolder);
         } else {

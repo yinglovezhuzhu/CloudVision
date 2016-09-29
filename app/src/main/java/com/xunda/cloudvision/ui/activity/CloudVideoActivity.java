@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +40,7 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
                 finish(RESULT_CANCELED, null);
                 break;
             case R.id.ibtn_cloud_video_search:
+                startActivity(new Intent(this, VideoSearchActivity.class));
                 break;
             default:
                 break;
@@ -50,7 +52,7 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
         findViewById(R.id.ibtn_cloud_video_search).setOnClickListener(this);
 
         final ListView lvVideo = (ListView) findViewById(R.id.lv_cloud_video);
-        mAdapter = new CloudVideoAdapter(this);
+        mAdapter = new CloudVideoAdapter(this, getResources().getDisplayMetrics().widthPixels);
         lvVideo.setAdapter(mAdapter);
         lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

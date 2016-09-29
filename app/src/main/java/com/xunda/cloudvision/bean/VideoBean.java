@@ -6,4 +6,9 @@ package com.xunda.cloudvision.bean;
  */
 
 public class VideoBean {
+    private String id;
+    private String name;
+    private String orderWeight;
+    private String imageUrl;
+
 }

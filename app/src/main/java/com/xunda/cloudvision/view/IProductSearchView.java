@@ -5,16 +5,7 @@ package com.xunda.cloudvision.view;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/28.
  */
 
-public interface IProductSearchView {
+public interface IProductSearchView extends ISearchView {
 
-    /**
-     * 获取搜索关键字
-     * @return 关键字
-     */
-    String getKeyword();
 
-    /**
-     * 关键字为空错误
-     */
-    void onKeywordEmptyError();
 }
