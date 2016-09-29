@@ -4,8 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListView
+        android:id="@+id/lv_cloud_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="@dimen/contentPadding_level4"/>
 
     <ImageButton
         android:id="@+id/ibtn_cloud_video_back"

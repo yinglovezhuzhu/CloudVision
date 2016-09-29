@@ -2,9 +2,12 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.CloudVideoPresenter;
+import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
 import com.xunda.cloudvision.view.ICloudVideoView;
 
 /**
@@ -16,6 +19,8 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
 
     private CloudVideoPresenter mCloudVideoPresenter;
 
+    private CloudVideoAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +28,8 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
         setContentView(R.layout.activity_cloud_video);
 
         mCloudVideoPresenter = new CloudVideoPresenter(this);
+
+        initView();
     }
 
     @Override
@@ -39,6 +46,17 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
     }
 
     private void initView() {
+        findViewById(R.id.ibtn_cloud_video_back).setOnClickListener(this);
+        findViewById(R.id.ibtn_cloud_video_search).setOnClickListener(this);
 
+        final ListView lvVideo = (ListView) findViewById(R.id.lv_cloud_video);
+        mAdapter = new CloudVideoAdapter(this);
+        lvVideo.setAdapter(mAdapter);
+        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 }
