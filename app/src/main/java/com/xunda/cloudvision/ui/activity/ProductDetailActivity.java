@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -39,6 +40,8 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                 break;
             case R.id.ibtn_product_720_view_img:
                 // 720度看图
+                Intent intent = new Intent(this, Img720ViewActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

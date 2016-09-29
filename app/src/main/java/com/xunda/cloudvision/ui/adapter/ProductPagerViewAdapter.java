@@ -25,11 +25,11 @@ public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    public void addAll(List<ProductBean> banners, boolean notifyDataSetChanged) {
-        if(null == banners || banners.isEmpty()) {
+    public void addAll(List<ProductBean> data, boolean notifyDataSetChanged) {
+        if(null == data || data.isEmpty()) {
             return;
         }
-        mData.addAll(banners);
+        mData.addAll(data);
         if(notifyDataSetChanged) {
             notifyDataSetChanged();
         }

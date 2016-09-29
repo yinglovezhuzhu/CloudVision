@@ -71,5 +71,6 @@
         android:layout_gravity="start|bottom"
         android:scaleType="fitCenter"
         android:background="@color/transparent"
-        android:src="@drawable/ic_back_round"/>
+        android:src="@drawable/ic_back_round"
+        android:contentDescription="@null"/>
 </FrameLayout>

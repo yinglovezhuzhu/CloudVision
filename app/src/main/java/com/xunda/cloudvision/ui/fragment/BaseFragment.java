@@ -55,16 +55,12 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * 加载图片
      * @param imageView 显示图片的ImageView
      * @param path 图片路径
-     * @param width 目标显示宽度
-     * @param height 目标显示高度
      * @param placeholder 加载占位图
      * @param error 加载错误占位图
      */
-    protected void loadImage(ImageView imageView, String path, int width, int height,
-                             int placeholder, int error) {
+    protected void loadImage(ImageView imageView, String path, int placeholder, int error) {
         Picasso.with(getActivity())
                 .load(path)
-                .resize(width, height)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);

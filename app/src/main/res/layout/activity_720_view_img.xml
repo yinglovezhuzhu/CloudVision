@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_720_view_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <ImageButton
+        android:id="@+id/ibtn_720_view_img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contentPadding_level2"
+        android:layout_gravity="start|bottom"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back_round"
+        android:contentDescription="@null"/>
+</FrameLayout>
