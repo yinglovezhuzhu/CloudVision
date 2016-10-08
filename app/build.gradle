@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'cloudvision'
+            keyPassword 'cloudvision2016'
+            storeFile file('../keystores/CloudVision_release.jks')
+            storePassword 'cloudvision2016'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-
     defaultConfig {
         applicationId "com.xunda.cloudvision"
         minSdkVersion 14
@@ -15,8 +22,37 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+        dev {
+            debuggable true
+            signingConfig signingConfigs.config
+            zipAlignEnabled true
         }
     }
+
+    //修改生成的apk名字
+    applicationVariants.all{ variant->
+        variant.outputs.each { output->
+            if(variant.buildType.name.equals("release") || variant.buildType.name.equals("dev")) {
+                def oldFile = output.outputFile
+                def newName = '';
+//                def releaseApkName = 'CloudVision_' + variant.buildType.name + '_v' + getVersionNameFromManifest() + '_build' + getDate() + "_android_" + variant.productFlavors[0].name + '.apk'
+                def releaseApkName = 'CloudVision_' + variant.buildType.name + '_v' + versionName + '(' + versionCode + ')' + '_build' + getDate() + '.apk'
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+        }
+    }
+}
+
+//获取时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
 }
 
 dependencies {
