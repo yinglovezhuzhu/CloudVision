@@ -42,7 +42,6 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
     private View mProgressView;
 
     private VideoPlayerPresenter mVideoPlayer;
-    private boolean mFinishOnCompletion;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -63,9 +62,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         mVideoPlayer = new VideoPlayerPresenter(this, this, intent.getData(), new VideoPlayListener() {
             @Override
             public void onCompletion() {
-                if (mFinishOnCompletion) {
-                    finish();
-                }
+                finish();
             }
 
             @Override
@@ -82,7 +79,6 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
                 setRequestedOrientation(orientation);
             }
         }
-        mFinishOnCompletion = intent.getBooleanExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, true);
         Window window = getWindow();
         WindowManager.LayoutParams winParams = window.getAttributes();
         winParams.buttonBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
