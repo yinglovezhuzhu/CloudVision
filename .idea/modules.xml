@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/OrientedViewPager/OrientedViewPager.iml" filepath="$PROJECT_DIR$/OrientedViewPager/OrientedViewPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/zoomableImageView/zoomableImageView.iml" filepath="$PROJECT_DIR$/zoomableImageView/zoomableImageView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zoomableImageView/zoomableImageView.iml" filepath="$PROJECT_DIR$/zoomableImageView/zoomableImageView.iml" />
     </modules>
   </component>
 </project>

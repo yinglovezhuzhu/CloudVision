@@ -36,4 +36,7 @@
     <string name="str_size_label">尺寸：</string>
     <string name="str_input_keyword">输入您要搜索的关键词</string>
     <string name="str_search_result_label">搜索结果：</string>
+
+    <!-- 视频 -->
+    <string name="str_loading_video">正在加载视频</string>
 </resources>
