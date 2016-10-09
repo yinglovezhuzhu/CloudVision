@@ -16,7 +16,7 @@ import com.xunda.cloudvision.observer.NetworkObserver;
  */
 public class NetworkManager {
 
-    private Context mAppContext;
+    private Context mContext;
 
     private ConnectivityManager mConnectivityManager;
 
@@ -43,28 +43,16 @@ public class NetworkManager {
         }
     }
 
-    /**
-     * 初始化
-     * @param context Context对象
-     */
     public void initialized(Context context) {
         if(!mInitialized) {
-            mAppContext = context.getApplicationContext();
-            mConnectivityManager = (ConnectivityManager) mAppContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-            mAppContext.registerReceiver(new NetworkReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-            mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
-            mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
+            mContext = context.getApplicationContext();
+            mConnectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            mContext.registerReceiver(new NetworkReceiver(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
             mInitialized = true;
         }
-    }
 
-    /**
-     * 重新初始化网络状态，因为在android 7.0 API 24的时候程序关闭后（单例依旧存在），程序无法接收网络状态广播
-     */
-    public void updateNetworkState() {
-        if(!mInitialized) {
-            return;
-        }
+        // 每次初始化都重新初始化网络状态，因为在android 7.0 API 24的时候程序关闭后（单例依旧存在），程序无法接收
+        // 网络状态广播
         mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
         mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
     }
@@ -115,9 +103,7 @@ public class NetworkManager {
     }
 
 
-    /**
-     * 网络状态广播接收器
-     */
+
     private class NetworkReceiver extends BroadcastReceiver {
 
         @Override
@@ -130,14 +116,8 @@ public class NetworkManager {
             }
 
             NetworkInfo lastNetwork = mCurrentNetwork;
-            boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-            mNetworkConnected = !noConnectivity;
-            if(mNetworkConnected) {
-                mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
-            } else {
-                mCurrentNetwork = null;
-                // 没有网络连接，直接返回
-            }
+            mCurrentNetwork = mConnectivityManager.getActiveNetworkInfo();
+            mNetworkConnected = null != mCurrentNetwork && mCurrentNetwork.isConnected();
 
             mNetworkObservable.notifyNetworkChanged(mNetworkConnected, mCurrentNetwork, lastNetwork);
         }

@@ -46,28 +46,29 @@ import java.util.regex.Pattern;
  */
 public class Downloader {
 
-	private static final String TAG = "DOWNLOADER";
+    private static final String TAG = "DOWNLOADER";
 
     private static final int BUFFER_SIZE = 1024 * 64;
 
-	private static final int RESPONSE_OK = 200;
+    private static final int RESPONSE_OK = 200;
 
-	private Context mContext;
-	private boolean mStop = true; // The flag of stopped.
+    private Context mContext;
+    private boolean mStop = true; // The flag of stopped.
     private File mSaveFolder;
-	private String mFileName; // saveLog file name;
+    private String mFileName; // saveLog file name;
     private File mSavedFile = null;
-	private DownloadLog mDownloadLog; // The data downloadVideo state
-	private String mUrl; // The url of the file which to downloadVideo.
+    private DownloadLog mDownloadLog; // The data downloadVideo state
+    private String mUrl; // The url of the file which to downloadVideo.
 
-	/**
-	 * Constructor<br><br>
-	 * @param context Context对象
-	 * @param downloadUrl 下载地址
-	 * @param saveFolder 保存目录
-     * @param fileName 保存文件名称，可以为null，如果为null，将从服务器解析文件名，如果解析失败，则随机生成一个文件名称
-	 */
-	public Downloader(Context context, String downloadUrl, File saveFolder, String fileName) {
+    /**
+     * Constructor<br><br>
+     *
+     * @param context     Context对象
+     * @param downloadUrl 下载地址
+     * @param saveFolder  保存目录
+     * @param fileName    保存文件名称，可以为null，如果为null，将从服务器解析文件名，如果解析失败，则随机生成一个文件名称
+     */
+    public Downloader(Context context, String downloadUrl, File saveFolder, String fileName) {
         this.mContext = context;
         this.mUrl = downloadUrl;
         this.mSaveFolder = saveFolder;
@@ -76,24 +77,24 @@ public class Downloader {
         checkDownloadFolder(saveFolder);
     }
 
-	/**
-	 * Download file，this method has network, don't use it on ui thread.
-	 *
-	 * @param listener The listener to listen downloadVideo state, can be null if not need.
+    /**
+     * Download file，this method has network, don't use it on ui thread.
+     *
+     * @param listener      The listener to listen downloadVideo state, can be null if not need.
      * @param defaultSuffix 默认后缀，没有设置文件名的时候生效，带点，例如".mp4"
-	 * @return The size that downloaded.
-	 * @throws Exception The error happened when downloading.
-	 */
-	public File download(String defaultSuffix, DownloadListener listener) throws Exception {
-        if(null != mDownloadLog && mDownloadLog.isLocked()) {
+     * @return The size that downloaded.
+     * @throws Exception The error happened when downloading.
+     */
+    public File download(String defaultSuffix, DownloadListener listener) throws Exception {
+        if (null != mDownloadLog && mDownloadLog.isLocked()) {
             Log.e(TAG, "File downloading now. url = " + mUrl);
             return mSavedFile;
         }
         mStop = false;
 
         mDownloadLog = DownloadDBUtils.getLogByUrl(mContext, mUrl);
-        if(null != mDownloadLog
-                && mDownloadLog.getDownloadedSize() == mDownloadLog.getTotalSize()) {
+        if (null != mDownloadLog
+                && mDownloadLog.getDownloadedSize() >= mDownloadLog.getTotalSize()) {
             mSavedFile = new File(mDownloadLog.getSavedFile());
             DownloadDBUtils.deleteLog(mContext, mUrl);
             DownloadDBUtils.saveHistory(mContext, mDownloadLog);
@@ -106,7 +107,7 @@ public class Downloader {
         HttpURLConnection conn = null;
         RandomAccessFile randomFile = null;
 
-        if(null == mDownloadLog) {
+        if (null == mDownloadLog) {
             // 进行一次链接，获取需要下载的文件信息
             int fileSize = 0;
             try {
@@ -120,7 +121,7 @@ public class Downloader {
                         throw new RuntimeException("Can't get file size ");
                     }
 
-                    if(StringUtils.isEmpty(mFileName)) {
+                    if (StringUtils.isEmpty(mFileName)) {
                         final String filename = getFileName(conn, defaultSuffix);
                         // Create local file object according to local saved folder and local file name.
                         mSavedFile = new File(mSaveFolder, filename);
@@ -139,21 +140,23 @@ public class Downloader {
                     }
                     mDownloadLog.lock();
                 } else {
-                    if(null != mDownloadLog) {
+                    if (null != mDownloadLog) {
                         mDownloadLog.unlock();
                     }
+                    mStop = true;
                     Log.w(TAG, "Server response error! Response code：" + conn.getResponseCode()
                             + "Response message：" + conn.getResponseMessage());
                     throw new RuntimeException("server response error, response code:" + conn.getResponseCode());
                 }
             } catch (Exception e) {
-                if(null != mDownloadLog) {
+                if (null != mDownloadLog) {
                     mDownloadLog.unlock();
                 }
+                mStop = true;
                 Log.e(TAG, e.toString());
                 throw new RuntimeException("Failed to connect the url:" + mUrl, e);
             } finally {
-                if(null != conn) {
+                if (null != conn) {
                     conn.disconnect();
                 }
                 conn = null;
@@ -165,13 +168,14 @@ public class Downloader {
                     randomFile.setLength(fileSize); // Set total size of the downloadVideo file.
                 }
             } catch (Exception e) {
-                if(null != mDownloadLog) {
+                if (null != mDownloadLog) {
                     mDownloadLog.unlock();
                 }
+                mStop = true;
                 Log.e(TAG, e.toString(), e);// 打印错误
                 throw new Exception("Exception occur when downloading file\n", e);// Throw exception when some error happened when downloading.
             } finally {
-                if(null != randomFile) {
+                if (null != randomFile) {
                     try {
                         randomFile.close(); // Close the RandomAccessFile to make the settings effective
                         randomFile = null;
@@ -189,7 +193,7 @@ public class Downloader {
         // 下载视频数据的尾部部分，否则播放器无法解析视频文件
         downloadFileEnd(mContext, 1024 * 512);
 
-        if(null != listener) {
+        if (null != listener) {
             listener.onProgressUpdate(mDownloadLog.getDownloadedSize(), mDownloadLog.getTotalSize());
         }
 
@@ -220,7 +224,7 @@ public class Downloader {
             while (!mStop && (offset = inStream.read(buffer)) != -1) {
                 randomFile.write(buffer, 0, offset);
                 mDownloadLog.setDownloadedSize(mDownloadLog.getDownloadedSize() + offset);
-                if(null != listener) {
+                if (null != listener) {
                     listener.onProgressUpdate(mDownloadLog.getDownloadedSize(), mDownloadLog.getTotalSize());
                 }
             }
@@ -234,67 +238,81 @@ public class Downloader {
                 mStop = true;
             }
 
-            if(null != mDownloadLog) {
+            if (null != mDownloadLog) {
                 mDownloadLog.unlock();
             }
         } catch (Exception e) {
-            if(null != mDownloadLog) {
+            if (null != mDownloadLog) {
                 mDownloadLog.unlock();
             }
+            mStop = true;
             Log.e(TAG, e.toString());// 打印错误
             throw new RuntimeException("Failed to downloadVideo file from " + mUrl, e);
         } finally {
-            if(null != randomFile) {
+            if (null != randomFile) {
                 try {
                     randomFile.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            if(null != inStream) {
+            if (null != inStream) {
                 try {
                     inStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            if(null != conn) {
+            if (null != conn) {
                 conn.disconnect();
             }
 
         }
         return mSavedFile;
-	}
+    }
 
-	/**
-	 * Stop the downloadVideo
-	 */
-	public synchronized void stop() {
-		this.mStop = true;
-        if(null != mDownloadLog) {
+    /**
+     * Stop the downloadVideo
+     */
+    public synchronized void stop() {
+        this.mStop = true;
+        if (null != mDownloadLog) {
             mDownloadLog.unlock();
         }
-	}
+    }
 
-	/**
-	 * Get downloadVideo state is stopped or not.
-	 * @return
-	 */
-	public synchronized boolean isStop() {
-		return this.mStop;
-	}
+    /**
+     * Get downloadVideo state is stopped or not.
+     *
+     * @return
+     */
+    public synchronized boolean isStop() {
+        return this.mStop;
+    }
 
-	/**
-	 * Get total file size
-	 *
-	 * @return
-	 */
-	public int getFileSize() {
-		return null == mDownloadLog ? 0 : mDownloadLog.getTotalSize();
-	}
+    /**
+     * 是否已经下载完成
+     * @return
+     */
+    public synchronized boolean isFinished() {
+        if(null == mDownloadLog) {
+            return false;
+        }
+        return mDownloadLog.getDownloadedSize() >= mDownloadLog.getTotalSize();
+    }
+
+    /**
+     * Get total file size
+     *
+     * @return
+     */
+    public int getFileSize() {
+        return null == mDownloadLog ? 0 : mDownloadLog.getTotalSize();
+    }
 
     /**
      * Gets save file
+     *
      * @return save file
      */
     public File getSavedFile() {
@@ -304,13 +322,14 @@ public class Downloader {
 
     /**
      * 下载文件的最尾部分数据<br>
-     *     mp4视频文件如果最后部分没有下载下来，将无法播放，直到下载完成，这里先将文件的最后部分下载下来，
-     *     方便视频能够在未下载完成就可以开始播放
-     * @param context Context对象
+     * mp4视频文件如果最后部分没有下载下来，将无法播放，直到下载完成，这里先将文件的最后部分下载下来，
+     * 方便视频能够在未下载完成就可以开始播放
+     *
+     * @param context  Context对象
      * @param byteSize 需要下载的文件尾部的长度
      */
     private void downloadFileEnd(Context context, int byteSize) {
-        if(null == mDownloadLog || mDownloadLog.isEndDownloaded()
+        if (null == mDownloadLog || mDownloadLog.isEndDownloaded()
                 | mDownloadLog.getDownloadedSize() >= mDownloadLog.getTotalSize()) {
             return;
         }
@@ -350,121 +369,126 @@ public class Downloader {
         } catch (Exception e) {
             Log.e(TAG, e.toString());// 打印错误
             mDownloadLog.unlock();
+            mStop = true;
             throw new RuntimeException("Failed to downloadVideo file from " + mUrl, e);
         } finally {
-            if(null != outFile) {
+            if (null != outFile) {
                 try {
                     outFile.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            if(null != inStream) {
+            if (null != inStream) {
                 try {
                     inStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            if(null != conn) {
+            if (null != conn) {
                 conn.disconnect();
             }
         }
     }
 
-	/**
-	 * 获取HttpURLConnection对象
-	 * @param downloadUrl 链接地址
-	 * @return HttpURLConnection对象，没有connect状态的
-	 */
-	private HttpURLConnection getConnection(String downloadUrl) throws IOException {
-		URL url = new URL(downloadUrl);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setConnectTimeout(6 * 1000);
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Accept", "*/*");
-		conn.setRequestProperty("Accept-Language", "zh-CN");
-		conn.setRequestProperty("Referer", downloadUrl);
-		conn.setRequestProperty("Charset", "UTF-8");
-		// Set agent.
-		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; "
-				+ "MSIE 8.0; Windows NT 5.2;"
-				+ " Trident/4.0; .NET CLR 1.1.4322;"
-				+ ".NET CLR 2.0.50727; " + ".NET CLR 3.0.04506.30;"
-				+ " .NET CLR 3.0.4506.2152; " + ".NET CLR 3.5.30729)");
-		conn.setRequestProperty("Connection", "Keep-Alive");
+    /**
+     * 获取HttpURLConnection对象
+     *
+     * @param downloadUrl 链接地址
+     * @return HttpURLConnection对象，没有connect状态的
+     */
+    private HttpURLConnection getConnection(String downloadUrl) throws IOException {
+        URL url = new URL(downloadUrl);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setConnectTimeout(6 * 1000);
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "*/*");
+        conn.setRequestProperty("Accept-Language", "zh-CN");
+        conn.setRequestProperty("Referer", downloadUrl);
+        conn.setRequestProperty("Charset", "UTF-8");
+        // Set agent.
+        conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; "
+                + "MSIE 8.0; Windows NT 5.2;"
+                + " Trident/4.0; .NET CLR 1.1.4322;"
+                + ".NET CLR 2.0.50727; " + ".NET CLR 3.0.04506.30;"
+                + " .NET CLR 3.0.4506.2152; " + ".NET CLR 3.5.30729)");
+        conn.setRequestProperty("Connection", "Keep-Alive");
 
-		return conn;
-	}
-	
-	/**
-	 * Check the downloadVideo folder, make new folder if it is not exist.
-	 * @param folder 目录
-	 */
-	private void checkDownloadFolder(File folder) {
-		if (!folder.exists() && !folder.mkdirs()) {
-			throw new IllegalStateException("Create folder failed: " + folder.getPath());
-		}
-	}
-	
-	/**
-	 * Get file name
-	 * @param conn HttpConnection object
+        return conn;
+    }
+
+    /**
+     * Check the downloadVideo folder, make new folder if it is not exist.
+     *
+     * @param folder 目录
+     */
+    private void checkDownloadFolder(File folder) {
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new IllegalStateException("Create folder failed: " + folder.getPath());
+        }
+    }
+
+    /**
+     * Get file name
+     *
+     * @param conn          HttpConnection object
      * @param defaultSuffix 默认后缀（后缀格式带点，如".mp4"）
-	 * @return 文件名称，如果不能从网络解析，自动生成一个，后缀为指定的默认后缀
-	 */
-	private String getFileName(HttpURLConnection conn, String defaultSuffix) {
-		String filename = mUrl.substring(mUrl.lastIndexOf("/") + 1);
+     * @return 文件名称，如果不能从网络解析，自动生成一个，后缀为指定的默认后缀
+     */
+    private String getFileName(HttpURLConnection conn, String defaultSuffix) {
+        String filename = mUrl.substring(mUrl.lastIndexOf("/") + 1);
 
-		if (StringUtils.isEmpty(filename)) {// Get file name failed.
-			for (int i = 0;; i++) { // Get file name from http header.
-				String mine = conn.getHeaderField(i);
-				if (mine == null)
-					break; // Exit the loop when go through all http header.
-				if ("content-disposition".equals(conn.getHeaderFieldKey(i).toLowerCase(Locale.ENGLISH))) { // Get content-disposition header field returns, which may contain a file name
-					Matcher m = Pattern.compile(".*filename=(.*)").matcher(mine.toLowerCase(Locale.ENGLISH)); // Using regular expressions query file name
-					if (m.find()) {
-						return m.group(1); // If there is compliance with the rules of the regular expression string
-					}
-				}
-			}
-			filename = UUID.randomUUID() + defaultSuffix;// A 16-byte binary digits generated by a unique identification number
-			                                      // (each card has a unique identification number)
-			                                      // on the card and the CPU clock as the file name
-		}
-		return filename;
-	}
+        if (StringUtils.isEmpty(filename)) {// Get file name failed.
+            for (int i = 0; ; i++) { // Get file name from http header.
+                String mine = conn.getHeaderField(i);
+                if (mine == null)
+                    break; // Exit the loop when go through all http header.
+                if ("content-disposition".equals(conn.getHeaderFieldKey(i).toLowerCase(Locale.ENGLISH))) { // Get content-disposition header field returns, which may contain a file name
+                    Matcher m = Pattern.compile(".*filename=(.*)").matcher(mine.toLowerCase(Locale.ENGLISH)); // Using regular expressions query file name
+                    if (m.find()) {
+                        return m.group(1); // If there is compliance with the rules of the regular expression string
+                    }
+                }
+            }
+            filename = UUID.randomUUID() + defaultSuffix;// A 16-byte binary digits generated by a unique identification number
+            // (each card has a unique identification number)
+            // on the card and the CPU clock as the file name
+        }
+        return filename;
+    }
 
-	/**
-	 * Get HTTP response header field
-	 * 
-	 * @param http HttpURLConnection object
-	 * @return HTTp response header field map.
-	 */
-	private static Map<String, String> getHttpResponseHeader(HttpURLConnection http) {
-		Map<String, String> header = new LinkedHashMap<String, String>();
-		for (int i = 0;; i++) {
-			String fieldValue = http.getHeaderField(i);
-			if (fieldValue == null) {
-				break;
-			}
-			header.put(http.getHeaderFieldKey(i), fieldValue);
-		}
-		return header;
-	}
+    /**
+     * Get HTTP response header field
+     *
+     * @param http HttpURLConnection object
+     * @return HTTp response header field map.
+     */
+    private static Map<String, String> getHttpResponseHeader(HttpURLConnection http) {
+        Map<String, String> header = new LinkedHashMap<String, String>();
+        for (int i = 0; ; i++) {
+            String fieldValue = http.getHeaderField(i);
+            if (fieldValue == null) {
+                break;
+            }
+            header.put(http.getHeaderFieldKey(i), fieldValue);
+        }
+        return header;
+    }
 
-	/**
-	 * Get HTTP response header field as a string
-	 * @param conn HttpURLConnection object
+    /**
+     * Get HTTP response header field as a string
+     *
+     * @param conn HttpURLConnection object
      * @return HTTP response header field as a string
-	 */
-	private static String getResponseHeader(HttpURLConnection conn) {
-		Map<String, String> header = getHttpResponseHeader(conn);
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<String, String> entry : header.entrySet()) {
-			String key = entry.getKey() != null ? entry.getKey() + ":" : "";
-			sb.append(key + entry.getValue());
-		}
-		return sb.toString();
-	}
+     */
+    private static String getResponseHeader(HttpURLConnection conn) {
+        Map<String, String> header = getHttpResponseHeader(conn);
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : header.entrySet()) {
+            String key = entry.getKey() != null ? entry.getKey() + ":" : "";
+            sb.append(key + entry.getValue());
+        }
+        return sb.toString();
+    }
 }

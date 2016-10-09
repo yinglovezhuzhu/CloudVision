@@ -19,12 +19,15 @@
 package com.xunda.cloudvision.model;
 
 import android.content.Context;
+import android.net.NetworkInfo;
 import android.os.Handler;
 
 import com.xunda.cloudvision.bean.DownloadLog;
 import com.xunda.cloudvision.db.DownloadDBUtils;
 import com.xunda.cloudvision.downloader.DownloadListener;
 import com.xunda.cloudvision.downloader.Downloader;
+import com.xunda.cloudvision.observer.NetworkObserver;
+import com.xunda.cloudvision.utils.NetworkManager;
 
 import java.io.File;
 
@@ -41,6 +44,15 @@ public class VideoPlayerModel implements IVideoPlayerModel {
     private String mUrl;
     private final Handler mHandler = new Handler();
 
+    private NetworkObserver mNetworkObserver = new NetworkObserver() {
+        @Override
+        public void onNetworkStateChanged(boolean networkConnected, NetworkInfo currentNetwork, NetworkInfo lastNetwork) {
+            if(networkConnected && null != mDownloader && mDownloader.isStop() && !mDownloader.isFinished()) {
+                downloadVideo();
+            }
+        }
+    };
+
     public VideoPlayerModel(Context context, String downloadUrl, DownloadListener listener) {
         this.mContext = context;
         this.mUrl = downloadUrl;
@@ -51,51 +63,53 @@ public class VideoPlayerModel implements IVideoPlayerModel {
 
     @Override
     public void downloadVideo() {
-        DownloadLog history = DownloadDBUtils.getHistoryByUrl(mContext, mUrl);
-        if(null != history && (new File(history.getSavedFile())).exists()) {
-            return;
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mDownloader.download(".mp4", new DownloadListener() {
-                        @Override
-                        public void onProgressUpdate(final int downloadedSize, final int totalSize) {
-                            if(null != mDownloadListener) {
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mDownloadListener.onProgressUpdate(downloadedSize, totalSize);
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onError(final int code, final String message) {
-                            if(null != mDownloadListener) {
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mDownloadListener.onError(code, message);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                } catch (final Exception e) {
-                    if (null != mDownloadListener) {
-                        mHandler.post(new Runnable() {
+        if(mDownloader.isStop()) {
+            DownloadLog history = DownloadDBUtils.getHistoryByUrl(mContext, mUrl);
+            if(null != history && (new File(history.getSavedFile())).exists()) {
+                return;
+            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        mDownloader.download(".mp4", new DownloadListener() {
                             @Override
-                            public void run() {
-                                mDownloadListener.onError(DownloadListener.CODE_EXCEPTION, e.getMessage());
+                            public void onProgressUpdate(final int downloadedSize, final int totalSize) {
+                                if(null != mDownloadListener) {
+                                    mHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mDownloadListener.onProgressUpdate(downloadedSize, totalSize);
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onError(final int code, final String message) {
+                                if(null != mDownloadListener) {
+                                    mHandler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mDownloadListener.onError(code, message);
+                                        }
+                                    });
+                                }
                             }
                         });
+                    } catch (final Exception e) {
+                        if (null != mDownloadListener) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mDownloadListener.onError(DownloadListener.CODE_EXCEPTION, e.getMessage());
+                                }
+                            });
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     @Override
@@ -104,6 +118,13 @@ public class VideoPlayerModel implements IVideoPlayerModel {
             return null;
         }
         return mDownloader.getSavedFile();
+    }
+
+    @Override
+    public void onCreate() {
+        // 初始化网络监听管理者
+        NetworkManager.getInstance().initialized(mContext);
+        NetworkManager.getInstance().registerNetworkObserver(mNetworkObserver);
     }
 
     @Override
@@ -121,5 +142,14 @@ public class VideoPlayerModel implements IVideoPlayerModel {
         if(null != mDownloader) {
             mDownloader.stop();
         }
+        NetworkManager.getInstance().unregisterNetworkObserver(mNetworkObserver);
+    }
+
+    @Override
+    public boolean isDownloadStopped() {
+        if(null == mDownloader) {
+            return true;
+        }
+        return mDownloader.isStop();
     }
 }

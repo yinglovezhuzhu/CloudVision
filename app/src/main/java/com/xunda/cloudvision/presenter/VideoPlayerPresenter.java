@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
-import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.DownloadLog;
 import com.xunda.cloudvision.db.DownloadDBUtils;
 import com.xunda.cloudvision.downloader.DownloadListener;
@@ -107,6 +106,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         });
         this.mPlayListener = listener;
 
+        mView.setOnPreparedListener(this);
+        mView.setOnErrorListener(this);
+        mView.setOnCompletionListener(this);
+
         // For streams that we expect to be slow to start up, show a
         // progress spinner until playback starts.
         String scheme = videoUri.getScheme();
@@ -153,6 +156,9 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         mView.showLoadingProgress();
         mCurrentPosition = mp.getCurrentPosition();
         mOnError = true;
+        if(mModel.isDownloadStopped()) {
+            mModel.downloadVideo();
+        }
         return true;
     }
 
@@ -166,6 +172,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
     @Override
     public void onPrepared(MediaPlayer mp) {
 
+    }
+
+    public void onCreate() {
+        mModel.onCreate();
     }
 
     public void onPause() {

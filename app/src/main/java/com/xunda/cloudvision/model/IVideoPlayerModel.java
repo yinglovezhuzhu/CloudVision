@@ -38,9 +38,13 @@ public interface IVideoPlayerModel {
      */
     File getSavedVideoFile();
 
+    void onCreate();
+
     void onPause();
 
     void onResume();
 
     void onDestroy();
+
+    boolean isDownloadStopped();
 }

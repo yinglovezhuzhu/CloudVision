@@ -20,6 +20,7 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -70,6 +71,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
             }
         });
+        mVideoPlayer.onCreate();
 
         if (intent.hasExtra(MediaStore.EXTRA_SCREEN_ORIENTATION)) {
             int orientation = intent.getIntExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -102,14 +104,35 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         }
         super.onResume();
     }
-    
+
     @Override
     public void onDestroy() {
         mVideoPlayer.onDestroy();
         if(null != mVideoView) {
             mVideoView.stopPlayback();
         }
-    	super.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void setOnErrorListener(MediaPlayer.OnErrorListener listener) {
+        if(null != mVideoView) {
+            mVideoView.setOnErrorListener(listener);
+        }
+    }
+
+    @Override
+    public void setOnCompletionListener(MediaPlayer.OnCompletionListener listener) {
+        if(null != mVideoView) {
+            mVideoView.setOnCompletionListener(listener);
+        }
+    }
+
+    @Override
+    public void setOnPreparedListener(MediaPlayer.OnPreparedListener listener) {
+        if(null != mVideoView) {
+            mVideoView.setOnPreparedListener(listener);
+        }
     }
 
     @Override

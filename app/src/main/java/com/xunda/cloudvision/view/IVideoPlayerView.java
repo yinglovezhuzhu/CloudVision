@@ -18,6 +18,7 @@
 
 package com.xunda.cloudvision.view;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 
 /** 视频播放器View接口
@@ -25,6 +26,12 @@ import android.net.Uri;
  */
 
 public interface IVideoPlayerView {
+
+    void setOnErrorListener(MediaPlayer.OnErrorListener listener);
+
+    void setOnCompletionListener(MediaPlayer.OnCompletionListener listener);
+
+    void setOnPreparedListener(MediaPlayer.OnPreparedListener listener);
 
     void playVideo(Uri uri, int position);
 
