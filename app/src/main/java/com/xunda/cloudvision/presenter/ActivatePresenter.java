@@ -1,5 +1,7 @@
 package com.xunda.cloudvision.presenter;
 
+import com.xunda.cloudvision.bean.resp.ActivateResp;
+import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.IActivateModel;
 import com.xunda.cloudvision.model.ActivateModel;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -11,20 +13,35 @@ import com.xunda.cloudvision.view.IActivateView;
  */
 public class ActivatePresenter {
 
-    private IActivateView mRegisterView;
-    private IActivateModel mRegisterModel;
+    private IActivateView mView;
+    private IActivateModel mModel;
 
     public ActivatePresenter(IActivateView registerView) {
-        this.mRegisterView = registerView;
-        this.mRegisterModel = new ActivateModel();
+        this.mView = registerView;
+        this.mModel = new ActivateModel();
     }
 
     public void activate() {
-        final String code = mRegisterView.getCodeText();
+        final String code = mView.getCodeText();
         if(StringUtils.isEmpty(code)) {
-            mRegisterView.onCodeEmpty();
+            mView.onCodeEmpty();
             return;
         }
-        mRegisterModel.activate(code);
+        mModel.activate(code, new HttpAsyncTask.Callback<ActivateResp>() {
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onCanceled() {
+
+            }
+
+            @Override
+            public void onResult(ActivateResp result) {
+                mView.onActivateResult(result);
+            }
+        });
     }
 }

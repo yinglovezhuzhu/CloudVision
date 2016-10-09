@@ -63,7 +63,10 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(null != mMainPresenter) {
             mMainPresenter.onCreate();
         }
-//        startActivity(new Intent(this, ActivateActivity.class));
+
+        if(!mMainPresenter.isActivated()) {
+            startActivity(new Intent(this, ActivateActivity.class));
+        }
     }
 
     @Override

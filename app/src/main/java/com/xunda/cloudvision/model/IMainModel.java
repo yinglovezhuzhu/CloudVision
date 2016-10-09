@@ -31,6 +31,12 @@ public interface IMainModel extends IModel {
     boolean isWeatherEnabled();
 
     /**
+     * 是否已激活
+     * @return
+     */
+    boolean isActivated();
+
+    /**
      * 下一条通知， 如果通知栏禁用或者没有通知，返回null
      */
     String nextNotice();

@@ -16,6 +16,10 @@ public class Config {
     public static final String SP_KEY_MAIN_WEATHER_DISABLED = "disable_main_weather";
     /** SP配置文件key：是否禁用首页公告（boolean）true 禁用， false 启用 **/
     public static final String SP_KEY_MAIN_NOTICE_DISABLED = "disable_main_notice";
+    /** SP配置文件key：激活码（String） **/
+    public static final String SP_KEY_ACTIVATE_CODE = "activate_code";
+
+
 
     /** Intent传参Data的key **/
     public static final String EXTRA_DATA = "extra_data";

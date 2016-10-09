@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.ActivateResp;
 import com.xunda.cloudvision.presenter.ActivatePresenter;
 import com.xunda.cloudvision.view.IActivateView;
 
@@ -47,7 +48,12 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
     @Override
     public void onCodeEmpty() {
+        showShortToast(R.string.str_please_input_activation_code);
+    }
 
+    @Override
+    public void onActivateResult(ActivateResp result) {
+        finish();
     }
 
     private void initView() {

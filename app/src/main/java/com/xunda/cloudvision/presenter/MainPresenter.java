@@ -106,6 +106,14 @@ public class MainPresenter implements Handler.Callback {
         return mMainModel.isWeatherEnabled();
     }
 
+    /**
+     * 是否已经激活
+     * @return 是否已经激活， true 已激活， false 未激活
+     */
+    public boolean isActivated() {
+        return mMainModel.isActivated();
+    }
+
     @Override
     public boolean handleMessage(Message message) {
         switch (message.what) {
