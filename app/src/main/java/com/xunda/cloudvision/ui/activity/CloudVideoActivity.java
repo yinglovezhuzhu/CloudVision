@@ -3,10 +3,15 @@ package com.xunda.cloudvision.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.opensource.pullview.IPullView;
+import com.opensource.pullview.OnLoadMoreListener;
+import com.opensource.pullview.OnRefreshListener;
+import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.CloudVideoPresenter;
 import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
@@ -52,7 +57,7 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
         findViewById(R.id.ibtn_cloud_video_back).setOnClickListener(this);
         findViewById(R.id.ibtn_cloud_video_search).setOnClickListener(this);
 
-        final ListView lvVideo = (ListView) findViewById(R.id.lv_cloud_video);
+        final PullListView lvVideo = (PullListView) findViewById(R.id.lv_cloud_video);
         mAdapter = new CloudVideoAdapter(this, getResources().getDisplayMetrics().widthPixels);
         lvVideo.setAdapter(mAdapter);
         lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,5 +68,32 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
                 startActivity(i);
             }
         });
+        final Handler handler = new Handler();
+        lvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
+        lvVideo.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // TODO 刷新数据
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvVideo.refreshCompleted();
+                    }
+                }, 3000);
+            }
+        });
+        lvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                // TODO 加载下一页
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvVideo.loadMoreCompleted(true);
+                    }
+                }, 3000);
+            }
+        });
+
     }
 }

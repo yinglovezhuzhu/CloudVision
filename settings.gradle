@@ -1,1 +1,1 @@
-include ':app', ':OrientedViewPager', ':zoomableImageView'
+include ':app', ':OrientedViewPager', ':zoomableImageView', ':pullview'

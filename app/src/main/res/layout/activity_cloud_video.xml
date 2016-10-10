@@ -3,12 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
+    <com.opensource.pullview.PullListView
         android:id="@+id/lv_cloud_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
-        android:dividerHeight="@dimen/contentPadding_level4"/>
+        android:dividerHeight="0dp"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"/>
 
     <ImageButton
         android:id="@+id/ibtn_cloud_video_back"

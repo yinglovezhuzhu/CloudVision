@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C)2016. The Android Open Source Project.
+  ~
+  ~          yinglovezhuzhu@gmail.com
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom|center_horizontal">
+    <LinearLayout
+        android:id="@+id/ll_pull_listview_header_top"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/pullview_header2_top_content_minHeight"
+        android:gravity="bottom">
+        <!-- 这里设置的android:minHeight="200dip"是为了防止滑动到了顶部，状态调的View的paddingTop值小于0是会隐藏，如果是大屏手机，可以加大这个数 -->
+        <!-- 这里可以添加一些最顶部显示的view，在头部全部View都被拉出来后，可以在这里添加一些默认的View -->
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip"
+            android:src="@drawable/ic_launcher"/>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fl_pull_lsitview_header_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_pull_listview_header_top">
+        <LinearLayout
+            android:id="@+id/ll_pull_listview_header_bg_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_pull_listview_header_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_pull_listview_header_view_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
+        </LinearLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/ll_pull_listview_header_state_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ll_pull_listview_header_top">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dip"
+            android:indeterminate="false"
+            android:visibility="invisible"/>
+    </LinearLayout>
+</RelativeLayout>

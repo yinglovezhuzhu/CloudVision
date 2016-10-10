@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorWhite">
+    android:layout_height="wrap_content">
     <FrameLayout
         android:id="@+id/fl_item_cloud_video_img_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite" >
         <ImageView
             android:id="@+id/iv_item_cloud_video_img"
             android:layout_width="match_parent"
@@ -29,5 +29,10 @@
         android:padding="@dimen/contentPadding_level4"
         android:textColor="@color/text_color_black"
         android:textSize="@dimen/textSize_level5"
+        android:background="@color/colorWhite"
         android:text="Cloud Video Play"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/contentPadding_level4"
+        android:background="@color/transparent"/>
 </LinearLayout>
