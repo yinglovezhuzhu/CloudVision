@@ -31,6 +31,11 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
     }
 
     @Override
+    public void onBackPressed() {
+        finish(RESULT_CANCELED, null);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_activate_register:
@@ -53,7 +58,7 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
     @Override
     public void onActivateResult(ActivateResp result) {
-        finish();
+        finish(RESULT_OK, null);
     }
 
     private void initView() {

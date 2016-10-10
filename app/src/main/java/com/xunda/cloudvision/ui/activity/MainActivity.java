@@ -30,6 +30,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     /** 打开语音界面的RequestCode **/
     private static final int RC_VOICE_PAGE = 0x001;
 
+    /** 打开注册页面 **/
+    private static final int RC_ACTIVATE_PAGE = 0x002;
+
     private View mViewTopBar;
     private TextView mTvTopBarTime;
     private TextView mTvTopBarCity;
@@ -65,7 +68,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
 
         if(!mMainPresenter.isActivated()) {
-            startActivity(new Intent(this, ActivateActivity.class));
+            startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
         }
     }
 
@@ -90,6 +93,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             case RC_VOICE_PAGE:
                 mCbVoice.setChecked(false);
                 break;
+            case RC_ACTIVATE_PAGE:
+                if(RESULT_OK == resultCode) {
+
+                } else {
+                    finish();
+                }
+                break;
             default:
                 break;
         }
@@ -103,6 +113,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 startActivity(new Intent(this, CorporateActivity.class));
                 break;
             case R.id.btn_main_menu_setting_logout:
+                startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
                 break;
             case R.id.btn_main_menu_setting_switch:
                 break;
@@ -282,5 +293,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         cbWeatherSettings.setOnCheckedChangeListener(onCheckedChangeListener);
         cbNoticeSettings.setChecked(!mMainPresenter.isNoticeEnabled());
         cbWeatherSettings.setChecked(!mMainPresenter.isWeatherEnabled());
+
+        settingMenuContentView.findViewById(R.id.btn_main_menu_setting_logout).setOnClickListener(this);
+        settingMenuContentView.findViewById(R.id.btn_main_menu_setting_switch).setOnClickListener(this);
     }
 }
