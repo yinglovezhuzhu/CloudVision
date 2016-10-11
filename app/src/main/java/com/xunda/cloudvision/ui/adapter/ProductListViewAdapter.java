@@ -3,6 +3,7 @@ package com.xunda.cloudvision.ui.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -95,18 +96,29 @@ public class ProductListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
-        final NoScrollGridView gridView;
+        final ViewHolder viewHolder;
         if(null == view) {
-            gridView = (NoScrollGridView) View.inflate(mContext, R.layout.item_product_list_view, null);
-            gridView.setNumColumns(mNumColumns);
-            gridView.setHorizontalSpacing(mHorizontalSpacing);
-            view = gridView;
+            viewHolder = new ViewHolder();
+            view = View.inflate(mContext, R.layout.item_product_list_view, null);
+            viewHolder.gridView = (NoScrollGridView) view.findViewById(R.id.gv_item_product_list);
+            viewHolder.divider = view.findViewById(R.id.view_item_product_divider);
+            viewHolder.gridView.setNumColumns(mNumColumns);
+            viewHolder.gridView.setHorizontalSpacing(mHorizontalSpacing);
+            viewHolder.divider.setMinimumHeight(mHorizontalSpacing);
+            ViewGroup.LayoutParams lp = viewHolder.divider.getLayoutParams();
+            if(null == lp) {
+                lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mHorizontalSpacing);
+            } else {
+                lp.height = mHorizontalSpacing;
+            }
+            viewHolder.divider.setLayoutParams(lp);
+            view.setTag(viewHolder);
         } else {
-            gridView = (NoScrollGridView) view;
+            viewHolder = (ViewHolder) view.getTag();
         }
-        gridView.setAdapter(new ProductListViewItemAdapter(mContext, mWidth,
+        viewHolder.gridView.setAdapter(new ProductListViewItemAdapter(mContext, mWidth,
                 mHeight, mNumColumns));
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(null != mOnProductItemClickListener) {
@@ -115,6 +127,11 @@ public class ProductListViewAdapter extends BaseAdapter {
             }
         });
         return view;
+    }
+
+    private class ViewHolder {
+        NoScrollGridView gridView;
+        View divider;
     }
 
     public interface OnProductItemClickListener {

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.xunda.cloudvision.ui.widget.NoScrollGridView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:horizontalSpacing="8dp"
-    android:verticalSpacing="0.5dp"
-    android:numColumns="2"/>
+    android:layout_height="wrap_content">
+    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+        android:id="@+id/gv_item_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/contentPadding_level4"
+        android:verticalSpacing="0.5dp"
+        android:numColumns="2"/>
+    <View
+        android:id="@+id/view_item_product_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+</LinearLayout>

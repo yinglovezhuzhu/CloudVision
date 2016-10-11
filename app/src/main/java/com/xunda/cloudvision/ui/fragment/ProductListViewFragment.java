@@ -32,8 +32,7 @@ public class ProductListViewFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         int width = getResources().getDisplayMetrics().widthPixels / 2;
         int height = width * 3 / 2;
-        mAdapter = new ProductListViewAdapter(getActivity(), width, height, 2,
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()));
+        mAdapter = new ProductListViewAdapter(getActivity(), width, height, 2, 0);
 
         mAdapter.setOnProductItemClickListener(new ProductListViewAdapter.OnProductItemClickListener() {
             @Override

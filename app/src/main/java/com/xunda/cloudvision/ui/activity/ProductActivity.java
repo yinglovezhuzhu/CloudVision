@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
 import com.xunda.cloudvision.presenter.ProductPresenter;
 import com.xunda.cloudvision.ui.fragment.ProductListViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductPagerViewFragment;
@@ -58,7 +59,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
     }
 
     @Override
-    public void onQueryProductResult(RecommendedProductResp result) {
+    public void onQueryProductResult(QueryProductDetailResp result) {
 
     }
 

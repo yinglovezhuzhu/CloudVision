@@ -42,8 +42,8 @@ public class HttpCacheDBHelper extends SQLiteOpenHelper {
 		
 		//接口Http请求缓存表
 		db.execSQL("CREATE TABLE IF NOT EXISTS http_cache(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "url TEXT, TEXT data, update_time INTEGER)");
-		
+                "url TEXT, corporate TEXT, data TEXT, update_time INTEGER)");
+
 	}
 	
 	@Override

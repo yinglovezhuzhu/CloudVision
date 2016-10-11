@@ -52,22 +52,14 @@
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/textSize_level4"
             android:text="@string/str_search_result_label"/>
-        <!--<GridView-->
-            <!--android:id="@+id/gv_product_search"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center"-->
-            <!--android:numColumns="2"-->
-            <!--android:horizontalSpacing="@dimen/contentPadding_level4"-->
-            <!--android:verticalSpacing="@dimen/contentPadding_level4"-->
-            <!--android:padding="@dimen/contentPadding_level4"/>-->
         <com.opensource.pullview.PullListView
             android:id="@+id/lv_product_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/contentPadding_level4"
+            android:paddingLeft="@dimen/contentPadding_level4"
+            android:paddingRight="@dimen/contentPadding_level4"
             android:divider="@color/transparent"
-            android:dividerHeight="@dimen/contentPadding_level4"
+            android:dividerHeight="0dp"
             android:headerDividersEnabled="false"
             android:footerDividersEnabled="false"
             android:descendantFocusability="afterDescendants"/>

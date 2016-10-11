@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class HttpAsyncTask<B extends BaseResp<?>> {
+public class HttpAsyncTask<B extends BaseResp> {
 	
 	private AsyncTask<Object, Integer, B> mTask;
 	
@@ -25,7 +25,7 @@ public class HttpAsyncTask<B extends BaseResp<?>> {
 	 * @param callback 毁掉
 	 */
 	public void execute(final String url, final Object reqParamBean,
-						final Class<? extends BaseResp<?>> resultClass, final Callback<B> callback) {
+						final Class<? extends BaseResp> resultClass, final Callback<B> callback) {
 		mTask = new AsyncTask<Object, Integer, B>(){
 			
 			@Override
@@ -46,40 +46,26 @@ public class HttpAsyncTask<B extends BaseResp<?>> {
 					paramsMap.putAll(BeanRefUtils.getFieldValueMap(paramsBean));
 				}
 
-				BaseResp<Object> errorResult = null;
+				BaseResp errorResult = null;
 				try {
-                    errorResult = (BaseResp<Object>) resultClass.newInstance();
+                    errorResult = (BaseResp) resultClass.newInstance();
 					HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
 					String responseData = httpResult.getResponseData();
 	                if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
 	                	return (B) new Gson().fromJson(responseData, resultClass);
 	                } else {
-	                	errorResult.setCode(httpResult.getResponseCode());
+	                	errorResult.setHttpCode(httpResult.getResponseCode());
 	                	errorResult.setMsg(httpResult.getResponseMessage());
 	                }
-				} catch (MalformedURLException e) {
+				} catch (IOException|IllegalAccessException|InstantiationException e) {
 					e.printStackTrace();
-					errorResult.setCode(HttpStatus.SC_EXPECTATION_FAILED);
-					errorResult.setMsg(e.getMessage());
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					errorResult.setCode(HttpStatus.SC_EXPECTATION_FAILED);
-					errorResult.setMsg(e.getMessage());
-				} catch (ProtocolException e) {
-					e.printStackTrace();
-					errorResult.setCode(HttpStatus.SC_EXPECTATION_FAILED);
-					errorResult.setMsg(e.getMessage());
-				} catch (IOException e) {
-					e.printStackTrace();
-					errorResult.setCode(HttpStatus.SC_EXPECTATION_FAILED);
-					errorResult.setMsg(e.getMessage());
-				} catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                    if(null != errorResult) {
+                        errorResult.setHttpCode(HttpStatus.SC_EXPECTATION_FAILED);
+                        errorResult.setMsg(e.getMessage());
+                    }
+				}
 
-                return (B) errorResult;
+				return (B) errorResult;
 			}
 			
 			@Override
