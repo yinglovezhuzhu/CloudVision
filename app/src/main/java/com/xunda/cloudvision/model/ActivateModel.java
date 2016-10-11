@@ -30,28 +30,7 @@ public class ActivateModel implements IActivateModel {
     public void activate(String code, final HttpAsyncTask.Callback<ActivateResp> callback) {
 
         ActivateReq reqParam = new ActivateReq();
-        new HttpAsyncTask<ActivateResp>().execute("", reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
-            @Override
-            public void onPreExecute() {
-                if(null != callback) {
-                    callback.onPreExecute();
-                }
-            }
-
-            @Override
-            public void onCanceled() {
-                if(null != callback) {
-                    callback.onCanceled();
-                }
-            }
-
-            @Override
-            public void onResult(ActivateResp result) {
-                if(null != callback) {
-                    callback.onResult(result);
-                }
-            }
-        });
+        new HttpAsyncTask<ActivateResp>().execute("", reqParam, ActivateResp.class, callback);
 
     }
 }

@@ -7,7 +7,8 @@ import android.view.View;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
-import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
+import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
 import com.xunda.cloudvision.view.ICorporateView;
@@ -74,7 +75,12 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     }
 
     @Override
-    public void onQueryRecommendedProductResult(RecommendedProductResp result) {
+    public void onQueryRecommendedProductResult(QueryProductResp result) {
+
+    }
+
+    @Override
+    public void onQueryCorporateInfoResult(QueryCorporateResp result) {
 
     }
 

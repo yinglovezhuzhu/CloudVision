@@ -2,7 +2,9 @@ package com.xunda.cloudvision.model;
 
 import android.content.Context;
 
+import com.xunda.cloudvision.bean.req.QueryCorporateReq;
 import com.xunda.cloudvision.bean.req.QueryProductReq;
+import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 
@@ -21,28 +23,12 @@ public class CorporateModel implements ICorporateModel {
     @Override
     public void queryRecommendedProduct(final HttpAsyncTask.Callback<QueryProductResp> callback) {
         QueryProductReq reqParam = new QueryProductReq();
-        new HttpAsyncTask<QueryProductResp>().execute("", reqParam,
-                QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
-            @Override
-            public void onPreExecute() {
-                if(null != callback) {
-                    callback.onPreExecute();
-                }
-            }
+        new HttpAsyncTask<QueryProductResp>().execute("", reqParam, QueryProductResp.class, callback);
+    }
 
-            @Override
-            public void onCanceled() {
-                if(null != callback) {
-                    callback.onCanceled();
-                }
-            }
-
-            @Override
-            public void onResult(QueryProductResp result) {
-                if(null != callback) {
-                    callback.onResult(result);
-                }
-            }
-        });
+    @Override
+    public void queryCorporateInfo(final HttpAsyncTask.Callback<QueryCorporateResp> callback) {
+        QueryCorporateReq reqParam = new QueryCorporateReq();
+        new HttpAsyncTask<QueryCorporateResp>().execute("", reqParam, QueryCorporateResp.class, callback);
     }
 }

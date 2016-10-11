@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.model;
 
+import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 
@@ -9,5 +10,15 @@ import com.xunda.cloudvision.http.HttpAsyncTask;
  */
 public interface ICorporateModel {
 
+    /**
+     * 查询推荐商品
+     * @param callback 回调
+     */
     void queryRecommendedProduct(HttpAsyncTask.Callback<QueryProductResp> callback);
+
+    /**
+     * 查询企业信息
+     * @param callback 回调
+     */
+    void queryCorporateInfo(HttpAsyncTask.Callback<QueryCorporateResp> callback);
 }

@@ -8,7 +8,6 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
-import com.xunda.cloudvision.bean.resp.RecommendedProductResp;
 import com.xunda.cloudvision.presenter.ProductPresenter;
 import com.xunda.cloudvision.ui.fragment.ProductListViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductPagerViewFragment;
