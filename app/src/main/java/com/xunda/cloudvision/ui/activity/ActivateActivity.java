@@ -62,6 +62,16 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
     }
 
     @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
     public void onActivateResult(ActivateResp result) {
         gotoMainPage();
     }

@@ -1,6 +1,7 @@
 package com.xunda.cloudvision.view;
 
 /**
+ * View接口基类
  * Created by yinglovezhuzhu@gmail.com on 2016/9/21.
  */
 

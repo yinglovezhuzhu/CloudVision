@@ -11,4 +11,29 @@ public class VideoBean {
     private String orderWeight;
     private String imageUrl;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "VideoBean{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", orderWeight='" + orderWeight + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }

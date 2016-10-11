@@ -3,6 +3,7 @@ package com.xunda.cloudvision.model;
 import android.content.Context;
 
 import com.xunda.cloudvision.Config;
+import com.xunda.cloudvision.bean.req.ActivateReq;
 import com.xunda.cloudvision.bean.resp.ActivateResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.utils.SharedPrefHelper;
@@ -26,9 +27,31 @@ public class ActivateModel implements IActivateModel {
     }
 
     @Override
-    public void activate(String code, HttpAsyncTask.Callback<ActivateResp> callback) {
-        if(null != callback) {
-            callback.onResult(null);
-        }
+    public void activate(String code, final HttpAsyncTask.Callback<ActivateResp> callback) {
+
+        ActivateReq reqParam = new ActivateReq();
+        new HttpAsyncTask<ActivateResp>().execute("", reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
+            @Override
+            public void onPreExecute() {
+                if(null != callback) {
+                    callback.onPreExecute();
+                }
+            }
+
+            @Override
+            public void onCanceled() {
+                if(null != callback) {
+                    callback.onCanceled();
+                }
+            }
+
+            @Override
+            public void onResult(ActivateResp result) {
+                if(null != callback) {
+                    callback.onResult(result);
+                }
+            }
+        });
+
     }
 }

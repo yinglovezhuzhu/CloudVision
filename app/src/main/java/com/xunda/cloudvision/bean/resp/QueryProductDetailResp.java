@@ -1,0 +1,23 @@
+package com.xunda.cloudvision.bean.resp;
+
+import com.xunda.cloudvision.bean.ProductBean;
+
+/**
+ * 查询商品详情信息接口返回数据实体类
+ * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
+ */
+
+public class QueryProductDetailResp extends BaseResp {
+    private ProductBean product;
+
+    public ProductBean getProduct() {
+        return product;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryProductDetailResp{" +
+                "product=" + product +
+                "} " + super.toString();
+    }
+}
