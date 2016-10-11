@@ -2,14 +2,18 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 
+import com.opensource.pullview.IPullView;
+import com.opensource.pullview.OnLoadMoreListener;
+import com.opensource.pullview.OnRefreshListener;
+import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.ProductSearchPresenter;
 import com.xunda.cloudvision.ui.adapter.ProductListViewAdapter;
+import com.xunda.cloudvision.utils.LogUtils;
 import com.xunda.cloudvision.view.IProductSearchView;
 
 /**
@@ -68,16 +72,42 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
         findViewById(R.id.btn_product_search).setOnClickListener(this);
         findViewById(R.id.ibtn_product_search_back).setOnClickListener(this);
 
-        final GridView gvProduct = (GridView) findViewById(R.id.gv_product_search);
+        final PullListView lvProduct = (PullListView) findViewById(R.id.lv_product_search);
         int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
         int width = (getResources().getDisplayMetrics().widthPixels - 3 * padding) / 2;
         int height = width * 3 / 2;
-        mAdapter = new ProductListViewAdapter(this, width, height);
-        gvProduct.setAdapter(mAdapter);
-        gvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new ProductListViewAdapter(this, width, height, 2, padding);
+        lvProduct.setAdapter(mAdapter);
+        mAdapter.setOnProductItemClickListener(new ProductListViewAdapter.OnProductItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClicked(int row, int column) {
                 startActivity(new Intent(ProductSearchActivity.this, ProductDetailActivity.class));
+            }
+        });
+        final Handler handler = new Handler();
+        lvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
+        lvProduct.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // TODO 刷新数据
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvProduct.refreshCompleted();
+                    }
+                }, 3000);
+            }
+        });
+        lvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                // TODO 加载下一页
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lvProduct.loadMoreCompleted(true);
+                    }
+                }, 3000);
             }
         });
     }

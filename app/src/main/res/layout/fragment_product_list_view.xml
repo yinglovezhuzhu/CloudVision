@@ -3,10 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <GridView
-        android:id="@+id/gv_product_list_view"
+
+    <com.opensource.pullview.PullListView
+        android:id="@+id/lv_product_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:numColumns="2" />
+        android:divider="@color/transparent"
+        android:dividerHeight="0.5dp"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:descendantFocusability="afterDescendants"/>
 </LinearLayout>

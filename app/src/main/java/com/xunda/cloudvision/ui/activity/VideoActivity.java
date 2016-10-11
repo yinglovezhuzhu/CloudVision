@@ -6,25 +6,24 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
-import com.xunda.cloudvision.presenter.CloudVideoPresenter;
+import com.xunda.cloudvision.presenter.VideoPresenter;
 import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
-import com.xunda.cloudvision.view.ICloudVideoView;
+import com.xunda.cloudvision.view.IVideoView;
 
 /**
  * 云展视频Activity
  * Created by yinglovezhuzhu@gmail.com on 2016/9/29.
  */
 
-public class CloudVideoActivity extends BaseActivity implements ICloudVideoView {
+public class VideoActivity extends BaseActivity implements IVideoView {
 
-    private CloudVideoPresenter mCloudVideoPresenter;
+    private VideoPresenter mCloudVideoPresenter;
 
     private CloudVideoAdapter mAdapter;
 
@@ -34,7 +33,7 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
 
         setContentView(R.layout.activity_cloud_video);
 
-        mCloudVideoPresenter = new CloudVideoPresenter(this);
+        mCloudVideoPresenter = new VideoPresenter(this);
 
         initView();
     }
@@ -63,7 +62,7 @@ public class CloudVideoActivity extends BaseActivity implements ICloudVideoView 
         lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(CloudVideoActivity.this, VideoPlayerActivity.class);
+                Intent i = new Intent(VideoActivity.this, VideoPlayerActivity.class);
                 i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
                 startActivity(i);
             }

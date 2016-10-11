@@ -53,7 +53,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 startActivity(new Intent(this, ProductActivity.class));
                 break;
             case R.id.btn_corporate_cloud_video:
-                startActivity(new Intent(this, CloudVideoActivity.class));
+                startActivity(new Intent(this, VideoActivity.class));
                 break;
             case R.id.ibtn_corporate_back:
                 finish(RESULT_CANCELED, null);

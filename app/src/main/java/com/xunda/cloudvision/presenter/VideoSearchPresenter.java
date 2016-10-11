@@ -1,7 +1,5 @@
 package com.xunda.cloudvision.presenter;
 
-import com.xunda.cloudvision.model.CloudVideoModel;
-import com.xunda.cloudvision.model.ICloudVideoModel;
 import com.xunda.cloudvision.model.IVideoSearchModel;
 import com.xunda.cloudvision.model.VideoSearchModel;
 import com.xunda.cloudvision.utils.StringUtils;

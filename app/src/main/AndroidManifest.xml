@@ -43,7 +43,7 @@
         <activity android:name=".ui.activity.Img720ViewActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.CloudVideoActivity"
+        <activity android:name=".ui.activity.VideoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.VideoSearchActivity"
             android:screenOrientation="portrait" />
