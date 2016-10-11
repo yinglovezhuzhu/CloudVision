@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.util.List;
@@ -104,6 +105,20 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 
             return false;
     }
+
+	/**
+	 * 隐藏软键盘
+	 * @param view View
+	 */
+	protected void hideSoftInputFromWindow(View view) {
+		if(null == view) {
+			return;
+		}
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(imm.isActive()) {
+			imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+		}
+	}
 
 	/**
 	 * 退出当前Activity

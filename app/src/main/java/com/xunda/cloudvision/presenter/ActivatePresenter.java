@@ -1,5 +1,7 @@
 package com.xunda.cloudvision.presenter;
 
+import android.content.Context;
+
 import com.xunda.cloudvision.bean.resp.ActivateResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.IActivateModel;
@@ -16,9 +18,17 @@ public class ActivatePresenter {
     private IActivateView mView;
     private IActivateModel mModel;
 
-    public ActivatePresenter(IActivateView registerView) {
+    public ActivatePresenter(Context context, IActivateView registerView) {
         this.mView = registerView;
-        this.mModel = new ActivateModel();
+        this.mModel = new ActivateModel(context);
+    }
+
+    /**
+     * 是否已经激活
+     * @return 是否已经激活， true 已激活， false 未激活
+     */
+    public boolean isActivated() {
+        return mModel.isActivated();
     }
 
     public void activate() {

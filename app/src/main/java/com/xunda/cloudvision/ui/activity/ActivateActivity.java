@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +28,11 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
         initView();
 
-        mActivatePresenter = new ActivatePresenter(this);
+        mActivatePresenter = new ActivatePresenter(this, this);
+
+        if(mActivatePresenter.isActivated()) {
+            gotoMainPage();
+        }
     }
 
     @Override
@@ -58,11 +63,16 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
     @Override
     public void onActivateResult(ActivateResp result) {
-        finish(RESULT_OK, null);
+        gotoMainPage();
     }
 
     private void initView() {
         mEtCode = (EditText) findViewById(R.id.et_activate_code);
         findViewById(R.id.btn_activate_register).setOnClickListener(this);
+    }
+
+    private void gotoMainPage() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

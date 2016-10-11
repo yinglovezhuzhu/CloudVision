@@ -41,11 +41,6 @@ public class MainModel implements IMainModel {
         return !mSharePrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED, false);
     }
 
-    @Override
-    public boolean isActivated() {
-        return !StringUtils.isEmpty(mSharePrefHelper.getString(Config.SP_KEY_ACTIVATE_CODE, null));
-    }
-
     private String [] mNotice = new String [] {
             "This is notice one",
             "This is notice two",

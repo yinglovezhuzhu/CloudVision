@@ -66,10 +66,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(null != mMainPresenter) {
             mMainPresenter.onCreate();
         }
-
-        if(!mMainPresenter.isActivated()) {
-            startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
-        }
     }
 
     @Override
@@ -113,7 +109,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                 startActivity(new Intent(this, CorporateActivity.class));
                 break;
             case R.id.btn_main_menu_setting_logout:
-                startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
+                startActivity(new Intent(this, ActivateActivity.class));
+                finish();
                 break;
             case R.id.btn_main_menu_setting_switch:
                 break;
