@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
+import com.xunda.cloudvision.presenter.ProductDetailPresenter;
 import com.xunda.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.xunda.cloudvision.ui.widget.PageControlBar;
 import com.xunda.cloudvision.view.IProductDetailView;
@@ -22,12 +24,15 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
 
+    private ProductDetailPresenter mProductDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_product_detail);
+
+        mProductDetailPresenter = new ProductDetailPresenter(this, this);
 
         initView();
     }
@@ -115,5 +120,20 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                 }
             }
         });
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onQueryProductDetailResult(QueryProductDetailResp result) {
+
     }
 }

@@ -15,6 +15,13 @@ public class QueryVideoResp extends BaseResp{
 
     private List<VideoBean> video = new ArrayList<>();
 
+    public QueryVideoResp() {
+    }
+
+    public QueryVideoResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public List<VideoBean> getVideo() {
         return video;
     }

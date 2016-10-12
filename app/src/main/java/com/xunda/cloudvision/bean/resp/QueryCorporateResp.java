@@ -15,6 +15,13 @@ public class QueryCorporateResp extends BaseResp{
 
     private CorporateBean enterprise;
 
+    public QueryCorporateResp() {
+    }
+
+    public QueryCorporateResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public CorporateBean getEnterprise() {
         return enterprise;
     }

@@ -10,6 +10,13 @@ import com.xunda.cloudvision.bean.ProductBean;
 public class QueryProductDetailResp extends BaseResp {
     private ProductBean product;
 
+    public QueryProductDetailResp() {
+    }
+
+    public QueryProductDetailResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public ProductBean getProduct() {
         return product;
     }

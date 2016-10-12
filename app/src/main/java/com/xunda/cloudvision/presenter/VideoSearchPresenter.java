@@ -1,5 +1,9 @@
 package com.xunda.cloudvision.presenter;
 
+import android.content.Context;
+
+import com.xunda.cloudvision.bean.resp.QueryVideoResp;
+import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.IVideoSearchModel;
 import com.xunda.cloudvision.model.VideoSearchModel;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -15,9 +19,9 @@ public class VideoSearchPresenter {
     private IVideoSearchView mView;
     private IVideoSearchModel mModel;
 
-    public VideoSearchPresenter(IVideoSearchView view) {
+    public VideoSearchPresenter(Context context, IVideoSearchView view) {
         this.mView = view;
-        this.mModel = new VideoSearchModel();
+        this.mModel = new VideoSearchModel(context);
     }
 
     /**
@@ -29,5 +33,22 @@ public class VideoSearchPresenter {
             mView.onKeywordEmptyError();
             return;
         }
+
+        mModel.searchVideo(keyword, new HttpAsyncTask.Callback<QueryVideoResp>() {
+            @Override
+            public void onPreExecute() {
+                mView.onPreExecute(null);
+            }
+
+            @Override
+            public void onCanceled() {
+                mView.onCanceled(null);
+            }
+
+            @Override
+            public void onResult(QueryVideoResp result) {
+                mView.onSearchVideoResult(result);
+            }
+        });
     }
 }

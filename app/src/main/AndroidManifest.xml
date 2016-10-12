@@ -48,8 +48,7 @@
         <activity android:name=".ui.activity.VideoSearchActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.VideoPlayerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/VoiceActivityTheme" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

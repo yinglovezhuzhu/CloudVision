@@ -14,6 +14,7 @@ import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 import com.xunda.cloudvision.presenter.VideoSearchPresenter;
 import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
 import com.xunda.cloudvision.view.IVideoSearchView;
@@ -114,5 +115,20 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 }, 3000);
             }
         });
+    }
+
+    @Override
+    public void onSearchVideoResult(QueryVideoResp result) {
+
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
     }
 }

@@ -2,11 +2,19 @@ package com.xunda.cloudvision.model;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.xunda.cloudvision.bean.req.QueryCorporateReq;
+import com.xunda.cloudvision.bean.req.QueryHomeDataReq;
 import com.xunda.cloudvision.bean.req.QueryProductReq;
 import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
+import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;
+import com.xunda.cloudvision.http.HttpStatus;
+import com.xunda.cloudvision.utils.NetworkManager;
+import com.xunda.cloudvision.utils.StringUtils;
 
 /**
  * Corporate Model class
@@ -22,13 +30,77 @@ public class CorporateModel implements ICorporateModel {
 
     @Override
     public void queryRecommendedProduct(final HttpAsyncTask.Callback<QueryProductResp> callback) {
-        QueryProductReq reqParam = new QueryProductReq();
-        new HttpAsyncTask<QueryProductResp>().execute("", reqParam, QueryProductResp.class, callback);
+        // FIXME 请求地址修改
+        final String url = "url";
+        if(NetworkManager.getInstance().isNetworkConnected()) {
+            QueryProductReq reqParam = new QueryProductReq();
+            new HttpAsyncTask<QueryProductResp>().execute("", reqParam, QueryProductResp.class, callback);
+        } else {
+            // FIXME 请求标识修改
+            final String key = "key";
+            QueryProductResp result;
+            String data = HttpCacheDBUtils.getHttpCache(mContext, url, key);
+            if(StringUtils.isEmpty(data)) {
+                // 错误
+                if(null != callback) {
+                    result = new QueryProductResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                    callback.onResult(result);
+                }
+            } else {
+                try {
+                    // 解析数据
+                    result = new Gson().fromJson(data, QueryProductResp.class);
+                    if(null != callback) {
+                        callback.onResult(result);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    if(null != callback) {
+                        result = new QueryProductResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                        callback.onResult(result);
+                        // 解析错误的，删除掉记录
+                        HttpCacheDBUtils.deleteHttpCache(mContext, url, key);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void queryCorporateInfo(final HttpAsyncTask.Callback<QueryCorporateResp> callback) {
-        QueryCorporateReq reqParam = new QueryCorporateReq();
-        new HttpAsyncTask<QueryCorporateResp>().execute("", reqParam, QueryCorporateResp.class, callback);
+        // FIXME 请求地址修改
+        final String url = "url";
+        if(NetworkManager.getInstance().isNetworkConnected()) {
+            QueryCorporateReq reqParam = new QueryCorporateReq();
+            new HttpAsyncTask<QueryCorporateResp>().execute("", reqParam, QueryCorporateResp.class, callback);
+        } else {
+            // FIXME 请求标识修改
+            final String key = "key";
+            QueryCorporateResp result;
+            String data = HttpCacheDBUtils.getHttpCache(mContext, url, key);
+            if(StringUtils.isEmpty(data)) {
+                // 错误
+                if(null != callback) {
+                    result = new QueryCorporateResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                    callback.onResult(result);
+                }
+            } else {
+                try {
+                    // 解析数据
+                    result = new Gson().fromJson(data, QueryCorporateResp.class);
+                    if(null != callback) {
+                        callback.onResult(result);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    if(null != callback) {
+                        result = new QueryCorporateResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                        callback.onResult(result);
+                        // 解析错误的，删除掉记录
+                        HttpCacheDBUtils.deleteHttpCache(mContext, url, key);
+                    }
+                }
+            }
+        }
     }
 }

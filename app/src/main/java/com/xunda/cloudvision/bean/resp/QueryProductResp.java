@@ -14,6 +14,13 @@ public class QueryProductResp extends BaseResp{
 
     private List<ProductBean> product = new ArrayList<>();
 
+    public QueryProductResp() {
+    }
+
+    public QueryProductResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public List<ProductBean> getProduct() {
         return product;
     }

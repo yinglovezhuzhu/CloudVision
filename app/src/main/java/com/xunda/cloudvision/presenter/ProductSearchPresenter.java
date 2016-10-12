@@ -1,5 +1,9 @@
 package com.xunda.cloudvision.presenter;
 
+import android.content.Context;
+
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.IProductSearchModel;
 import com.xunda.cloudvision.model.ProductSearchModel;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -15,9 +19,9 @@ public class ProductSearchPresenter {
     private IProductSearchView mView;
     private IProductSearchModel mModel;
 
-    public ProductSearchPresenter(IProductSearchView view) {
+    public ProductSearchPresenter(Context context, IProductSearchView view) {
         this.mView = view;
-        mModel = new ProductSearchModel();
+        mModel = new ProductSearchModel(context);
     }
 
     public void search() {
@@ -26,5 +30,21 @@ public class ProductSearchPresenter {
             mView.onKeywordEmptyError();
             return;
         }
+        mModel.searchProduct(keyword, new HttpAsyncTask.Callback<QueryProductResp>() {
+            @Override
+            public void onPreExecute() {
+                mView.onPreExecute(null);
+            }
+
+            @Override
+            public void onCanceled() {
+                mView.onCanceled(null);
+            }
+
+            @Override
+            public void onResult(QueryProductResp result) {
+                mView.onSearchProductResult(result);
+            }
+        });
     }
 }

@@ -11,6 +11,7 @@ import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.presenter.ProductSearchPresenter;
 import com.xunda.cloudvision.ui.adapter.ProductListViewAdapter;
 import com.xunda.cloudvision.utils.LogUtils;
@@ -35,7 +36,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
 
         setContentView(R.layout.activity_product_search);
 
-        mProductSearchPresenter = new ProductSearchPresenter(this);
+        mProductSearchPresenter = new ProductSearchPresenter(this, this);
 
         initView();
     }
@@ -111,4 +112,20 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
             }
         });
     }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onSearchProductResult(QueryProductResp result) {
+
+    }
+
 }
