@@ -115,7 +115,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.99"
-        android:gravity="center">
+        android:gravity="center"
+        android:baselineAligned="false">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,18 +131,17 @@
             android:layout_marginBottom="@dimen/contentPadding_level4"
             android:background="@color/colorTextRed" />
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:weightSum="5"
-            android:clipChildren="false">
+            android:clipChildren="false"
+            android:baselineAligned="false">
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_corporate_recommended_product"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:clipChildren="false"/>
         </LinearLayout>
         <Button
