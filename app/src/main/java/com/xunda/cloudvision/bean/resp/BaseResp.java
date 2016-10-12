@@ -13,6 +13,11 @@ public class BaseResp {
 
 	}
 
+	public BaseResp(int httpCode, String msg) {
+		this.httpCode = httpCode;
+		this.msg = msg;
+	}
+
 	public void setHttpCode(int httpCode) {
 		this.httpCode = httpCode;
 	}

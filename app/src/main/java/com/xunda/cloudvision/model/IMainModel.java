@@ -1,5 +1,9 @@
 package com.xunda.cloudvision.model;
 
+import com.xunda.cloudvision.bean.resp.ActivateResp;
+import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
+import com.xunda.cloudvision.http.HttpAsyncTask;
+
 /**
  * MainModel接口
  * Created by yinglovezhuzhu@gmail.com on 2016/9/16.
@@ -34,4 +38,10 @@ public interface IMainModel extends IModel {
      * 下一条通知， 如果通知栏禁用或者没有通知，返回null
      */
     String nextNotice();
+
+    /**
+     * 查询首页数据
+     * @param callback 回调
+     */
+    void queryHomeData(final HttpAsyncTask.Callback<QueryHomeDataResp> callback);
 }

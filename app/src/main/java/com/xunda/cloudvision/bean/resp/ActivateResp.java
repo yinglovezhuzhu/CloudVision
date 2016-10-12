@@ -10,4 +10,31 @@ public class ActivateResp extends BaseResp {
     private String activateTime; // 激活时间	yyyy-MM-dd
     private String endTime; // 激活码截止使用时间	yyyy-MM-dd
 
+    public ActivateResp() {
+    }
+
+    public ActivateResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
+    public String getEnterpriseId() {
+        return enterpriseId;
+    }
+
+    public String getActivateTime() {
+        return activateTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivateResp{" +
+                "enterpriseId='" + enterpriseId + '\'' +
+                ", activateTime='" + activateTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                "} " + super.toString();
+    }
 }

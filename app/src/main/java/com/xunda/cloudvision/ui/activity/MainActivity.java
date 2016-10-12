@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.presenter.MainPresenter;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -30,8 +31,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     /** 打开语音界面的RequestCode **/
     private static final int RC_VOICE_PAGE = 0x001;
 
-    /** 打开注册页面 **/
-    private static final int RC_ACTIVATE_PAGE = 0x002;
+//    /** 打开注册页面 **/
+//    private static final int RC_ACTIVATE_PAGE = 0x002;
 
     private View mViewTopBar;
     private TextView mTvTopBarTime;
@@ -89,13 +90,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             case RC_VOICE_PAGE:
                 mCbVoice.setChecked(false);
                 break;
-            case RC_ACTIVATE_PAGE:
-                if(RESULT_OK == resultCode) {
-
-                } else {
-                    finish();
-                }
-                break;
+//            case RC_ACTIVATE_PAGE:
+//                if(RESULT_OK == resultCode) {
+//
+//                } else {
+//                    finish();
+//                }
+//                break;
             default:
                 break;
         }
@@ -157,6 +158,21 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
         mTvNotice.startAnimation(mNoticeExitAnim);
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onQueryAdvertiseResult(QueryHomeDataResp result) {
+
     }
 
     /**

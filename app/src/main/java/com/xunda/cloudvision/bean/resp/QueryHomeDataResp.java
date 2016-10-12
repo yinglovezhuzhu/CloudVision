@@ -14,6 +14,13 @@ public class QueryHomeDataResp extends BaseResp {
 
     private List<AdvertiseBean> advertise = new ArrayList<>();
 
+    public QueryHomeDataResp() {
+    }
+
+    public QueryHomeDataResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public List<AdvertiseBean> getAdvertise() {
         return advertise;
     }
