@@ -114,7 +114,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.99"
+        android:layout_weight="1"
         android:gravity="center"
         android:baselineAligned="false">
         <TextView
@@ -175,7 +175,7 @@
                 android:drawableTop="@drawable/ic_corporate_video"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/textSize_level5"
-                android:text="@string/str_cloud_video"/>
+                android:text="@string/str_corporate_video"/>
             <ImageButton
                 android:id="@+id/ibtn_corporate_back"
                 android:layout_width="@dimen/corporate_ibtn_back_size"

@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onWeatherSettingsChanged(boolean disabled) {
-        mTvTopBarWeather.setVisibility(disabled ? View.INVISIBLE : View.VISIBLE);
+        mViewTopBar.setVisibility(disabled ? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
