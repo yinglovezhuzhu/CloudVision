@@ -19,13 +19,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/contentPadding_level2"
-            android:weightSum="6">
+            android:padding="@dimen/contentPadding_level2">
             <ImageView
                 android:id="@+id/iv_product_pager_img"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:layout_margin="@dimen/contentPadding_level2"
                 android:scaleType="centerInside"
                 android:src="@drawable/bg_activate"
@@ -34,8 +33,7 @@
             <TextView
                 android:id="@+id/tv_product_pager_desc"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:textSize="@dimen/textSize_level4"
                 android:textColor="@color/colorTextBlack"
                 android:gravity="center"
@@ -45,8 +43,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/contentPadding_level4"
                 android:gravity="top|center_horizontal">
                 <TextView

@@ -10,7 +10,7 @@
         android:id="@+id/iv_item_product_list_view_img"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:layout_margin="@dimen/contentPadding_level2"
         android:scaleType="centerInside"
         android:src="@drawable/bg_activate"
