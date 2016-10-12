@@ -1,15 +1,15 @@
 <resources>
 
     <!-- 字体大小 -->
-    <dimen name="textSize_level0">28sp</dimen>
-    <dimen name="textSize_level1">22sp</dimen>
-    <dimen name="textSize_level2">20sp</dimen>
-    <dimen name="textSize_level3">18sp</dimen>
-    <dimen name="textSize_level4">16sp</dimen>
-    <dimen name="textSize_level5">14sp</dimen>
-    <dimen name="textSize_level6">12sp</dimen>
-    <dimen name="textSize_level7">10sp</dimen>
-    <dimen name="textSize_level8">8sp</dimen>
+    <dimen name="textSize_level0">38sp</dimen>
+    <dimen name="textSize_level1">32sp</dimen>
+    <dimen name="textSize_level2">30sp</dimen>
+    <dimen name="textSize_level3">28sp</dimen>
+    <dimen name="textSize_level4">26sp</dimen>
+    <dimen name="textSize_level5">24sp</dimen>
+    <dimen name="textSize_level6">22sp</dimen>
+    <dimen name="textSize_level7">20sp</dimen>
+    <dimen name="textSize_level8">18sp</dimen>
 
 
     <dimen name="contentPadding_level0">20dp</dimen>
