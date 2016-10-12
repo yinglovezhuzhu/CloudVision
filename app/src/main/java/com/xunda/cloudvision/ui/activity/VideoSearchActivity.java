@@ -38,7 +38,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
 
         setContentView(R.layout.activity_video_search);
 
-        mVideoSearchPresenter = new VideoSearchPresenter(this);
+        mVideoSearchPresenter = new VideoSearchPresenter(this, this);
 
         initView();
     }

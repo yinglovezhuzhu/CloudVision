@@ -34,7 +34,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
         setContentView(R.layout.activity_cloud_video);
 
-        mCloudVideoPresenter = new VideoPresenter(this);
+        mCloudVideoPresenter = new VideoPresenter(this, this);
 
         initView();
     }
