@@ -444,44 +444,48 @@ public class ViewAttacher implements IZoomableImageView, View.OnTouchListener,
 
         if (mZoomEnabled && hasDrawable((ImageView) v)) {
             ViewParent parent = v.getParent();
-            switch (ev.getAction()) {
-                case ACTION_DOWN:
-                    // First, disable the Parent from intercepting the touch
-                    // event
-                    if (null != parent)
-                        parent.requestDisallowInterceptTouchEvent(true);
-                    else
-                        Log.i(LOG_TAG, "onTouch getParent() returned null");
+            try {
+                switch (ev.getAction()) {
+                    case ACTION_DOWN:
+                        // First, disable the Parent from intercepting the touch
+                        // event
+                        if (null != parent)
+                            parent.requestDisallowInterceptTouchEvent(true);
+                        else
+                            Log.i(LOG_TAG, "onTouch getParent() returned null");
 
-                    // If we're flinging, and the user presses down, cancel
-                    // fling
-                    cancelFling();
-                    break;
+                        // If we're flinging, and the user presses down, cancel
+                        // fling
+                        cancelFling();
+                        break;
 
-                case ACTION_CANCEL:
-                case ACTION_UP:
-                    // If the user has zoomed less than min scale, zoom back
-                    // to min scale
-                    if (getScale() < mMinScale) {
-                        RectF rect = getDisplayRect();
-                        if (null != rect) {
-                            v.post(new AnimatedZoomRunnable(getScale(), mMinScale,
-                                    rect.centerX(), rect.centerY()));
-                            handled = true;
+                    case ACTION_CANCEL:
+                    case ACTION_UP:
+                        // If the user has zoomed less than min scale, zoom back
+                        // to min scale
+                        if (getScale() < mMinScale) {
+                            RectF rect = getDisplayRect();
+                            if (null != rect) {
+                                v.post(new AnimatedZoomRunnable(getScale(), mMinScale,
+                                        rect.centerX(), rect.centerY()));
+                                handled = true;
+                            }
                         }
-                    }
-                    break;
-            }
+                        break;
+                }
 
-            // Try the Scale/Drag detector
-            if (null != mScaleDragDetector
-                    && mScaleDragDetector.onTouchEvent(ev)) {
-                handled = true;
-            }
+                // Try the Scale/Drag detector
+                if (null != mScaleDragDetector
+                        && mScaleDragDetector.onTouchEvent(ev)) {
+                    handled = true;
+                }
 
-            // Check to see if the user double tapped
-            if (null != mGestureDetector && mGestureDetector.onTouchEvent(ev)) {
-                handled = true;
+                // Check to see if the user double tapped
+                if (null != mGestureDetector && mGestureDetector.onTouchEvent(ev)) {
+                    handled = true;
+                }
+            } catch (Exception e) {
+                // do nothing
             }
         }
 
