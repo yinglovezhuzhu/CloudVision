@@ -21,8 +21,8 @@ import android.view.MotionEvent;
 
 public interface IGestureDetector {
 
-    public boolean onTouchEvent(MotionEvent ev);
 
+    public boolean onTouchEvent(MotionEvent ev);
     public boolean isScaling();
 
     public void setOnGestureListener(OnGestureListener listener);

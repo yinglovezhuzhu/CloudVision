@@ -52,14 +52,6 @@ public class ZoomableImageView extends ImageView implements IZoomableImageView {
         }
     }
 
-    /**
-     * @deprecated use {@link #setRotationTo(float)}
-     */
-    @Override
-    public void setPhotoViewRotation(float rotationDegree) {
-        mViewAttacher.setRotationTo(rotationDegree);
-    }
-    
     @Override
     public void setRotationTo(float rotationDegree) {
         mViewAttacher.setRotationTo(rotationDegree);
