@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
+    <CheckedTextView
         android:id="@+id/tv_item_product_detail_attr_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
