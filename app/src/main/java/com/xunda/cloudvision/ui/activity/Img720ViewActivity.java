@@ -3,6 +3,7 @@ package com.xunda.cloudvision.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.opensource.widget.LockableViewPager;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.presenter.Img720ViewPresenter;
 import com.xunda.cloudvision.ui.adapter.Img720ViewAdapter;
@@ -44,7 +45,7 @@ public class Img720ViewActivity extends BaseActivity implements IImg720ViewView 
     private void initView() {
         findViewById(R.id.ibtn_720_view_img_back).setOnClickListener(this);
 
-        final FixedViewPager viewPager = (FixedViewPager) findViewById(R.id.vp_720_view_img);
+        final LockableViewPager viewPager = (LockableViewPager) findViewById(R.id.vp_720_view_img);
         viewPager.setOffscreenPageLimit(3);
         mAdpater = new Img720ViewAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mAdpater);
