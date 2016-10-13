@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/contentPadding_level2"
     android:background="@drawable/layer_list_bg_product_list_view">
 
@@ -20,7 +20,8 @@
         android:id="@+id/tv_item_product_list_view_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/contentPadding_level2"
+        android:layout_marginTop="@dimen/contentPadding_level5"
+        android:layout_marginBottom="@dimen/contentPadding_level5"
         android:textSize="@dimen/textSize_level5"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
@@ -29,28 +30,28 @@
         android:ellipsize="end"
         android:text="中国黄金500g,绝对真金，柜金真金，柜台验货，带证书"/>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/contentPadding_level5"
         android:gravity="top|center_horizontal">
-        <TextView
-            android:id="@+id/tv_item_product_list_view_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/contentPadding_level6"
-            android:textStyle="bold"
-            android:textSize="@dimen/textSize_level3"
-            android:textColor="@color/colorTextRed"
-            android:text="100"/>
         <TextView
             android:id="@+id/tv_item_product_list_view_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_item_product_list_view_price"
-            android:layout_toEndOf="@+id/tv_item_product_list_view_price"
-            android:textStyle="bold"
-            android:textSize="@dimen/textSize_level6"
+            android:textSize="@dimen/textSize_level3"
             android:textColor="@color/colorTextRed"
             android:text="@string/str_currency_rmb"/>
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_item_product_list_view_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level6"
+            android:layout_marginStart="@dimen/contentPadding_level6"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize_level3"
+            android:textColor="@color/colorTextRed"
+            android:text="100"/>
+    </LinearLayout>
 </LinearLayout>

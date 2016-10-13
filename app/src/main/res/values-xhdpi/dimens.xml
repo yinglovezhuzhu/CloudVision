@@ -29,7 +29,7 @@
     <!-- 主页面 -->
     <dimen name="main_menu_btn_width">30dp</dimen>
     <dimen name="main_menu_marginTop">200dp</dimen>
-    <dimen name="main_video_play_icon_size">40dp</dimen>
+    <dimen name="main_video_play_icon_size">80dp</dimen>
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">25dp</dimen>
@@ -47,5 +47,6 @@
 
     <!-- 产品详情 -->
     <dimen name="product_detail_img_page_margin">0dp</dimen>
+    <dimen name="product_detail_loading_progress_size">20dp</dimen>
 
 </resources>

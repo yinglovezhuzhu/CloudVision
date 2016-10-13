@@ -35,33 +35,6 @@
             android:textSize="@dimen/textSize_level4"
             android:textColor="@color/text_color_black"
             android:text="绝对真金 市场最低价 100g每条 标题内容最多侠士两行"/>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tv_product_detail_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/contentPadding_level6"
-                android:layout_marginEnd="@dimen/contentPadding_level6"
-                android:textStyle="bold"
-                android:textSize="@dimen/textSize_level1"
-                android:textColor="@color/colorTextRed"
-                android:minEms="2"
-                android:gravity="end"
-                android:text="200"/>
-            <TextView
-                android:id="@+id/tv_product_detail_currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_product_detail_price"
-                android:layout_toEndOf="@+id/tv_product_detail_price"
-                android:layout_alignTop="@+id/tv_product_detail_price"
-                android:minEms="1"
-                android:textColor="@color/colorTextRed"
-                android:textSize="@dimen/textSize_level6"
-                android:text="@string/str_currency_rmb"/>
-        </RelativeLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -69,11 +42,12 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -124,11 +98,16 @@
                         android:textColor="@color/colorTextGray"
                         android:textSize="@dimen/textSize_level4"
                         android:text="@string/str_color_label"/>
-                    <com.xunda.cloudvision.ui.widget.HorizontalListView
-                        android:id="@+id/hlv_product_detail_color"
+                    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+                        android:id="@+id/gv_product_detail_color"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"/>
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:horizontalSpacing="@dimen/contentPadding_level5"
+                        android:numColumns="4"
+                        android:listSelector="@color/transparent"
+                        android:choiceMode="singleChoice"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -143,20 +122,76 @@
                         android:textColor="@color/colorTextGray"
                         android:textSize="@dimen/textSize_level4"
                         android:text="@string/str_size_label"/>
-                    <com.xunda.cloudvision.ui.widget.HorizontalListView
-                        android:id="@+id/hlv_product_detail_size"
+                    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+                        android:id="@+id/gv_product_detail_size"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"/>
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:horizontalSpacing="@dimen/contentPadding_level5"
+                        android:numColumns="4"
+                        android:listSelector="@color/transparent"
+                        android:choiceMode="singleChoice"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/contentPadding_level4"
+                        android:textColor="@color/text_color_black"
+                        android:textSize="@dimen/textSize_level5"
+                        android:text="@string/str_reference_price_label"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextRed"
+                        android:textSize="@dimen/textSize_level4"
+                        android:text="@string/str_currency_rmb"/>
+                    <TextView
+                        android:id="@+id/tv_product_detail_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/contentPadding_level6"
+                        android:layout_marginStart="@dimen/contentPadding_level6"
+                        android:textSize="@dimen/textSize_level4"
+                        android:textColor="@color/colorTextRed"
+                        android:minEms="2"
+                        android:text="200"/>
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/contentPadding_level4"
+                    android:padding="@dimen/contentPadding_level4"
                     android:textColor="@color/text_color_black"
                     android:textSize="@dimen/textSize_level5"
                     android:text="@string/str_image_text_detail_label"/>
+                <LinearLayout
+                    android:id="@+id/ll_product_detail_loading"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/contentPadding_level5">
+                    <ProgressBar
+                        android:layout_width="@dimen/product_detail_loading_progress_size"
+                        android:layout_height="@dimen/product_detail_loading_progress_size" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/contentPadding_level5"
+                        android:layout_marginStart="@dimen/contentPadding_level5"
+                        android:text="@string/str_loading"/>
+                </LinearLayout>
+                <WebView
+                    android:id="@+id/wv_product_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </ScrollView>
         <RelativeLayout

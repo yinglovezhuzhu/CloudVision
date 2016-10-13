@@ -29,13 +29,15 @@
     <string name="str_search">搜索</string>
     <string name="str_to_list_view">转列表模式</string>
     <string name="str_to_page_view">转浏览模式</string>
-    <string name="str_currency_rmb">RMB</string>
+    <string name="str_reference_price_label">参考价：</string>
+    <string name="str_currency_rmb">¥</string>
     <string name="str_specification_parameter_label">规格参数：</string>
     <string name="str_image_text_detail_label">图文详情：</string>
     <string name="str_color_label">颜色：</string>
     <string name="str_size_label">尺寸：</string>
     <string name="str_input_keyword">输入您要搜索的关键词</string>
     <string name="str_search_result_label">搜索结果：</string>
+    <string name="str_loading">加载中</string>
 
     <!-- 视频 -->
     <string name="str_loading_video">正在加载视频</string>

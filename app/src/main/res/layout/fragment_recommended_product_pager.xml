@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:padding="@dimen/contentPadding_level2"
     android:background="@color/colorWhite"
-    android:weightSum="6"
     android:focusable="true"
     android:focusableInTouchMode="true">
     <ImageView
         android:id="@+id/iv_recommended_product_pager_img"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:layout_margin="@dimen/contentPadding_level2"
         android:scaleType="centerInside"
         android:src="@drawable/bg_activate"
@@ -21,8 +20,9 @@
     <TextView
         android:id="@+id/tv_recommended_product_pager_desc"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contentPadding_level4"
+        android:layout_marginBottom="@dimen/contentPadding_level4"
         android:textSize="@dimen/textSize_level6"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
@@ -32,8 +32,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/contentPadding_level2"
         android:gravity="top|center_horizontal">
         <TextView
             android:id="@+id/tv_recommended_product_pager_price"
