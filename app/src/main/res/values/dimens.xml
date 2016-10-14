@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- 字体大小 -->
@@ -33,7 +34,7 @@
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">25dp</dimen>
-    
+
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">55dp</dimen>
     <dimen name="corporate_red_divider_width">40dp</dimen>
