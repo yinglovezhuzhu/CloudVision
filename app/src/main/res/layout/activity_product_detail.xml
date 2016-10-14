@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/contentPadding_level4"
-                    android:gravity="center_vertical">
+                    android:gravity="start|top">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -101,13 +101,14 @@
                     <com.xunda.cloudvision.ui.widget.NoScrollGridView
                         android:id="@+id/gv_product_detail_color"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:horizontalSpacing="@dimen/contentPadding_level5"
+                        android:horizontalSpacing="@dimen/contentPadding_level3"
+                        android:verticalSpacing="@dimen/contentPadding_level4"
                         android:numColumns="4"
                         android:listSelector="@color/transparent"
-                        android:choiceMode="singleChoice"/>
+                        android:descendantFocusability="afterDescendants"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/contentPadding_level4"
-                    android:gravity="center_vertical">
+                    android:gravity="start|top">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,13 +126,14 @@
                     <com.xunda.cloudvision.ui.widget.NoScrollGridView
                         android:id="@+id/gv_product_detail_size"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:horizontalSpacing="@dimen/contentPadding_level5"
+                        android:horizontalSpacing="@dimen/contentPadding_level3"
+                        android:verticalSpacing="@dimen/contentPadding_level4"
                         android:numColumns="4"
                         android:listSelector="@color/transparent"
-                        android:choiceMode="singleChoice"/>
+                        android:descendantFocusability="afterDescendants"/>
                 </LinearLayout>
 
                 <LinearLayout

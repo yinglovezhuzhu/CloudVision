@@ -19,6 +19,10 @@ public class AttrValueBean implements Parcelable {
 
     }
 
+    public AttrValueBean(String name) {
+        this.attrName = name;
+    }
+
     protected AttrValueBean(Parcel in) {
         attrId = in.readString();
         attrName = in.readString();
