@@ -137,23 +137,38 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_marginTop="@dimen/main_menu_marginTop">
-        <ToggleButton
-            android:id="@+id/tbtn_main_menu"
+        <ImageButton
+            android:id="@+id/ibtn_main_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="@dimen/main_menu_btn_width"
             android:minHeight="@dimen/main_menu_btn_width"
             android:maxWidth="@dimen/main_menu_btn_width"
             android:maxHeight="@dimen/main_menu_btn_width"
-            android:padding="@dimen/contentPadding_level3"
-            android:layout_gravity="center"
             android:background="@drawable/layer_list_bg_main_menu"
-            android:button="@null"
-            android:textOn="@null"
-            android:textOff="@null"
-            android:drawableTop="@drawable/selector_ic_main_menu"
-            android:gravity="center"
-            android:checked="false"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/selector_ic_main_menu"
+            android:contentDescription="@null"/>
+        <!--<FrameLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<ToggleButton-->
+                <!--android:id="@+id/tbtn_main_menu"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:minWidth="@dimen/main_menu_btn_width"-->
+                <!--android:minHeight="@dimen/main_menu_btn_width"-->
+                <!--android:maxWidth="@dimen/main_menu_btn_width"-->
+                <!--android:maxHeight="@dimen/main_menu_btn_width"-->
+                <!--android:padding="@dimen/contentPadding_level3"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:button="@null"-->
+                <!--android:textOn="@null"-->
+                <!--android:textOff="@null"-->
+                <!--android:gravity="center"-->
+                <!--android:checked="false"/>-->
+        <!--</FrameLayout>-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

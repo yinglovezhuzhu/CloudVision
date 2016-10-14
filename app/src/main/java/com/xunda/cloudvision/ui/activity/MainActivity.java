@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -21,6 +22,8 @@ import com.xunda.cloudvision.presenter.MainPresenter;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
+
+import static android.R.attr.checked;
 
 /**
  * 主界面Activity
@@ -132,7 +135,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onWeatherSettingsChanged(boolean disabled) {
-        mViewTopBar.setVisibility(disabled ? View.INVISIBLE : View.VISIBLE);
+        mViewTopBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -192,18 +195,27 @@ public class MainActivity extends BaseActivity implements IMainView {
         mCbSetting = (CheckBox) findViewById(R.id.cb_main_menu_setting);
 
         final View menuItemView = findViewById(R.id.ll_main_menu_items);
-        final ToggleButton tBtnMainMenu = (ToggleButton) findViewById(R.id.tbtn_main_menu);
+        final ImageButton ibtnMenu = (ImageButton) findViewById(R.id.ibtn_main_menu);
         final Animation menuItemShowAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_main_menu_items_show);
         final Animation menuItemHideAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_main_menu_items_hide);
 
-        tBtnMainMenu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ibtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked) {
+            public void onClick(View v) {
+                boolean isOpened = false;
+                Object tag = v.getTag();
+                if(null != tag && tag instanceof Boolean) {
+                    isOpened = (boolean) tag;
+                }
+                if(isOpened) {
+                    menuItemView.startAnimation(menuItemHideAnimation);
+                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                    v.setTag(false);
+                } else {
                     menuItemView.startAnimation(menuItemShowAnimation);
                     menuItemView.setVisibility(View.VISIBLE);
-                } else {
-                    menuItemView.startAnimation(menuItemHideAnimation);
+                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_pressed);
+                    v.setTag(true);
                 }
                 mCbVoice.setChecked(false);
                 mCbSetting.setChecked(false);
@@ -213,7 +225,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         menuItemShowAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                tBtnMainMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
+                ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
             }
 
             @Override
@@ -230,7 +242,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onAnimationEnd(Animation animation) {
                 menuItemView.setVisibility(View.GONE);
-                tBtnMainMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+                ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
             }
 
             @Override

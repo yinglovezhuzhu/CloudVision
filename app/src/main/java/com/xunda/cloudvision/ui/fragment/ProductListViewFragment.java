@@ -31,7 +31,7 @@ public class ProductListViewFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int width = getResources().getDisplayMetrics().widthPixels / 2;
-        int height = width * 3 / 2;
+        int height = width * 4 / 3;
         mAdapter = new ProductListViewAdapter(getActivity(), width, height, 2, 0);
 
         mAdapter.setOnProductItemClickListener(new ProductListViewAdapter.OnProductItemClickListener() {
@@ -58,14 +58,6 @@ public class ProductListViewFragment extends BaseFragment {
 
         final PullListView lvProduct = (PullListView) contentView.findViewById(R.id.lv_product_list);
         lvProduct.setAdapter(mAdapter);
-//        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getActivity(), VideoPlayerActivity.class);
-//                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
-//                startActivity(i);
-//            }
-//        });
         final Handler handler = new Handler();
         lvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         lvProduct.setOnRefreshListener(new OnRefreshListener() {
