@@ -179,8 +179,8 @@
                 android:text="@string/str_corporate_video"/>
             <ImageButton
                 android:id="@+id/ibtn_corporate_back"
-                android:layout_width="@dimen/corporate_ibtn_back_size"
-                android:layout_height="@dimen/corporate_ibtn_back_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="start|bottom"
                 android:layout_margin="@dimen/contentPadding_level2"
                 android:background="@color/transparent"

@@ -1,15 +1,15 @@
 <resources>
 
     <!-- 字体大小 -->
-    <dimen name="textSize_level0">32sp</dimen>
-    <dimen name="textSize_level1">28sp</dimen>
-    <dimen name="textSize_level2">24sp</dimen>
-    <dimen name="textSize_level3">22sp</dimen>
-    <dimen name="textSize_level4">20sp</dimen>
-    <dimen name="textSize_level5">18sp</dimen>
-    <dimen name="textSize_level6">16sp</dimen>
-    <dimen name="textSize_level7">14sp</dimen>
-    <dimen name="textSize_level8">12sp</dimen>
+    <dimen name="textSize_level0">28sp</dimen>
+    <dimen name="textSize_level1">22sp</dimen>
+    <dimen name="textSize_level2">20sp</dimen>
+    <dimen name="textSize_level3">18sp</dimen>
+    <dimen name="textSize_level4">16sp</dimen>
+    <dimen name="textSize_level5">14sp</dimen>
+    <dimen name="textSize_level6">12sp</dimen>
+    <dimen name="textSize_level7">10sp</dimen>
+    <dimen name="textSize_level8">8sp</dimen>
 
 
     <dimen name="contentPadding_level0">20dp</dimen>
@@ -29,16 +29,17 @@
     <!-- 主页面 -->
     <dimen name="main_menu_btn_width">30dp</dimen>
     <dimen name="main_menu_marginTop">200dp</dimen>
-    <dimen name="main_video_play_icon_size">60dp</dimen>
+    <dimen name="main_video_play_icon_size">40dp</dimen>
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">25dp</dimen>
     
     <!-- 企业首页 -->
-    <dimen name="corporate_header_logo_size">75dp</dimen>
+    <dimen name="corporate_header_logo_size">55dp</dimen>
     <dimen name="corporate_red_divider_width">40dp</dimen>
     <dimen name="corporate_btn_more_product_height">30dp</dimen>
     <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
+    <dimen name="corporate_ibtn_back_size">35dp</dimen>
 
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">30dp</dimen>
@@ -46,6 +47,5 @@
 
     <!-- 产品详情 -->
     <dimen name="product_detail_img_page_margin">0dp</dimen>
-    <dimen name="product_detail_loading_progress_size">20dp</dimen>
 
 </resources>
