@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_margin="@dimen/contentPadding_level2"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:src="@drawable/bg_activate"
         android:contentDescription="@null"/>
 
@@ -30,11 +30,20 @@
         android:ellipsize="end"
         android:text="中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书中国黄金500g,绝对真金，柜台验货，带证书"/>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/contentPadding_level2"
-        android:gravity="top|center_horizontal">
+        android:padding="@dimen/contentPadding_level3"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_recommended_product_pager_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/textSize_level1"
+            android:textColor="@color/colorTextRed"
+            android:text="@string/str_currency_rmb"/>
         <TextView
             android:id="@+id/tv_recommended_product_pager_price"
             android:layout_width="wrap_content"
@@ -44,15 +53,5 @@
             android:textSize="@dimen/textSize_level1"
             android:textColor="@color/colorTextRed"
             android:text="100"/>
-        <TextView
-            android:id="@+id/tv_recommended_product_pager_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_recommended_product_pager_price"
-            android:layout_toEndOf="@+id/tv_recommended_product_pager_price"
-            android:textStyle="bold"
-            android:textSize="@dimen/textSize_level7"
-            android:textColor="@color/colorTextRed"
-            android:text="RMB"/>
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

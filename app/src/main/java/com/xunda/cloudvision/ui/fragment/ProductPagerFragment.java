@@ -7,11 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
+
+import java.util.Random;
 
 /**
  * 产品浏览模式信息Pager页面Fragment
@@ -45,6 +49,41 @@ public class ProductPagerFragment extends BaseFragment {
             }
         });
         contentView.requestFocus();
+        initView(contentView);
         return contentView;
+    }
+
+    private void initView(View contentView) {
+
+        final ImageView ivImg = (ImageView) contentView.findViewById(R.id.iv_product_pager_img);
+
+
+
+        final TextView tvDesc = (TextView) contentView.findViewById(R.id.tv_product_pager_desc);
+
+        final TextView tvCurrency = (TextView) contentView.findViewById(R.id.tv_product_pager_currency);
+
+        final TextView tvPrice = (TextView) contentView.findViewById(R.id.tv_product_pager_price);
+
+        switch (new Random().nextInt(4)) {
+            case 0:
+                ivImg.setImageResource(R.drawable.img_product1);
+                tvPrice.setText("100");
+                break;
+            case 1:
+                ivImg.setImageResource(R.drawable.img_product2);
+                tvPrice.setText("120");
+                break;
+            case 2:
+                ivImg.setImageResource(R.drawable.img_product3);
+                tvPrice.setText("150");
+                break;
+            case 3:
+                ivImg.setImageResource(R.drawable.img_product4);
+                tvPrice.setText("200");
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.presenter.MainPresenter;
+import com.xunda.cloudvision.utils.LogUtils;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
 
-import static android.R.attr.checked;
+import java.util.Random;
 
 /**
  * 主界面Activity
@@ -55,6 +57,19 @@ public class MainActivity extends BaseActivity implements IMainView {
     private Animation mNoticeEnterAnim;
     private Animation mNoticeExitAnim;
 
+    private View mViewContentOne;
+    private ImageView mIvContentOne;
+    private ImageView mIvPlayOne;
+
+    private View mViewContentTwo;
+    private ImageView mIvContentTwo;
+    private ImageView mIvPlayTwo;
+
+    private View mViewContentThree;
+    private ImageView mIvContentThree;
+    private ImageView mIvPlayThree;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +85,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(null != mMainPresenter) {
             mMainPresenter.onCreate();
         }
+
+        mMainPresenter.queryHomeAdvertise();
     }
 
     @Override
@@ -117,6 +134,18 @@ public class MainActivity extends BaseActivity implements IMainView {
                 finish();
                 break;
             case R.id.btn_main_menu_setting_switch:
+                break;
+            case R.id.iv_main_content_one_video_play:
+                Intent i = new Intent(this, VideoPlayerActivity.class);
+                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+                startActivity(i);
+                break;
+            case R.id.iv_main_content_two_video_play:
+                break;
+            case R.id.iv_main_content_three_video_play:
+                Intent i2 = new Intent(this, VideoPlayerActivity.class);
+                i2.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+                startActivity(i2);
                 break;
             default:
                 break;
@@ -279,6 +308,29 @@ public class MainActivity extends BaseActivity implements IMainView {
         mCbSetting.setOnCheckedChangeListener(onCheckedChangeListener);
 
         initSettingsSubItems();
+
+        mViewContentOne = findViewById(R.id.ll_main_content_one);
+        mIvContentOne = (ImageView) findViewById(R.id.iv_main_content_one_img);
+        mIvPlayOne = (ImageView) findViewById(R.id.iv_main_content_one_video_play);
+        mIvPlayOne.setOnClickListener(this);
+
+        mViewContentTwo = findViewById(R.id.ll_main_content_two);
+        mIvContentTwo = (ImageView) findViewById(R.id.iv_main_content_two_img);
+        mIvPlayTwo = (ImageView) findViewById(R.id.iv_main_content_two_video_play);
+        mIvPlayTwo.setOnClickListener(this);
+
+        mViewContentThree = findViewById(R.id.ll_main_content_three);
+        mIvContentThree = (ImageView) findViewById(R.id.iv_main_content_three_img);
+        mIvPlayThree = (ImageView) findViewById(R.id.iv_main_content_three_video_play);
+        mIvPlayThree.setOnClickListener(this);
+
+        mIvContentOne.setImageResource(R.drawable.img_home_ad1);
+        mIvPlayOne.setVisibility(View.VISIBLE);
+        mIvContentTwo.setImageResource(R.drawable.img_home_ad2);
+        mIvPlayTwo.setVisibility(View.GONE);
+        mIvContentThree.setImageResource(R.drawable.img_home_ad3);
+        mIvPlayThree.setVisibility(View.VISIBLE);
+
     }
 
     /**

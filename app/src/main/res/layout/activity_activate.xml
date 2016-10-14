@@ -40,6 +40,7 @@
             android:textColorHint="@color/colorWhite"
             android:background="@drawable/selector_activate_input"
             android:textSize="@dimen/textSize_level4"
+            android:textCursorDrawable="@drawable/shape_edit_cursor_white"
             android:hint="@string/str_please_input_activation_code"/>
         <Button
             android:id="@+id/btn_activate_register"

@@ -43,14 +43,14 @@
                 android:text="晴 33℃~36℃"/>
         </RelativeLayout>
         <FrameLayout
-            android:id="@+id/ll_main_content1"
+            android:id="@+id/ll_main_content_one"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/iv_main_content1_img"
+                android:id="@+id/iv_main_content_one_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -58,7 +58,7 @@
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content1_video_play"
+                android:id="@+id/iv_main_content_one_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"/>
@@ -68,13 +68,13 @@
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
         <FrameLayout
-            android:id="@+id/ll_main_content2"
+            android:id="@+id/ll_main_content_two"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
             <ImageView
-                android:id="@+id/iv_main_content2_img"
+                android:id="@+id/iv_main_content_two_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -82,7 +82,7 @@
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content2_video_play"
+                android:id="@+id/iv_main_content_two_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"/>
@@ -92,13 +92,13 @@
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
         <FrameLayout
-            android:id="@+id/ll_main_content3"
+            android:id="@+id/ll_main_content_three"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
             <ImageView
-                android:id="@+id/iv_main_content3_img"
+                android:id="@+id/iv_main_content_three_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -106,7 +106,7 @@
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content3_video_play"
+                android:id="@+id/iv_main_content_three_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"/>

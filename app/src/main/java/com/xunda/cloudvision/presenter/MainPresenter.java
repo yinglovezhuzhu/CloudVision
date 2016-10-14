@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
+import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.IMainModel;
 import com.xunda.cloudvision.model.MainModel;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -121,5 +123,27 @@ public class MainPresenter implements Handler.Callback {
                 break;
         }
         return false;
+    }
+
+    /**
+     * 查询首页广告
+     */
+    public void queryHomeAdvertise() {
+        mMainModel.queryHomeData(new HttpAsyncTask.Callback<QueryHomeDataResp>() {
+            @Override
+            public void onPreExecute() {
+                mMainView.onPreExecute(null);
+            }
+
+            @Override
+            public void onCanceled() {
+                mMainView.onCanceled(null);
+            }
+
+            @Override
+            public void onResult(QueryHomeDataResp result) {
+                mMainView.onQueryAdvertiseResult(result);
+            }
+        });
     }
 }
