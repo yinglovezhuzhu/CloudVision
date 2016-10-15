@@ -18,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
+import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
 import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
@@ -71,8 +72,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                 break;
             case R.id.ibtn_product_720_view_img:
                 // 720度看图
-                Intent intent = new Intent(this, Img720ViewActivity.class);
-                startActivity(intent);
+                viewPic(0);
                 break;
             default:
                 break;
@@ -187,6 +187,16 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     @Override
     public void onQueryProductDetailResult(QueryProductDetailResp result) {
 
+    }
+
+    public void onPicClicked(int position) {
+        viewPic(position);
+    }
+
+    private void viewPic(int position) {
+        Intent intent = new Intent(this, Img720ViewActivity.class);
+        intent.putExtra(Config.EXTRA_POSITION, position);
+        startActivity(intent);
     }
 
     @SuppressLint("SetJavaScriptEnabled")

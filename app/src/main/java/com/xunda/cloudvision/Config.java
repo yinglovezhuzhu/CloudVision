@@ -23,4 +23,5 @@ public class Config {
 
     /** Intent传参Data的key **/
     public static final String EXTRA_DATA = "extra_data";
+    public static final String EXTRA_POSITION = "extra_position";
 }

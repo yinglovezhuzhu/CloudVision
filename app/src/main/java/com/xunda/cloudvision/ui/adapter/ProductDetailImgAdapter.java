@@ -41,7 +41,7 @@ public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ImageFragment.newInstance(null, 400, 400);
+        return ImageFragment.newInstance(null, position, 400, 400);
     }
 
     @Override

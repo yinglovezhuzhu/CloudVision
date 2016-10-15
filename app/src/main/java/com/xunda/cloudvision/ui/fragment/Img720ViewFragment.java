@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 
+import java.util.Random;
+
 /**
  * 720看图Fragment
  * Created by yinglovezhuzhu@gmail.com on 2016/9/29.
@@ -50,8 +52,25 @@ public class Img720ViewFragment extends BaseFragment {
             // FIXME 显示图片
         }
 
+        int pic = R.drawable.bg_activate;
+        switch (new Random().nextInt(4)) {
+            case 0:
+                pic = R.drawable.img_product1;
+                break;
+            case 1:
+                pic = R.drawable.img_product2;
+                break;
+            case 2:
+                pic = R.drawable.img_product3;
+                break;
+            case 3:
+                pic = R.drawable.img_product4;
+                break;
+            default:
+                break;
+        }
         Picasso.with(getActivity())
-                .load(R.drawable.bg_activate)
+                .load(pic)
                 .placeholder(R.drawable.ic_launcher)
                 .error(R.drawable.ic_launcher)
                 .into(imageView);

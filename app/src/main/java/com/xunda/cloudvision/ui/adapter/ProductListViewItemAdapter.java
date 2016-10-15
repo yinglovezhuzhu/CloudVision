@@ -14,6 +14,7 @@ import com.xunda.cloudvision.bean.ProductBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 产品列表浏览模式适配器
@@ -72,6 +73,26 @@ class ProductListViewItemAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
+        }
+        switch (new Random().nextInt(4)) {
+            case 0:
+                viewHolder.ivImg.setImageResource(R.drawable.img_product1);
+                viewHolder.tvPrice.setText("100");
+                break;
+            case 1:
+                viewHolder.ivImg.setImageResource(R.drawable.img_product2);
+                viewHolder.tvPrice.setText("120");
+                break;
+            case 2:
+                viewHolder.ivImg.setImageResource(R.drawable.img_product3);
+                viewHolder.tvPrice.setText("150");
+                break;
+            case 3:
+                viewHolder.ivImg.setImageResource(R.drawable.img_product4);
+                viewHolder.tvPrice.setText("200");
+                break;
+            default:
+                break;
         }
         return view;
     }
