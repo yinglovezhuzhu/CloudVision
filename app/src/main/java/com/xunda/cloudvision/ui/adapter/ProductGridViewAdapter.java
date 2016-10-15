@@ -95,8 +95,8 @@ public class ProductGridViewAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         if(null == view) {
             viewHolder = new ViewHolder();
-            view = View.inflate(mContext, R.layout.item_product_list_view, null);
-            viewHolder.gridView = (NoScrollGridView) view.findViewById(R.id.gv_item_product_list);
+            view = View.inflate(mContext, R.layout.item_product_grid_view, null);
+            viewHolder.gridView = (NoScrollGridView) view.findViewById(R.id.gv_item_product_grid);
             viewHolder.divider = view.findViewById(R.id.view_item_product_divider);
             viewHolder.gridView.setNumColumns(mNumColumns);
             viewHolder.gridView.setHorizontalSpacing(mHorizontalSpacing);

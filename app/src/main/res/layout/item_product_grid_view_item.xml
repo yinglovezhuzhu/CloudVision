@@ -2,22 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="@dimen/contentPadding_level2"
     android:background="@drawable/layer_list_bg_product_list_view">
 
     <ImageView
-        android:id="@+id/iv_item_product_list_view_img"
+        android:id="@+id/iv_item_product_grid_view_img"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_margin="@dimen/contentPadding_level2"
         android:scaleType="fitCenter"
-        android:src="@drawable/bg_activate"
         android:contentDescription="@null"/>
 
     <TextView
-        android:id="@+id/tv_item_product_list_view_desc"
+        android:id="@+id/tv_item_product_grid_view_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contentPadding_level5"
@@ -37,14 +36,14 @@
         android:padding="@dimen/contentPadding_level5"
         android:gravity="top|center_horizontal">
         <TextView
-            android:id="@+id/tv_item_product_list_view_currency"
+            android:id="@+id/tv_item_product_grid_view_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/textSize_level3"
             android:textColor="@color/colorTextRed"
             android:text="@string/str_currency_rmb"/>
         <TextView
-            android:id="@+id/tv_item_product_list_view_price"
+            android:id="@+id/tv_item_product_grid_view_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/contentPadding_level6"

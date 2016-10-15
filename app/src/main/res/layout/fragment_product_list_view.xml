@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.opensource.pullview.PullListView
-        android:id="@+id/lv_product_grid"
+        android:id="@+id/lv_product_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"

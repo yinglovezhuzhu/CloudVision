@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
@@ -14,38 +15,29 @@ import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
-import com.xunda.cloudvision.ui.adapter.ProductGridViewAdapter;
+import com.xunda.cloudvision.ui.adapter.ProductListViewAdapter;
 
 /**
- * 产品网格模式Fragment（列表模式）
- * Created by yinglovezhuzhu@gmail.com on 2016/9/21.
+ * 产品列表模式Fragment（浏览模式）
+ * Created by yinglovezhuzhu@gmail.com on 2016/10/15.
  */
 
-public class ProductGridViewFragment extends BaseFragment {
+public class ProductListViewFragment extends BaseFragment {
 
-    private ProductGridViewAdapter mAdapter;
+    public ProductListViewAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int width = getResources().getDisplayMetrics().widthPixels / 2;
-        int height = width * 4 / 3;
-        mAdapter = new ProductGridViewAdapter(getActivity(), width, height, 2, 0);
+        mAdapter = new ProductListViewAdapter(getActivity());
 
-        mAdapter.setOnProductItemClickListener(new ProductGridViewAdapter.OnProductItemClickListener() {
-            @Override
-            public void onItemClicked(int row, int column) {
-                showShortToast("position-----" + row + " <> " + column);
-                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
-            }
-        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_product_grid_view, container, false);
+        View contentView = inflater.inflate(R.layout.fragment_product_list_view, container, false);
 
         initView(contentView);
 
@@ -54,8 +46,14 @@ public class ProductGridViewFragment extends BaseFragment {
 
     private void initView(View contentView) {
 
-        final PullListView lvProduct = (PullListView) contentView.findViewById(R.id.lv_product_grid);
+        final PullListView lvProduct = (PullListView) contentView.findViewById(R.id.lv_product_list);
         lvProduct.setAdapter(mAdapter);
+        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+            }
+        });
         final Handler handler = new Handler();
         lvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         lvProduct.setOnRefreshListener(new OnRefreshListener() {
@@ -83,5 +81,4 @@ public class ProductGridViewFragment extends BaseFragment {
             }
         });
     }
-
 }

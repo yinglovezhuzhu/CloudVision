@@ -11,6 +11,7 @@ import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.presenter.ProductPresenter;
 import com.xunda.cloudvision.ui.fragment.ProductGridViewFragment;
+import com.xunda.cloudvision.ui.fragment.ProductListViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductPagerViewFragment;
 import com.xunda.cloudvision.view.IProductView;
 
@@ -89,13 +90,15 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
         // 列表模式
         final Bundle honorArgs = new Bundle();
-        tabHost.addTab(tabHost.newTabSpec("honorTab").setIndicator("honorTab"),
+        tabHost.addTab(tabHost.newTabSpec("productGrid").setIndicator("productGrid"),
                 ProductGridViewFragment.class, honorArgs);
 
         // 浏览模式
         final Bundle cultureArgs = new Bundle();
-        tabHost.addTab(tabHost.newTabSpec("cultureTab").setIndicator("honorTab"),
-                ProductPagerViewFragment.class, cultureArgs);
+//        tabHost.addTab(tabHost.newTabSpec("productPager").setIndicator("productPager"),
+//                ProductPagerViewFragment.class, cultureArgs);
+        tabHost.addTab(tabHost.newTabSpec("productList").setIndicator("productList"),
+                ProductListViewFragment.class, cultureArgs);
 
 
     }
