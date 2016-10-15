@@ -21,7 +21,7 @@ import java.util.Random;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/22.
  */
 
-class ProductListViewItemAdapter extends BaseAdapter {
+class ProductGridViewItemAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<ProductBean> mData = new ArrayList<>();
@@ -29,7 +29,7 @@ class ProductListViewItemAdapter extends BaseAdapter {
     private int mHeight = 430;
     private int mNumColumns = 2;
 
-    ProductListViewItemAdapter(Context context, int width, int height, int numColumns) {
+    ProductGridViewItemAdapter(Context context, int width, int height, int numColumns) {
         mContext = context;
         this.mWidth = width;
         this.mHeight = height;

@@ -3,12 +3,8 @@ package com.xunda.cloudvision.ui.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
@@ -22,7 +18,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/22.
  */
 
-public class ProductListViewAdapter extends BaseAdapter {
+public class ProductGridViewAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<ProductBean> mData = new ArrayList<>();
@@ -33,7 +29,7 @@ public class ProductListViewAdapter extends BaseAdapter {
 
     private OnProductItemClickListener mOnProductItemClickListener;
 
-    public ProductListViewAdapter(Context context, int width, int height,
+    public ProductGridViewAdapter(Context context, int width, int height,
                                   int numColumns, int horizontalSpacing) {
         mContext = context;
         this.mWidth = width;
@@ -116,7 +112,7 @@ public class ProductListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.gridView.setAdapter(new ProductListViewItemAdapter(mContext, mWidth,
+        viewHolder.gridView.setAdapter(new ProductGridViewItemAdapter(mContext, mWidth,
                 mHeight, mNumColumns));
         viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

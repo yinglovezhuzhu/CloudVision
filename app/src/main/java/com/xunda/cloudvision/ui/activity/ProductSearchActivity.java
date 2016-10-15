@@ -13,8 +13,7 @@ import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.presenter.ProductSearchPresenter;
-import com.xunda.cloudvision.ui.adapter.ProductListViewAdapter;
-import com.xunda.cloudvision.utils.LogUtils;
+import com.xunda.cloudvision.ui.adapter.ProductGridViewAdapter;
 import com.xunda.cloudvision.view.IProductSearchView;
 
 /**
@@ -28,7 +27,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
 
     private EditText mEtKeyword;
 
-    private ProductListViewAdapter mAdapter;
+    private ProductGridViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +76,9 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
         int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
         int width = (getResources().getDisplayMetrics().widthPixels - 3 * padding) / 2;
         int height = width * 3 / 2;
-        mAdapter = new ProductListViewAdapter(this, width, height, 2, padding);
+        mAdapter = new ProductGridViewAdapter(this, width, height, 2, padding);
         lvProduct.setAdapter(mAdapter);
-        mAdapter.setOnProductItemClickListener(new ProductListViewAdapter.OnProductItemClickListener() {
+        mAdapter.setOnProductItemClickListener(new ProductGridViewAdapter.OnProductItemClickListener() {
             @Override
             public void onItemClicked(int row, int column) {
                 startActivity(new Intent(ProductSearchActivity.this, ProductDetailActivity.class));

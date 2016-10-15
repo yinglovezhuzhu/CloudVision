@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +14,25 @@ import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
-import com.xunda.cloudvision.ui.adapter.ProductListViewAdapter;
-import com.xunda.cloudvision.utils.LogUtils;
+import com.xunda.cloudvision.ui.adapter.ProductGridViewAdapter;
 
 /**
  * 产品列表模式Fragment
  * Created by yinglovezhuzhu@gmail.com on 2016/9/21.
  */
 
-public class ProductListViewFragment extends BaseFragment {
+public class ProductGridViewFragment extends BaseFragment {
 
-    private ProductListViewAdapter mAdapter;
+    private ProductGridViewAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int width = getResources().getDisplayMetrics().widthPixels / 2;
         int height = width * 4 / 3;
-        mAdapter = new ProductListViewAdapter(getActivity(), width, height, 2, 0);
+        mAdapter = new ProductGridViewAdapter(getActivity(), width, height, 2, 0);
 
-        mAdapter.setOnProductItemClickListener(new ProductListViewAdapter.OnProductItemClickListener() {
+        mAdapter.setOnProductItemClickListener(new ProductGridViewAdapter.OnProductItemClickListener() {
             @Override
             public void onItemClicked(int row, int column) {
                 showShortToast("position-----" + row + " <> " + column);
@@ -47,7 +45,7 @@ public class ProductListViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_product_list_view, container, false);
+        View contentView = inflater.inflate(R.layout.fragment_product_grid_view, container, false);
 
         initView(contentView);
 
