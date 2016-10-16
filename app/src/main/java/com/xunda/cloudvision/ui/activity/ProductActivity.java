@@ -72,11 +72,23 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
         findViewById(R.id.btn_product_back).setOnClickListener(this);
         findViewById(R.id.btn_product_search).setOnClickListener(this);
+
+        final View listViewDivider = findViewById(R.id.view_product_list_view_mode_divider);
+        final ToggleButton listViewModeSwitcher = (ToggleButton) findViewById(R.id.tbtn_product_list_view_mode);
+        listViewModeSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tabHost.setCurrentTab(isChecked ? 0 : 2);
+            }
+        });
+
         final ToggleButton viewModeSwitcher = (ToggleButton) findViewById(R.id.tbtn_product_view_mode);
         viewModeSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tabHost.setCurrentTab(isChecked ? 0 : 1);
+                tabHost.setCurrentTab(isChecked ? (listViewModeSwitcher.isChecked() ? 0 : 2) : 1);
+                listViewModeSwitcher.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                listViewDivider.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
         });
         viewModeSwitcher.setChecked(true);
@@ -89,16 +101,19 @@ public class ProductActivity extends BaseActivity implements IProductView {
     private void addTabs(FragmentTabHost tabHost) {
 
         // 列表模式
-        final Bundle honorArgs = new Bundle();
-        tabHost.addTab(tabHost.newTabSpec("productGrid").setIndicator("productGrid"),
-                ProductGridViewFragment.class, honorArgs);
+        final Bundle listArgs = new Bundle();
+        tabHost.addTab(tabHost.newTabSpec("productList").setIndicator("productList"),
+                ProductListViewFragment.class, listArgs);
 
         // 浏览模式
-        final Bundle cultureArgs = new Bundle();
-//        tabHost.addTab(tabHost.newTabSpec("productPager").setIndicator("productPager"),
-//                ProductPagerViewFragment.class, cultureArgs);
-        tabHost.addTab(tabHost.newTabSpec("productList").setIndicator("productList"),
-                ProductListViewFragment.class, cultureArgs);
+        final Bundle pagerArgs = new Bundle();
+        tabHost.addTab(tabHost.newTabSpec("productPager").setIndicator("productPager"),
+                ProductPagerViewFragment.class, pagerArgs);
+
+        // GridView模式
+        final Bundle gridArgs = new Bundle();
+        tabHost.addTab(tabHost.newTabSpec("productGrid").setIndicator("productGrid"),
+                ProductGridViewFragment.class, gridArgs);
 
 
     }

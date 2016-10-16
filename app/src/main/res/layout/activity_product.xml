@@ -21,47 +21,71 @@
             android:layout_height="wrap_content">
         </TabWidget>
     </android.support.v4.app.FragmentTabHost>
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/product_bottom_bar_size"
         android:background="@color/colorBlack"
-        android:padding="@dimen/contentPadding_level5">
+        android:padding="@dimen/contentPadding_level4">
+
         <Button
             style="@style/ProductBottomBtnTheme"
             android:id="@+id/btn_product_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/contentPadding_level2"
-            android:layout_marginRight="@dimen/contentPadding_level2"
-            android:text="@string/str_back_with_arrow_left"/>
+            android:text="@string/str_back_with_arrow_left"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <ToggleButton
+            style="@style/ProductBottomBtnTheme"
+            android:id="@+id/tbtn_product_view_mode"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-            <ToggleButton
-                style="@style/ProductBottomBtnTheme"
-                android:id="@+id/tbtn_product_view_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/selector_product_view_mode_icon"
-                android:drawableStart="@drawable/selector_product_view_mode_icon"
-                android:textOn="@string/str_to_page_view"
-                android:textOff="@string/str_to_list_view"
-                android:checked="true"/>
-        </LinearLayout>
+            android:layout_centerInParent="true"
+            android:drawableLeft="@drawable/selector_product_view_mode_icon"
+            android:drawableStart="@drawable/selector_product_view_mode_icon"
+            android:textOn="@string/str_to_page_view"
+            android:textOff="@string/str_to_list_view"
+            android:checked="true"/>
 
+        <ToggleButton
+            style="@style/ProductBottomBtnTheme"
+            android:id="@+id/tbtn_product_list_view_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level3"
+            android:layout_marginRight="@dimen/contentPadding_level3"
+            android:layout_toLeftOf="@+id/view_product_list_view_mode_divider"
+            android:layout_toStartOf="@+id/view_product_list_view_mode_divider"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/selector_product_list_view_mode_icon"
+            android:drawableStart="@drawable/selector_product_list_view_mode_icon"
+            android:textOn=""
+            android:textOff=""
+            android:checked="true"/>
+        <View
+            android:id="@+id/view_product_list_view_mode_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/contentPadding_level4"
+            android:layout_marginBottom="@dimen/contentPadding_level4"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_product_search"
+            android:layout_toStartOf="@+id/btn_product_search"
+            android:background="@color/colorWhite"/>
         <Button
             style="@style/ProductBottomBtnTheme"
             android:id="@+id/btn_product_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/contentPadding_level2"
-            android:layout_marginRight="@dimen/contentPadding_level2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="@dimen/contentPadding_level3"
+            android:layout_marginRight="@dimen/contentPadding_level3"
+            android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_search_white"
             android:drawableStart="@drawable/ic_search_white"
             android:text="@string/str_search"/>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

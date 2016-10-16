@@ -43,6 +43,7 @@
 
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">30dp</dimen>
+    <dimen name="product_bottom_bar_size">55dp</dimen>
     <dimen name="product_pager_view_index_view_size">80dp</dimen>
     <dimen name="product_list_view_img_size">120dp</dimen>
 
