@@ -22,7 +22,9 @@
     <string name="str_corporate_intro">企业简介</string>
     <string name="str_corporate_environment">企业环境</string>
     <string name="str_recommended_product">推荐产品</string>
+    <string name="str_recommended_video">推荐视频</string>
     <string name="str_view_all_product">查看所有产品</string>
+    <string name="str_view_all_video">查看所有视频</string>
     <string name="str_corporate_video">企业视频</string>
 
     <!-- 产品界面 -->

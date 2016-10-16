@@ -10,33 +10,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xunda.cloudvision.R;
-import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.VideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 云展视频列表适配器
  * Created by yinglovezhuzhu@gmail.com on 2016/9/29.
  */
 
-public class CloudVideoAdapter extends BaseAdapter {
+public class RecommendedVideoAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<VideoBean> mData = new ArrayList<>();
     private int mWidth = 700;
 
-    public CloudVideoAdapter(Context context, int width) {
+    public RecommendedVideoAdapter(Context context, int width) {
         mContext = context;
         mWidth = width;
     }
 
     @Override
     public int getCount() {
-//        return mData.size();
-        return 20;
+//        return mData.size() > 4 ? 4 : mData.size();
+        return 4;
     }
 
     @Override
@@ -69,7 +67,7 @@ public class CloudVideoAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        switch (new Random().nextInt(4)) {
+        switch (i) {
             case 0:
                 viewHolder.ivImg.setImageResource(R.drawable.img_video1);
                 break;
@@ -85,7 +83,6 @@ public class CloudVideoAdapter extends BaseAdapter {
             default:
                 break;
         }
-
         return view;
     }
 

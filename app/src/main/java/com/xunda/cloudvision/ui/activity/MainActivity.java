@@ -324,11 +324,11 @@ public class MainActivity extends BaseActivity implements IMainView {
         mIvPlayThree = (ImageView) findViewById(R.id.iv_main_content_three_video_play);
         mIvPlayThree.setOnClickListener(this);
 
-        mIvContentOne.setImageResource(R.drawable.img_home_ad1);
+        mIvContentOne.setImageResource(R.drawable.img_video1);
         mIvPlayOne.setVisibility(View.VISIBLE);
-        mIvContentTwo.setImageResource(R.drawable.img_home_ad2);
+        mIvContentTwo.setImageResource(R.drawable.img_ad1);
         mIvPlayTwo.setVisibility(View.GONE);
-        mIvContentThree.setImageResource(R.drawable.img_home_ad3);
+        mIvContentThree.setImageResource(R.drawable.img_video2);
         mIvPlayThree.setVisibility(View.VISIBLE);
 
     }

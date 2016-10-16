@@ -30,7 +30,7 @@
     <!-- 主页面 -->
     <dimen name="main_menu_btn_width">30dp</dimen>
     <dimen name="main_menu_marginTop">300dp</dimen>
-    <dimen name="main_video_play_icon_size">60dp</dimen>
+    <dimen name="main_video_play_icon_size">50dp</dimen>
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">25dp</dimen>

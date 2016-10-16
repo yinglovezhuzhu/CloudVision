@@ -1,9 +1,12 @@
 package com.xunda.cloudvision.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
@@ -11,6 +14,8 @@ import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
+import com.xunda.cloudvision.ui.adapter.RecommendedVideoAdapter;
+import com.xunda.cloudvision.ui.widget.NoScrollGridView;
 import com.xunda.cloudvision.view.ICorporateView;
 
 /**
@@ -53,7 +58,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
             case R.id.btn_corporate_all_product:
                 startActivity(new Intent(this, ProductActivity.class));
                 break;
-            case R.id.btn_corporate_cloud_video:
+            case R.id.btn_corporate_all_video:
                 startActivity(new Intent(this, VideoActivity.class));
                 break;
             case R.id.ibtn_corporate_back:
@@ -91,13 +96,35 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         findViewById(R.id.btn_corporate_image).setOnClickListener(this);
         findViewById(R.id.btn_corporate_intro).setOnClickListener(this);
         findViewById(R.id.btn_corporate_all_product).setOnClickListener(this);
-        findViewById(R.id.btn_corporate_cloud_video).setOnClickListener(this);
         findViewById(R.id.ibtn_corporate_back).setOnClickListener(this);
+        findViewById(R.id.btn_corporate_all_video).setOnClickListener(this);
+
+        // 推荐产品ViewPager高度设置
+        final int dmWidth = getResources().getDisplayMetrics().widthPixels;
+        final View recommendedProductContent = findViewById(R.id.ll_corporate_recommended_product_content);
+        ViewGroup.LayoutParams lp = recommendedProductContent.getLayoutParams();
+        if(null == lp) {
+            lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+        lp.height = dmWidth * 4 / 5;
+        recommendedProductContent.setLayoutParams(lp);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommended_product);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level2));
         viewPager.setAdapter(new RecommendedProductPagerAdapter(getSupportFragmentManager()));
+
+        final int videoItemWidth = (dmWidth - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 3) / 2;
+        final NoScrollGridView videoGrid = (NoScrollGridView) findViewById(R.id.gv_corporate_recommended_video);
+        videoGrid.setAdapter(new RecommendedVideoAdapter(this, videoItemWidth));
+        videoGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(CorporateActivity.this, VideoPlayerActivity.class);
+                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+                startActivity(i);
+            }
+        });
     }
 
     /**
