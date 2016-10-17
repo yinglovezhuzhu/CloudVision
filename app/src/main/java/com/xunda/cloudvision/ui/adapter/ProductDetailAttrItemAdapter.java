@@ -127,6 +127,7 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
         } else {
             if(POSITION_INVALID != mLastCheckedPosition && position < mChecked.size()) {
                 mChecked.set(mLastCheckedPosition, false);
+                mLastCheckedPosition = POSITION_INVALID;
                 if(null != mOnCheckChangedListener) {
                     mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition, false);
                 }
@@ -135,6 +136,7 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
                 for(int i = mChecked.size(); i < mData.size(); i++) {
                     mChecked.add(position == i);
                     if(position == i) {
+                        mLastCheckedPosition = position;
                         if(null != mOnCheckChangedListener) {
                             mOnCheckChangedListener.onCheckChanged(position, true);
                         }
@@ -142,11 +144,11 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
                 }
             } else {
                 mChecked.set(position, true);
+                mLastCheckedPosition = position;
                 if(null != mOnCheckChangedListener) {
                     mOnCheckChangedListener.onCheckChanged(position, true);
                 }
             }
-            mLastCheckedPosition = position;
         }
         notifyDataSetChanged();
     }

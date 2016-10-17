@@ -127,6 +127,7 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
                     }
                 }
             });
+            mAdapters.put(key, adapter);
         }
         viewHolder.gvAttrValueName.setAdapter(adapter);
 

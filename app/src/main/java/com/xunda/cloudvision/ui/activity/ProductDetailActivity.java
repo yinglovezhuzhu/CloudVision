@@ -149,6 +149,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         });
 
         final NoScrollListView lvAttr = (NoScrollListView) findViewById(R.id.lv_product_detail_attr);
+        final TextView tvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
 
@@ -169,32 +170,45 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         sizes.add(new AttrValueBean("尺寸", "XXXL"));
         mAttrAdapter.addAll(sizes, true);
 
+        tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
+
         mAttrAdapter.setOnAttrCheckChangedListener(new ProductDetailAttrAdapter.OnAttrCheckChangedListener() {
             @Override
             public void onAttrCheckChanged(int position, int subPosition, boolean isChecked) {
                 LogUtils.e("XXXX", "Attr Check Changed: \nposition-> " + position
                         + "\nsubPosition-> " + subPosition
                         + "\nisChecked-> " + isChecked);
+                if(isChecked) {
+                    boolean updatePrice = true;
+                    for(int i = 0; i < mAttrAdapter.getCount(); i++) {
+                        if(mAttrAdapter.getCheckedPosition(i) == -1) {
+                            updatePrice = false;
+                            break;
+                        }
+                    }
+                    if(updatePrice) {
+                        switch (subPosition) {
+                            case 0:
+                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
+                                break;
+                            case 1:
+                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
+                                break;
+                            case 2:
+                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
+                                break;
+                            case 3:
+                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
+                                break;
+                            default:
+                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "220"));
+                                break;
+                        }
+                    }
+                }
             }
         });
 
-        final TextView tvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
-        switch (new Random().nextInt(4)) {
-            case 0:
-                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
-                break;
-            case 1:
-                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
-                break;
-            case 2:
-                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
-                break;
-            case 3:
-                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
-                break;
-            default:
-                break;
-        }
 
         mDetailLoadingView = findViewById(R.id.ll_product_detail_loading);
         mWebView = (WebView) findViewById(R.id.wv_product_detail);
