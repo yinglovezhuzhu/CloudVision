@@ -85,56 +85,62 @@
                     android:textColor="@color/text_color_black"
                     android:textSize="@dimen/textSize_level5"
                     android:text="@string/str_specification_parameter_label"/>
-
-                <LinearLayout
-                    android:orientation="horizontal"
+                <com.xunda.cloudvision.ui.widget.NoScrollListView
+                    android:id="@+id/lv_product_detail_attr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/contentPadding_level4"
-                    android:gravity="start|top">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextGray"
-                        android:textSize="@dimen/textSize_level4"
-                        android:text="@string/str_color_label"/>
-                    <com.xunda.cloudvision.ui.widget.NoScrollGridView
-                        android:id="@+id/gv_product_detail_color"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:horizontalSpacing="@dimen/contentPadding_level3"
-                        android:verticalSpacing="@dimen/contentPadding_level4"
-                        android:numColumns="4"
-                        android:listSelector="@color/transparent"
-                        android:descendantFocusability="afterDescendants"/>
-                </LinearLayout>
+                    android:divider="@color/transparent"
+                    android:dividerHeight="0dp"/>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/contentPadding_level4"
-                    android:gravity="start|top">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextGray"
-                        android:textSize="@dimen/textSize_level4"
-                        android:text="@string/str_size_label"/>
-                    <com.xunda.cloudvision.ui.widget.NoScrollGridView
-                        android:id="@+id/gv_product_detail_size"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:horizontalSpacing="@dimen/contentPadding_level3"
-                        android:verticalSpacing="@dimen/contentPadding_level4"
-                        android:numColumns="4"
-                        android:listSelector="@color/transparent"
-                        android:descendantFocusability="afterDescendants"/>
-                </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:padding="@dimen/contentPadding_level4"-->
+                    <!--android:gravity="start|top">-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@color/colorTextGray"-->
+                        <!--android:textSize="@dimen/textSize_level4"-->
+                        <!--android:text="@string/str_color_label"/>-->
+                    <!--<com.xunda.cloudvision.ui.widget.NoScrollGridView-->
+                        <!--android:id="@+id/gv_product_detail_color"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:horizontalSpacing="@dimen/contentPadding_level3"-->
+                        <!--android:verticalSpacing="@dimen/contentPadding_level4"-->
+                        <!--android:numColumns="4"-->
+                        <!--android:listSelector="@color/transparent"-->
+                        <!--android:descendantFocusability="afterDescendants"/>-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:padding="@dimen/contentPadding_level4"-->
+                    <!--android:gravity="start|top">-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@color/colorTextGray"-->
+                        <!--android:textSize="@dimen/textSize_level4"-->
+                        <!--android:text="@string/str_size_label"/>-->
+                    <!--<com.xunda.cloudvision.ui.widget.NoScrollGridView-->
+                        <!--android:id="@+id/gv_product_detail_size"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:horizontalSpacing="@dimen/contentPadding_level3"-->
+                        <!--android:verticalSpacing="@dimen/contentPadding_level4"-->
+                        <!--android:numColumns="4"-->
+                        <!--android:listSelector="@color/transparent"-->
+                        <!--android:descendantFocusability="afterDescendants"/>-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:orientation="horizontal"

@@ -137,7 +137,7 @@
                         android:text="@string/str_recommended_product"/>
                     <View
                         android:layout_width="@dimen/corporate_red_divider_width"
-                        android:layout_height="0.5dp"
+                        android:layout_height="1dp"
                         android:layout_marginBottom="@dimen/contentPadding_level4"
                         android:background="@color/colorTextRed" />
                     <LinearLayout
@@ -183,7 +183,7 @@
                         android:text="@string/str_recommended_video"/>
                     <View
                         android:layout_width="@dimen/corporate_red_divider_width"
-                        android:layout_height="0.5dp"
+                        android:layout_height="1dp"
                         android:layout_marginBottom="@dimen/contentPadding_level4"
                         android:background="@color/colorTextRed" />
                     <com.xunda.cloudvision.ui.widget.NoScrollGridView

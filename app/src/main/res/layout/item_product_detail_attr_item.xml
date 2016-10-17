@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <TextView
+        android:id="@+id/tv_item_product_detail_attr_item_value_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minEms="4"
+        android:maxEms="4"
+        android:gravity="center"
+        android:maxLines="1"
+        android:clickable="true"
+        android:textSize="@dimen/textSize_level6"
+        android:textColor="@color/colorTextBlack"
+        android:background="@drawable/selector_bg_item_product_detail_attr" />
+</LinearLayout>

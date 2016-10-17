@@ -16,16 +16,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
 import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
 import com.xunda.cloudvision.ui.adapter.ProductDetailAttrAdapter;
+import com.xunda.cloudvision.ui.adapter.ProductDetailAttrItemAdapter;
 import com.xunda.cloudvision.presenter.ProductDetailPresenter;
 import com.xunda.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.xunda.cloudvision.ui.widget.NoScrollGridView;
+import com.xunda.cloudvision.ui.widget.NoScrollListView;
 import com.xunda.cloudvision.ui.widget.PageControlBar;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.view.IProductDetailView;
@@ -45,13 +46,14 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
 
-    private NoScrollGridView  mGvColor;
-    private NoScrollGridView mGvSize;
+//    private NoScrollGridView  mGvColor;
+//    private NoScrollGridView mGvSize;
     private View mDetailLoadingView;
     private WebView mWebView;
 
-    private ProductDetailAttrAdapter mColorAttrAdapter;
-    private ProductDetailAttrAdapter mSizeAttrAdapter;
+//    private ProductDetailAttrItemAdapter mColorAttrAdapter;
+//    private ProductDetailAttrItemAdapter mSizeAttrAdapter;
+    private ProductDetailAttrAdapter mAttrAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,27 +148,35 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                 }
             }
         });
-        mGvColor = (NoScrollGridView) findViewById(R.id.gv_product_detail_color);
-        mColorAttrAdapter = new ProductDetailAttrAdapter(this);
-        mGvColor.setAdapter(mColorAttrAdapter);
-        List<AttrValueBean> colors = new ArrayList<>();
-        colors.add(new AttrValueBean("黄色"));
-        colors.add(new AttrValueBean("紫色"));
-        colors.add(new AttrValueBean("蓝色"));
-        colors.add(new AttrValueBean("白色"));
-        mColorAttrAdapter.addAll(colors, true);
 
-        mGvSize = (NoScrollGridView) findViewById(R.id.gv_product_detail_size);
-        mSizeAttrAdapter = new ProductDetailAttrAdapter(this);
-        mGvSize.setAdapter(mSizeAttrAdapter);
+        final NoScrollListView lvAttr = (NoScrollListView) findViewById(R.id.lv_product_detail_attr);
+        mAttrAdapter = new ProductDetailAttrAdapter(this);
+        lvAttr.setAdapter(mAttrAdapter);
+
+//        mGvColor = (NoScrollGridView) findViewById(R.id.gv_product_detail_color);
+//        mColorAttrAdapter = new ProductDetailAttrItemAdapter(this);
+//        mGvColor.setAdapter(mColorAttrAdapter);
+        List<AttrValueBean> colors = new ArrayList<>();
+        colors.add(new AttrValueBean("颜色", "黄色"));
+        colors.add(new AttrValueBean("颜色", "紫色"));
+        colors.add(new AttrValueBean("颜色", "蓝色"));
+        colors.add(new AttrValueBean("颜色", "白色"));
+
+        mAttrAdapter.addAll(colors, false);
+//        mColorAttrAdapter.addAll(colors, true);
+
+//        mGvSize = (NoScrollGridView) findViewById(R.id.gv_product_detail_size);
+//        mSizeAttrAdapter = new ProductDetailAttrItemAdapter(this);
+//        mGvSize.setAdapter(mSizeAttrAdapter);
         List<AttrValueBean> sizes = new ArrayList<>();
-        sizes.add(new AttrValueBean("S"));
-        sizes.add(new AttrValueBean("M"));
-        sizes.add(new AttrValueBean("L"));
-        sizes.add(new AttrValueBean("XL"));
-        sizes.add(new AttrValueBean("XXL"));
-        sizes.add(new AttrValueBean("XXXL"));
-        mSizeAttrAdapter.addAll(sizes, false);
+        sizes.add(new AttrValueBean("尺寸", "S"));
+        sizes.add(new AttrValueBean("尺寸", "M"));
+        sizes.add(new AttrValueBean("尺寸", "L"));
+        sizes.add(new AttrValueBean("尺寸", "XL"));
+        sizes.add(new AttrValueBean("尺寸", "XXL"));
+        sizes.add(new AttrValueBean("尺寸", "XXXL"));
+        mAttrAdapter.addAll(sizes, true);
+//        mSizeAttrAdapter.addAll(sizes, false);
 
         mDetailLoadingView = findViewById(R.id.ll_product_detail_loading);
         mWebView = (WebView) findViewById(R.id.wv_product_detail);

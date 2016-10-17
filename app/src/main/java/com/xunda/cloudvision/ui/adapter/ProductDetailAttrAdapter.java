@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
+import com.xunda.cloudvision.ui.widget.NoScrollGridView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 产品详情属性适配器
@@ -20,14 +24,8 @@ import java.util.List;
 
 public class ProductDetailAttrAdapter extends BaseAdapter {
 
-    public static final int POSITION_INVALID = -1;
-
     private Context mContext;
-    private List<Boolean> mChecked = new ArrayList<>();
-    private List<AttrValueBean> mData = new ArrayList<>();
-    private int mLastCheckedPosition = POSITION_INVALID;
-
-    private OnCheckChangedListener mOnCheckChangedListener;
+    private Map<String, List<AttrValueBean>> mData = new HashMap<>();
 
     public ProductDetailAttrAdapter(Context context) {
         this.mContext = context;
@@ -42,9 +40,16 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
         if(null == data || data.isEmpty()) {
             return;
         }
-        mData.addAll(data);
-        for(int i = 0;i < data.size(); i++) {
-            mChecked.add(false);
+        String attrName;
+        for (AttrValueBean attr : data) {
+            attrName = attr.getAttrName();
+            if(mData.containsKey(attrName)) {
+                mData.get(attrName).add(attr);
+            } else {
+                List<AttrValueBean> attrs = new ArrayList<>();
+                attrs.add(attr);
+                mData.put(attrName, attrs);
+            }
         }
         if(notifyDataSetChanged) {
             notifyDataSetChanged();
@@ -53,26 +58,9 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
 
     public void clear(boolean notifyDataSetChanged) {
         mData.clear();
-        mChecked.clear();
         if(notifyDataSetChanged) {
             notifyDataSetChanged();
         }
-    }
-
-    public int getCheckedPosition() {
-        return mLastCheckedPosition;
-    }
-
-    public void clearChoice() {
-        if(mLastCheckedPosition < mChecked.size()) {
-            mChecked.set(mLastCheckedPosition, false);
-        }
-        mLastCheckedPosition = POSITION_INVALID;
-        notifyDataSetChanged();
-    }
-
-    public void setOnChechChangedListener(OnCheckChangedListener listener) {
-        this.mOnCheckChangedListener = listener;
     }
 
     @Override
@@ -81,7 +69,7 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
     }
 
     @Override
-    public AttrValueBean getItem(int position) {
+    public List<AttrValueBean> getItem(int position) {
         return mData.get(position);
     }
 
@@ -96,59 +84,26 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
         if(null == convertView) {
             viewHolder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_product_detail_attr, null);
-            viewHolder.tvName = (TextView) convertView.findViewById(R.id.tv_item_product_detail_attr_name);
-            viewHolder.tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClicked(position);
-                }
-            });
+            viewHolder.tvAttrName = (TextView) convertView.findViewById(R.id.tv_item_product_detail_attr_name);
+            viewHolder.gvAttrValueName = (NoScrollGridView) convertView.findViewById(R.id.gv_item_product_detail_attr_value);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final boolean checked = position < mChecked.size() ? mChecked.get(position) : false;
-        viewHolder.tvName.setBackgroundResource(checked ?
-                R.drawable.shape_bg_item_product_detail_attr_pressed : R.drawable.selector_bg_item_product_detail_attr);
-        viewHolder.tvName.setText(getItem(position).getAttrName());
+        final Object key = mData.keySet().toArray()[position];
+
+        viewHolder.tvAttrName.setText(key.toString());
+        ProductDetailAttrItemAdapter adapter = new ProductDetailAttrItemAdapter(mContext);
+        viewHolder.gvAttrValueName.setAdapter(adapter);
+        adapter.addAll(mData.get(key), true);
+
         return convertView;
     }
 
-    private void onItemClicked(int position) {
-        if(mLastCheckedPosition == position) {
-            final boolean checked = mChecked.get(mLastCheckedPosition);
-            mChecked.set(mLastCheckedPosition, !checked);
-            mLastCheckedPosition = checked ? POSITION_INVALID : position;
-        } else {
-            if(POSITION_INVALID != mLastCheckedPosition && position < mChecked.size()) {
-                mChecked.set(mLastCheckedPosition, false);
-            }
-            if(position >= mChecked.size() && position < mData.size()) {
-                for(int i = mChecked.size(); i < mData.size(); i++) {
-                    mChecked.add(position == i);
-                }
-            } else {
-                mChecked.set(position, true);
-            }
-            mLastCheckedPosition = position;
-        }
-        if(null != mOnCheckChangedListener) {
-            mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition);
-        }
-        notifyDataSetChanged();
-    }
 
     private static class ViewHolder {
-        TextView tvName;
-    }
-
-    public interface OnCheckChangedListener {
-
-        /**
-         * 选中状态发生改变
-         * @param checkedPosition 选中position，当取值为 {@linkplain #POSITION_INVALID} = -1时，表示没有选中任何项
-         */
-        void onCheckChanged(int checkedPosition);
+        TextView tvAttrName;
+        NoScrollGridView gvAttrValueName;
     }
 }

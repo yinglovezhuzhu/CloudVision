@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:padding="@dimen/contentPadding_level4"
+    android:gravity="start|top">
     <TextView
         android:id="@+id/tv_item_product_detail_attr_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minEms="4"
-        android:maxEms="4"
+        android:textColor="@color/colorTextGray"
+        android:textSize="@dimen/textSize_level4"
+        android:text="@string/str_color_label"/>
+    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+        android:id="@+id/gv_item_product_detail_attr_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
-        android:maxLines="1"
-        android:clickable="true"
-        android:textSize="@dimen/textSize_level6"
-        android:textColor="@color/colorTextBlack"
-        android:background="@drawable/selector_bg_item_product_detail_attr" />
+        android:horizontalSpacing="@dimen/contentPadding_level3"
+        android:verticalSpacing="@dimen/contentPadding_level4"
+        android:numColumns="4"
+        android:listSelector="@color/transparent"
+        android:descendantFocusability="afterDescendants"/>
 </LinearLayout>
