@@ -61,26 +61,25 @@ public class ProductPagerFragment extends BaseFragment {
 
         final TextView tvDesc = (TextView) contentView.findViewById(R.id.tv_product_pager_desc);
 
-        final TextView tvCurrency = (TextView) contentView.findViewById(R.id.tv_product_pager_currency);
 
         final TextView tvPrice = (TextView) contentView.findViewById(R.id.tv_product_pager_price);
 
         switch (new Random().nextInt(4)) {
             case 0:
                 ivImg.setImageResource(R.drawable.img_product1);
-                tvPrice.setText("100");
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
                 break;
             case 1:
                 ivImg.setImageResource(R.drawable.img_product2);
-                tvPrice.setText("120");
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
                 break;
             case 2:
                 ivImg.setImageResource(R.drawable.img_product3);
-                tvPrice.setText("150");
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
                 break;
             case 3:
                 ivImg.setImageResource(R.drawable.img_product4);
-                tvPrice.setText("200");
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
                 break;
             default:
                 break;

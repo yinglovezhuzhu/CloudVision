@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
 
-    private List<ProductBean> mData = new ArrayList<>();
+    private final List<ProductBean> mData = new ArrayList<>();
 
     public ProductPagerViewAdapter(FragmentManager fm) {
         super(fm);

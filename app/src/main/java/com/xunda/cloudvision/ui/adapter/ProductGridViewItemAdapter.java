@@ -23,17 +23,19 @@ import java.util.Random;
 
 class ProductGridViewItemAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private List<ProductBean> mData = new ArrayList<>();
+    private final Context mContext;
+    private final List<ProductBean> mData = new ArrayList<>();
     private int mWidth = 200;
     private int mHeight = 430;
     private int mNumColumns = 2;
+    private final String mPriceFormat;
 
     ProductGridViewItemAdapter(Context context, int width, int height, int numColumns) {
         mContext = context;
         this.mWidth = width;
         this.mHeight = height;
         this.mNumColumns = numColumns;
+        this.mPriceFormat = mContext.getResources().getString(R.string.str_price_format_with_currency);
     }
 
     @Override
@@ -62,7 +64,6 @@ class ProductGridViewItemAdapter extends BaseAdapter {
             viewHolder.ivImg = (ImageView) view.findViewById(R.id.iv_item_product_grid_view_img);
             viewHolder.tvDesc = (TextView) view.findViewById(R.id.tv_item_product_grid_view_desc);
             viewHolder.tvPrice = (TextView) view.findViewById(R.id.tv_item_product_grid_view_price);
-            viewHolder.tvCurrency = (TextView) view.findViewById(R.id.tv_item_product_grid_view_currency);
             LayoutParams lp = (LayoutParams) view.getLayoutParams();
             if(null == lp) {
                 lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -77,19 +78,19 @@ class ProductGridViewItemAdapter extends BaseAdapter {
         switch (new Random().nextInt(4)) {
             case 0:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product1);
-                viewHolder.tvPrice.setText("100");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "100"));
                 break;
             case 1:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product2);
-                viewHolder.tvPrice.setText("120");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "120"));
                 break;
             case 2:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product3);
-                viewHolder.tvPrice.setText("150");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "150"));
                 break;
             case 3:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product4);
-                viewHolder.tvPrice.setText("200");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "200"));
                 break;
             default:
                 break;
@@ -102,6 +103,5 @@ class ProductGridViewItemAdapter extends BaseAdapter {
         ImageView ivImg;
         TextView tvDesc;
         TextView tvPrice;
-        TextView tvCurrency;
     }
 }

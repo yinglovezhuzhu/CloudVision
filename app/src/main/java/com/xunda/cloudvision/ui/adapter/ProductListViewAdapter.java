@@ -22,11 +22,13 @@ import java.util.Random;
 
 public class ProductListViewAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private List<ProductBean> mData = new ArrayList<>();
+    private final Context mContext;
+    private final List<ProductBean> mData = new ArrayList<>();
+    private final String mPriceFormat;
 
     public ProductListViewAdapter(Context context) {
-        mContext = context;
+        this.mContext = context;
+        this.mPriceFormat = mContext.getResources().getString(R.string.str_price_format_with_currency);
     }
 
     @Override
@@ -55,7 +57,6 @@ public class ProductListViewAdapter extends BaseAdapter {
             viewHolder.ivImg = (ImageView) view.findViewById(R.id.iv_item_product_list_view_img);
             viewHolder.tvDesc = (TextView) view.findViewById(R.id.tv_item_product_list_view_desc);
             viewHolder.tvPrice = (TextView) view.findViewById(R.id.tv_item_product_list_view_price);
-            viewHolder.tvCurrency = (TextView) view.findViewById(R.id.tv_item_product_list_view_currency);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -63,19 +64,19 @@ public class ProductListViewAdapter extends BaseAdapter {
         switch (new Random().nextInt(4)) {
             case 0:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product1);
-                viewHolder.tvPrice.setText("100");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "100"));
                 break;
             case 1:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product2);
-                viewHolder.tvPrice.setText("120");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "120"));
                 break;
             case 2:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product3);
-                viewHolder.tvPrice.setText("150");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "150"));
                 break;
             case 3:
                 viewHolder.ivImg.setImageResource(R.drawable.img_product4);
-                viewHolder.tvPrice.setText("200");
+                viewHolder.tvPrice.setText(String.format(mPriceFormat, "200"));
                 break;
             default:
                 break;
@@ -88,6 +89,5 @@ public class ProductListViewAdapter extends BaseAdapter {
         ImageView ivImg;
         TextView tvDesc;
         TextView tvPrice;
-        TextView tvCurrency;
     }
 }

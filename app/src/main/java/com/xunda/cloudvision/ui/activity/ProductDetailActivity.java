@@ -16,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
@@ -28,11 +29,13 @@ import com.xunda.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.xunda.cloudvision.ui.widget.NoScrollGridView;
 import com.xunda.cloudvision.ui.widget.NoScrollListView;
 import com.xunda.cloudvision.ui.widget.PageControlBar;
+import com.xunda.cloudvision.utils.LogUtils;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.view.IProductDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 产品详情页面
@@ -46,13 +49,9 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
 
-//    private NoScrollGridView  mGvColor;
-//    private NoScrollGridView mGvSize;
     private View mDetailLoadingView;
     private WebView mWebView;
 
-//    private ProductDetailAttrItemAdapter mColorAttrAdapter;
-//    private ProductDetailAttrItemAdapter mSizeAttrAdapter;
     private ProductDetailAttrAdapter mAttrAdapter;
 
     @Override
@@ -153,9 +152,6 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
 
-//        mGvColor = (NoScrollGridView) findViewById(R.id.gv_product_detail_color);
-//        mColorAttrAdapter = new ProductDetailAttrItemAdapter(this);
-//        mGvColor.setAdapter(mColorAttrAdapter);
         List<AttrValueBean> colors = new ArrayList<>();
         colors.add(new AttrValueBean("颜色", "黄色"));
         colors.add(new AttrValueBean("颜色", "紫色"));
@@ -163,11 +159,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         colors.add(new AttrValueBean("颜色", "白色"));
 
         mAttrAdapter.addAll(colors, false);
-//        mColorAttrAdapter.addAll(colors, true);
 
-//        mGvSize = (NoScrollGridView) findViewById(R.id.gv_product_detail_size);
-//        mSizeAttrAdapter = new ProductDetailAttrItemAdapter(this);
-//        mGvSize.setAdapter(mSizeAttrAdapter);
         List<AttrValueBean> sizes = new ArrayList<>();
         sizes.add(new AttrValueBean("尺寸", "S"));
         sizes.add(new AttrValueBean("尺寸", "M"));
@@ -176,7 +168,33 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         sizes.add(new AttrValueBean("尺寸", "XXL"));
         sizes.add(new AttrValueBean("尺寸", "XXXL"));
         mAttrAdapter.addAll(sizes, true);
-//        mSizeAttrAdapter.addAll(sizes, false);
+
+        mAttrAdapter.setOnAttrCheckChangedListener(new ProductDetailAttrAdapter.OnAttrCheckChangedListener() {
+            @Override
+            public void onAttrCheckChanged(int position, int subPosition, boolean isChecked) {
+                LogUtils.e("XXXX", "Attr Check Changed: \nposition-> " + position
+                        + "\nsubPosition-> " + subPosition
+                        + "\nisChecked-> " + isChecked);
+            }
+        });
+
+        final TextView tvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
+        switch (new Random().nextInt(4)) {
+            case 0:
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
+                break;
+            case 1:
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
+                break;
+            case 2:
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
+                break;
+            case 3:
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
+                break;
+            default:
+                break;
+        }
 
         mDetailLoadingView = findViewById(R.id.ll_product_detail_loading);
         mWebView = (WebView) findViewById(R.id.wv_product_detail);

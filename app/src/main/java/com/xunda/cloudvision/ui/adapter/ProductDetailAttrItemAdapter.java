@@ -71,7 +71,7 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setOnChechChangedListener(OnCheckChangedListener listener) {
+    public void setOnCheckChangedListener(OnCheckChangedListener listener) {
         this.mOnCheckChangedListener = listener;
     }
 
@@ -111,30 +111,42 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
         final boolean checked = position < mChecked.size() ? mChecked.get(position) : false;
         viewHolder.tvName.setBackgroundResource(checked ?
                 R.drawable.shape_bg_item_product_detail_attr_pressed : R.drawable.selector_bg_item_product_detail_attr);
-        viewHolder.tvName.setText(getItem(position).getAttrName());
+        viewHolder.tvName.setText(getItem(position).getAttrValue());
         return convertView;
     }
 
     private void onItemClicked(int position) {
+
         if(mLastCheckedPosition == position) {
             final boolean checked = mChecked.get(mLastCheckedPosition);
             mChecked.set(mLastCheckedPosition, !checked);
             mLastCheckedPosition = checked ? POSITION_INVALID : position;
+            if(null != mOnCheckChangedListener) {
+                mOnCheckChangedListener.onCheckChanged(position, !checked);
+            }
         } else {
             if(POSITION_INVALID != mLastCheckedPosition && position < mChecked.size()) {
                 mChecked.set(mLastCheckedPosition, false);
+                if(null != mOnCheckChangedListener) {
+                    mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition, false);
+                }
             }
             if(position >= mChecked.size() && position < mData.size()) {
                 for(int i = mChecked.size(); i < mData.size(); i++) {
                     mChecked.add(position == i);
+                    if(position == i) {
+                        if(null != mOnCheckChangedListener) {
+                            mOnCheckChangedListener.onCheckChanged(position, true);
+                        }
+                    }
                 }
             } else {
                 mChecked.set(position, true);
+                if(null != mOnCheckChangedListener) {
+                    mOnCheckChangedListener.onCheckChanged(position, true);
+                }
             }
             mLastCheckedPosition = position;
-        }
-        if(null != mOnCheckChangedListener) {
-            mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition);
         }
         notifyDataSetChanged();
     }
@@ -143,12 +155,13 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
         TextView tvName;
     }
 
-    public interface OnCheckChangedListener {
+    interface OnCheckChangedListener {
 
         /**
          * 选中状态发生改变
-         * @param checkedPosition 选中position，当取值为 {@linkplain #POSITION_INVALID} = -1时，表示没有选中任何项
+         * @param position 选中position，当取值为 {@linkplain #POSITION_INVALID} = -1时，表示没有选中任何项
+         * @param isChecked 是否选中
          */
-        void onCheckChanged(int checkedPosition);
+        void onCheckChanged(int position, boolean isChecked);
     }
 }

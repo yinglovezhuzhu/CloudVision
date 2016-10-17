@@ -154,13 +154,13 @@
                         android:textColor="@color/text_color_black"
                         android:textSize="@dimen/textSize_level5"
                         android:text="@string/str_reference_price_label"/>
-                    <TextView
-                        android:id="@+id/tv_product_detail_currency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorTextRed"
-                        android:textSize="@dimen/textSize_level4"
-                        android:text="@string/str_currency_rmb"/>
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_product_detail_currency"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@color/colorTextRed"-->
+                        <!--android:textSize="@dimen/textSize_level4"-->
+                        <!--android:text="@string/str_currency_rmb"/>-->
                     <TextView
                         android:id="@+id/tv_product_detail_price"
                         android:layout_width="wrap_content"
@@ -169,8 +169,7 @@
                         android:layout_marginStart="@dimen/contentPadding_level6"
                         android:textSize="@dimen/textSize_level4"
                         android:textColor="@color/colorTextRed"
-                        android:minEms="2"
-                        android:text="200"/>
+                        android:minEms="2"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"

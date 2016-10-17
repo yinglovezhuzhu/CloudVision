@@ -47,14 +47,14 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/contentPadding_level4"
                 android:gravity="center">
-                <TextView
-                    android:id="@+id/tv_product_pager_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/textSize_level0"
-                    android:textColor="@color/colorTextRed"
-                    android:text="@string/str_currency_rmb"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_product_pager_currency"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="@dimen/textSize_level0"-->
+                    <!--android:textColor="@color/colorTextRed"-->
+                    <!--android:text="@string/str_currency_rmb"/>-->
                 <TextView
                     android:id="@+id/tv_product_pager_price"
                     android:layout_width="wrap_content"

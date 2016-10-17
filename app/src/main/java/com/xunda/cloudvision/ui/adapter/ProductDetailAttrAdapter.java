@@ -9,13 +9,13 @@ import android.widget.TextView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
 import com.xunda.cloudvision.ui.widget.NoScrollGridView;
+import com.xunda.cloudvision.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 产品详情属性适配器
@@ -24,17 +24,22 @@ import java.util.Set;
 
 public class ProductDetailAttrAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private Map<String, List<AttrValueBean>> mData = new HashMap<>();
+    private final Context mContext;
+    private final Map<String, List<AttrValueBean>> mData = new HashMap<>();
+    private final Map<String, ProductDetailAttrItemAdapter> mAdapters = new HashMap<>();
+    private final String mLabelFormat;
+
+    private OnAttrCheckChangedListener mOnAttrCheckChangedListener = null;
 
     public ProductDetailAttrAdapter(Context context) {
         this.mContext = context;
+        this.mLabelFormat = context.getResources().getString(R.string.str_label_format);
     }
 
     /**
      * 加入数据
-     * @param data
-     * @param notifyDataSetChanged
+     * @param data 属性数据
+     * @param notifyDataSetChanged 是否更新UI
      */
     public void addAll(Collection<AttrValueBean> data, boolean notifyDataSetChanged) {
         if(null == data || data.isEmpty()) {
@@ -63,6 +68,19 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
         }
     }
 
+    public void setOnAttrCheckChangedListener(OnAttrCheckChangedListener listener) {
+        this.mOnAttrCheckChangedListener = listener;
+    }
+
+    /**
+     * 获取某个属性选中的值索引
+     * @param position 属性索引
+     * @return 选中的值索引， -1表示没有选中任何值
+     */
+    public int getCheckedPosition(int position) {
+        return mAdapters.get(String.valueOf(mData.keySet().toArray()[position])).getCheckedPosition();
+    }
+
     @Override
     public int getCount() {
         return mData.size();
@@ -70,7 +88,7 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
 
     @Override
     public List<AttrValueBean> getItem(int position) {
-        return mData.get(position);
+        return mData.get(String.valueOf(mData.keySet().toArray()[position]));
     }
 
     @Override
@@ -91,12 +109,26 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final Object key = mData.keySet().toArray()[position];
+        final String key = String.valueOf(mData.keySet().toArray()[position]);
 
-        viewHolder.tvAttrName.setText(key.toString());
-        ProductDetailAttrItemAdapter adapter = new ProductDetailAttrItemAdapter(mContext);
+        viewHolder.tvAttrName.setText(String.format(mLabelFormat, key));
+
+        final ProductDetailAttrItemAdapter adapter;
+        if(mAdapters.containsKey(key)) {
+            adapter = mAdapters.get(key);
+        } else {
+            adapter = new ProductDetailAttrItemAdapter(mContext);
+            adapter.addAll(mData.get(key), true);
+            adapter.setOnCheckChangedListener(new ProductDetailAttrItemAdapter.OnCheckChangedListener() {
+                @Override
+                public void onCheckChanged(int subPosition, boolean isChecked) {
+                    if(null != mOnAttrCheckChangedListener) {
+                        mOnAttrCheckChangedListener.onAttrCheckChanged(position, subPosition, isChecked);
+                    }
+                }
+            });
+        }
         viewHolder.gvAttrValueName.setAdapter(adapter);
-        adapter.addAll(mData.get(key), true);
 
         return convertView;
     }
@@ -105,5 +137,15 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
     private static class ViewHolder {
         TextView tvAttrName;
         NoScrollGridView gvAttrValueName;
+    }
+
+    public interface OnAttrCheckChangedListener {
+        /**
+         * 属性选中状态发生变化
+         * @param position 属性索引
+         * @param subPosition 属性值索引
+         * @param isChecked 是否选中，true 选中， false没选中
+         */
+        void onAttrCheckChanged(int position, int subPosition, boolean isChecked);
     }
 }
