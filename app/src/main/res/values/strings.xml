@@ -40,6 +40,7 @@
     <string name="str_search_result_label">搜索结果：</string>
     <string name="str_loading">加载中</string>
 
+
     <!-- 视频 -->
     <string name="str_loading_video">正在加载视频</string>
 </resources>
