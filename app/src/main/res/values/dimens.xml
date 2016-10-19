@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 字体大小 -->
-    <dimen name="textSize_level0">28sp</dimen>
-    <dimen name="textSize_level1">22sp</dimen>
-    <dimen name="textSize_level2">20sp</dimen>
-    <dimen name="textSize_level3">18sp</dimen>
-    <dimen name="textSize_level4">16sp</dimen>
-    <dimen name="textSize_level5">14sp</dimen>
-    <dimen name="textSize_level6">12sp</dimen>
-    <dimen name="textSize_level7">10sp</dimen>
-    <dimen name="textSize_level8">8sp</dimen>
+    <!--&lt;!&ndash; 字体大小 &ndash;&gt;-->
+    <!--<dimen name="textSize_level0">28sp</dimen>-->
+    <!--<dimen name="textSize_level1">22sp</dimen>-->
+    <!--<dimen name="textSize_level2">20sp</dimen>-->
+    <!--<dimen name="textSize_level3">18sp</dimen>-->
+    <!--<dimen name="textSize_level4">16sp</dimen>-->
+    <!--<dimen name="textSize_level5">14sp</dimen>-->
+    <!--<dimen name="textSize_level6">12sp</dimen>-->
+    <!--<dimen name="textSize_level7">10sp</dimen>-->
+    <!--<dimen name="textSize_level8">8sp</dimen>-->
 
 
-    <dimen name="contentPadding_level0">20dp</dimen>
-    <dimen name="contentPadding_level1">15dp</dimen>
-    <dimen name="contentPadding_level2">12dp</dimen>
-    <dimen name="contentPadding_level3">10dp</dimen>
-    <dimen name="contentPadding_level4">8dp</dimen>
-    <dimen name="contentPadding_level5">5dp</dimen>
-    <dimen name="contentPadding_level6">3dp</dimen>
+    <!--<dimen name="contentPadding_level0">20dp</dimen>-->
+    <!--<dimen name="contentPadding_level1">15dp</dimen>-->
+    <!--<dimen name="contentPadding_level2">12dp</dimen>-->
+    <!--<dimen name="contentPadding_level3">10dp</dimen>-->
+    <!--<dimen name="contentPadding_level4">8dp</dimen>-->
+    <!--<dimen name="contentPadding_level5">5dp</dimen>-->
+    <!--<dimen name="contentPadding_level6">3dp</dimen>-->
 
 
-    <!-- 激活页面 -->
-    <dimen name="activate_logo_minSize">120dp</dimen>
-    <dimen name="activate_widget_margin">50dp</dimen>
-    <dimen name="activate_btn_height">45dp</dimen>
+    <!--&lt;!&ndash; 激活页面 &ndash;&gt;-->
+    <!--<dimen name="activate_logo_minSize">120dp</dimen>-->
+    <!--<dimen name="activate_widget_margin">50dp</dimen>-->
+    <!--<dimen name="activate_btn_height">45dp</dimen>-->
 
-    <!-- 主页面 -->
-    <dimen name="main_menu_btn_width">30dp</dimen>
-    <dimen name="main_menu_marginTop">200dp</dimen>
-    <dimen name="main_video_play_icon_size">40dp</dimen>
+    <!--&lt;!&ndash; 主页面 &ndash;&gt;-->
+    <!--<dimen name="main_menu_btn_width">30dp</dimen>-->
+    <!--<dimen name="main_menu_marginTop">200dp</dimen>-->
+    <!--<dimen name="main_video_play_icon_size">40dp</dimen>-->
 
-    <!-- 语音界面 -->
-    <dimen name="voice_android_icon_size">25dp</dimen>
+    <!--&lt;!&ndash; 语音界面 &ndash;&gt;-->
+    <!--<dimen name="voice_android_icon_size">25dp</dimen>-->
 
-    <!-- 企业首页 -->
-    <dimen name="corporate_header_logo_size">55dp</dimen>
-    <dimen name="corporate_red_divider_width">40dp</dimen>
-    <dimen name="corporate_btn_more_product_height">30dp</dimen>
-    <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
-    <dimen name="corporate_ibtn_back_size">35dp</dimen>
+    <!--&lt;!&ndash; 企业首页 &ndash;&gt;-->
+    <!--<dimen name="corporate_header_logo_size">55dp</dimen>-->
+    <!--<dimen name="corporate_red_divider_width">40dp</dimen>-->
+    <!--<dimen name="corporate_btn_more_product_height">30dp</dimen>-->
+    <!--<dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>-->
+    <!--<dimen name="corporate_ibtn_back_size">35dp</dimen>-->
 
-    <!-- 产品界面 -->
-    <dimen name="product_bottom_btn_minSize">30dp</dimen>
-    <dimen name="product_bottom_bar_size">55dp</dimen>
-    <dimen name="product_pager_view_index_view_size">70dp</dimen>
-    <dimen name="product_list_view_img_size">120dp</dimen>
+    <!--&lt;!&ndash; 产品界面 &ndash;&gt;-->
+    <!--<dimen name="product_bottom_btn_minSize">30dp</dimen>-->
+    <!--<dimen name="product_bottom_bar_size">55dp</dimen>-->
+    <!--<dimen name="product_pager_view_index_view_size">70dp</dimen>-->
+    <!--<dimen name="product_list_view_img_size">120dp</dimen>-->
 
-    <!-- 产品详情 -->
-    <dimen name="product_detail_img_page_margin">0dp</dimen>
-    <dimen name="product_detail_loading_progress_size">20dp</dimen>s
+    <!--&lt;!&ndash; 产品详情 &ndash;&gt;-->
+    <!--<dimen name="product_detail_img_page_margin">0dp</dimen>-->
+    <!--<dimen name="product_detail_loading_progress_size">20dp</dimen>-->
 
 </resources>

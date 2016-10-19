@@ -17,42 +17,61 @@
         android:layout_height="match_parent"
         android:padding="@dimen/contentPadding_level2"
         android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="@dimen/activate_logo_minSize"
-            android:minHeight="@dimen/activate_logo_minSize"
-            android:scaleType="fitCenter"
-            android:src="@drawable/logo_full"
-            android:contentDescription="@null"/>
-        <EditText
-            android:id="@+id/et_activate_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activate_widget_margin"
-            android:padding="@dimen/contentPadding_level2"
-            android:minEms="12"
-            android:maxEms="12"
-            android:gravity="center_horizontal"
-            android:maxLines="1"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/text_color_white"
-            android:textColorHint="@color/colorWhite"
-            android:background="@drawable/selector_activate_input"
-            android:textSize="@dimen/textSize_level4"
-            android:textCursorDrawable="@drawable/shape_edit_cursor_white"
-            android:hint="@string/str_please_input_activation_code"/>
-        <Button
-            android:id="@+id/btn_activate_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activate_widget_margin"
-            android:padding="@dimen/contentPadding_level2"
-            android:minEms="12"
-            android:background="@drawable/selector_btn_activate"
-            android:textColor="@color/text_color_white"
-            android:textSize="@dimen/textSize_level4"
-            android:text="@string/str_activate"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="bottom|center_horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_full"
+                android:contentDescription="@null"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/et_activate_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activate_widget_margin"
+                android:padding="@dimen/contentPadding_level3"
+                android:minEms="14"
+                android:maxEms="14"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/text_color_white"
+                android:textColorHint="@color/colorWhite"
+                android:background="@drawable/selector_activate_input"
+                android:textSize="@dimen/textSize_level4"
+                android:textCursorDrawable="@drawable/shape_edit_cursor_white"
+                android:hint="@string/str_please_input_activation_code"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="top|center_horizontal">
+            <Button
+                android:id="@+id/btn_activate_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activate_widget_margin"
+                android:padding="@dimen/contentPadding_level2"
+                android:minEms="15"
+                android:background="@drawable/selector_btn_activate"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/textSize_level4"
+                android:text="@string/str_activate"/>
+
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
 

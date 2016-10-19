@@ -6,24 +6,23 @@
     <dimen name="textSize_level1">28sp</dimen>
     <dimen name="textSize_level2">24sp</dimen>
     <dimen name="textSize_level3">22sp</dimen>
-    <dimen name="textSize_level4">20sp</dimen>
+    <dimen name="textSize_level4">50sp</dimen>
     <dimen name="textSize_level5">18sp</dimen>
     <dimen name="textSize_level6">16sp</dimen>
     <dimen name="textSize_level7">14sp</dimen>
     <dimen name="textSize_level8">12sp</dimen>
 
 
-    <dimen name="contentPadding_level0">20dp</dimen>
-    <dimen name="contentPadding_level1">15dp</dimen>
-    <dimen name="contentPadding_level2">12dp</dimen>
-    <dimen name="contentPadding_level3">10dp</dimen>
-    <dimen name="contentPadding_level4">8dp</dimen>
-    <dimen name="contentPadding_level5">5dp</dimen>
-    <dimen name="contentPadding_level6">3dp</dimen>
+    <dimen name="contentPadding_level0">80dp</dimen>
+    <dimen name="contentPadding_level1">60dp</dimen>
+    <dimen name="contentPadding_level2">50dp</dimen>
+    <dimen name="contentPadding_level3">40dp</dimen>
+    <dimen name="contentPadding_level4">30dp</dimen>
+    <dimen name="contentPadding_level5">20dp</dimen>
+    <dimen name="contentPadding_level6">10dp</dimen>
 
 
     <!-- 激活页面 -->
-    <dimen name="activate_logo_minSize">120dp</dimen>
     <dimen name="activate_widget_margin">50dp</dimen>
     <dimen name="activate_btn_height">45dp</dimen>
 
