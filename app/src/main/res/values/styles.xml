@@ -25,6 +25,7 @@
     <!-- 主页菜单样式 -->
     <style name="MainMenuItemTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
+        <item name="android:minHeight">@dimen/main_menu_btn_width</item>
         <item name="android:padding">@dimen/contentPadding_level5</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/text_color_white_red</item>

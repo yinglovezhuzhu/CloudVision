@@ -135,55 +135,31 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginTop="@dimen/main_menu_marginTop">
+        android:layout_gravity="left|center_vertical">
         <ImageButton
             android:id="@+id/ibtn_main_menu"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minWidth="@dimen/main_menu_btn_width"
-            android:minHeight="@dimen/main_menu_btn_width"
-            android:maxWidth="@dimen/main_menu_btn_width"
-            android:maxHeight="@dimen/main_menu_btn_width"
             android:background="@drawable/layer_list_bg_main_menu"
+            android:padding="@dimen/contentPadding_level5"
             android:scaleType="centerInside"
             android:src="@drawable/selector_ic_main_menu"
             android:contentDescription="@null"/>
-        <!--<FrameLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<ToggleButton-->
-                <!--android:id="@+id/tbtn_main_menu"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:minWidth="@dimen/main_menu_btn_width"-->
-                <!--android:minHeight="@dimen/main_menu_btn_width"-->
-                <!--android:maxWidth="@dimen/main_menu_btn_width"-->
-                <!--android:maxHeight="@dimen/main_menu_btn_width"-->
-                <!--android:padding="@dimen/contentPadding_level3"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="@color/transparent"-->
-                <!--android:button="@null"-->
-                <!--android:textOn="@null"-->
-                <!--android:textOff="@null"-->
-                <!--android:gravity="center"-->
-                <!--android:checked="false"/>-->
-        <!--</FrameLayout>-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/ll_main_menu_items"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/layer_list_bg_main_menu_items"
-                android:visibility="gone">
+                android:visibility="invisible">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level4"
-                    android:layout_marginRight="@dimen/contentPadding_level4"
+                    android:layout_marginLeft="@dimen/contentPadding_level5"
+                    android:layout_marginRight="@dimen/contentPadding_level5"
                     android:background="@color/colorMainMenuBorder"/>
                 <CheckBox
                     style="@style/MainMenuItemTheme"
@@ -198,8 +174,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level4"
-                    android:layout_marginRight="@dimen/contentPadding_level4"
+                    android:layout_marginLeft="@dimen/contentPadding_level5"
+                    android:layout_marginRight="@dimen/contentPadding_level5"
                     android:background="@color/colorMainMenuBorder"/>
 
                 <Button
@@ -214,8 +190,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginLeft="@dimen/contentPadding_level4"
-                    android:layout_marginRight="@dimen/contentPadding_level4"
+                    android:layout_marginLeft="@dimen/contentPadding_level5"
+                    android:layout_marginRight="@dimen/contentPadding_level5"
                     android:background="@color/colorMainMenuBorder"/>
 
                 <CheckBox

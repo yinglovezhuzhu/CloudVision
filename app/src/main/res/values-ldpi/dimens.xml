@@ -2,15 +2,15 @@
 <resources>
 
     <!-- 字体大小 -->
-    <dimen name="textSize_level0">32sp</dimen>
-    <dimen name="textSize_level1">28sp</dimen>
-    <dimen name="textSize_level2">24sp</dimen>
-    <dimen name="textSize_level3">22sp</dimen>
+    <dimen name="textSize_level0">70sp</dimen>
+    <dimen name="textSize_level1">65sp</dimen>
+    <dimen name="textSize_level2">60sp</dimen>
+    <dimen name="textSize_level3">55sp</dimen>
     <dimen name="textSize_level4">50sp</dimen>
-    <dimen name="textSize_level5">18sp</dimen>
-    <dimen name="textSize_level6">16sp</dimen>
-    <dimen name="textSize_level7">14sp</dimen>
-    <dimen name="textSize_level8">12sp</dimen>
+    <dimen name="textSize_level5">45sp</dimen>
+    <dimen name="textSize_level6">40sp</dimen>
+    <dimen name="textSize_level7">35sp</dimen>
+    <dimen name="textSize_level8">30sp</dimen>
 
 
     <dimen name="contentPadding_level0">80dp</dimen>
@@ -27,7 +27,7 @@
     <dimen name="activate_btn_height">45dp</dimen>
 
     <!-- 主页面 -->
-    <dimen name="main_menu_btn_width">30dp</dimen>
+    <dimen name="main_menu_btn_width">60dp</dimen>
     <dimen name="main_menu_marginTop">300dp</dimen>
     <dimen name="main_video_play_icon_size">50dp</dimen>
 
