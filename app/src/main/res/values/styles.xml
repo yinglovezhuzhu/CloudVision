@@ -36,8 +36,8 @@
     <!-- 主页菜单子菜单样式 -->
     <style name="MainMenuSubItemTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
-        <item name="android:paddingLeft">@dimen/contentPadding_level2</item>
-        <item name="android:paddingRight">@dimen/contentPadding_level2</item>
+        <item name="android:paddingLeft">@dimen/contentPadding_level3</item>
+        <item name="android:paddingRight">@dimen/contentPadding_level3</item>
         <item name="android:paddingTop">@dimen/contentPadding_level5</item>
         <item name="android:paddingBottom">@dimen/contentPadding_level5</item>
         <item name="android:background">@color/transparent</item>
