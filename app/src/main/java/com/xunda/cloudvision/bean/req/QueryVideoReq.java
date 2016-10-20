@@ -9,6 +9,13 @@ public class QueryVideoReq extends BaseReq {
 
     private String enterpriseId;
 
+    public QueryVideoReq() {
+    }
+
+    public QueryVideoReq(String token) {
+        super(token);
+    }
+
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
     }

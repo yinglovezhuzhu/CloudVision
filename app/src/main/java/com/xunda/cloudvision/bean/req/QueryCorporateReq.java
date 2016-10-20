@@ -8,6 +8,13 @@ package com.xunda.cloudvision.bean.req;
 public class QueryCorporateReq extends BaseReq {
     private String enterpriseId;
 
+    public QueryCorporateReq() {
+    }
+
+    public QueryCorporateReq(String token) {
+        super(token);
+    }
+
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
     }

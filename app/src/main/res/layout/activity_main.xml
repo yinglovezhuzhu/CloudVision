@@ -125,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_notice"
+                android:drawableStart="@drawable/ic_notice"
                 android:drawablePadding="@dimen/contentPadding_level3"
                 android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/text_color_white"/>

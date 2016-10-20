@@ -8,6 +8,13 @@ package com.xunda.cloudvision.bean.req;
 public class SearchReq extends BaseReq {
     private String keywords;	// 关键词
 
+    public SearchReq() {
+    }
+
+    public SearchReq(String token) {
+        super(token);
+    }
+
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }

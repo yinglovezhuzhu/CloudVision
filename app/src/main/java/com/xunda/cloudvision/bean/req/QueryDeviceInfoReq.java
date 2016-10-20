@@ -8,6 +8,13 @@ package com.xunda.cloudvision.bean.req;
 public class QueryDeviceInfoReq extends BaseReq {
     private String enterpriseId;
 
+    public QueryDeviceInfoReq() {
+    }
+
+    public QueryDeviceInfoReq(String token) {
+        super(token);
+    }
+
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
     }

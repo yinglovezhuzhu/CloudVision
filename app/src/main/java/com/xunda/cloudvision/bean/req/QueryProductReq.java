@@ -9,6 +9,13 @@ public class QueryProductReq extends BaseReq {
 
     private String enterpriseId;
 
+    public QueryProductReq() {
+    }
+
+    public QueryProductReq(String token) {
+        super(token);
+    }
+
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
     }

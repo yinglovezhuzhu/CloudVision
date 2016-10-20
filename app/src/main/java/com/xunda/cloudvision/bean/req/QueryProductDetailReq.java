@@ -8,6 +8,13 @@ package com.xunda.cloudvision.bean.req;
 public class QueryProductDetailReq extends BaseReq {
     private String productId;
 
+    public QueryProductDetailReq() {
+    }
+
+    public QueryProductDetailReq(String token) {
+        super(token);
+    }
+
     public void setProductId(String productId) {
         this.productId = productId;
     }

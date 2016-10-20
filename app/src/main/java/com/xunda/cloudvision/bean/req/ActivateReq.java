@@ -5,7 +5,7 @@ package com.xunda.cloudvision.bean.req;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class ActivateReq extends BaseReq {
+public class ActivateReq {
     private String activateCode;	// 激活码
     private String equipmentNo;	// 机器码
 

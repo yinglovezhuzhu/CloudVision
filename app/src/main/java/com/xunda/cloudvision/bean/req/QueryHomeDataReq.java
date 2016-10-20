@@ -8,6 +8,13 @@ package com.xunda.cloudvision.bean.req;
 public class QueryHomeDataReq extends BaseReq {
     private String enterpriseId;
 
+    public QueryHomeDataReq() {
+    }
+
+    public QueryHomeDataReq(String token) {
+        super(token);
+    }
+
     public void setEnterpriseId(String enterpriseId) {
         this.enterpriseId = enterpriseId;
     }
