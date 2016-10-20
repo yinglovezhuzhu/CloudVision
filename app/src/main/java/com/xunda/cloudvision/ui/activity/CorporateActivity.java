@@ -111,7 +111,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommended_product);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level2));
+        viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level6));
         viewPager.setAdapter(new RecommendedProductPagerAdapter(getSupportFragmentManager()));
 
         final int videoItemWidth = (dmWidth - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 3) / 2;

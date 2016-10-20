@@ -21,9 +21,9 @@
         android:id="@+id/tv_recommended_product_pager_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/contentPadding_level5"
-        android:layout_marginBottom="@dimen/contentPadding_level5"
-        android:textSize="@dimen/textSize_level6"
+        android:layout_marginTop="@dimen/contentPadding_level3"
+        android:layout_marginBottom="@dimen/contentPadding_level3"
+        android:textSize="@dimen/textSize_level7"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
         android:maxLines="2"
@@ -34,7 +34,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/contentPadding_level5"
+        android:padding="@dimen/contentPadding_level3"
         android:gravity="center">
         <!--<TextView-->
             <!--android:id="@+id/tv_recommended_product_pager_currency"-->
@@ -48,9 +48,9 @@
             android:id="@+id/tv_recommended_product_pager_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/contentPadding_level6"
+            android:layout_margin="@dimen/contentPadding_level2"
             android:textStyle="bold"
-            android:textSize="@dimen/textSize_level2"
+            android:textSize="@dimen/textSize_level11"
             android:textColor="@color/colorTextRed"
             android:text="100"/>
     </LinearLayout>

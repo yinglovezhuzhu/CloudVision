@@ -9,18 +9,18 @@
         android:id="@+id/tv_item_product_detail_attr_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/contentPadding_level5"
-        android:layout_marginRight="@dimen/contentPadding_level5"
+        android:layout_marginEnd="@dimen/contentPadding_level3"
+        android:layout_marginRight="@dimen/contentPadding_level3"
         android:textColor="@color/colorTextGray"
-        android:textSize="@dimen/textSize_level4"/>
+        android:textSize="@dimen/textSize_level9"/>
     <com.xunda.cloudvision.ui.widget.NoScrollGridView
         android:id="@+id/gv_item_product_detail_attr_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/contentPadding_level3"
-        android:verticalSpacing="@dimen/contentPadding_level3"
+        android:horizontalSpacing="@dimen/contentPadding_level5"
+        android:verticalSpacing="@dimen/contentPadding_level5"
         android:numColumns="4"
         android:listSelector="@color/transparent"
         android:descendantFocusability="afterDescendants"/>

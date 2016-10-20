@@ -11,15 +11,15 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/contentPadding_level4"
         android:paddingRight="@dimen/contentPadding_level4"
-        android:paddingTop="@dimen/contentPadding_level2"
-        android:paddingBottom="@dimen/contentPadding_level2"
+        android:paddingTop="@dimen/contentPadding_level6"
+        android:paddingBottom="@dimen/contentPadding_level6"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:minLines="2"
-            android:textSize="@dimen/textSize_level4"
+            android:textSize="@dimen/textSize_level9"
             android:background="@color/colorTextGray"/>
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:maxLines="2"
             android:minLines="2"
             android:ellipsize="end"
-            android:textSize="@dimen/textSize_level4"
+            android:textSize="@dimen/textSize_level9"
             android:textColor="@color/text_color_black"
             android:text="绝对真金 市场最低价 100g每条 标题内容最多侠士两行"/>
     </LinearLayout>
@@ -52,8 +52,8 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/contentPadding_level2"
-                    android:paddingBottom="@dimen/contentPadding_level5"
+                    android:paddingTop="@dimen/contentPadding_level6"
+                    android:paddingBottom="@dimen/contentPadding_level3"
                     android:background="@color/colorLightGray">
                     <LinearLayout
                         android:orientation="horizontal"
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/contentPadding_level4"
                     android:textColor="@color/text_color_black"
-                    android:textSize="@dimen/textSize_level5"
+                    android:textSize="@dimen/textSize_level8"
                     android:text="@string/str_specification_parameter_label"/>
                 <com.xunda.cloudvision.ui.widget.NoScrollListView
                     android:id="@+id/lv_product_detail_attr"
@@ -152,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/contentPadding_level4"
                         android:textColor="@color/text_color_black"
-                        android:textSize="@dimen/textSize_level5"
+                        android:textSize="@dimen/textSize_level8"
                         android:text="@string/str_reference_price_label"/>
                     <!--<TextView-->
                         <!--android:id="@+id/tv_product_detail_currency"-->
@@ -165,9 +165,9 @@
                         android:id="@+id/tv_product_detail_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/contentPadding_level6"
-                        android:layout_marginStart="@dimen/contentPadding_level6"
-                        android:textSize="@dimen/textSize_level4"
+                        android:layout_marginLeft="@dimen/contentPadding_level2"
+                        android:layout_marginStart="@dimen/contentPadding_level2"
+                        android:textSize="@dimen/textSize_level9"
                         android:textColor="@color/colorTextRed"
                         android:minEms="2"/>
                 </LinearLayout>
@@ -176,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/contentPadding_level4"
                     android:textColor="@color/text_color_black"
-                    android:textSize="@dimen/textSize_level5"
+                    android:textSize="@dimen/textSize_level8"
                     android:text="@string/str_image_text_detail_label"/>
                 <LinearLayout
                     android:id="@+id/ll_product_detail_loading"
@@ -184,15 +184,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="@dimen/contentPadding_level5">
+                    android:padding="@dimen/contentPadding_level3">
                     <ProgressBar
                         android:layout_width="@dimen/product_detail_loading_progress_size"
                         android:layout_height="@dimen/product_detail_loading_progress_size" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/contentPadding_level5"
-                        android:layout_marginStart="@dimen/contentPadding_level5"
+                        android:layout_marginLeft="@dimen/contentPadding_level3"
+                        android:layout_marginStart="@dimen/contentPadding_level3"
                         android:text="@string/str_loading"/>
                 </LinearLayout>
                 <WebView
@@ -205,7 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
-            android:padding="@dimen/contentPadding_level2">
+            android:padding="@dimen/contentPadding_level6">
             <ImageButton
                 android:id="@+id/ibtn_product_detail_back"
                 android:layout_width="wrap_content"
@@ -220,8 +220,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/ibtn_product_detail_back"
                 android:layout_toEndOf="@+id/ibtn_product_detail_back"
-                android:layout_marginLeft="@dimen/contentPadding_level2"
-                android:layout_marginStart="@dimen/contentPadding_level2"
+                android:layout_marginLeft="@dimen/contentPadding_level6"
+                android:layout_marginStart="@dimen/contentPadding_level6"
                 android:background="@color/transparent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_720_view_img"

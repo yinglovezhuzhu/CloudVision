@@ -4,8 +4,8 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle">
             <solid android:color="@color/colorWhite" />
-            <corners android:topLeftRadius="3dp"
-                android:bottomLeftRadius="3dp" />
+            <corners android:topLeftRadius="@dimen/shape_corner_radius_level1"
+                android:bottomLeftRadius="@dimen/shape_corner_radius_level1" />
         </shape>
     </item>
 </selector>

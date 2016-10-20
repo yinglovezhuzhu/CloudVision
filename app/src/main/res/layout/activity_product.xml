@@ -23,7 +23,7 @@
     </android.support.v4.app.FragmentTabHost>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/product_bottom_bar_size"
+        android:layout_height="wrap_content"
         android:background="@color/colorBlack"
         android:padding="@dimen/contentPadding_level4">
 
@@ -54,8 +54,8 @@
             android:id="@+id/tbtn_product_list_view_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/contentPadding_level3"
-            android:layout_marginRight="@dimen/contentPadding_level3"
+            android:layout_marginLeft="@dimen/contentPadding_level5"
+            android:layout_marginRight="@dimen/contentPadding_level5"
             android:layout_toLeftOf="@+id/view_product_list_view_mode_divider"
             android:layout_toStartOf="@+id/view_product_list_view_mode_divider"
             android:layout_centerVertical="true"
@@ -66,10 +66,8 @@
             android:checked="true"/>
         <View
             android:id="@+id/view_product_list_view_mode_divider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/contentPadding_level4"
-            android:layout_marginBottom="@dimen/contentPadding_level4"
+            android:layout_width="@dimen/divider_size_level2"
+            android:layout_height="@dimen/product_bottom_btn_minSize"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_product_search"
             android:layout_toStartOf="@+id/btn_product_search"
@@ -81,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="@dimen/contentPadding_level3"
-            android:layout_marginRight="@dimen/contentPadding_level3"
+            android:layout_marginLeft="@dimen/contentPadding_level5"
+            android:layout_marginRight="@dimen/contentPadding_level5"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_search_white"
             android:drawableStart="@drawable/ic_search_white"

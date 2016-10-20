@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/contentPadding_level2"
+        android:padding="@dimen/contentPadding_level6"
         android:gravity="center">
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activate_widget_margin"
-                android:padding="@dimen/contentPadding_level3"
+                android:padding="@dimen/contentPadding_level5"
                 android:minEms="14"
                 android:maxEms="14"
                 android:gravity="center_horizontal"
@@ -49,7 +49,7 @@
                 android:textColor="@color/text_color_white"
                 android:textColorHint="@color/colorWhite"
                 android:background="@drawable/selector_activate_input"
-                android:textSize="@dimen/textSize_level4"
+                android:textSize="@dimen/textSize_level9"
                 android:textCursorDrawable="@drawable/shape_edit_cursor_white"
                 android:hint="@string/str_please_input_activation_code"/>
 
@@ -64,11 +64,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activate_widget_margin"
-                android:padding="@dimen/contentPadding_level2"
+                android:padding="@dimen/contentPadding_level6"
                 android:minEms="15"
                 android:background="@drawable/selector_btn_activate"
                 android:textColor="@color/text_color_white"
-                android:textSize="@dimen/textSize_level4"
+                android:textSize="@dimen/textSize_level9"
                 android:text="@string/str_activate"/>
 
         </LinearLayout>

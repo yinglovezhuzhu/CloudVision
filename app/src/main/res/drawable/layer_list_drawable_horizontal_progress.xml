@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="2dp" />
+            <corners android:radius="@dimen/shape_corner_radius_level1" />
             <gradient
                 android:angle="270"
                 android:centerColor="@color/colorLightGray"
@@ -13,7 +13,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="2dp" />
+                <corners android:radius="@dimen/shape_corner_radius_level1" />
                 <gradient
                     android:centerColor="@color/colorActivateBtnNormal"
                     android:endColor="@color/colorActivateBtnNormal"

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/contentPadding_level2"
+    android:padding="@dimen/contentPadding_level6"
     android:background="@drawable/layer_list_bg_product_list_view">
 
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_margin="@dimen/contentPadding_level2"
+        android:layout_margin="@dimen/contentPadding_level6"
         android:scaleType="fitCenter"
         android:contentDescription="@null"/>
 
@@ -19,9 +19,9 @@
         android:id="@+id/tv_item_product_grid_view_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/contentPadding_level5"
-        android:layout_marginBottom="@dimen/contentPadding_level5"
-        android:textSize="@dimen/textSize_level5"
+        android:layout_marginTop="@dimen/contentPadding_level3"
+        android:layout_marginBottom="@dimen/contentPadding_level3"
+        android:textSize="@dimen/textSize_level8"
         android:textColor="@color/colorTextBlack"
         android:gravity="center_horizontal"
         android:minLines="2"
@@ -33,7 +33,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/contentPadding_level5"
+        android:padding="@dimen/contentPadding_level3"
         android:gravity="top|center_horizontal">
         <!--<TextView-->
             <!--android:id="@+id/tv_item_product_grid_view_currency"-->
@@ -46,10 +46,10 @@
             android:id="@+id/tv_item_product_grid_view_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/contentPadding_level6"
-            android:layout_marginStart="@dimen/contentPadding_level6"
+            android:layout_marginLeft="@dimen/contentPadding_level2"
+            android:layout_marginStart="@dimen/contentPadding_level2"
             android:textStyle="bold"
-            android:textSize="@dimen/textSize_level3"
+            android:textSize="@dimen/textSize_level10"
             android:textColor="@color/colorTextRed"
             android:text="100"/>
     </LinearLayout>

@@ -32,7 +32,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_cloud_video);
+        setContentView(R.layout.activity_video);
 
         mCloudVideoPresenter = new VideoPresenter(this, this);
 

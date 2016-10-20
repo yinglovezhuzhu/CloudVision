@@ -6,17 +6,21 @@
             <item>
                 <shape
                     android:shape="ring"
-                    android:thickness="1dp"
-                    android:innerRadius="4dp"
+                    android:thickness="@dimen/divider_size_level2"
+                    android:innerRadius="@dimen/contentPadding_level2"
                     android:useLevel="false" >
                     <solid android:color="@color/colorActivateBtnNormal" />
-                    <size android:height="10dp" android:width="10dp" />
+                    <size android:height="@dimen/page_indicator_outer_size"
+                        android:width="@dimen/page_indicator_outer_size" />
                 </shape>
             </item>
-            <item android:left="2dp" android:right="2dp"
-                android:top="2dp" android:bottom="2dp">
+            <item android:left="@dimen/contentPadding_level2"
+                android:right="@dimen/contentPadding_level2"
+                android:top="@dimen/contentPadding_level2"
+                android:bottom="@dimen/contentPadding_level2">
                 <shape android:shape="oval">
-                    <size android:width="6dp" android:height="6dp" />
+                    <size android:width="@dimen/page_indicator_inner_size"
+                        android:height="@dimen/page_indicator_inner_size" />
                     <solid android:color="@color/colorActivateBtnNormal" />
                 </shape>
             </item>
@@ -25,10 +29,13 @@
 
     <item>
         <layer-list>
-            <item android:left="2dp" android:right="2dp"
-                android:top="2dp" android:bottom="2dp">
+            <item android:left="@dimen/contentPadding_level1"
+                android:right="@dimen/contentPadding_level1"
+                android:top="@dimen/contentPadding_level1"
+                android:bottom="@dimen/contentPadding_level1">
                 <shape android:shape="oval">
-                    <size android:width="6dp" android:height="6dp" />
+                    <size android:width="@dimen/page_indicator_normal_size"
+                        android:height="@dimen/page_indicator_normal_size" />
                     <solid android:color="@color/colorActivateBtnDisabled" />
                 </shape>
             </item>

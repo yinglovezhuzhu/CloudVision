@@ -3,9 +3,9 @@
     android:shape="rectangle">
     <solid android:color="@color/colorVoiceAndroidBackground" />
 
-    <corners android:radius="8dp" />
+    <corners android:radius="@dimen/shape_corner_radius_level3" />
 
-    <padding android:left="@dimen/contentPadding_level2"
+    <padding android:left="@dimen/contentPadding_level6"
         android:top="@dimen/contentPadding_level4"
         android:right="@dimen/contentPadding_level4"
         android:bottom="@dimen/contentPadding_level4" />

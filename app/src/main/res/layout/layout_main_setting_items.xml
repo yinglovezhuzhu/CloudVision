@@ -13,10 +13,10 @@
         android:button="@null"
         android:drawableTop="@drawable/selector_ic_main_menu_hide"/>
     <View
-        android:layout_width="2dp"
+        android:layout_width="@dimen/divider_size_level1"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/contentPadding_level3"
-        android:layout_marginBottom="@dimen/contentPadding_level3"
+        android:layout_marginTop="@dimen/contentPadding_level5"
+        android:layout_marginBottom="@dimen/contentPadding_level5"
         android:background="@color/colorMainMenuBorder"/>
     <CheckBox
         android:id="@+id/cb_main_menu_setting_weather"
@@ -27,10 +27,10 @@
         android:button="@null"
         android:drawableTop="@drawable/selector_ic_main_menu_hide"/>
     <View
-        android:layout_width="2dp"
+        android:layout_width="@dimen/divider_size_level1"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/contentPadding_level3"
-        android:layout_marginBottom="@dimen/contentPadding_level3"
+        android:layout_marginTop="@dimen/contentPadding_level5"
+        android:layout_marginBottom="@dimen/contentPadding_level5"
         android:background="@color/colorMainMenuBorder"/>
     <Button
         android:id="@+id/btn_main_menu_setting_logout"
@@ -41,10 +41,10 @@
         android:drawableTop="@drawable/selector_ic_main_menu_logout"
         android:text="@string/str_logout_vertical"/>
     <View
-        android:layout_width="2dp"
+        android:layout_width="@dimen/divider_size_level1"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/contentPadding_level3"
-        android:layout_marginBottom="@dimen/contentPadding_level3"
+        android:layout_marginTop="@dimen/contentPadding_level5"
+        android:layout_marginBottom="@dimen/contentPadding_level5"
         android:background="@color/colorMainMenuBorder"/>
     <Button
         android:id="@+id/btn_main_menu_setting_switch"

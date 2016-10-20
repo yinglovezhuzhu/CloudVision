@@ -10,7 +10,7 @@
         android:id="@+id/ibtn_720_view_img_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/contentPadding_level2"
+        android:layout_margin="@dimen/contentPadding_level6"
         android:layout_gravity="start|bottom"
         android:scaleType="fitCenter"
         android:background="@color/transparent"

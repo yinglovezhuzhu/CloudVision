@@ -14,7 +14,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:clickable="true"
-        android:textSize="@dimen/textSize_level6"
+        android:textSize="@dimen/textSize_level7"
         android:textColor="@color/colorTextBlack"
         android:background="@drawable/selector_bg_item_product_detail_attr" />
 </LinearLayout>

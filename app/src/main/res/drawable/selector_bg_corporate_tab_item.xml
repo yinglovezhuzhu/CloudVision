@@ -7,12 +7,17 @@
                     <solid android:color="@color/colorLightGray" />
                 </shape>
             </item>
-            <item android:top="1dp" android:left="0.5dp" android:right="0.5dp">
+            <item android:top="@dimen/divider_margin_level2"
+                android:left="@dimen/divider_margin_level1"
+                android:right="@dimen/divider_margin_level1">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorActivateBtnNormal" />
                 </shape>
             </item>
-            <item android:left="0.5dp" android:top="4dp" android:right="0.5dp">
+            <item
+                android:left="@dimen/divider_size_level1"
+                android:top="@dimen/divider_size_level1"
+                android:right="@dimen/divider_size_level1">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorWhite" />
                 </shape>
@@ -26,12 +31,16 @@
                     <solid android:color="@color/colorLightGray" />
                 </shape>
             </item>
-            <item android:top="1dp" android:left="0.5dp" android:right="0.5dp">
+            <item android:top="@dimen/divider_size_level1"
+                android:left="@dimen/divider_size_level1"
+                android:right="@dimen/divider_size_level1">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorActivateBtnNormal" />
                 </shape>
             </item>
-            <item android:left="0.5dp" android:top="4dp" android:right="0.5dp">
+            <item android:left="@dimen/divider_margin_level1"
+                android:top="@dimen/contentPadding_level2"
+                android:right="@dimen/divider_margin_level1">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorWhite" />
                 </shape>
@@ -45,7 +54,9 @@
                     <solid android:color="@color/colorLightGray" />
                 </shape>
             </item>
-            <item android:left="0.5dp" android:top="1dp" android:right="0.5dp">
+            <item android:left="@dimen/divider_size_level1"
+                android:top="@dimen/divider_size_level1"
+                android:right="@dimen/divider_size_level1">
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorWhite" />
                 </shape>

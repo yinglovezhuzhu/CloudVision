@@ -3,8 +3,8 @@
     <item android:left="3dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/colorMainMenuBackground" />
-            <stroke android:color="@color/colorMainMenuBorder" android:width="0.5dp" />
-            <corners android:radius="5dp" />
+            <stroke android:color="@color/colorMainMenuBorder" android:width="@dimen/divider_size_level1" />
+            <corners android:radius="@dimen/shape_corner_radius_level2" />
         </shape>
     </item>
 </layer-list>

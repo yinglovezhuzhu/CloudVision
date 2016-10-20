@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:left="-1dp"
-        android:bottom="-1dp">
+        android:left="@dimen/divider_hide_margin_level1"
+        android:bottom="@dimen/divider_hide_margin_level1">
         <shape>
             <solid android:color="@color/colorMainMenuBackground" />
-            <stroke android:color="@color/colorMainMenuBorder" android:width="0.5dp" />
-            <corners android:topRightRadius="5dp" />
+            <stroke android:color="@color/colorMainMenuBorder" android:width="@dimen/divider_size_level1" />
+            <corners android:topRightRadius="@dimen/shape_corner_radius_level2" />
         </shape>
     </item>
 </layer-list>

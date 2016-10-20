@@ -26,35 +26,35 @@
     <style name="MainMenuItemTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
         <item name="android:minHeight">@dimen/main_menu_btn_width</item>
-        <item name="android:padding">@dimen/contentPadding_level5</item>
+        <item name="android:padding">@dimen/contentPadding_level3</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/text_color_white_red</item>
-        <item name="android:textSize">@dimen/textSize_level6</item>
-        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
+        <item name="android:textSize">@dimen/textSize_level7</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level2</item>
     </style>
 
     <!-- 主页菜单子菜单样式 -->
     <style name="MainMenuSubItemTheme">
         <item name="android:minWidth">@dimen/main_menu_btn_width</item>
-        <item name="android:paddingLeft">@dimen/contentPadding_level3</item>
-        <item name="android:paddingRight">@dimen/contentPadding_level3</item>
-        <item name="android:paddingTop">@dimen/contentPadding_level5</item>
-        <item name="android:paddingBottom">@dimen/contentPadding_level5</item>
+        <item name="android:paddingLeft">@dimen/contentPadding_level5</item>
+        <item name="android:paddingRight">@dimen/contentPadding_level5</item>
+        <item name="android:paddingTop">@dimen/contentPadding_level3</item>
+        <item name="android:paddingBottom">@dimen/contentPadding_level3</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/text_color_white_red</item>
-        <item name="android:textSize">@dimen/textSize_level6</item>
-        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
+        <item name="android:textSize">@dimen/textSize_level7</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level2</item>
     </style>
 
     <!-- 主页标题栏文字样式 -->
     <style name="MainTopBarTextTheme" parent="SingleLine">
-        <item name="android:textSize">@dimen/textSize_level5</item>
+        <item name="android:textSize">@dimen/textSize_level8</item>
         <item name="android:textColor">@color/text_color_white</item>
     </style>
 
     <!-- 视屏播放图标样式 -->
     <style name="PlayIconTheme">
-        <item name="android:layout_margin">@dimen/contentPadding_level2</item>
+        <item name="android:layout_margin">@dimen/contentPadding_level6</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:minWidth">@dimen/main_video_play_icon_size</item>
         <item name="android:minHeight">@dimen/main_video_play_icon_size</item>
@@ -70,13 +70,13 @@
 
     <!-- 企业顶部导航按钮样式 -->
     <style name="CorporateTopBarTheme" parent="SingleLine">
-        <item name="android:paddingTop">@dimen/contentPadding_level2</item>
-        <item name="android:paddingBottom">@dimen/contentPadding_level2</item>
-        <item name="android:paddingLeft">@dimen/contentPadding_level5</item>
-        <item name="android:paddingRight">@dimen/contentPadding_level5</item>
+        <item name="android:paddingTop">@dimen/contentPadding_level6</item>
+        <item name="android:paddingBottom">@dimen/contentPadding_level6</item>
+        <item name="android:paddingLeft">@dimen/contentPadding_level3</item>
+        <item name="android:paddingRight">@dimen/contentPadding_level3</item>
         <item name="android:drawablePadding">@dimen/contentPadding_level4</item>
         <item name="android:background">@color/transparent</item>
-        <item name="android:textSize">@dimen/textSize_level6</item>
+        <item name="android:textSize">@dimen/textSize_level7</item>
         <item name="android:textColor">@color/colorTextGray</item>
     </style>
 
@@ -86,13 +86,13 @@
         <item name="android:minWidth">@dimen/product_bottom_btn_minSize</item>
         <item name="android:minHeight">@dimen/product_bottom_btn_minSize</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/textSize_level6</item>
-        <item name="android:padding">@dimen/contentPadding_level5</item>
-        <item name="android:drawablePadding">@dimen/contentPadding_level6</item>
+        <item name="android:textSize">@dimen/textSize_level7</item>
+        <item name="android:padding">@dimen/contentPadding_level3</item>
+        <item name="android:drawablePadding">@dimen/contentPadding_level2</item>
     </style>
 
     <style name="ProductPagerViewIndexTextTheme" parent="SingleLine">
-        <item name="android:textSize">@dimen/textSize_level5</item>
+        <item name="android:textSize">@dimen/textSize_level8</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:maxLength">6</item>
         <item name="android:minEms">2</item>

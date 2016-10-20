@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/contentPadding_level4"
-    android:paddingTop="@dimen/contentPadding_level2"
+    android:paddingTop="@dimen/contentPadding_level6"
     android:paddingRight="@dimen/contentPadding_level4"
-    android:paddingBottom="@dimen/contentPadding_level2">
+    android:paddingBottom="@dimen/contentPadding_level6">
 
     <LinearLayout
         android:id="@+id/ll_item_voice_android_content"
@@ -24,10 +24,10 @@
                 android:id="@+id/tv_item_voice_android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/contentPadding_level2"
-                android:layout_marginRight="@dimen/contentPadding_level2"
+                android:layout_marginLeft="@dimen/contentPadding_level6"
+                android:layout_marginRight="@dimen/contentPadding_level6"
                 android:background="@drawable/shape_bg_voice_android"
-                android:textSize="@dimen/textSize_level6"
+                android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/colorTextBlack"/>
             <ImageView
                 android:layout_width="@dimen/voice_android_icon_size"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_bg_voice_human"
-                android:textSize="@dimen/textSize_level6"
+                android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>

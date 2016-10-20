@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/contentPadding_level4"
         android:textColor="@color/text_color_black"
-        android:textSize="@dimen/textSize_level5"
+        android:textSize="@dimen/textSize_level8"
         android:background="@color/colorWhite"
         android:text="Cloud Video Play"/>
     <View

@@ -3,9 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/contentPadding_level5"
-    android:paddingTop="@dimen/contentPadding_level2"
-    android:paddingRight="@dimen/contentPadding_level5"
+    android:paddingLeft="@dimen/contentPadding_level3"
+    android:paddingTop="@dimen/contentPadding_level6"
+    android:paddingRight="@dimen/contentPadding_level3"
     android:paddingBottom="@dimen/contentPadding_level4"
     android:background="@drawable/selector_bg_corporate_tab_item">
     <TextView
@@ -14,5 +14,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/text_color_black"
-        android:textSize="@dimen/textSize_level6"/>
+        android:textSize="@dimen/textSize_level7"/>
 </LinearLayout>

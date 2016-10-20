@@ -20,12 +20,9 @@ import android.widget.TextView;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.presenter.MainPresenter;
-import com.xunda.cloudvision.utils.LogUtils;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
-
-import java.util.Random;
 
 /**
  * 主界面Activity
@@ -255,7 +252,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onAnimationStart(Animation animation) {
                 ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
-                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level5);
+                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
                 ibtnMenu.setPadding(padding, padding, padding, padding);
             }
 
@@ -274,7 +271,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onAnimationEnd(Animation animation) {
                 menuItemView.setVisibility(View.INVISIBLE);
                 ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
-                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level5);
+                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
                 ibtnMenu.setPadding(padding, padding, padding, padding);
             }
 
@@ -298,7 +295,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                             mCbVoice.setChecked(false);
                             Rect rect = new Rect();
                             mCbSetting.getGlobalVisibleRect(rect);
-                            int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level6);
+                            int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level2);
                             mPwSettingMenu.showAsDropDown(mCbSetting, rect.right + padding, -(rect.bottom - rect.top));
                         }
                         break;
