@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.resp.ActivateResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.ActivatePresenter;
 import com.xunda.cloudvision.view.IActivateView;
 
@@ -30,9 +31,6 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
         mActivatePresenter = new ActivatePresenter(this, this);
 
-        if(mActivatePresenter.isActivated()) {
-            gotoMainPage();
-        }
     }
 
     @Override
@@ -73,7 +71,11 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
     @Override
     public void onActivateResult(ActivateResp result) {
-        gotoMainPage();
+        if(HttpStatus.SC_OK == result.getHttpCode()) {
+            finish(RESULT_OK, null);
+        } else {
+            showShortToast(result.getMsg());
+        }
     }
 
     private void initView() {
@@ -81,8 +83,4 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
         findViewById(R.id.btn_activate_register).setOnClickListener(this);
     }
 
-    private void gotoMainPage() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
 }

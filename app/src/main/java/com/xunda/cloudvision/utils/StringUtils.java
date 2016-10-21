@@ -1,5 +1,12 @@
 package com.xunda.cloudvision.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -41,5 +48,35 @@ public class StringUtils {
      */
 	public static String formatTimeStamp(long timeStamp) {
 		return mDateFormat.format(new Date(timeStamp * 1000));
+	}
+
+	/**
+	 * 从Assets文件中读取文本内容（测试）
+	 * @param context
+	 * @param name
+	 * @return
+	 * @throws IOException
+     */
+	public static String readStringFromAssetsFile(Context context, String name) throws IOException {
+		InputStream is = null;
+		ByteArrayOutputStream bos = null;
+		try {
+			is = context.getAssets().open(name);
+			bos = new ByteArrayOutputStream();
+			int count = 0;
+			byte [] buff = new byte[1024 * 32];
+			while ((count = is.read(buff)) != -1) {
+				bos.write(buff, 0, count);
+			}
+			return new String(bos.toByteArray());
+		} finally {
+			if(null != is) {
+				try {
+					is.close();
+				} catch (Exception e) {
+					// do nothing
+				}
+			}
+		}
 	}
 }

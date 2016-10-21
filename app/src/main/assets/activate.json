@@ -1,0 +1,8 @@
+{
+  "httpCode": 200,
+  "msg": "激活成功",
+  "enterpriseId": "123456789",
+  "activateTime": "2016-10-20 10:00:00",
+  "endTime": "2017-10-20 10:00:00",
+  "token": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+}

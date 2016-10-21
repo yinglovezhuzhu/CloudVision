@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private static final int RC_VOICE_PAGE = 0x001;
 
 //    /** 打开注册页面 **/
-//    private static final int RC_ACTIVATE_PAGE = 0x002;
+    private static final int RC_ACTIVATE_PAGE = 0x002;
 
     private View mViewTopBar;
     private TextView mTvTopBarTime;
@@ -83,7 +83,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             mMainPresenter.onCreate();
         }
 
-        mMainPresenter.queryHomeAdvertise();
+        if(mMainPresenter.isActivated()) {
+            mMainPresenter.queryHomeAdvertise();
+        } else {
+            Intent intent = new Intent(this, ActivateActivity.class);
+            startActivityForResult(intent, RC_ACTIVATE_PAGE);
+        }
+
     }
 
     @Override
@@ -107,13 +113,13 @@ public class MainActivity extends BaseActivity implements IMainView {
             case RC_VOICE_PAGE:
                 mCbVoice.setChecked(false);
                 break;
-//            case RC_ACTIVATE_PAGE:
-//                if(RESULT_OK == resultCode) {
-//
-//                } else {
-//                    finish();
-//                }
-//                break;
+            case RC_ACTIVATE_PAGE:
+                if(RESULT_OK == resultCode) {
+
+                } else {
+                    finish();
+                }
+                break;
             default:
                 break;
         }

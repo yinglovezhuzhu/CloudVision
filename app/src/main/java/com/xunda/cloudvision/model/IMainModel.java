@@ -40,6 +40,12 @@ public interface IMainModel extends IModel {
     String nextNotice();
 
     /**
+     * 是否已激活
+     * @return
+     */
+    boolean isActivated();
+
+    /**
      * 查询首页数据
      * @param callback 回调
      */

@@ -73,6 +73,12 @@ public class MainModel implements IMainModel {
     }
 
     @Override
+    public boolean isActivated() {
+        // FIXME 修改为正确的判断是否激活的代码
+        return !StringUtils.isEmpty(mSharePrefHelper.getString(Config.SP_KEY_ACTIVATE_CODE, null));
+    }
+
+    @Override
     public void queryHomeData(HttpAsyncTask.Callback<QueryHomeDataResp> callback) {
         // FIXME 请求地址修改
         final String url = "url";

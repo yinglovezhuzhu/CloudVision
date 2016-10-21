@@ -44,12 +44,12 @@ public class HttpCacheDBUtils {
             values.put(DATA, data);
             values.put(UPDATE_TIME, System.currentTimeMillis());
             // 查询记录
-            cursor = db.query(TABLE_NAME_CACHE, null, URL + " = ? && " + KEY + " = ?",
+            cursor = db.query(TABLE_NAME_CACHE, null, URL + " = ? AND " + KEY + " = ?",
 					new String [] {url, key, }, null, null, null);
             if(null != cursor) {
                 if(cursor.moveToFirst()) {
                     // 有记录，更新记录
-                    id = db.update(TABLE_NAME_CACHE, values, URL + " = ? && " + KEY + " = ?",
+                    id = db.update(TABLE_NAME_CACHE, values, URL + " = ? AND " + KEY + " = ?",
                             new String [] {url, key, });
                 } else {
                     // 无记录，插入新纪录
@@ -87,7 +87,7 @@ public class HttpCacheDBUtils {
 		int count = 0;
 		try {
 			db.beginTransaction();
-			count = db.delete(TABLE_NAME_CACHE, URL + " = ? && " + KEY + " = ?",
+			count = db.delete(TABLE_NAME_CACHE, URL + " = ? AND " + KEY + " = ?",
                     new String[] {url, key, });
 			db.setTransactionSuccessful();
 		} finally {
@@ -112,7 +112,7 @@ public class HttpCacheDBUtils {
         Cursor cursor = null;
         try {
             // 查询记录
-            cursor = db.query(TABLE_NAME_CACHE, null, URL + " = ? && " + KEY + " = ?",
+            cursor = db.query(TABLE_NAME_CACHE, null, URL + " = ? AND " + KEY + " = ?",
                     new String [] {url, key, }, null, null, null);
             if(null != cursor) {
                 if(cursor.moveToFirst()) {

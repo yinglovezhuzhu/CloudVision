@@ -31,20 +31,50 @@ public class ActivateModel implements IActivateModel {
     }
 
     @Override
-    public boolean isActivated() {
-        return !StringUtils.isEmpty(mSharePrefHelper.getString(Config.SP_KEY_ACTIVATE_CODE, null));
+    public String getEquipmentNo() {
+        // FIXME 获取正确的机器码
+        return "AAAAAAAAAAAAAAAAAA";
     }
 
     @Override
     public void activate(String code, final HttpAsyncTask.Callback<ActivateResp> callback) {
         // FIXME 请求地址修改
-        final String url = "url";
+        final String url = "activate.json";
+        ActivateReq reqParam = new ActivateReq();
+        reqParam.setEquipmentNo(getEquipmentNo());
+        reqParam.setActivateCode(code);
+        final Gson gson = new Gson();
+        // FIXME 请求标识修改
+        final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            ActivateReq reqParam = new ActivateReq();
-            new HttpAsyncTask<ActivateResp>().execute("", reqParam, ActivateResp.class, callback);
+            new HttpAsyncTask<ActivateResp>(mContext).execute(url, reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
+                @Override
+                public void onPreExecute() {
+                    if(null != callback) {
+                        callback.onPreExecute();
+                    }
+                }
+
+                @Override
+                public void onCanceled() {
+                    if(null != callback) {
+                        callback.onCanceled();
+                    }
+                }
+
+                @Override
+                public void onResult(ActivateResp result) {
+                    // 保存接口请求缓存，只有在请求成功的时候才保存
+                    if(HttpStatus.SC_OK == result.getHttpCode()) {
+                        HttpCacheDBUtils.saveHttpCache(mContext, url, key, gson.toJson(result));
+                    }
+
+                    if(null != callback) {
+                        callback.onResult(result);
+                    }
+                }
+            });
         } else {
-            // FIXME 请求标识修改
-            final String key = "key";
             ActivateResp result;
             String data = HttpCacheDBUtils.getHttpCache(mContext, url, key);
             if(StringUtils.isEmpty(data)) {
@@ -56,7 +86,7 @@ public class ActivateModel implements IActivateModel {
             } else {
                 try {
                     // 解析数据
-                    result = new Gson().fromJson(data, ActivateResp.class);
+                    result = gson.fromJson(data, ActivateResp.class);
                     if(null != callback) {
                         callback.onResult(result);
                     }

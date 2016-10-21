@@ -1,9 +1,11 @@
 package com.xunda.cloudvision.http;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.xunda.cloudvision.bean.resp.BaseResp;
 import com.xunda.cloudvision.utils.BeanRefUtils;
+import com.xunda.cloudvision.utils.StringUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,6 +18,18 @@ import java.util.Map;
 public class HttpAsyncTask<B extends BaseResp> {
 	
 	private AsyncTask<Object, Integer, B> mTask;
+
+	// FIXME TEST ONLY
+	private Context mContext;
+
+	public HttpAsyncTask() {
+
+	}
+
+	// FIXME TEST ONLY
+	public HttpAsyncTask(Context context) {
+		this.mContext = context;
+	}
 	
 	/**
 	 * 执行一个异步网络请求
@@ -49,14 +63,29 @@ public class HttpAsyncTask<B extends BaseResp> {
 				BaseResp errorResult = null;
 				try {
                     errorResult = (BaseResp) resultClass.newInstance();
-					HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
-					String responseData = httpResult.getResponseData();
-	                if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
-	                	return (B) new Gson().fromJson(responseData, resultClass);
-	                } else {
-	                	errorResult.setHttpCode(httpResult.getResponseCode());
-	                	errorResult.setMsg(httpResult.getResponseMessage());
-	                }
+//					HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
+//					String responseData = httpResult.getResponseData();
+//	                if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
+//	                	return (B) new Gson().fromJson(responseData, resultClass);
+//	                } else {
+//	                	errorResult.setHttpCode(httpResult.getResponseCode());
+//	                	errorResult.setMsg(httpResult.getResponseMessage());
+//	                }
+
+					// FIXME TEST ONLY
+					if(null == mContext) {
+						errorResult.setHttpCode(HttpStatus.SC_GONE);
+						errorResult.setMsg("构造方法不对");
+					} else {
+						String responseData = StringUtils.readStringFromAssetsFile(mContext, url);
+						if(StringUtils.isEmpty(responseData)) {
+							errorResult.setHttpCode(HttpStatus.SC_NOT_FOUND);
+							errorResult.setMsg("文件不存在");
+						} else {
+							return (B) new Gson().fromJson(responseData, resultClass);
+						}
+					}
+
 				} catch (IOException|IllegalAccessException|InstantiationException e) {
 					e.printStackTrace();
                     if(null != errorResult) {

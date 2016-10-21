@@ -12,8 +12,9 @@
         android:name=".CVApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.ActivateActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.MainActivity"
+        <activity android:name=".ui.activity.ActivateActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.activity.VoiceActivity"

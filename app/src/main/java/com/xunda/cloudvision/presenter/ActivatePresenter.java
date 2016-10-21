@@ -23,14 +23,6 @@ public class ActivatePresenter {
         this.mModel = new ActivateModel(context);
     }
 
-    /**
-     * 是否已经激活
-     * @return 是否已经激活， true 已激活， false 未激活
-     */
-    public boolean isActivated() {
-        return mModel.isActivated();
-    }
-
     public void activate() {
         final String code = mView.getCodeText();
         if(StringUtils.isEmpty(code)) {

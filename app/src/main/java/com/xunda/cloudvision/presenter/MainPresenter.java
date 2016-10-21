@@ -126,6 +126,14 @@ public class MainPresenter implements Handler.Callback {
     }
 
     /**
+     * 是否已经激活
+     * @return 是否已经激活， true 已激活， false 未激活
+     */
+    public boolean isActivated() {
+        return mMainModel.isActivated();
+    }
+
+    /**
      * 查询首页广告
      */
     public void queryHomeAdvertise() {
