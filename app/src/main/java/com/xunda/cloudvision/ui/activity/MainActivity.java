@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             case RC_ACTIVATE_PAGE:
                 if(RESULT_OK == resultCode) {
-
+                    mMainPresenter.queryHomeAdvertise();
                 } else {
                     finish();
                 }

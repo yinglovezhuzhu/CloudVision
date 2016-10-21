@@ -14,6 +14,7 @@ import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.http.HttpStatus;
+import com.xunda.cloudvision.utils.DeviceManager;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.SharedPrefHelper;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -79,15 +80,43 @@ public class MainModel implements IMainModel {
     }
 
     @Override
-    public void queryHomeData(HttpAsyncTask.Callback<QueryHomeDataResp> callback) {
+    public void queryHomeData(final HttpAsyncTask.Callback<QueryHomeDataResp> callback) {
         // FIXME 请求地址修改
-        final String url = "url";
+        final String url = "main_advertise.json";
+        final QueryHomeDataReq reqParam = new QueryHomeDataReq();
+        reqParam.setEnterpriseId(DeviceManager.getInstance().getCorporateId());
+        reqParam.setToken(DeviceManager.getInstance().getToken());
+        final Gson gson = new Gson();
+        // FIXME 请求标识修改
+        final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            QueryHomeDataReq reqParam = new QueryHomeDataReq();
-            new HttpAsyncTask<QueryHomeDataResp>().execute(url, reqParam, QueryHomeDataResp.class, callback);
+            new HttpAsyncTask<QueryHomeDataResp>().execute(url, reqParam, QueryHomeDataResp.class, new HttpAsyncTask.Callback<QueryHomeDataResp>() {
+                public void onPreExecute() {
+                    if(null != callback) {
+                        callback.onPreExecute();
+                    }
+                }
+
+                @Override
+                public void onCanceled() {
+                    if(null != callback) {
+                        callback.onCanceled();
+                    }
+                }
+
+                @Override
+                public void onResult(QueryHomeDataResp result) {
+                    // 保存接口请求缓存，只有在请求成功的时候才保存
+                    if(HttpStatus.SC_OK == result.getHttpCode()) {
+                        HttpCacheDBUtils.saveHttpCache(mContext, url, key, gson.toJson(result));
+                    }
+
+                    if(null != callback) {
+                        callback.onResult(result);
+                    }
+                }
+            });
         } else {
-            // FIXME 请求标识修改
-            final String key = "key";
             QueryHomeDataResp result;
             String data = HttpCacheDBUtils.getHttpCache(mContext, url, key);
             if(StringUtils.isEmpty(data)) {

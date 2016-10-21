@@ -1,0 +1,30 @@
+{
+  "httpCode": 200,
+  "msg": "查询成功",
+  "advertise": [
+    {
+      "id": "111111",
+      "type": "1",
+      "relationId": "111112",
+      "orderWeight": "1",
+      "url": "http://h.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3ed69473cb848ba61ea8d34516.jpg",
+      "outLink": ""
+    },
+    {
+      "id": "222222",
+      "type": "2",
+      "relationId": "111113",
+      "orderWeight": "2",
+      "url": "http://120.24.234.204/static/upload/video/FUKESI.mp4",
+      "outLink": ""
+    },
+    {
+      "id": "333333",
+      "type": "2",
+      "relationId": "111114",
+      "orderWeight": "2",
+      "url": "http://120.24.234.204/static/upload/video/FUKESI.mp4",
+      "outLink": ""
+    }
+  ]
+}

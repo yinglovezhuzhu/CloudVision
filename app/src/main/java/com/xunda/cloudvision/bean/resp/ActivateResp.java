@@ -30,12 +30,17 @@ public class ActivateResp extends BaseResp {
         return endTime;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     @Override
     public String toString() {
         return "ActivateResp{" +
                 "enterpriseId='" + enterpriseId + '\'' +
                 ", activateTime='" + activateTime + '\'' +
                 ", endTime='" + endTime + '\'' +
+                ", token='" + token + '\'' +
                 "} " + super.toString();
     }
 }

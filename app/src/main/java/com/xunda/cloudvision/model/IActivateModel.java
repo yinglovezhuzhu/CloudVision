@@ -10,10 +10,4 @@ import com.xunda.cloudvision.http.HttpAsyncTask;
 public interface IActivateModel extends IModel {
 
     void activate(String code, HttpAsyncTask.Callback<ActivateResp> callback);
-
-    /**
-     * 获取机器码
-     * @return 机器码
-     */
-    String getEquipmentNo();
 }
