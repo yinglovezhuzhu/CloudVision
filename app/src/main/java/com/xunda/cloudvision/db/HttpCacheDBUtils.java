@@ -41,6 +41,7 @@ public class HttpCacheDBUtils {
 		try {
 			ContentValues values = new ContentValues();
             values.put(URL, url);
+            values.put(KEY, key);
             values.put(DATA, data);
             values.put(UPDATE_TIME, System.currentTimeMillis());
             // 查询记录
