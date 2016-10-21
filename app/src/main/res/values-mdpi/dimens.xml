@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 字体大小 -->
+    <dimen name="textSize_level1">5sp</dimen>
+    <dimen name="textSize_level2">8sp</dimen>
+    <dimen name="textSize_level3">10sp</dimen>
+    <dimen name="textSize_level4">15sp</dimen>
+    <dimen name="textSize_level5">20sp</dimen>
+    <dimen name="textSize_level6">25sp</dimen>
+    <dimen name="textSize_level7">30sp</dimen>
+    <dimen name="textSize_level8">35sp</dimen>
+    <dimen name="textSize_level9">40sp</dimen>
+    <dimen name="textSize_level10">45sp</dimen>
+    <dimen name="textSize_level11">50sp</dimen>
+    <dimen name="textSize_level12">55sp</dimen>
+    <dimen name="textSize_level13">60sp</dimen>
+
+    <!-- 边距 -->
+    <dimen name="contentPadding_level1">3dp</dimen>
+    <dimen name="contentPadding_level2">5dp</dimen>
+    <dimen name="contentPadding_level3">10dp</dimen>
+    <dimen name="contentPadding_level4">20dp</dimen>
+    <dimen name="contentPadding_level5">30dp</dimen>
+    <dimen name="contentPadding_level6">40dp</dimen>
+    <dimen name="contentPadding_level7">50dp</dimen>
+    <dimen name="contentPadding_level8">60dp</dimen>
+
+    <!-- 分割线 -->
+    <dimen name="divider_size_level1">1dp</dimen>
+    <dimen name="divider_size_level2">2dp</dimen>
+    <dimen name="divider_margin_level1">1dp</dimen>
+    <dimen name="divider_margin_level2">3dp</dimen>
+    <dimen name="divider_margin_level3">5dp</dimen>
+    <dimen name="divider_hide_margin_level1">-2dp</dimen>
+    <dimen name="divider_hide_margin_level2">-4dp</dimen>
+
+    <!-- Shape圆角 -->
+    <dimen name="shape_corner_radius_level1">4dp</dimen>
+    <dimen name="shape_corner_radius_level2">8dp</dimen>
+    <dimen name="shape_corner_radius_level3">12dp</dimen>
+
+    <!-- 页面指示器 -->
+    <dimen name="page_indicator_inner_size">12dp</dimen>
+    <dimen name="page_indicator_normal_size">16dp</dimen>
+    <dimen name="page_indicator_outer_size">24dp</dimen>
+
+    <!-- 激活页面 -->
+    <dimen name="activate_widget_margin">40dp</dimen>
+    <dimen name="activate_btn_height">38dp</dimen>
+
+    <!-- 主页面 -->
+    <dimen name="main_menu_btn_width">50dp</dimen>
+    <dimen name="main_video_play_icon_size">45dp</dimen>
+
+    <!-- 语音界面 -->
+    <dimen name="voice_android_icon_size">60dp</dimen>
+
+    <!-- 企业首页 -->
+    <dimen name="corporate_header_logo_size">180dp</dimen>
+    <dimen name="corporate_red_divider_width">80dp</dimen>
+    <dimen name="corporate_btn_more_product_height">40dp</dimen>
+    <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
+
+    <!-- 产品界面 -->
+    <dimen name="product_bottom_btn_minSize">45dp</dimen>
+    <dimen name="product_pager_view_index_view_size">230dp</dimen>
+    <dimen name="product_list_view_img_size">280dp</dimen>
+
+    <!-- 产品详情 -->
+    <dimen name="product_detail_img_page_margin">0dp</dimen>
+    <dimen name="product_detail_loading_progress_size">40dp</dimen>
+
+</resources>

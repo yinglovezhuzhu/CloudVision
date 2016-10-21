@@ -54,13 +54,13 @@
     <dimen name="main_video_play_icon_size">50dp</dimen>
 
     <!-- 语音界面 -->
-    <dimen name="voice_android_icon_size">25dp</dimen>
+    <dimen name="voice_android_icon_size">70dp</dimen>
 
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">200dp</dimen>
-    <dimen name="corporate_red_divider_width">40dp</dimen>
-    <dimen name="corporate_btn_more_product_height">30dp</dimen>
-    <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
+    <dimen name="corporate_red_divider_width">100dp</dimen>
+    <dimen name="corporate_btn_more_product_height">50dp</dimen>
+    <dimen name="corporate_btn_more_product_corner_radio">60dp</dimen>
 
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">50dp</dimen>
@@ -69,6 +69,6 @@
 
     <!-- 产品详情 -->
     <dimen name="product_detail_img_page_margin">0dp</dimen>
-    <dimen name="product_detail_loading_progress_size">20dp</dimen>
+    <dimen name="product_detail_loading_progress_size">50dp</dimen>
 
 </resources>
