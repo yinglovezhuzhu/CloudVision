@@ -42,10 +42,10 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ibtn_cloud_video_back:
+            case R.id.ibtn_video_back:
                 finish(RESULT_CANCELED, null);
                 break;
-            case R.id.ibtn_cloud_video_search:
+            case R.id.ibtn_video_search:
                 startActivity(new Intent(this, VideoSearchActivity.class));
                 break;
             default:
@@ -54,10 +54,10 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     }
 
     private void initView() {
-        findViewById(R.id.ibtn_cloud_video_back).setOnClickListener(this);
-        findViewById(R.id.ibtn_cloud_video_search).setOnClickListener(this);
+        findViewById(R.id.ibtn_video_back).setOnClickListener(this);
+        findViewById(R.id.ibtn_video_search).setOnClickListener(this);
 
-        final PullListView lvVideo = (PullListView) findViewById(R.id.lv_cloud_video);
+        final PullListView lvVideo = (PullListView) findViewById(R.id.lv_video);
         mAdapter = new CloudVideoAdapter(this, getResources().getDisplayMetrics().widthPixels);
         lvVideo.setAdapter(mAdapter);
         lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {

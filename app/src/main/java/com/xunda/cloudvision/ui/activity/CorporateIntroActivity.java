@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.CorporateBean;
 import com.xunda.cloudvision.presenter.CorporateIntroPresenter;
 import com.xunda.cloudvision.view.ICorporateIntroView;
 import com.xunda.cloudvision.ui.fragment.WebViewFragment;
@@ -31,6 +32,7 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
     public static final int PAGE_CORPORATE_ENVIRONMENT = 4;
 
     private CorporateIntroPresenter mCorporateIntroPresenter;
+    private CorporateBean mCorporateData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +65,19 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         FragmentTabHost tabHost = (FragmentTabHost) findViewById(R.id.fth_corporate_intro_tabs);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_corporate_intro_container);
         tabHost.getTabWidget().setDividerDrawable(null);
-
-        addTabs(tabHost);
-
         findViewById(R.id.btn_corporate_intro_back).setOnClickListener(this);
 
         Intent intent = getIntent();
-        if(null != intent && intent.hasExtra(Config.EXTRA_DATA)) {
-            int page = intent.getIntExtra(Config.EXTRA_DATA, PAGE_CORPORATE_CULTURE);
+        if(null == intent) {
+            finish(RESULT_CANCELED, null);
+        }
+
+        mCorporateData = intent.getParcelableExtra(Config.EXTRA_DATA);
+
+        addTabs(tabHost);
+
+        if(intent.hasExtra(Config.EXTRA_POSITION)) {
+            int page = intent.getIntExtra(Config.EXTRA_POSITION, PAGE_CORPORATE_CULTURE);
             tabHost.setCurrentTab(page);
         }
     }
@@ -88,31 +95,41 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
 
         // 企业荣誉
         final Bundle honorArgs = new Bundle();
-        honorArgs.putString(Config.EXTRA_DATA, "https://www.baidu.com");
+        if(null != mCorporateData) {
+            honorArgs.putString(Config.EXTRA_DATA, mCorporateData.getHonor());
+        }
         tabHost.addTab(tabHost.newTabSpec("honorTab").setIndicator(honorTab),
                 WebViewFragment.class, honorArgs);
 
         // 企业文化
         final Bundle cultureArgs = new Bundle();
-        cultureArgs.putString(Config.EXTRA_DATA, "https://www.so.com/");
+        if(null != mCorporateData) {
+            cultureArgs.putString(Config.EXTRA_DATA, mCorporateData.getCulture());
+        }
         tabHost.addTab(tabHost.newTabSpec("cultureTab").setIndicator(cultureTab),
                 WebViewFragment.class, cultureArgs);
 
         // 企业形象
         final Bundle imageArgs = new Bundle();
-        imageArgs.putString(Config.EXTRA_DATA, "http://dict.youdao.com/");
+        if(null != mCorporateData) {
+            imageArgs.putString(Config.EXTRA_DATA, mCorporateData.getFigure());
+        }
         tabHost.addTab(tabHost.newTabSpec("imageTab").setIndicator(imageTab),
                 WebViewFragment.class, imageArgs);
 
         // 企业简介
         final Bundle introArgs = new Bundle();
-        introArgs.putString(Config.EXTRA_DATA, "http://www.liantu.com/");
+        if(null != mCorporateData) {
+            introArgs.putString(Config.EXTRA_DATA, mCorporateData.getSummary());
+        }
         tabHost.addTab(tabHost.newTabSpec("introTab").setIndicator(introTab),
                 WebViewFragment.class, introArgs);
 
         // 企业环境
         final Bundle environmentArgs = new Bundle();
-        environmentArgs.putString(Config.EXTRA_DATA, "http://www.express8.cn/");
+        if(null != mCorporateData) {
+            environmentArgs.putString(Config.EXTRA_DATA, mCorporateData.getEnvironment());
+        }
         tabHost.addTab(tabHost.newTabSpec("environmentTab").setIndicator(environmentTab),
                 WebViewFragment.class, environmentArgs);
     }

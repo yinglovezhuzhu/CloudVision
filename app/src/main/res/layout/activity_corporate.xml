@@ -39,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/contentPadding_level4"
                 android:textSize="@dimen/textSize_level7"
-                android:textColor="@color/text_color_white"
-                android:text="天朝实业有限公司"/>
+                android:textColor="@color/text_color_white"/>
         </LinearLayout>
     </FrameLayout>
     <LinearLayout
@@ -119,7 +118,9 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"

@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.xunda.cloudvision.R;
 
 import java.util.List;
 
@@ -132,5 +136,18 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 		}
 		setResult(resultCode, data);
 		finish();
+	}
+
+	/**
+	 * 加载图片并且显示
+	 * @param path 图片地址
+	 * @param imageView 显示图片的ImageView控件
+     */
+	protected void loadImage(String path, ImageView imageView) {
+		Picasso.with(this)
+				.load(path)
+				.placeholder(R.drawable.ic_launcher)
+				.error(R.drawable.ic_launcher)
+				.into(imageView);
 	}
 }

@@ -47,21 +47,22 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/iv_main_content_one_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content_one_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@null"/>
+                android:contentDescription="@null"
+                android:visibility="gone"/>
         </FrameLayout>
         <View
             android:layout_width="match_parent"
@@ -72,20 +73,21 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true">
             <ImageView
                 android:id="@+id/iv_main_content_two_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content_two_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@null"/>
+                android:contentDescription="@null"
+                android:visibility="gone"/>
         </FrameLayout>
         <View
             android:layout_width="match_parent"
@@ -96,20 +98,21 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true">
             <ImageView
                 android:id="@+id/iv_main_content_three_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_activate"
                 android:contentDescription="@null"/>
             <ImageView
                 style="@style/PlayIconTheme"
                 android:id="@+id/iv_main_content_three_video_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@null"/>
+                android:contentDescription="@null"
+                android:visibility="gone"/>
         </FrameLayout>
         <LinearLayout
             android:id="@+id/ll_main_bottom_bar"
@@ -155,6 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/layer_list_bg_main_menu_items"
+                android:gravity="center_horizontal"
                 android:visibility="invisible">
                 <View
                     android:layout_width="match_parent"

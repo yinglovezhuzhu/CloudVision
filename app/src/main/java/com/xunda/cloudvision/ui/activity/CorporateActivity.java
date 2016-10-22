@@ -7,16 +7,26 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.AdvertiseBean;
+import com.xunda.cloudvision.bean.CorporateBean;
+import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
 import com.xunda.cloudvision.ui.adapter.RecommendedVideoAdapter;
 import com.xunda.cloudvision.ui.widget.NoScrollGridView;
+import com.xunda.cloudvision.utils.DataManager;
 import com.xunda.cloudvision.view.ICorporateView;
+
+import java.util.List;
 
 /**
  * 企业首页
@@ -25,6 +35,11 @@ import com.xunda.cloudvision.view.ICorporateView;
 public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     private CorporatePresenter mCorporatePresenter;
+
+    private ImageView mIvCorporateLogo;
+    private TextView mTvCorporateName;
+
+    private RecommendedProductPagerAdapter mRecommendedProductAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,9 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         mCorporatePresenter = new CorporatePresenter(this, this);
 
         initView();
+
+        mCorporatePresenter.queryCorporateInfo();
+        mCorporatePresenter.queryRecommendedProduct();
     }
 
     @Override
@@ -81,15 +99,57 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     @Override
     public void onQueryRecommendedProductResult(QueryProductResp result) {
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<ProductBean> product = result.getProduct();
+                    if(null == product || product.isEmpty()) {
+                        // TODO 错误
+                    } else {
+                        mRecommendedProductAdapter.addAll(product, true);
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
     }
 
     @Override
     public void onQueryCorporateInfoResult(QueryCorporateResp result) {
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    final CorporateBean corporate = result.getEnterprise();
+                    if(null == corporate) {
+                        // TODO 错误
+                    } else {
+                        DataManager.getInstance().updateCorporateInfo(corporate);
+                        mTvCorporateName.setText(corporate.getName());
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
     }
 
     private void initView() {
+        mIvCorporateLogo = (ImageView) findViewById(R.id.iv_corporate_logo);
+        mTvCorporateName = (TextView) findViewById(R.id.tv_corporate_name);
+
         findViewById(R.id.btn_corporate_culture).setOnClickListener(this);
         findViewById(R.id.btn_corporate_honor).setOnClickListener(this);
         findViewById(R.id.btn_corporate_environment).setOnClickListener(this);
@@ -112,7 +172,8 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_corporate_recommended_product);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level6));
-        viewPager.setAdapter(new RecommendedProductPagerAdapter(getSupportFragmentManager()));
+        mRecommendedProductAdapter = new RecommendedProductPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mRecommendedProductAdapter);
 
         final int videoItemWidth = (dmWidth - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 3) / 2;
         final NoScrollGridView videoGrid = (NoScrollGridView) findViewById(R.id.gv_corporate_recommended_video);
@@ -125,6 +186,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 startActivity(i);
             }
         });
+
     }
 
     /**
@@ -138,7 +200,8 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
      */
     private void gotoCorporateIntro(int page) {
         Intent intent = new Intent(this, CorporateIntroActivity.class);
-        intent.putExtra(Config.EXTRA_DATA, page);
+        intent.putExtra(Config.EXTRA_DATA, DataManager.getInstance().getCorporateInfo());
+        intent.putExtra(Config.EXTRA_POSITION, page);
         startActivity(intent);
     }
 }

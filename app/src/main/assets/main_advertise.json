@@ -7,24 +7,24 @@
       "type": "1",
       "relationId": "111112",
       "orderWeight": "1",
-      "url": "http://h.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3ed69473cb848ba61ea8d34516.jpg",
-      "outLink": ""
+      "url": "https://img13.360buyimg.com/da/jfs/t3526/332/302708486/97931/79ea6554/5805f3a5N7aed9f78.jpg",
+      "outLink": "https://sale.jd.com/act/UsXVRMC17uiHy.html?jd_pop=b46d7d40-9faa-4ff4-82a8-666cad59df09&abt=1"
     },
     {
       "id": "222222",
       "type": "2",
       "relationId": "111113",
       "orderWeight": "2",
-      "url": "http://120.24.234.204/static/upload/video/FUKESI.mp4",
-      "outLink": ""
+      "url": "http://img4.iyiou.com/Cover/2015-07-16/hangye-chongwu.jpg",
+      "outLink": "http://120.24.234.204/static/upload/video/FUKESI.mp4"
     },
     {
       "id": "333333",
       "type": "2",
       "relationId": "111114",
-      "orderWeight": "2",
-      "url": "http://120.24.234.204/static/upload/video/FUKESI.mp4",
-      "outLink": ""
+      "orderWeight": "3",
+      "url": "http://img1.3lian.com/2015/a2/249/d/221.jpg",
+      "outLink": "http://120.24.234.204/static/upload/video/FUKESI.mp4"
     }
   ]
 }

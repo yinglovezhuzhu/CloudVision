@@ -46,8 +46,7 @@ public class RecommendedProductPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//        return RecommendedProductPagerFragment.newInstance(getItemData(position));
-        return RecommendedProductPagerFragment.newInstance(null);
+        return RecommendedProductPagerFragment.newInstance(getItemData(position));
     }
 
     @Override
@@ -57,8 +56,7 @@ public class RecommendedProductPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-//        return mData.size();
-        return 20;
+        return mData.size();
     }
 
     @Override

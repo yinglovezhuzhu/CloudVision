@@ -5,16 +5,12 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.xunda.cloudvision.Config;
-import com.xunda.cloudvision.bean.req.ActivateReq;
 import com.xunda.cloudvision.bean.req.QueryHomeDataReq;
-import com.xunda.cloudvision.bean.resp.ActivateResp;
-import com.xunda.cloudvision.bean.resp.BaseResp;
-import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.http.HttpStatus;
-import com.xunda.cloudvision.utils.DeviceManager;
+import com.xunda.cloudvision.utils.DataManager;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.SharedPrefHelper;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -84,13 +80,14 @@ public class MainModel implements IMainModel {
         // FIXME 请求地址修改
         final String url = "main_advertise.json";
         final QueryHomeDataReq reqParam = new QueryHomeDataReq();
-        reqParam.setEnterpriseId(DeviceManager.getInstance().getCorporateId());
-        reqParam.setToken(DeviceManager.getInstance().getToken());
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
+        reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryHomeDataResp>().execute(url, reqParam, QueryHomeDataResp.class, new HttpAsyncTask.Callback<QueryHomeDataResp>() {
+            new HttpAsyncTask<QueryHomeDataResp>(mContext).execute(url, reqParam,
+                    QueryHomeDataResp.class, new HttpAsyncTask.Callback<QueryHomeDataResp>() {
                 public void onPreExecute() {
                     if(null != callback) {
                         callback.onPreExecute();

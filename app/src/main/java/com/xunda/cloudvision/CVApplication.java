@@ -2,7 +2,7 @@ package com.xunda.cloudvision;
 
 import android.app.Application;
 
-import com.xunda.cloudvision.utils.DeviceManager;
+import com.xunda.cloudvision.utils.DataManager;
 import com.xunda.cloudvision.utils.NetworkManager;
 
 /**
@@ -16,6 +16,6 @@ public class CVApplication extends Application {
         super.onCreate();
 
         NetworkManager.getInstance().initialized(this);
-        DeviceManager.getInstance().initialize(this);
+        DataManager.getInstance().initialize(this);
     }
 }

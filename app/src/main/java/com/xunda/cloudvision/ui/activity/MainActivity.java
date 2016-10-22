@@ -18,11 +18,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.AdvertiseBean;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.MainPresenter;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.StringUtils;
 import com.xunda.cloudvision.view.IMainView;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 主界面Activity
@@ -138,17 +143,32 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             case R.id.btn_main_menu_setting_switch:
                 break;
-            case R.id.iv_main_content_one_video_play:
-                Intent i = new Intent(this, VideoPlayerActivity.class);
-                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
-                startActivity(i);
-                break;
-            case R.id.iv_main_content_two_video_play:
-                break;
-            case R.id.iv_main_content_three_video_play:
-                Intent i2 = new Intent(this, VideoPlayerActivity.class);
-                i2.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
-                startActivity(i2);
+            case R.id.ll_main_content_one:
+            case R.id.ll_main_content_two:
+            case R.id.ll_main_content_three:
+                final Object tag = v.getTag();
+                if(null != tag && tag instanceof AdvertiseBean) {
+                    final AdvertiseBean advertiseBean = (AdvertiseBean) tag;
+                    switch (advertiseBean.getType()) {
+                        case AdvertiseBean.TYPE_IMAGE:
+                            openWebView(advertiseBean.getOutLink());
+                            break;
+                        case AdvertiseBean.TYPE_VIDEO:
+                            playVideo(advertiseBean.getOutLink());
+                            break;
+                        case AdvertiseBean.TYPE_PRODUCT:
+                            openWebView(advertiseBean.getOutLink());
+                            break;
+                        case AdvertiseBean.TYPE_CORPORATE:
+                            openWebView(advertiseBean.getOutLink());
+                            break;
+                        case AdvertiseBean.TYPE_OUTER_LINK:
+                            openWebView(advertiseBean.getOutLink());
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 break;
             default:
                 break;
@@ -207,7 +227,37 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onQueryAdvertiseResult(QueryHomeDataResp result) {
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<AdvertiseBean> advertises = result.getAdvertise();
+                    if(null == advertises || advertises.isEmpty()) {
+                        // TODO 错误
+                    } else {
+                        final AdvertiseBean advertiseOne = advertises.get(0);
+                        setAdvertiseOneData(advertiseOne);
+
+                        if(advertises.size() > 1) {
+                            final AdvertiseBean advertiseTwo = advertises.get(1);
+                            setAdvertiseTwoData(advertiseTwo);
+                        }
+
+                        if(advertises.size() > 2) {
+                            final AdvertiseBean advertiseThree = advertises.get(2);
+                            setAdvertiseThreeData(advertiseThree);
+                        }
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
     }
 
     /**
@@ -319,25 +369,17 @@ public class MainActivity extends BaseActivity implements IMainView {
         mViewContentOne = findViewById(R.id.ll_main_content_one);
         mIvContentOne = (ImageView) findViewById(R.id.iv_main_content_one_img);
         mIvPlayOne = (ImageView) findViewById(R.id.iv_main_content_one_video_play);
-        mIvPlayOne.setOnClickListener(this);
+        mViewContentOne.setOnClickListener(this);
 
         mViewContentTwo = findViewById(R.id.ll_main_content_two);
         mIvContentTwo = (ImageView) findViewById(R.id.iv_main_content_two_img);
         mIvPlayTwo = (ImageView) findViewById(R.id.iv_main_content_two_video_play);
-        mIvPlayTwo.setOnClickListener(this);
+        mViewContentTwo.setOnClickListener(this);
 
         mViewContentThree = findViewById(R.id.ll_main_content_three);
         mIvContentThree = (ImageView) findViewById(R.id.iv_main_content_three_img);
         mIvPlayThree = (ImageView) findViewById(R.id.iv_main_content_three_video_play);
-        mIvPlayThree.setOnClickListener(this);
-
-        mIvContentOne.setImageResource(R.drawable.img_video1);
-        mIvPlayOne.setVisibility(View.VISIBLE);
-        mIvContentTwo.setImageResource(R.drawable.img_ad1);
-        mIvPlayTwo.setVisibility(View.GONE);
-        mIvContentThree.setImageResource(R.drawable.img_video2);
-        mIvPlayThree.setVisibility(View.VISIBLE);
-
+        mViewContentThree.setOnClickListener(this);
     }
 
     /**
@@ -380,5 +422,109 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_logout).setOnClickListener(this);
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_switch).setOnClickListener(this);
+    }
+
+    /**
+     * 设置第一个广告位
+     * @param advertiseOne
+     */
+    private void setAdvertiseOneData(AdvertiseBean advertiseOne) {
+        loadImage(advertiseOne.getUrl(), mIvContentOne);
+        mViewContentOne.setTag(advertiseOne);
+        switch (advertiseOne.getType()) {
+            case AdvertiseBean.TYPE_IMAGE:
+                mIvPlayOne.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_VIDEO:
+                mIvPlayOne.setVisibility(View.VISIBLE);
+                break;
+            case AdvertiseBean.TYPE_PRODUCT:
+                mIvPlayOne.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_CORPORATE:
+                mIvPlayOne.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_OUTER_LINK:
+                mIvPlayOne.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 设置第二个广告位
+     * @param advertiseTwo
+     */
+    private void setAdvertiseTwoData(AdvertiseBean advertiseTwo) {
+        loadImage(advertiseTwo.getUrl(), mIvContentTwo);
+        mViewContentTwo.setTag(advertiseTwo);
+        switch (advertiseTwo.getType()) {
+            case AdvertiseBean.TYPE_IMAGE:
+                mIvPlayTwo.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_VIDEO:
+                mIvPlayTwo.setVisibility(View.VISIBLE);
+                break;
+            case AdvertiseBean.TYPE_PRODUCT:
+                mIvPlayTwo.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_CORPORATE:
+                mIvPlayTwo.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_OUTER_LINK:
+                mIvPlayTwo.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 设置第三个广告位
+     * @param advertiseThree
+     */
+    private void setAdvertiseThreeData(AdvertiseBean advertiseThree) {
+        loadImage(advertiseThree.getUrl(), mIvContentThree);
+        mViewContentThree.setTag(advertiseThree);
+        switch (advertiseThree.getType()) {
+            case AdvertiseBean.TYPE_IMAGE:
+                mIvPlayThree.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_VIDEO:
+                mIvPlayThree.setVisibility(View.VISIBLE);
+                break;
+            case AdvertiseBean.TYPE_PRODUCT:
+                mIvPlayThree.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_CORPORATE:
+                mIvPlayThree.setVisibility(View.GONE);
+                break;
+            case AdvertiseBean.TYPE_OUTER_LINK:
+                mIvPlayThree.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 播放视频
+     * @param path
+     */
+    private void playVideo(String path) {
+        Intent i = new Intent(this, VideoPlayerActivity.class);
+        i.setData(Uri.parse(path));
+        startActivity(i);
+    }
+
+    /**
+     * 打开网页
+     * @param url
+     */
+    private void openWebView(String url) {
+        Intent i = new Intent(this, WebViewActivity.class);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

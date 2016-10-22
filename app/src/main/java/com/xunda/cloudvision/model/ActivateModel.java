@@ -10,7 +10,7 @@ import com.xunda.cloudvision.bean.resp.ActivateResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.http.HttpStatus;
-import com.xunda.cloudvision.utils.DeviceManager;
+import com.xunda.cloudvision.utils.DataManager;
 import com.xunda.cloudvision.utils.NetworkManager;
 import com.xunda.cloudvision.utils.SharedPrefHelper;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -34,7 +34,7 @@ public class ActivateModel implements IActivateModel {
         // FIXME 请求地址修改
         final String url = "activate.json";
         final ActivateReq reqParam = new ActivateReq();
-        reqParam.setEquipmentNo(DeviceManager.getInstance().getDeviceNo());
+        reqParam.setEquipmentNo(DataManager.getInstance().getDeviceNo());
         reqParam.setActivateCode(code);
         final Gson gson = new Gson();
         // FIXME 请求标识修改
@@ -59,7 +59,7 @@ public class ActivateModel implements IActivateModel {
                 public void onResult(ActivateResp result) {
                     // 保存接口请求缓存，只有在请求成功的时候才保存
                     if(HttpStatus.SC_OK == result.getHttpCode()) {
-                        DeviceManager.getInstance().updateActivateData(result);
+                        DataManager.getInstance().updateActivateData(result);
                         HttpCacheDBUtils.saveHttpCache(mContext, url, key, gson.toJson(result));
                     }
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.opensource.pullview.PullListView
-        android:id="@+id/lv_cloud_video"
+        android:id="@+id/lv_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
@@ -13,7 +13,7 @@
         android:footerDividersEnabled="false"/>
 
     <ImageButton
-        android:id="@+id/ibtn_cloud_video_back"
+        android:id="@+id/ibtn_video_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/contentPadding_level6"
@@ -25,7 +25,7 @@
         android:src="@drawable/ic_back_round"
         android:contentDescription="@null"/>
     <ImageButton
-        android:id="@+id/ibtn_cloud_video_search"
+        android:id="@+id/ibtn_video_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/contentPadding_level6"
@@ -33,8 +33,8 @@
         android:layout_marginRight="@dimen/contentPadding_level6"
         android:layout_marginEnd="@dimen/contentPadding_level6"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/ibtn_cloud_video_back"
-        android:layout_toEndOf="@+id/ibtn_cloud_video_back"
+        android:layout_toRightOf="@+id/ibtn_video_back"
+        android:layout_toEndOf="@+id/ibtn_video_back"
         android:scaleType="fitCenter"
         android:background="@color/transparent"
         android:src="@drawable/ic_search_round"

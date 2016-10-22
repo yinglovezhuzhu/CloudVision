@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <WebView
+        android:id="@+id/wv_webview_activity_web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top" />
+    <ProgressBar
+        android:id="@+id/pb_webview_activity_progress"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="top"
+        android:progressDrawable="@drawable/layer_list_drawable_horizontal_progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"/>
+
+    <ImageButton
+        android:id="@+id/ibtn_webview_activity_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contentPadding_level6"
+        android:layout_gravity="start|bottom"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back_round"
+        android:onClick="onClick"
+        android:contentDescription="@null"/>
+</FrameLayout>
