@@ -57,7 +57,7 @@
             android:id="@+id/tv_pullview_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:maxLength="1"
             android:textSize="@dimen/pullview_header_title_textSize"
             android:textColor="@color/pullview_black"/>
         <TextView
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/pullview_header_label_paddingTop"
-            android:singleLine="true"
+            android:maxLength="1"
             android:textSize="@dimen/pullview_header_label_textSize"
             android:textColor="@color/pullview_orange"/>
     </LinearLayout>

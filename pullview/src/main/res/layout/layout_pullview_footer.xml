@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/pullview_footer_title_padding"
-        android:singleLine="true"
+        android:maxLength="1"
         android:textSize="@dimen/pullview_footer_title_textSize"
         android:textColor="@color/pullview_black"/>
 </LinearLayout>
