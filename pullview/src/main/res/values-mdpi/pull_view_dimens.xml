@@ -19,6 +19,8 @@
 
 <resources>
 
+    <dimen name="pullview_contentPadding">15dp</dimen>
+
     <!-- HeaderView -->
     <dimen name="pullview_header_arrow_content_minSize">120dip</dimen>
     <dimen name="pullview_header_progress_size">70dip</dimen>
