@@ -2,6 +2,7 @@ package com.xunda.cloudvision.view;
 
 import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 
 /**
  * Corporate View
@@ -24,14 +25,20 @@ public interface ICorporateView {
     void onCanceled(String key);
 
     /**
+     * 查询企业详情结果
+     * @param result 企业详情
+     */
+    void onQueryCorporateInfoResult(QueryCorporateResp result);
+
+    /**
      * 查询推荐商品信息结果
      * @param result 推荐商品信息查询结果数据
      */
     void onQueryRecommendedProductResult(QueryProductResp result);
 
     /**
-     * 查询企业详情结果
-     * @param result 企业详情
+     * 查询推荐视频结果
+     * @param result 推荐视频列表数据
      */
-    void onQueryCorporateInfoResult(QueryCorporateResp result);
+    void onQueryRecommendedVideoReseult(QueryVideoResp result);
 }

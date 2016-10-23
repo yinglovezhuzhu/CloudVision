@@ -13,6 +13,7 @@ import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.VideoBean;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/29.
  */
 
-public class RecommendedVideoAdapter extends BaseAdapter {
+public class RecommendedVideoAdapter extends AbsBaseAdapter {
 
     private Context mContext;
     private List<VideoBean> mData = new ArrayList<>();
@@ -31,10 +32,27 @@ public class RecommendedVideoAdapter extends BaseAdapter {
         mWidth = width;
     }
 
+    public void addAll(Collection<VideoBean> videos, boolean notifyDataSetChanged) {
+        if(null == videos || videos.isEmpty()) {
+            return;
+        }
+        mData.addAll(videos);
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void clear(boolean notifyDataSetChanged) {
+        mData.clear();
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
-//        return mData.size() > 4 ? 4 : mData.size();
-        return 4;
+        return mData.size() > 4 ? 4 : mData.size();
+//        return 4;
     }
 
     @Override
@@ -67,22 +85,11 @@ public class RecommendedVideoAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        switch (i) {
-            case 0:
-                viewHolder.ivImg.setImageResource(R.drawable.img_video1);
-                break;
-            case 1:
-                viewHolder.ivImg.setImageResource(R.drawable.img_video2);
-                break;
-            case 2:
-                viewHolder.ivImg.setImageResource(R.drawable.img_video3);
-                break;
-            case 3:
-                viewHolder.ivImg.setImageResource(R.drawable.img_video4);
-                break;
-            default:
-                break;
-        }
+
+        final VideoBean video = getItem(i);
+
+        loadImage(mContext, video.getImageUrl(), viewHolder.ivImg);
+        viewHolder.tvTitle.setText(video.getName());
         return view;
     }
 

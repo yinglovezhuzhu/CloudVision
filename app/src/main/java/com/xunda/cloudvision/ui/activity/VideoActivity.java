@@ -12,10 +12,14 @@ import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.VideoBean;
 import com.xunda.cloudvision.bean.resp.QueryVideoResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.VideoPresenter;
-import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
+import com.xunda.cloudvision.ui.adapter.VideoAdapter;
 import com.xunda.cloudvision.view.IVideoView;
+
+import java.util.List;
 
 /**
  * 云展视频Activity
@@ -24,9 +28,10 @@ import com.xunda.cloudvision.view.IVideoView;
 
 public class VideoActivity extends BaseActivity implements IVideoView {
 
-    private VideoPresenter mCloudVideoPresenter;
+    private VideoPresenter mVideoPresenter;
 
-    private CloudVideoAdapter mAdapter;
+    private PullListView mLvVideo;
+    private VideoAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,11 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
         setContentView(R.layout.activity_video);
 
-        mCloudVideoPresenter = new VideoPresenter(this, this);
+        mVideoPresenter = new VideoPresenter(this, this);
 
         initView();
+
+        mVideoPresenter.queryVideo();
     }
 
     @Override
@@ -57,10 +64,10 @@ public class VideoActivity extends BaseActivity implements IVideoView {
         findViewById(R.id.ibtn_video_back).setOnClickListener(this);
         findViewById(R.id.ibtn_video_search).setOnClickListener(this);
 
-        final PullListView lvVideo = (PullListView) findViewById(R.id.lv_video);
-        mAdapter = new CloudVideoAdapter(this, getResources().getDisplayMetrics().widthPixels);
-        lvVideo.setAdapter(mAdapter);
-        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mLvVideo = (PullListView) findViewById(R.id.lv_video);
+        mAdapter = new VideoAdapter(this, getResources().getDisplayMetrics().widthPixels);
+        mLvVideo.setAdapter(mAdapter);
+        mLvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(VideoActivity.this, VideoPlayerActivity.class);
@@ -69,27 +76,27 @@ public class VideoActivity extends BaseActivity implements IVideoView {
             }
         });
         final Handler handler = new Handler();
-        lvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
-        lvVideo.setOnRefreshListener(new OnRefreshListener() {
+        mLvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
+        mLvVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // TODO 刷新数据
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvVideo.refreshCompleted();
+                        mLvVideo.refreshCompleted();
                     }
                 }, 3000);
             }
         });
-        lvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mLvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // TODO 加载下一页
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvVideo.loadMoreCompleted(true);
+                        mLvVideo.loadMoreCompleted(true);
                     }
                 }, 3000);
             }
@@ -99,7 +106,28 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
     @Override
     public void onQueryVideoResult(QueryVideoResp result) {
+        mLvVideo.refreshCompleted();
+        mLvVideo.loadMoreCompleted(true);
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<VideoBean> video = result.getVideo();
+                    if(null == video || video.isEmpty()) {
+                        // TODO 错误
+                    } else {
+                        mAdapter.addAll(video, true);
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
     }
 
     @Override

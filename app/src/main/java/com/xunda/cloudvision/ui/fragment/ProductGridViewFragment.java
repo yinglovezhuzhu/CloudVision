@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,9 @@ import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.observer.ProductObserver;
+import com.xunda.cloudvision.ui.activity.ProductActivity;
 import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
 import com.xunda.cloudvision.ui.adapter.ProductGridViewAdapter;
 
@@ -23,7 +27,22 @@ import com.xunda.cloudvision.ui.adapter.ProductGridViewAdapter;
 
 public class ProductGridViewFragment extends BaseFragment {
 
+    private PullListView mLvProduct;
     private ProductGridViewAdapter mAdapter;
+    private ProductObserver mProductObserver = new ProductObserver() {
+        @Override
+        public void onQueryProductResult(boolean isRefresh, QueryProductResp result) {
+            if(null != mLvProduct) {
+                mLvProduct.refreshCompleted();
+                // FIXME 是否可以加载更多根据加载分页结果决定
+                mLvProduct.loadMoreCompleted(true);
+            }
+            if(isRefresh) {
+                mAdapter.clear(true);
+            }
+            mAdapter.addAll(result.getProduct(), true);
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +58,14 @@ public class ProductGridViewFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ProductDetailActivity.class));
             }
         });
+
+        final Activity activity = getActivity();
+        if(activity instanceof ProductActivity) {
+            mAdapter.addAll(((ProductActivity) activity).getProductData(), true);
+            ((ProductActivity) activity).registerProductObserver(mProductObserver);
+        } else {
+            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+        }
     }
 
     @Nullable
@@ -52,32 +79,59 @@ public class ProductGridViewFragment extends BaseFragment {
         return contentView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mLvProduct = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        final Activity activity = getActivity();
+        if(activity instanceof ProductActivity) {
+            ((ProductActivity) activity).unregisterProductObserver(mProductObserver);
+        } else {
+            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+        }
+    }
+
     private void initView(View contentView) {
 
-        final PullListView lvProduct = (PullListView) contentView.findViewById(R.id.lv_product_grid);
-        lvProduct.setAdapter(mAdapter);
+        mLvProduct = (PullListView) contentView.findViewById(R.id.lv_product_grid);
+        mLvProduct.setAdapter(mAdapter);
         final Handler handler = new Handler();
-        lvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
-        lvProduct.setOnRefreshListener(new OnRefreshListener() {
+        mLvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
+        mLvProduct.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // TODO 刷新数据
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvProduct.refreshCompleted();
+                        final Activity activity = getActivity();
+                        if(activity instanceof ProductActivity) {
+                            ((ProductActivity) activity).refresh();
+                        } else {
+                            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+                        }
                     }
                 }, 3000);
             }
         });
-        lvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mLvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // TODO 加载下一页
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvProduct.loadMoreCompleted(true);
+                        final Activity activity = getActivity();
+                        if(activity instanceof ProductActivity) {
+                            ((ProductActivity) activity).loadMore();
+                        } else {
+                            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+                        }
                     }
                 }, 3000);
             }

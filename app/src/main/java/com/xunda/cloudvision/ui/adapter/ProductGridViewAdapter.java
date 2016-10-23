@@ -11,6 +11,7 @@ import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.ui.widget.NoScrollGridView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,6 +39,23 @@ public class ProductGridViewAdapter extends BaseAdapter {
         this.mHorizontalSpacing = horizontalSpacing;
     }
 
+    public void addAll(Collection<ProductBean> products, boolean notifyDataSetChanged) {
+        if(null == products || products.isEmpty()) {
+            return;
+        }
+        mData.addAll(products);
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void clear(boolean notifyDataSetChanged) {
+        mData.clear();
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
     /**
      * 设置点击监听
      * @param listener 点击监听
@@ -62,13 +80,11 @@ public class ProductGridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // FIXME 真是数据使用注释代码
-//        if(mData.size() % mNumColumns == 0) {
-//            return mData.size() / mNumColumns;
-//        } else {
-//            return mData.size() / mNumColumns + 1;
-//        }
-        return 20;
+        if(mData.size() % mNumColumns == 0) {
+            return mData.size() / mNumColumns;
+        } else {
+            return mData.size() / mNumColumns + 1;
+        }
     }
 
     @Override
@@ -76,7 +92,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
         final ProductBean [] rowData = new ProductBean[mNumColumns];
         int index = i * mNumColumns;
         for(int j = 0; j < mNumColumns; j++) {
-            if(index + j < mNumColumns) {
+            if(index + j < mData.size()) {
                 rowData[j] = mData.get(index + j);
             } else {
                 break;
@@ -113,7 +129,7 @@ public class ProductGridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.gridView.setAdapter(new ProductGridViewItemAdapter(mContext, mWidth,
-                mHeight, mNumColumns));
+                mHeight, mNumColumns, getItem(i)));
         viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

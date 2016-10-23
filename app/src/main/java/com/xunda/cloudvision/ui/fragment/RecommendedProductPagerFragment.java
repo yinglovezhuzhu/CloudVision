@@ -68,31 +68,8 @@ public class RecommendedProductPagerFragment extends BaseFragment {
             if(null != product) {
                 loadImage(product.getImageUrl(), ivImg);
                 tvDesc.setText(product.getName());
-                tvPrice.setText(product.getPrice());
+                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), product.getPrice()));
             }
         }
-
-
-//        switch (new Random().nextInt(4)) {
-//            case 0:
-//                ivImg.setImageResource(R.drawable.img_product1);
-//                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
-//                break;
-//            case 1:
-//                ivImg.setImageResource(R.drawable.img_product2);
-//                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
-//                break;
-//            case 2:
-//                ivImg.setImageResource(R.drawable.img_product3);
-//                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
-//                break;
-//            case 3:
-//                ivImg.setImageResource(R.drawable.img_product4);
-//                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
-//                break;
-//            default:
-//                break;
-//        }
-
     }
 }

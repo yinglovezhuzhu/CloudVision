@@ -4,7 +4,7 @@
     <solid android:color="@color/transparent" />
     <stroke android:width="@dimen/divider_size_level2" android:color="@color/colorWhite" />
     <padding android:left="@dimen/contentPadding_level4"
-        android:top="@dimen/contentPadding_level6"
+        android:top="@dimen/contentPadding_level5"
         android:right="@dimen/contentPadding_level4"
-        android:bottom="@dimen/contentPadding_level6" />
+        android:bottom="@dimen/contentPadding_level5" />
 </shape>

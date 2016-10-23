@@ -16,8 +16,10 @@ import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AdvertiseBean;
 import com.xunda.cloudvision.bean.CorporateBean;
 import com.xunda.cloudvision.bean.ProductBean;
+import com.xunda.cloudvision.bean.VideoBean;
 import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.CorporatePresenter;
 import com.xunda.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
@@ -40,6 +42,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     private TextView mTvCorporateName;
 
     private RecommendedProductPagerAdapter mRecommendedProductAdapter;
+    private RecommendedVideoAdapter mRecommendedVideoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
         mCorporatePresenter.queryCorporateInfo();
         mCorporatePresenter.queryRecommendedProduct();
+        mCorporatePresenter.queryRecommendVideo();
     }
 
     @Override
@@ -98,6 +102,31 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     }
 
     @Override
+    public void onQueryCorporateInfoResult(QueryCorporateResp result) {
+        if(null == result) {
+
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    final CorporateBean corporate = result.getEnterprise();
+                    if(null == corporate) {
+                        // TODO 错误
+                    } else {
+                        DataManager.getInstance().updateCorporateInfo(corporate);
+                        mTvCorporateName.setText(corporate.getName());
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onQueryRecommendedProductResult(QueryProductResp result) {
         if(null == result) {
 
@@ -122,18 +151,17 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     }
 
     @Override
-    public void onQueryCorporateInfoResult(QueryCorporateResp result) {
+    public void onQueryRecommendedVideoReseult(QueryVideoResp result) {
         if(null == result) {
 
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    final CorporateBean corporate = result.getEnterprise();
-                    if(null == corporate) {
+                    List<VideoBean> video = result.getVideo();
+                    if(null == video || video.isEmpty()) {
                         // TODO 错误
                     } else {
-                        DataManager.getInstance().updateCorporateInfo(corporate);
-                        mTvCorporateName.setText(corporate.getName());
+                        mRecommendedVideoAdapter.addAll(video, true);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
@@ -177,11 +205,17 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
         final int videoItemWidth = (dmWidth - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 3) / 2;
         final NoScrollGridView videoGrid = (NoScrollGridView) findViewById(R.id.gv_corporate_recommended_video);
-        videoGrid.setAdapter(new RecommendedVideoAdapter(this, videoItemWidth));
+        mRecommendedVideoAdapter = new RecommendedVideoAdapter(this, videoItemWidth);
+        videoGrid.setAdapter(mRecommendedVideoAdapter);
         videoGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final VideoBean video = mRecommendedVideoAdapter.getItem(position);
+                if(null == video) {
+                    return;
+                }
                 Intent i = new Intent(CorporateActivity.this, VideoPlayerActivity.class);
+                // FIXME 改为视频地址
                 i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
                 startActivity(i);
             }

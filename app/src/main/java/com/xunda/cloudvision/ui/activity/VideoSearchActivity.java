@@ -7,17 +7,20 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.VideoBean;
 import com.xunda.cloudvision.bean.resp.QueryVideoResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.VideoSearchPresenter;
-import com.xunda.cloudvision.ui.adapter.CloudVideoAdapter;
+import com.xunda.cloudvision.ui.adapter.VideoAdapter;
 import com.xunda.cloudvision.view.IVideoSearchView;
+
+import java.util.List;
 
 /**
  * 云展视频搜索Activity
@@ -29,8 +32,9 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
     private VideoSearchPresenter mVideoSearchPresenter;
 
     private EditText mEtKeyword;
+    private PullListView mLvVideo;
 
-    private CloudVideoAdapter mAdapter;
+    private VideoAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +80,12 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
         findViewById(R.id.ibtn_video_search_back).setOnClickListener(this);
         findViewById(R.id.btn_video_search).setOnClickListener(this);
 
-        final PullListView lvVideo = (PullListView) findViewById(R.id.lv_video_search);
+        mLvVideo = (PullListView) findViewById(R.id.lv_video_search);
         final int width = getResources().getDisplayMetrics().widthPixels
                 - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 2;
-        mAdapter = new CloudVideoAdapter(this, width);
-        lvVideo.setAdapter(mAdapter);
-        lvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mAdapter = new VideoAdapter(this, width);
+        mLvVideo.setAdapter(mAdapter);
+        mLvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(VideoSearchActivity.this, VideoPlayerActivity.class);
@@ -90,27 +94,27 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
             }
         });
         final Handler handler = new Handler();
-        lvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
-        lvVideo.setOnRefreshListener(new OnRefreshListener() {
+        mLvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
+        mLvVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // TODO 刷新数据
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvVideo.refreshCompleted();
+                        mLvVideo.refreshCompleted();
                     }
                 }, 3000);
             }
         });
-        lvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mLvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // TODO 加载下一页
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        lvVideo.loadMoreCompleted(true);
+                        mLvVideo.loadMoreCompleted(true);
                     }
                 }, 3000);
             }
@@ -119,7 +123,28 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
 
     @Override
     public void onSearchVideoResult(QueryVideoResp result) {
+        mLvVideo.refreshCompleted();
+        mLvVideo.loadMoreCompleted(true);
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<VideoBean> video = result.getVideo();
+                    if(null == video || video.isEmpty()) {
+                        // TODO 错误
+                    } else {
+                        mAdapter.addAll(video, true);
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
     }
 
     @Override

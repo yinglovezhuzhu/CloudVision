@@ -64,7 +64,7 @@
 
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">45dp</dimen>
-    <dimen name="product_pager_view_index_view_size">230dp</dimen>
+    <dimen name="product_pager_view_index_view_size">200dp</dimen>
     <dimen name="product_list_view_img_size">280dp</dimen>
 
     <!-- 产品详情 -->

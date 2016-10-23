@@ -68,13 +68,6 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 加载图片
-     * @param imageView 图片控件
-     * @param path
-     */
-
-
-    /**
      * 加载图片并且显示
      * @param path 图片地址
      * @param imageView 显示图片的ImageView控件

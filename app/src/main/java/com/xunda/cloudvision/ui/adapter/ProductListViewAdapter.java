@@ -12,6 +12,7 @@ import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -20,7 +21,7 @@ import java.util.Random;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/22.
  */
 
-public class ProductListViewAdapter extends BaseAdapter {
+public class ProductListViewAdapter extends AbsBaseAdapter {
 
     private final Context mContext;
     private final List<ProductBean> mData = new ArrayList<>();
@@ -31,11 +32,26 @@ public class ProductListViewAdapter extends BaseAdapter {
         this.mPriceFormat = mContext.getResources().getString(R.string.str_price_format_with_currency);
     }
 
+    public void addAll(Collection<ProductBean> products, boolean notifyDataSetChanged) {
+        if(null == products || products.isEmpty()) {
+            return;
+        }
+        mData.addAll(products);
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void clear(boolean notifyDataSetChanged) {
+        mData.clear();
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
-        // FIXME 真是数据的时候改为注释部分
-//        return mData.size();
-        return 20;
+        return mData.size();
     }
 
     @Override
@@ -61,26 +77,13 @@ public class ProductListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        switch (new Random().nextInt(4)) {
-            case 0:
-                viewHolder.ivImg.setImageResource(R.drawable.img_product1);
-                viewHolder.tvPrice.setText(String.format(mPriceFormat, "100"));
-                break;
-            case 1:
-                viewHolder.ivImg.setImageResource(R.drawable.img_product2);
-                viewHolder.tvPrice.setText(String.format(mPriceFormat, "120"));
-                break;
-            case 2:
-                viewHolder.ivImg.setImageResource(R.drawable.img_product3);
-                viewHolder.tvPrice.setText(String.format(mPriceFormat, "150"));
-                break;
-            case 3:
-                viewHolder.ivImg.setImageResource(R.drawable.img_product4);
-                viewHolder.tvPrice.setText(String.format(mPriceFormat, "200"));
-                break;
-            default:
-                break;
-        }
+
+        final ProductBean product = getItem(i);
+
+        loadImage(mContext, product.getImageUrl(), viewHolder.ivImg);
+        viewHolder.tvDesc.setText(product.getName());
+        viewHolder.tvPrice.setText(String.format(mPriceFormat, product.getPrice()));
+
         return view;
     }
 

@@ -49,8 +49,7 @@ public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//        return ProductPagerFragment.newInstance(getItemData(position));
-        return ProductPagerFragment.newInstance(null);
+        return ProductPagerFragment.newInstance(getItemData(position));
     }
 
     @Override
@@ -60,13 +59,11 @@ public class ProductPagerViewAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-//        return mData.size();
-        return 20;
+        return mData.size();
     }
 
     @Override
     public float getPageWidth(int position) {
         return super.getPageWidth(position);
-//        return 0.8f;
     }
 }

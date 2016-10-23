@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 import com.xunda.cloudvision.model.CorporateModel;
 import com.xunda.cloudvision.model.ICorporateModel;
@@ -36,6 +37,28 @@ public class CorporatePresenter {
     }
 
     /**
+     * 查询企业信息
+     */
+    public void queryCorporateInfo() {
+        mModel.queryCorporateInfo(new HttpAsyncTask.Callback<QueryCorporateResp>() {
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onCanceled() {
+
+            }
+
+            @Override
+            public void onResult(QueryCorporateResp result) {
+                mView.onQueryCorporateInfoResult(result);
+            }
+        });
+    }
+
+    /**
      * 查询推荐产品列表
      */
     public void queryRecommendedProduct() {
@@ -57,11 +80,8 @@ public class CorporatePresenter {
         });
     }
 
-    /**
-     * 查询企业信息
-     */
-    public void queryCorporateInfo() {
-        mModel.queryCorporateInfo(new HttpAsyncTask.Callback<QueryCorporateResp>() {
+    public void queryRecommendVideo() {
+        mModel.queryRecommendedVideo(new HttpAsyncTask.Callback<QueryVideoResp>() {
             @Override
             public void onPreExecute() {
 
@@ -73,8 +93,8 @@ public class CorporatePresenter {
             }
 
             @Override
-            public void onResult(QueryCorporateResp result) {
-                mView.onQueryCorporateInfoResult(result);
+            public void onResult(QueryVideoResp result) {
+                mView.onQueryRecommendedVideoReseult(result);
             }
         });
     }

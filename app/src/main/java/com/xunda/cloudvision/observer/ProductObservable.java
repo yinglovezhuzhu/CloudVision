@@ -19,20 +19,20 @@
 
 package com.xunda.cloudvision.observer;
 
-import android.net.NetworkInfo;
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
 
 /**
- * 网络状态被观察者
- * Created by yinglovezhuzhu@gmail.com on 2016/08/19.
+ * 查询产品数据被观察者
+ * Created by yinglovezhuzhu@gmail.com on 2016/10/23.
  */
-public class NetworkObservable extends Observable<NetworkObserver> {
+public class ProductObservable extends Observable<ProductObserver> {
 
-    public void notifyNetworkChanged(boolean networkConnected, NetworkInfo currentNetwork,
-                                     NetworkInfo lastNetwork) {
+
+    public void notifyQueryProductResult(boolean isRefresh, QueryProductResp result) {
         synchronized (mObservers) {
             for(int i = mObservers.size() - 1; i >= 0; i--) {
-                NetworkObserver observer = mObservers.get(i);
-                observer.onNetworkStateChanged(networkConnected, currentNetwork, lastNetwork);
+                ProductObserver observer = mObservers.get(i);
+                observer.onQueryProductResult(isRefresh, result);
             }
         }
     }

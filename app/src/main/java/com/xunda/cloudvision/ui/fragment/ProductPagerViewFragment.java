@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import com.opensource.transformer.VerticalStackTransformer;
 import com.opensource.view.OrientedViewPager;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.observer.ProductObserver;
+import com.xunda.cloudvision.ui.activity.ProductActivity;
 import com.xunda.cloudvision.ui.adapter.ProductPagerViewAdapter;
 
 /**
@@ -26,10 +30,38 @@ public class ProductPagerViewFragment extends BaseFragment {
     private TextView mTvPageCount;
     private ProductPagerViewAdapter mAdapter;
 
+
+    private ProductObserver mProductObserver = new ProductObserver() {
+        @Override
+        public void onQueryProductResult(boolean isRefresh, QueryProductResp result) {
+//            if(null != mLvProduct) {
+//                mLvProduct.refreshCompleted();
+//                // FIXME 是否可以加载更多根据加载分页结果决定
+//                mLvProduct.loadMoreCompleted(true);
+//            }
+//            if(isRefresh) {
+//                mAdapter.clear(true);
+//            }
+            mAdapter.addAll(result.getProduct(), true);
+            if(null != mTvPageCount) {
+                mTvPageCount.setText(String.valueOf(mAdapter.getCount()));
+            }
+
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAdapter = new ProductPagerViewAdapter(getChildFragmentManager());
+
+        final Activity activity = getActivity();
+        if(activity instanceof ProductActivity) {
+            mAdapter.addAll(((ProductActivity) activity).getProductData(), true);
+            ((ProductActivity) activity).registerProductObserver(mProductObserver);
+        } else {
+            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+        }
     }
 
     @Nullable
@@ -41,6 +73,24 @@ public class ProductPagerViewFragment extends BaseFragment {
         initView(contentView);
 
         return contentView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mViewPager = null;
+        mTvPageCount = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        final Activity activity = getActivity();
+        if(activity instanceof ProductActivity) {
+            ((ProductActivity) activity).unregisterProductObserver(mProductObserver);
+        } else {
+            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+        }
     }
 
     @Override

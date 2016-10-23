@@ -8,12 +8,19 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
+import com.xunda.cloudvision.http.HttpStatus;
+import com.xunda.cloudvision.observer.ProductObservable;
+import com.xunda.cloudvision.observer.ProductObserver;
 import com.xunda.cloudvision.presenter.ProductPresenter;
 import com.xunda.cloudvision.ui.fragment.ProductGridViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductListViewFragment;
 import com.xunda.cloudvision.ui.fragment.ProductPagerViewFragment;
 import com.xunda.cloudvision.view.IProductView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 产品列表页面
@@ -24,6 +31,10 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
     private ProductPresenter mProductPresenter;
 
+    private final ProductObservable mProductObservable = new ProductObservable();
+    private final List<ProductBean> mProductData = new ArrayList<>();
+    private boolean mRefresh = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,14 @@ public class ProductActivity extends BaseActivity implements IProductView {
         mProductPresenter = new ProductPresenter(this, this);
 
         initView();
+
+        mProductPresenter.queryProduct();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProductObservable.unregisterAll();
     }
 
     @Override
@@ -61,7 +80,61 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
     @Override
     public void onQueryProductResult(QueryProductResp result) {
+        if(null == result) {
 
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<ProductBean> products = result.getProduct();
+                    if(null == products || products.isEmpty()) {
+                        // TODO 错误
+                    } else {
+                        if(mRefresh) {
+                            mProductData.clear();
+                        }
+                        mProductData.addAll(products);
+                        mProductObservable.notifyQueryProductResult(mRefresh, result);
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
+        mRefresh = false;
+    }
+
+    /**
+     * 注册查询产品观察者
+     * @param observer 产品观察者
+     */
+    public void registerProductObserver(ProductObserver observer) {
+        mProductObservable.registerObserver(observer);
+    }
+
+    /**
+     * 反注册产品观察者
+     * @param observer 产品观察者
+     */
+    public void unregisterProductObserver(ProductObserver observer) {
+        mProductObservable.unregisterObserver(observer);
+    }
+
+    public void refresh() {
+        mRefresh = true;
+        mProductPresenter.queryProduct();
+    }
+
+    public void loadMore() {
+        mRefresh = false;
+        mProductPresenter.queryProduct();
+    }
+
+    public List<ProductBean> getProductData() {
+        return mProductData;
     }
 
     private void initView() {

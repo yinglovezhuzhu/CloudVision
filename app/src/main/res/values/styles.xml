@@ -95,7 +95,7 @@
         <item name="android:textSize">@dimen/textSize_level8</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:maxLength">6</item>
-        <item name="android:minEms">2</item>
+        <item name="android:minEms">4</item>
     </style>
 
     <!-- 视频播放器Activity样式 -->
