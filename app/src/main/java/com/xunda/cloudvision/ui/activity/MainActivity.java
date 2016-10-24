@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AdvertiseBean;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
@@ -178,6 +179,15 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onTimeUpdate(String time) {
         mTvTopBarTime.setText(time);
+    }
+
+    @Override
+    public void onBDLocationUpdate(BDLocation bdLocation) {
+        if(null == bdLocation) {
+            mTvTopBarCity.setText("");
+        } else {
+            mTvTopBarCity.setText(bdLocation.getCity());
+        }
     }
 
     @Override

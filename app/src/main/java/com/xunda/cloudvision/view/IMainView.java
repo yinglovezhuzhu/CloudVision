@@ -1,5 +1,6 @@
 package com.xunda.cloudvision.view;
 
+import com.baidu.location.BDLocation;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 
 /**
@@ -12,7 +13,13 @@ public interface IMainView {
      * 时间更新
      * @param time 时间字符串
      */
-    public void onTimeUpdate(String time);
+    void onTimeUpdate(String time);
+
+    /**
+     * 百度定位信息更新
+     * @param bdLocation 百度定位数据
+     */
+    void onBDLocationUpdate(BDLocation bdLocation);
 
     /**
      * 公告设置改变

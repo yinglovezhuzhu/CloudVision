@@ -18,21 +18,32 @@ android {
         versionCode 2
         versionName "0.0.2"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
         }
         debug {
             signingConfig signingConfigs.config
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
         }
         dev {
             debuggable true
             signingConfig signingConfigs.config
             zipAlignEnabled true
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 
     //修改生成的apk名字
     applicationVariants.all{ variant->
