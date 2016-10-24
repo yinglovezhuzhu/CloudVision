@@ -23,7 +23,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:padding="@dimen/pullview_footer_title_padding"
     android:id="@+id/ll_pullview_header">
     <FrameLayout
         android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
             android:id="@+id/tv_pullview_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="1"
+            android:maxLines="1"
             android:textSize="@dimen/pullview_header_title_textSize"
             android:textColor="@color/pullview_black"/>
         <TextView
@@ -66,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/pullview_header_label_paddingTop"
-            android:maxLength="1"
+            android:maxLines="1"
             android:textSize="@dimen/pullview_header_label_textSize"
             android:textColor="@color/pullview_orange"/>
     </LinearLayout>
