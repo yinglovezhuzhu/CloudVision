@@ -12,6 +12,7 @@ public class CorporateBean implements Parcelable{
     private String id; // 企业id
     private String industryName; // 行业名称
     private String name; // 企业名称
+    private String logo;
     private String summary; // 企业简介
     private String culture; // 企业文化
     private String honor; // 企业荣誉
@@ -27,6 +28,7 @@ public class CorporateBean implements Parcelable{
         id = in.readString();
         industryName = in.readString();
         name = in.readString();
+        logo = in.readString();
         summary = in.readString();
         culture = in.readString();
         honor = in.readString();
@@ -59,6 +61,7 @@ public class CorporateBean implements Parcelable{
         dest.writeString(id);
         dest.writeString(industryName);
         dest.writeString(name);
+        dest.writeString(logo);
         dest.writeString(summary);
         dest.writeString(culture);
         dest.writeString(honor);
@@ -73,88 +76,48 @@ public class CorporateBean implements Parcelable{
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getIndustryName() {
         return industryName;
-    }
-
-    public void setIndustryName(String industryName) {
-        this.industryName = industryName;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLogo() {
+        return logo;
     }
 
     public String getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
     public String getCulture() {
         return culture;
-    }
-
-    public void setCulture(String culture) {
-        this.culture = culture;
     }
 
     public String getHonor() {
         return honor;
     }
 
-    public void setHonor(String honor) {
-        this.honor = honor;
-    }
-
     public String getEnvironment() {
         return environment;
-    }
-
-    public void setEnvironment(String environment) {
-        this.environment = environment;
     }
 
     public String getFigure() {
         return figure;
     }
 
-    public void setFigure(String figure) {
-        this.figure = figure;
-    }
-
     public String getContacts() {
         return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
     }
 
     public String getTelnumber() {
         return telnumber;
     }
 
-    public void setTelnumber(String telnumber) {
-        this.telnumber = telnumber;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     @Override
@@ -163,6 +126,7 @@ public class CorporateBean implements Parcelable{
                 "id='" + id + '\'' +
                 ", industryName='" + industryName + '\'' +
                 ", name='" + name + '\'' +
+                ", logo='" + logo + '\'' +
                 ", summary='" + summary + '\'' +
                 ", culture='" + culture + '\'' +
                 ", honor='" + honor + '\'' +
