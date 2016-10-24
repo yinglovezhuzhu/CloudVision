@@ -21,7 +21,9 @@ import android.widget.TextView;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
+import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.ui.adapter.ProductDetailAttrAdapter;
 import com.xunda.cloudvision.ui.adapter.ProductDetailAttrItemAdapter;
 import com.xunda.cloudvision.presenter.ProductDetailPresenter;
@@ -46,6 +48,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
     private ProductDetailPresenter mProductDetailPresenter;
 
+    private ViewPager mImgPager;
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
 
@@ -53,6 +56,8 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     private WebView mWebView;
 
     private ProductDetailAttrAdapter mAttrAdapter;
+
+    private ProductBean mProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +67,14 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
         mProductDetailPresenter = new ProductDetailPresenter(this, this);
 
+        if(!initData()) {
+            finish(RESULT_CANCELED, null);
+            return;
+        }
+
         initView();
+
+        mProductDetailPresenter.queryProductDetail(mProduct.getId());
     }
 
     @Override
@@ -80,34 +92,90 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         }
     }
 
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onQueryProductDetailResult(QueryProductDetailResp result) {
+        if(null == result) {
+
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    ProductBean product = result.getProduct();
+                    if(null == product) {
+                        // TODO 错误
+                    } else {
+                        // TODO 设置数据
+                        mImgAdapter.addAll(product.getDetailImages(), true);
+                        mPageIndicator.setPageCount(mImgAdapter.getCount());
+                        mImgPager.setAdapter(mImgAdapter);
+
+                    }
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // TODO 无网络，读取缓存错误
+                    break;
+                default:
+                    // TODO 错误
+                    break;
+            }
+        }
+    }
+
+    public void onPicClicked(int position) {
+        viewPic(position);
+    }
+
+    /**
+     * 初始化数据，处理传递过来的数据
+     * @return
+     */
+    private boolean initData() {
+        Intent intent = getIntent();
+        if(null == intent) {
+            return false;
+        }
+        mProduct = intent.getParcelableExtra(Config.EXTRA_DATA);
+        return null != mProduct;
+    }
+
     /**
      * 初始化视图
      */
     private void initView() {
+
+        final TextView tvProductName = (TextView) findViewById(R.id.tv_product_detail_name);
+
         findViewById(R.id.ibtn_product_detail_back).setOnClickListener(this);
         findViewById(R.id.ibtn_product_720_view_img).setOnClickListener(this);
 
         int dmWidth = getResources().getDisplayMetrics().widthPixels;
         int pageMargin = getResources().getDimensionPixelSize(R.dimen.product_detail_img_page_margin);
-        ViewPager imgPager = (ViewPager) findViewById(R.id.vp_product_detail_img);
-        ViewGroup.LayoutParams lp = imgPager.getLayoutParams();
+        mImgPager = (ViewPager) findViewById(R.id.vp_product_detail_img);
+        ViewGroup.LayoutParams lp = mImgPager.getLayoutParams();
         if(null == lp) {
             lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     AbsListView.LayoutParams.WRAP_CONTENT);
         }
         lp.height = dmWidth * 2 / 3;
-        imgPager.setLayoutParams(lp);
+        mImgPager.setLayoutParams(lp);
         // 调整缩放后的页面间距
-        imgPager.setPageMargin(pageMargin);
-        imgPager.setOffscreenPageLimit(3);
+        mImgPager.setPageMargin(pageMargin);
+        mImgPager.setOffscreenPageLimit(3);
         mImgAdapter = new ProductDetailImgAdapter(getSupportFragmentManager());
-        imgPager.setAdapter(mImgAdapter);
+        mImgPager.setAdapter(mImgAdapter);
 
         mPageIndicator = (PageControlBar) findViewById(R.id.pb_product_detail_page_indicator);
-        mPageIndicator.setPageCount(mImgAdapter.getCount());
-        mPageIndicator.setCurrentPage(imgPager.getCurrentItem());
 
-        imgPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mImgPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -123,7 +191,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
             }
         });
-        imgPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+        mImgPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             /** 最小缩放比例 **/
             private static final float PAGE_MIN_SCALE = 0.85f;
             /** 最小透明比例 **/
@@ -213,26 +281,12 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         mDetailLoadingView = findViewById(R.id.ll_product_detail_loading);
         mWebView = (WebView) findViewById(R.id.wv_product_detail);
         settingWebView(mWebView);
+
+        tvProductName.setText(mProduct.getName());
+
+
+
         mWebView.loadUrl("https://www.baidu.com/");
-    }
-
-    @Override
-    public void onPreExecute(String key) {
-
-    }
-
-    @Override
-    public void onCanceled(String key) {
-
-    }
-
-    @Override
-    public void onQueryProductDetailResult(QueryProductDetailResp result) {
-
-    }
-
-    public void onPicClicked(int position) {
-        viewPic(position);
     }
 
     private void viewPic(int position) {

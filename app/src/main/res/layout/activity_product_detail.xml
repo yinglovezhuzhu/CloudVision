@@ -22,6 +22,7 @@
             android:textSize="@dimen/textSize_level9"
             android:background="@color/colorTextGray"/>
         <TextView
+            android:id="@+id/tv_product_detail_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -33,8 +34,7 @@
             android:minLines="2"
             android:ellipsize="end"
             android:textSize="@dimen/textSize_level9"
-            android:textColor="@color/text_color_black"
-            android:text="绝对真金 市场最低价 100g每条 标题内容最多侠士两行"/>
+            android:textColor="@color/text_color_black"/>
     </LinearLayout>
 
     <FrameLayout
@@ -61,7 +61,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:weightSum="3"
-                        android:clipChildren="false">
+                        android:clipChildren="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
                         <android.support.v4.view.ViewPager
                             android:id="@+id/vp_product_detail_img"
                             android:layout_width="0dp"

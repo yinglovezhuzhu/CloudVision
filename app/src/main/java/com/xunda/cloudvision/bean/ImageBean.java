@@ -12,7 +12,7 @@ public class ImageBean implements Parcelable {
     private String imgUrl;
 
     public ImageBean() {
-
+String a = "";
     }
 
     protected ImageBean(Parcel in) {

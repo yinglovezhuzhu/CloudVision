@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.xunda.cloudvision.bean.ImageBean;
+import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.ui.fragment.ImageFragment;
 
 import java.util.ArrayList;
@@ -16,17 +18,17 @@ import java.util.List;
 
 public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
 
-    private List<String> mData = new ArrayList<>();
+    private List<ImageBean> mData = new ArrayList<>();
 
     public ProductDetailImgAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void addAll(List<String> urls, boolean notifyDataSetChanged) {
-        if(null == urls || urls.isEmpty()) {
+    public void addAll(List<ImageBean> images, boolean notifyDataSetChanged) {
+        if(null == images || images.isEmpty()) {
             return;
         }
-        mData.addAll(urls);
+        mData.addAll(images);
         if(notifyDataSetChanged) {
             notifyDataSetChanged();
         }
@@ -41,12 +43,17 @@ public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ImageFragment.newInstance(null, position, 400, 400);
+        final ImageBean img = mData.get(position);
+        if(null == img) {
+            return null;
+        }
+        return ImageFragment.newInstance(img.getImgUrl(), position, 400, 400);
+//        return ImageFragment.newInstance(null, position, 400, 400);
     }
 
     @Override
     public int getCount() {
-//        return mData.size();
-        return 20;
+        return mData.size();
+//        return 20;
     }
 }

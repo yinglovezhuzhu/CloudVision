@@ -40,14 +40,16 @@
         <activity android:name=".ui.activity.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ProductSearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.activity.Img720ViewActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activity.VideoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.VideoSearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ui.activity.VideoPlayerActivity"
             android:screenOrientation="portrait" />
 

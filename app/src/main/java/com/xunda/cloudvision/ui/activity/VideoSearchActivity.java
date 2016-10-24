@@ -55,6 +55,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 break;
             case R.id.btn_video_search:
                 mVideoSearchPresenter.search();
+                hideSoftInputFromWindow(mEtKeyword);
                 break;
             default:
                 break;

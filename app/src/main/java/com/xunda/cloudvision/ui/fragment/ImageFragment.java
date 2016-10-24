@@ -55,12 +55,12 @@ public class ImageFragment extends BaseFragment {
         final Bundle args = getArguments();
         final ImageView imageView = (ImageView) contentView.findViewById(R.id.iv_image_fragment_img);
 
+        if(null == args) {
+            return;
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null == args) {
-                    return;
-                }
                 Activity activity = getActivity();
                 if(activity instanceof ProductDetailActivity) {
                     final int position = args.getInt(ARG_POSITION, 0);
@@ -69,22 +69,7 @@ public class ImageFragment extends BaseFragment {
             }
         });
 
-        switch (new Random().nextInt(4)) {
-            case 0:
-                imageView.setImageResource(R.drawable.img_product1);
-                break;
-            case 1:
-                imageView.setImageResource(R.drawable.img_product2);
-                break;
-            case 2:
-                imageView.setImageResource(R.drawable.img_product3);
-                break;
-            case 3:
-                imageView.setImageResource(R.drawable.img_product4);
-                break;
-            default:
-                break;
-        }
+        loadImage(args.getString(ARG_PATH), imageView);
     }
 
 

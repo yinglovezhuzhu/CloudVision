@@ -53,6 +53,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                 break;
             case R.id.btn_product_search:
                 mProductSearchPresenter.search();
+                hideSoftInputFromWindow(mEtKeyword);
                 break;
             default:
                 break;

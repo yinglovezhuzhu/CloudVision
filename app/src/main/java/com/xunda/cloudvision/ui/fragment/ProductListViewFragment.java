@@ -14,7 +14,9 @@ import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
+import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.observer.ProductObserver;
 import com.xunda.cloudvision.ui.activity.ProductActivity;
@@ -96,7 +98,13 @@ public class ProductListViewFragment extends BaseFragment {
         mLvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+                final ProductBean product = mAdapter.getItem(position);
+                if(null == product) {
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                intent.putExtra(Config.EXTRA_DATA, product);
+                startActivity(intent);
             }
         });
         final Handler handler = new Handler();

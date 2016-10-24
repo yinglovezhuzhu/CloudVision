@@ -69,6 +69,16 @@ public class RecommendedProductPagerFragment extends BaseFragment {
                 loadImage(product.getImageUrl(), ivImg);
                 tvDesc.setText(product.getName());
                 tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), product.getPrice()));
+
+                contentView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // 点击事件
+                        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                        intent.putExtra(Config.EXTRA_DATA, product);
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }

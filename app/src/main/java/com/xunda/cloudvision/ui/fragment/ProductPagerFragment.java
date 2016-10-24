@@ -1,10 +1,8 @@
 package com.xunda.cloudvision.ui.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,7 @@ import android.widget.TextView;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.ProductBean;
-import com.xunda.cloudvision.bean.resp.QueryProductResp;
-import com.xunda.cloudvision.observer.ProductObserver;
-import com.xunda.cloudvision.ui.activity.ProductActivity;
 import com.xunda.cloudvision.ui.activity.ProductDetailActivity;
-
-import java.util.Random;
 
 /**
  * 产品浏览模式信息Pager页面Fragment
@@ -45,13 +38,6 @@ public class ProductPagerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_product_pager, container, false);
-        contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 点击事件
-                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
-            }
-        });
         contentView.requestFocus();
         initView(contentView);
         return contentView;
@@ -72,7 +58,17 @@ public class ProductPagerFragment extends BaseFragment {
                 loadImage(product.getImageUrl(), ivImg);
                 tvDesc.setText(product.getName());
                 tvPrice.setText(String.format(getResources().getString(R.string.str_price_format_with_currency), product.getPrice()));
+                contentView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // 点击事件
+                        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                        intent.putExtra(Config.EXTRA_DATA, product);
+                        startActivity(intent);
+                    }
+                });
             }
         }
+
     }
 }
