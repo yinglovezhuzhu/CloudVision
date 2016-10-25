@@ -204,28 +204,30 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onNoticeUpdate(final NoticeBean notice) {
         if(null == notice) {
-            mTvNotice.setVisibility(View.INVISIBLE);
             return;
         }
-        mNoticeExitAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        if(StringUtils.isEmpty(mTvNotice.getText().toString().trim())) {
+            mTvNotice.setText(notice.getName());
+        } else {
+            mNoticeExitAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mTvNotice.setText(notice.getName());
-                mTvNotice.startAnimation(mNoticeEnterAnim);
-                mTvNotice.setVisibility(View.VISIBLE);
-            }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mTvNotice.setText(notice.getName());
+                    mTvNotice.startAnimation(mNoticeEnterAnim);
+                }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+                @Override
+                public void onAnimationRepeat(Animation animation) {
 
-            }
-        });
-        mTvNotice.startAnimation(mNoticeExitAnim);
+                }
+            });
+            mTvNotice.startAnimation(mNoticeExitAnim);
+        }
     }
 
     @Override

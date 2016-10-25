@@ -8,6 +8,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.xunda.cloudvision.bean.NoticeBean;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.bean.resp.QueryNoticeResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
@@ -37,7 +38,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     private Handler mHandler = new Handler(this);
 
     private LocationClient mLocationClient = null;
-    private BDLocation mBDLocation;
+//    private BDLocation mBDLocation;
 
     public MainPresenter(Context context, IMainView view) {
         mContext = context;
@@ -71,18 +72,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public void onCreate() {
         mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
         mMainView.onNoticeUpdate(mMainModel.nextNotice());
-        if(null != mHandler) {
-            if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
-                mHandler.removeMessages(MSG_TIME_UPDATE);
-            }
-            // 延迟一秒
-            mHandler.sendEmptyMessageDelayed(MSG_TIME_UPDATE, 1000);
 
-            if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
-                mHandler.removeMessages(MSG_NOTICE_UPDATE);
-            }
-            mHandler.sendEmptyMessageDelayed(MSG_NOTICE_UPDATE, NOTICE_UPDATE_TIME);
-        }
+        updateTime();
 
         initLocation();
 
@@ -98,6 +89,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public void onNoticeSettingsChanged(boolean disabled) {
         mMainModel.onNoticeSettingsChanged(disabled);
         mMainView.onNoticeSettingsChanged(disabled);
+        updateNotice();
     }
 
     /**
@@ -107,6 +99,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public void onWeatherSettingsChanged(boolean disabled) {
         mMainModel.onWeatherSettingsChanged(disabled);
         mMainView.onWeatherSettingsChanged(disabled);
+        updateTime();
     }
 
     /**
@@ -133,8 +126,11 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
                 mHandler.sendEmptyMessageDelayed(MSG_TIME_UPDATE, 1000);
                 return true;
             case MSG_NOTICE_UPDATE:
-                mMainView.onNoticeUpdate(mMainModel.nextNotice());
-                mHandler.sendEmptyMessageDelayed(MSG_NOTICE_UPDATE, NOTICE_UPDATE_TIME);
+                final NoticeBean notice = mMainModel.nextNotice();
+                if(null != notice) {
+                    mMainView.onNoticeUpdate(notice);
+                    mHandler.sendEmptyMessageDelayed(MSG_NOTICE_UPDATE, NOTICE_UPDATE_TIME);
+                }
                 break;
             default:
                 break;
@@ -229,8 +225,39 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
 
             @Override
             public void onResult(QueryNoticeResp result) {
-
+                if(null != result) {
+                    updateNotice();
+                }
             }
         });
+    }
+
+    /**
+     * 更新时间
+     */
+    private void updateTime() {
+        if(null != mHandler) {
+            if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
+                mHandler.removeMessages(MSG_TIME_UPDATE);
+            }
+            if(isWeatherEnabled()) {
+                // 延迟一秒
+                mHandler.sendEmptyMessage(MSG_TIME_UPDATE);
+            }
+        }
+    }
+
+    /**
+     * 开始轮播公告
+     */
+    private void updateNotice() {
+        if(null != mHandler) {
+            if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
+                mHandler.removeMessages(MSG_NOTICE_UPDATE);
+            }
+            if(isNoticeEnabled()) {
+                mHandler.sendEmptyMessage(MSG_NOTICE_UPDATE);
+            }
+        }
     }
 }
