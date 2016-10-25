@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+    <com.vrcvp.cloudvision.ui.widget.NoScrollGridView
         android:id="@+id/gv_item_product_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

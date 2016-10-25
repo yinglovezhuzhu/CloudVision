@@ -72,7 +72,7 @@
                             android:clipChildren="false"/>
 
                     </LinearLayout>
-                    <com.xunda.cloudvision.ui.widget.PageControlBar
+                    <com.vrcvp.cloudvision.ui.widget.PageControlBar
                         android:id="@+id/pb_product_detail_page_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                     android:textColor="@color/text_color_black"
                     android:textSize="@dimen/textSize_level8"
                     android:text="@string/str_specification_parameter_label"/>
-                <com.xunda.cloudvision.ui.widget.NoScrollListView
+                <com.vrcvp.cloudvision.ui.widget.NoScrollListView
                     android:id="@+id/lv_product_detail_attr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

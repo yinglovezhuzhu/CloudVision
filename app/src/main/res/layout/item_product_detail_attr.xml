@@ -13,7 +13,7 @@
         android:layout_marginRight="@dimen/contentPadding_level3"
         android:textColor="@color/colorTextGray"
         android:textSize="@dimen/textSize_level9"/>
-    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+    <com.vrcvp.cloudvision.ui.widget.NoScrollGridView
         android:id="@+id/gv_item_product_detail_attr_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

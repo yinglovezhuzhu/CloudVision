@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/contentPadding_level7"
             android:paddingBottom="@dimen/contentPadding_level5"
             android:gravity="center_horizontal|bottom">
-            <com.xunda.cloudvision.ui.widget.round.RoundImageView
+            <com.vrcvp.cloudvision.ui.widget.round.RoundImageView
                 android:id="@+id/iv_corporate_logo"
                 android:layout_width="@dimen/corporate_header_logo_size"
                 android:layout_height="@dimen/corporate_header_logo_size"
@@ -187,7 +187,7 @@
                         android:layout_height="1dp"
                         android:layout_marginBottom="@dimen/contentPadding_level4"
                         android:background="@color/colorTextRed" />
-                    <com.xunda.cloudvision.ui.widget.NoScrollGridView
+                    <com.vrcvp.cloudvision.ui.widget.NoScrollGridView
                         android:id="@+id/gv_corporate_recommended_video"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
