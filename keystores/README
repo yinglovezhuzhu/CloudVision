@@ -1,5 +1,5 @@
 config {
-    keyAlias 'cloudvision'
+    keyAlias 'CloudVision'
     keyPassword 'cloudvision2016'
     storeFile file('../keystores/CloudVision_release.jks')
     storePassword 'cloudvision2016'
