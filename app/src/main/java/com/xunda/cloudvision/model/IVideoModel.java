@@ -12,7 +12,8 @@ public interface IVideoModel {
 
     /**
      * 查询视频
+     * @param pageNo 页码
      * @param callback 回调
      */
-    void queryVideo(final HttpAsyncTask.Callback<QueryVideoResp> callback);
+    void queryVideo(int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback);
 }

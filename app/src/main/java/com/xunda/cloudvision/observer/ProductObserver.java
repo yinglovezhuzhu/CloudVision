@@ -30,7 +30,8 @@ public abstract class ProductObserver {
     /**
      * 查询产品结果
      * @param isRefresh 是否刷新操作
+     * @param hasMore 是否还有更多数据
      * @param result 查询结果
      */
-    public abstract void onQueryProductResult(boolean isRefresh, QueryProductResp result);
+    public abstract void onQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result);
 }

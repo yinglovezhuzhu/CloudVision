@@ -3,7 +3,6 @@ package com.xunda.cloudvision.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -43,7 +42,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
         initView();
 
-        mVideoPresenter.queryVideo();
+        mVideoPresenter.queryVideoFirstPage();
     }
 
     @Override
@@ -75,30 +74,19 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                 startActivity(i);
             }
         });
-        final Handler handler = new Handler();
         mLvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         mLvVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // TODO 刷新数据
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvVideo.refreshCompleted();
-                    }
-                }, 3000);
+                // 刷新数据
+                mVideoPresenter.queryVideoFirstPage();
             }
         });
         mLvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                // TODO 加载下一页
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvVideo.loadMoreCompleted(true);
-                    }
-                }, 3000);
+                // 加载下一页
+                mVideoPresenter.queryVideoNextPage();
             }
         });
 
@@ -106,8 +94,6 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
     @Override
     public void onQueryVideoResult(QueryVideoResp result) {
-        mLvVideo.refreshCompleted();
-        mLvVideo.loadMoreCompleted(true);
         if(null == result) {
 
         } else {
@@ -117,17 +103,25 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                     if(null == video || video.isEmpty()) {
                         // TODO 错误
                     } else {
+                        if(mLvVideo.isRefreshing()) {
+                            mAdapter.clear(false);
+                        }
                         mAdapter.addAll(video, true);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // TODO 无网络，读取缓存错误
                     break;
+                case HttpStatus.SC_NO_MORE_DATA:
+                    showShortToast(R.string.str_no_more_data);
+                    break;
                 default:
                     // TODO 错误
                     break;
             }
         }
+        mLvVideo.refreshCompleted();
+        mLvVideo.loadMoreCompleted(mVideoPresenter.hasMoreVideo());
     }
 
     @Override

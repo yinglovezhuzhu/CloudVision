@@ -28,11 +28,11 @@ import com.xunda.cloudvision.bean.resp.QueryProductResp;
 public class ProductObservable extends Observable<ProductObserver> {
 
 
-    public void notifyQueryProductResult(boolean isRefresh, QueryProductResp result) {
+    public void notifyQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result) {
         synchronized (mObservers) {
             for(int i = mObservers.size() - 1; i >= 0; i--) {
                 ProductObserver observer = mObservers.get(i);
-                observer.onQueryProductResult(isRefresh, result);
+                observer.onQueryProductResult(isRefresh, hasMore, result);
             }
         }
     }

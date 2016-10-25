@@ -5,7 +5,7 @@ package com.xunda.cloudvision.bean.req;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class SearchReq extends BaseReq {
+public class SearchReq extends PageReq {
     private String keywords;	// 关键词
 
     public SearchReq() {

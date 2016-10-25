@@ -55,6 +55,8 @@ public abstract interface HttpStatus {
 	public static final int SC_UNSUPPORTED_MEDIA_TYPE = 415;
 	public static final int SC_USE_PROXY = 305;
 
+	/** 没有更多数据 **/
+	public static final int SC_NO_MORE_DATA = -401;
 	/** 缓存没有找到相应数据 **/
 	public static final int SC_CACHE_NOT_FOUND = -404;
 }

@@ -2,6 +2,7 @@ package com.xunda.cloudvision.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -45,7 +46,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
         initView();
 
-        mProductPresenter.queryProduct();
+        mProductPresenter.queryProductFirstPage();
     }
 
     @Override
@@ -93,11 +94,15 @@ public class ProductActivity extends BaseActivity implements IProductView {
                             mProductData.clear();
                         }
                         mProductData.addAll(products);
-                        mProductObservable.notifyQueryProductResult(mRefresh, result);
+                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMoreProduct(), result);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // TODO 无网络，读取缓存错误
+                    break;
+                case HttpStatus.SC_NO_MORE_DATA:
+                    // 提示没有更多数据
+                    showShortToast(R.string.str_no_more_data);
                     break;
                 default:
                     // TODO 错误
@@ -123,14 +128,20 @@ public class ProductActivity extends BaseActivity implements IProductView {
         mProductObservable.unregisterObserver(observer);
     }
 
+    /**
+     * 刷新
+     */
     public void refresh() {
         mRefresh = true;
-        mProductPresenter.queryProduct();
+        mProductPresenter.queryProductFirstPage();
     }
 
+    /**
+     * 加载更多
+     */
     public void loadMore() {
         mRefresh = false;
-        mProductPresenter.queryProduct();
+        mProductPresenter.queryProductNextPage();
     }
 
     public List<ProductBean> getProductData() {

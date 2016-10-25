@@ -90,30 +90,19 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                 startActivity(new Intent(ProductSearchActivity.this, ProductDetailActivity.class));
             }
         });
-        final Handler handler = new Handler();
         mLvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         mLvProduct.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // TODO 刷新数据
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvProduct.refreshCompleted();
-                    }
-                }, 3000);
+                // 刷新数据
+                mProductSearchPresenter.search();
             }
         });
         mLvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                // TODO 加载下一页
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvProduct.loadMoreCompleted(true);
-                    }
-                }, 3000);
+                // 加载下一页
+                mProductSearchPresenter.nextPage();
             }
         });
     }
@@ -131,8 +120,8 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
     @Override
     public void onSearchProductResult(QueryProductResp result) {
         mLvProduct.refreshCompleted();
-        // FIXME 根据分页数据是否能加载更多
-        mLvProduct.loadMoreCompleted(true);
+        // 根据分页数据是否能加载更多
+        mLvProduct.loadMoreCompleted(mProductSearchPresenter.hasMore());
         if(null == result) {
 
         } else {
@@ -147,6 +136,9 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // TODO 无网络，读取缓存错误
+                    break;
+                case HttpStatus.SC_NO_MORE_DATA:
+                    showShortToast(R.string.str_no_more_data);
                     break;
                 default:
                     // TODO 错误

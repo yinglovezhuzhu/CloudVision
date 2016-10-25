@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.xunda.cloudvision.bean.req.QueryProductReq;
 import com.xunda.cloudvision.bean.req.SearchReq;
 import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
@@ -28,12 +27,13 @@ public class ProductSearchModel implements IProductSearchModel {
     }
 
     @Override
-    public void searchProduct(String keyword, final HttpAsyncTask.Callback<QueryProductResp> callback) {
+    public void searchProduct(String keyword, int pageNo, final HttpAsyncTask.Callback<QueryProductResp> callback) {
         // FIXME 请求地址修改
         final String url = "product.json";
         final SearchReq reqParam = new SearchReq();
         reqParam.setToken(DataManager.getInstance().getToken());
         reqParam.setKeywords(keyword);
+        reqParam.setPageNo(pageNo);
         final Gson gson = new Gson();
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);

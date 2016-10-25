@@ -2,8 +2,10 @@ package com.xunda.cloudvision.presenter;
 
 import android.content.Context;
 
+import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
+import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.model.IVideoSearchModel;
 import com.xunda.cloudvision.model.VideoSearchModel;
 import com.xunda.cloudvision.utils.StringUtils;
@@ -19,6 +21,10 @@ public class VideoSearchPresenter {
     private IVideoSearchView mView;
     private IVideoSearchModel mModel;
 
+    private String mKeyword;
+    private int mPage = 1;
+    private boolean mHasMore = true;
+
     public VideoSearchPresenter(Context context, IVideoSearchView view) {
         this.mView = view;
         this.mModel = new VideoSearchModel(context);
@@ -28,13 +34,37 @@ public class VideoSearchPresenter {
      * 搜索
      */
     public void search() {
-        String keyword = mView.getKeyword();
-        if(StringUtils.isEmpty(keyword)) {
+        mKeyword = mView.getKeyword();
+        if(StringUtils.isEmpty(mKeyword)) {
             mView.onKeywordEmptyError();
             return;
         }
+        mPage = 1;
+        loadData(mPage);
+    }
 
-        mModel.searchVideo(keyword, new HttpAsyncTask.Callback<QueryVideoResp>() {
+    /**
+     * 下一页
+     */
+    public void nextPage() {
+        mPage++;
+        loadData(mPage);
+    }
+
+    /**
+     * 是否有更多数据
+     * @return true 有更多数据， false 没有更多数据
+     */
+    public boolean hasMore() {
+        return mHasMore;
+    }
+
+    /**
+     * 加载数据
+     * @param pageNo 页码
+     */
+    private void loadData(int pageNo) {
+        mModel.searchVideo(mKeyword, pageNo, new HttpAsyncTask.Callback<QueryVideoResp>() {
             @Override
             public void onPreExecute() {
                 mView.onPreExecute(null);
@@ -47,8 +77,23 @@ public class VideoSearchPresenter {
 
             @Override
             public void onResult(QueryVideoResp result) {
+                if(null == result) {
+                    mHasMore = false;
+                    mPage--;
+                } else {
+                    mHasMore = null != result.getVideo() && !result.getVideo().isEmpty();
+                    mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
+                }
+                if(!mHasMore) {
+                    if(null == result) {
+                        result = new QueryVideoResp();
+                    }
+                    result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                    result.setMsg("No more data");
+                }
                 mView.onSearchVideoResult(result);
             }
         });
     }
+
 }

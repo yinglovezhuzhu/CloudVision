@@ -27,13 +27,14 @@ public class VideoModel implements IVideoModel {
     }
 
     @Override
-    public void queryVideo(final HttpAsyncTask.Callback<QueryVideoResp> callback) {
+    public void queryVideo(int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback) {
 
         // FIXME 请求地址修改
         final String url = "video.json";
         final QueryVideoReq reqParam = new QueryVideoReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
+        reqParam.setPageNo(pageNo);
         final Gson gson = new Gson();
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);

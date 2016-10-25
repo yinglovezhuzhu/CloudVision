@@ -4,10 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.xunda.cloudvision.bean.req.QueryProductReq;
-import com.xunda.cloudvision.bean.req.QueryVideoReq;
 import com.xunda.cloudvision.bean.req.SearchReq;
-import com.xunda.cloudvision.bean.resp.QueryProductResp;
 import com.xunda.cloudvision.bean.resp.QueryVideoResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;
@@ -30,7 +27,7 @@ public class VideoSearchModel implements IVideoSearchModel {
     }
 
     @Override
-    public void searchVideo(String keyword, final HttpAsyncTask.Callback<QueryVideoResp> callback) {
+    public void searchVideo(String keyword, int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback) {
         // FIXME 请求地址修改
         final String url = "video.json";
         final SearchReq reqParam = new SearchReq();

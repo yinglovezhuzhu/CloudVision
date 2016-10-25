@@ -12,7 +12,8 @@ public interface IVideoSearchModel {
     /**
      * 搜索视频
      * @param keyword 关键字
+     * @param pageNo 页码
      * @param callback 回调
      */
-    void searchVideo(String keyword, final HttpAsyncTask.Callback<QueryVideoResp> callback);
+    void searchVideo(String keyword, int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback);
 }

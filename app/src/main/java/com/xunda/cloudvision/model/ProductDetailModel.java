@@ -4,10 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.xunda.cloudvision.bean.req.QueryCorporateReq;
 import com.xunda.cloudvision.bean.req.QueryProductDetailReq;
-import com.xunda.cloudvision.bean.req.QueryProductReq;
-import com.xunda.cloudvision.bean.resp.QueryCorporateResp;
 import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
 import com.xunda.cloudvision.db.HttpCacheDBUtils;
 import com.xunda.cloudvision.http.HttpAsyncTask;

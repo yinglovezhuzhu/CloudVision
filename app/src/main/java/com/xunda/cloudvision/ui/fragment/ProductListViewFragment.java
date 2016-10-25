@@ -35,16 +35,16 @@ public class ProductListViewFragment extends BaseFragment {
 
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
-        public void onQueryProductResult(boolean isRefresh, QueryProductResp result) {
-            if(null != mLvProduct) {
-                mLvProduct.refreshCompleted();
-                // FIXME 是否可以加载更多根据加载分页结果决定
-                mLvProduct.loadMoreCompleted(true);
-            }
+        public void onQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result) {
             if(isRefresh) {
                 mAdapter.clear(true);
             }
             mAdapter.addAll(result.getProduct(), true);
+            if(null != mLvProduct) {
+                mLvProduct.refreshCompleted();
+                // 是否可以加载更多根据加载分页结果决定
+                mLvProduct.loadMoreCompleted(hasMore);
+            }
         }
     };
 
@@ -107,40 +107,30 @@ public class ProductListViewFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        final Handler handler = new Handler();
+
         mLvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         mLvProduct.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // TODO 刷新数据
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Activity activity = getActivity();
-                        if(activity instanceof ProductActivity) {
-                            ((ProductActivity) activity).refresh();
-                        } else {
-                            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-                        }
-                    }
-                }, 3000);
+                // 刷新数据
+                final Activity activity = getActivity();
+                if(activity instanceof ProductActivity) {
+                    ((ProductActivity) activity).refresh();
+                } else {
+                    throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+                }
             }
         });
         mLvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                // TODO 加载下一页
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Activity activity = getActivity();
-                        if(activity instanceof ProductActivity) {
-                            ((ProductActivity) activity).loadMore();
-                        } else {
-                            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-                        }
-                    }
-                }, 3000);
+                // 加载下一页
+                final Activity activity = getActivity();
+                if(activity instanceof ProductActivity) {
+                    ((ProductActivity) activity).loadMore();
+                } else {
+                    throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
+                }
             }
         });
     }

@@ -5,7 +5,7 @@ package com.xunda.cloudvision.bean.req;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryProductReq extends BaseReq {
+public class QueryProductReq extends PageReq {
 
     private String enterpriseId;
 

@@ -10,6 +10,11 @@ import com.xunda.cloudvision.http.HttpAsyncTask;
 
 public interface IProductModel {
 
-    void queryProduct(final HttpAsyncTask.Callback<QueryProductResp> callback);
+    /**
+     * 查询产品列表
+     * @param pageNo 页码
+     * @param callback 回调
+     */
+    void queryProduct(int pageNo, final HttpAsyncTask.Callback<QueryProductResp> callback);
 
 }
