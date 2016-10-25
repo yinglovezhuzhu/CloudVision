@@ -42,78 +42,32 @@
                 android:drawablePadding="@dimen/contentPadding_level2"
                 android:text="晴 33℃~36℃"/>
         </RelativeLayout>
-        <FrameLayout
-            android:id="@+id/ll_main_content_one"
-            android:orientation="horizontal"
+        <fragment
+            android:id="@+id/fragment_main_add_one"
+            android:name="com.vrcvp.cloudvision.ui.fragment.MainAdFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/iv_main_content_one_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@null"/>
-            <ImageView
-                style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content_one_video_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:visibility="gone"/>
-        </FrameLayout>
+            android:layout_weight="1" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
-        <FrameLayout
-            android:id="@+id/ll_main_content_two"
-            android:orientation="horizontal"
+        <fragment
+            android:id="@+id/fragment_main_add_two"
+            android:name="com.vrcvp.cloudvision.ui.fragment.MainAdFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true">
-            <ImageView
-                android:id="@+id/iv_main_content_two_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@null"/>
-            <ImageView
-                style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content_two_video_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:visibility="gone"/>
-        </FrameLayout>
+            android:layout_weight="1" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorWhite" />
-        <FrameLayout
-            android:id="@+id/ll_main_content_three"
-            android:orientation="horizontal"
+        <fragment
+            android:id="@+id/fragment_main_add_three"
+            android:name="com.vrcvp.cloudvision.ui.fragment.MainAdFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true">
-            <ImageView
-                android:id="@+id/iv_main_content_three_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:contentDescription="@null"/>
-            <ImageView
-                style="@style/PlayIconTheme"
-                android:id="@+id/iv_main_content_three_video_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:visibility="gone"/>
-        </FrameLayout>
+            android:layout_weight="1" />
         <LinearLayout
             android:id="@+id/ll_main_bottom_bar"
             android:orientation="horizontal"

@@ -24,6 +24,7 @@ import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
+import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
@@ -60,19 +61,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     private Animation mNoticeEnterAnim;
     private Animation mNoticeExitAnim;
 
-    private View mViewContentOne;
-    private ImageView mIvContentOne;
-    private ImageView mIvPlayOne;
-
-    private View mViewContentTwo;
-    private ImageView mIvContentTwo;
-    private ImageView mIvPlayTwo;
-
-    private View mViewContentThree;
-    private ImageView mIvContentThree;
-    private ImageView mIvPlayThree;
-
-
+    private MainAdFragment mAdOne;
+    private MainAdFragment mAdTwo;
+    private MainAdFragment mAdThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,33 +134,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                 finish();
                 break;
             case R.id.btn_main_menu_setting_switch:
-                break;
-            case R.id.ll_main_content_one:
-            case R.id.ll_main_content_two:
-            case R.id.ll_main_content_three:
-                final Object tag = v.getTag();
-                if(null != tag && tag instanceof AdvertiseBean) {
-                    final AdvertiseBean advertiseBean = (AdvertiseBean) tag;
-                    switch (advertiseBean.getType()) {
-                        case AdvertiseBean.TYPE_IMAGE:
-                            openWebView(advertiseBean.getOutLink());
-                            break;
-                        case AdvertiseBean.TYPE_VIDEO:
-                            playVideo(advertiseBean.getOutLink());
-                            break;
-                        case AdvertiseBean.TYPE_PRODUCT:
-                            openWebView(advertiseBean.getOutLink());
-                            break;
-                        case AdvertiseBean.TYPE_CORPORATE:
-                            openWebView(advertiseBean.getOutLink());
-                            break;
-                        case AdvertiseBean.TYPE_OUTER_LINK:
-                            openWebView(advertiseBean.getOutLink());
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 break;
             default:
                 break;
@@ -250,17 +214,24 @@ public class MainActivity extends BaseActivity implements IMainView {
                     if(null == advertises || advertises.isEmpty()) {
                         // TODO 错误
                     } else {
+
                         final AdvertiseBean advertiseOne = advertises.get(0);
-                        setAdvertiseOneData(advertiseOne);
+                        if(null != mAdOne) {
+                            mAdOne.setData(advertiseOne);
+                        }
 
                         if(advertises.size() > 1) {
                             final AdvertiseBean advertiseTwo = advertises.get(1);
-                            setAdvertiseTwoData(advertiseTwo);
+                            if(null != mAdTwo) {
+                                mAdTwo.setData(advertiseTwo);
+                            }
                         }
 
                         if(advertises.size() > 2) {
                             final AdvertiseBean advertiseThree = advertises.get(2);
-                            setAdvertiseThreeData(advertiseThree);
+                            if(null != mAdThree) {
+                                mAdThree.setData(advertiseThree);
+                            }
                         }
                     }
                     break;
@@ -380,20 +351,9 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         initSettingsSubItems();
 
-        mViewContentOne = findViewById(R.id.ll_main_content_one);
-        mIvContentOne = (ImageView) findViewById(R.id.iv_main_content_one_img);
-        mIvPlayOne = (ImageView) findViewById(R.id.iv_main_content_one_video_play);
-        mViewContentOne.setOnClickListener(this);
-
-        mViewContentTwo = findViewById(R.id.ll_main_content_two);
-        mIvContentTwo = (ImageView) findViewById(R.id.iv_main_content_two_img);
-        mIvPlayTwo = (ImageView) findViewById(R.id.iv_main_content_two_video_play);
-        mViewContentTwo.setOnClickListener(this);
-
-        mViewContentThree = findViewById(R.id.ll_main_content_three);
-        mIvContentThree = (ImageView) findViewById(R.id.iv_main_content_three_img);
-        mIvPlayThree = (ImageView) findViewById(R.id.iv_main_content_three_video_play);
-        mViewContentThree.setOnClickListener(this);
+        mAdOne = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_one);
+        mAdTwo = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_two);
+        mAdThree = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_three);
     }
 
     /**
@@ -436,109 +396,5 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_logout).setOnClickListener(this);
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_switch).setOnClickListener(this);
-    }
-
-    /**
-     * 设置第一个广告位
-     * @param advertiseOne
-     */
-    private void setAdvertiseOneData(AdvertiseBean advertiseOne) {
-        loadImage(advertiseOne.getUrl(), mIvContentOne);
-        mViewContentOne.setTag(advertiseOne);
-        switch (advertiseOne.getType()) {
-            case AdvertiseBean.TYPE_IMAGE:
-                mIvPlayOne.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_VIDEO:
-                mIvPlayOne.setVisibility(View.VISIBLE);
-                break;
-            case AdvertiseBean.TYPE_PRODUCT:
-                mIvPlayOne.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_CORPORATE:
-                mIvPlayOne.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_OUTER_LINK:
-                mIvPlayOne.setVisibility(View.GONE);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 设置第二个广告位
-     * @param advertiseTwo
-     */
-    private void setAdvertiseTwoData(AdvertiseBean advertiseTwo) {
-        loadImage(advertiseTwo.getUrl(), mIvContentTwo);
-        mViewContentTwo.setTag(advertiseTwo);
-        switch (advertiseTwo.getType()) {
-            case AdvertiseBean.TYPE_IMAGE:
-                mIvPlayTwo.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_VIDEO:
-                mIvPlayTwo.setVisibility(View.VISIBLE);
-                break;
-            case AdvertiseBean.TYPE_PRODUCT:
-                mIvPlayTwo.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_CORPORATE:
-                mIvPlayTwo.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_OUTER_LINK:
-                mIvPlayTwo.setVisibility(View.GONE);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 设置第三个广告位
-     * @param advertiseThree
-     */
-    private void setAdvertiseThreeData(AdvertiseBean advertiseThree) {
-        loadImage(advertiseThree.getUrl(), mIvContentThree);
-        mViewContentThree.setTag(advertiseThree);
-        switch (advertiseThree.getType()) {
-            case AdvertiseBean.TYPE_IMAGE:
-                mIvPlayThree.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_VIDEO:
-                mIvPlayThree.setVisibility(View.VISIBLE);
-                break;
-            case AdvertiseBean.TYPE_PRODUCT:
-                mIvPlayThree.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_CORPORATE:
-                mIvPlayThree.setVisibility(View.GONE);
-                break;
-            case AdvertiseBean.TYPE_OUTER_LINK:
-                mIvPlayThree.setVisibility(View.GONE);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 播放视频
-     * @param path
-     */
-    private void playVideo(String path) {
-        Intent i = new Intent(this, VideoPlayerActivity.class);
-        i.setData(Uri.parse(path));
-        startActivity(i);
-    }
-
-    /**
-     * 打开网页
-     * @param url
-     */
-    private void openWebView(String url) {
-        Intent i = new Intent(this, WebViewActivity.class);
-        i.setData(Uri.parse(url));
-        startActivity(i);
     }
 }
