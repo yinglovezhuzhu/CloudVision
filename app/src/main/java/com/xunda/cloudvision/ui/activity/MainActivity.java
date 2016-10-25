@@ -207,7 +207,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             mTvNotice.setVisibility(View.INVISIBLE);
             return;
         }
-        mTvNotice.setVisibility(View.VISIBLE);
         mNoticeExitAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -218,6 +217,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onAnimationEnd(Animation animation) {
                 mTvNotice.setText(notice.getName());
                 mTvNotice.startAnimation(mNoticeEnterAnim);
+                mTvNotice.setVisibility(View.VISIBLE);
             }
 
             @Override
