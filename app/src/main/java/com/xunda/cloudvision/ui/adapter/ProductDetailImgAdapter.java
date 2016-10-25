@@ -48,12 +48,10 @@ public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
             return null;
         }
         return ImageFragment.newInstance(img.getImgUrl(), position, 400, 400);
-//        return ImageFragment.newInstance(null, position, 400, 400);
     }
 
     @Override
     public int getCount() {
         return mData.size();
-//        return 20;
     }
 }

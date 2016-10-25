@@ -7,9 +7,12 @@ import android.view.View;
 import com.opensource.widget.LockableViewPager;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.ImageBean;
 import com.xunda.cloudvision.presenter.Img720ViewPresenter;
 import com.xunda.cloudvision.ui.adapter.Img720ViewAdapter;
 import com.xunda.cloudvision.view.IImg720ViewView;
+
+import java.util.ArrayList;
 
 /**
  * 720度看图
@@ -20,7 +23,7 @@ public class Img720ViewActivity extends BaseActivity implements IImg720ViewView 
 
     private Img720ViewPresenter mImg720ViewPresenter;
 
-    private Img720ViewAdapter mAdpater;
+    private Img720ViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,14 @@ public class Img720ViewActivity extends BaseActivity implements IImg720ViewView 
 
         final LockableViewPager viewPager = (LockableViewPager) findViewById(R.id.vp_720_view_img);
         viewPager.setOffscreenPageLimit(3);
-        mAdpater = new Img720ViewAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mAdpater);
+        mAdapter = new Img720ViewAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mAdapter);
 
         Intent intent = getIntent();
         if(null != intent) {
             final int position = intent.getIntExtra(Config.EXTRA_POSITION, 0);
+            final ArrayList<ImageBean> images = intent.getParcelableArrayListExtra(Config.EXTRA_DATA);
+            mAdapter.addAll(images, true);
             viewPager.setCurrentItem(position, false);
         }
     }

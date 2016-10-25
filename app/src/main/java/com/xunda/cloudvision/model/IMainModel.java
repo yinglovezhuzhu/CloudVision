@@ -1,7 +1,9 @@
 package com.xunda.cloudvision.model;
 
+import com.xunda.cloudvision.bean.NoticeBean;
 import com.xunda.cloudvision.bean.resp.ActivateResp;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
+import com.xunda.cloudvision.bean.resp.QueryNoticeResp;
 import com.xunda.cloudvision.http.HttpAsyncTask;
 
 /**
@@ -37,7 +39,7 @@ public interface IMainModel extends IModel {
     /**
      * 下一条通知， 如果通知栏禁用或者没有通知，返回null
      */
-    String nextNotice();
+    NoticeBean nextNotice();
 
     /**
      * 是否已激活
@@ -50,4 +52,10 @@ public interface IMainModel extends IModel {
      * @param callback 回调
      */
     void queryHomeData(final HttpAsyncTask.Callback<QueryHomeDataResp> callback);
+
+    /**
+     * 查询公告
+     * @param callback 回调
+     */
+    void queryNotice(final HttpAsyncTask.Callback<QueryNoticeResp> callback);
 }

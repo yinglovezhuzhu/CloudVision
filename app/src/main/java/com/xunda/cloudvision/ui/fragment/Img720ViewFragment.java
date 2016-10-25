@@ -10,6 +10,7 @@ import com.opensource.widget.ZoomableImageView;
 import com.squareup.picasso.Picasso;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
+import com.xunda.cloudvision.bean.ImageBean;
 
 import java.util.Random;
 
@@ -22,13 +23,13 @@ public class Img720ViewFragment extends BaseFragment {
 
     /**
      * 新建一个实例
-     * @param path 图片路径
+     * @param image 图片数据
      * @return Img720ViewFragment实例对象
      */
-    public static Img720ViewFragment newInstance(String path) {
+    public static Img720ViewFragment newInstance(ImageBean image) {
         Img720ViewFragment fragment = new Img720ViewFragment();
         Bundle args = new Bundle();
-        args.putString(Config.EXTRA_DATA, path);
+        args.putParcelable(Config.EXTRA_DATA, image);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,31 +49,15 @@ public class Img720ViewFragment extends BaseFragment {
 
         Bundle args = getArguments();
         if(null != args && args.containsKey(Config.EXTRA_DATA)) {
-            final String path = args.getString(Config.EXTRA_DATA);
-            // FIXME 显示图片
+            final ImageBean image = args.getParcelable(Config.EXTRA_DATA);
+            // 显示图片
+            if(null != image) {
+                Picasso.with(getActivity())
+                        .load(image.getImgUrl())
+                        .placeholder(R.drawable.ic_launcher)
+                        .error(R.drawable.ic_launcher)
+                        .into(imageView);
+            }
         }
-
-        int pic = R.drawable.bg_activate;
-        switch (new Random().nextInt(4)) {
-            case 0:
-                pic = R.drawable.img_product1;
-                break;
-            case 1:
-                pic = R.drawable.img_product2;
-                break;
-            case 2:
-                pic = R.drawable.img_product3;
-                break;
-            case 3:
-                pic = R.drawable.img_product4;
-                break;
-            default:
-                break;
-        }
-        Picasso.with(getActivity())
-                .load(pic)
-                .placeholder(R.drawable.ic_launcher)
-                .error(R.drawable.ic_launcher)
-                .into(imageView);
     }
 }

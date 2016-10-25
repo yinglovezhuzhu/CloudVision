@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.baidu.location.BDLocation;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AdvertiseBean;
+import com.xunda.cloudvision.bean.NoticeBean;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
 import com.xunda.cloudvision.http.HttpStatus;
 import com.xunda.cloudvision.presenter.MainPresenter;
@@ -90,7 +91,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
 
         if(mMainPresenter.isActivated()) {
-            mMainPresenter.queryHomeAdvertise();
+            mMainPresenter.onActivateSuccess();
         } else {
             Intent intent = new Intent(this, ActivateActivity.class);
             startActivityForResult(intent, RC_ACTIVATE_PAGE);
@@ -121,7 +122,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             case RC_ACTIVATE_PAGE:
                 if(RESULT_OK == resultCode) {
-                    mMainPresenter.queryHomeAdvertise();
+                    mMainPresenter.onActivateSuccess();
                 } else {
                     finish();
                 }
@@ -201,8 +202,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void onNoticeUpdate(final String notice) {
-        if(StringUtils.isEmpty(notice)) {
+    public void onNoticeUpdate(final NoticeBean notice) {
+        if(null == notice) {
             return;
         }
         mNoticeExitAnim.setAnimationListener(new Animation.AnimationListener() {
@@ -213,7 +214,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mTvNotice.setText(notice);
+                mTvNotice.setText(notice.getName());
                 mTvNotice.startAnimation(mNoticeEnterAnim);
             }
 

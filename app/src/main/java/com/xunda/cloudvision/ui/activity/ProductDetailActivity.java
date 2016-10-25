@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.xunda.cloudvision.Config;
 import com.xunda.cloudvision.R;
 import com.xunda.cloudvision.bean.AttrValueBean;
+import com.xunda.cloudvision.bean.ImageBean;
 import com.xunda.cloudvision.bean.ProductBean;
 import com.xunda.cloudvision.bean.resp.QueryProductDetailResp;
 import com.xunda.cloudvision.http.HttpStatus;
@@ -109,13 +111,15 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    ProductBean product = result.getProduct();
+                    final ProductBean product = result.getProduct();
                     if(null == product) {
                         // TODO 错误
                     } else {
                         // TODO 设置数据
+                        mProduct = product;
                         mImgAdapter.addAll(product.getDetailImages(), true);
                         mPageIndicator.setPageCount(mImgAdapter.getCount());
+                        mPageIndicator.setCurrentPage(0);
                         mImgPager.setAdapter(mImgAdapter);
 
                     }
@@ -290,7 +294,12 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     }
 
     private void viewPic(int position) {
+        final List<ImageBean> images = mProduct.getDetailImages();
+        if(null == images || images.isEmpty()) {
+            return;
+        }
         Intent intent = new Intent(this, Img720ViewActivity.class);
+        intent.putParcelableArrayListExtra(Config.EXTRA_DATA, new ArrayList<Parcelable>(images));
         intent.putExtra(Config.EXTRA_POSITION, position);
         startActivity(intent);
     }

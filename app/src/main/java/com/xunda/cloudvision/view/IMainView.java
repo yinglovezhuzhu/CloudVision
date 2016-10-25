@@ -1,7 +1,9 @@
 package com.xunda.cloudvision.view;
 
 import com.baidu.location.BDLocation;
+import com.xunda.cloudvision.bean.NoticeBean;
 import com.xunda.cloudvision.bean.resp.QueryHomeDataResp;
+import com.xunda.cloudvision.bean.resp.QueryNoticeResp;
 
 /**
  * Main页面视图接口
@@ -37,7 +39,7 @@ public interface IMainView {
      * 公告数据更新
      * @param notice 公告内容
      */
-    void onNoticeUpdate(String notice);
+    void onNoticeUpdate(NoticeBean notice);
 
     /**
      * 异步执行前
@@ -54,8 +56,14 @@ public interface IMainView {
     void onCanceled(String key);
 
     /**
-     *
-     * @param result
+     * 首页广告查询结果
+     * @param result 广告数据
      */
     void onQueryAdvertiseResult(QueryHomeDataResp result);
+
+//    /**
+//     * 公告查询结果
+//     * @param result 公告数据
+//     */
+//    void onQueryNoticeResult(QueryNoticeResp result);
 }

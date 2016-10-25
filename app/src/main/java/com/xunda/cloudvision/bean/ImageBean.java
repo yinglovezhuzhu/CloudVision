@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * 图片数据实体类
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
