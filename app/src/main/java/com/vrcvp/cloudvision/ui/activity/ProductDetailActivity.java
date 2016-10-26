@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.bean.AttrBean;
 import com.vrcvp.cloudvision.bean.AttrValueBean;
 import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.bean.ProductBean;
@@ -222,22 +223,22 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
 
-        List<AttrValueBean> colors = new ArrayList<>();
-        colors.add(new AttrValueBean("颜色", "黄色"));
-        colors.add(new AttrValueBean("颜色", "紫色"));
-        colors.add(new AttrValueBean("颜色", "蓝色"));
-        colors.add(new AttrValueBean("颜色", "白色"));
+        AttrBean attrColor = new AttrBean("颜色");
+        attrColor.addAttrValue(new AttrValueBean("黄色"));
+        attrColor.addAttrValue(new AttrValueBean("紫色"));
+        attrColor.addAttrValue(new AttrValueBean("蓝色"));
+        attrColor.addAttrValue(new AttrValueBean("白色"));
 
-        mAttrAdapter.addAll(colors, false);
+        mAttrAdapter.add(attrColor, false);
 
-        List<AttrValueBean> sizes = new ArrayList<>();
-        sizes.add(new AttrValueBean("尺寸", "S"));
-        sizes.add(new AttrValueBean("尺寸", "M"));
-        sizes.add(new AttrValueBean("尺寸", "L"));
-        sizes.add(new AttrValueBean("尺寸", "XL"));
-        sizes.add(new AttrValueBean("尺寸", "XXL"));
-        sizes.add(new AttrValueBean("尺寸", "XXXL"));
-        mAttrAdapter.addAll(sizes, true);
+        AttrBean attrSize = new AttrBean("尺寸");
+        attrSize.addAttrValue(new AttrValueBean("S"));
+        attrSize.addAttrValue(new AttrValueBean("M"));
+        attrSize.addAttrValue(new AttrValueBean("L"));
+        attrSize.addAttrValue(new AttrValueBean("XL"));
+        attrSize.addAttrValue(new AttrValueBean("XXL"));
+        attrSize.addAttrValue(new AttrValueBean("XXXL"));
+        mAttrAdapter.add(attrSize, true);
 
         tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
 

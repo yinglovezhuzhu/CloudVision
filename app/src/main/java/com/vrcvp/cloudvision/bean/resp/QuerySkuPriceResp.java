@@ -6,4 +6,16 @@ package com.vrcvp.cloudvision.bean.resp;
  */
 
 public class QuerySkuPriceResp extends BaseResp {
+    private String price;
+
+    public String getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return "QuerySkuPriceResp{" +
+                "price='" + price + '\'' +
+                "} " + super.toString();
+    }
 }

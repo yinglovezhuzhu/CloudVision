@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.bean.AttrBean;
 import com.vrcvp.cloudvision.bean.AttrValueBean;
 import com.vrcvp.cloudvision.ui.widget.NoScrollGridView;
 
@@ -24,7 +25,7 @@ import java.util.Map;
 public class ProductDetailAttrAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final Map<String, List<AttrValueBean>> mData = new HashMap<>();
+    private final List<AttrBean> mData = new ArrayList<>();
     private final Map<String, ProductDetailAttrItemAdapter> mAdapters = new HashMap<>();
     private final String mLabelFormat;
 
@@ -40,21 +41,26 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
      * @param data 属性数据
      * @param notifyDataSetChanged 是否更新UI
      */
-    public void addAll(Collection<AttrValueBean> data, boolean notifyDataSetChanged) {
+    public void add(AttrBean data, boolean notifyDataSetChanged) {
+        if(null == data) {
+            return;
+        }
+        mData.add(data);
+        if(notifyDataSetChanged) {
+            notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 加入数据
+     * @param data 属性数据
+     * @param notifyDataSetChanged 是否更新UI
+     */
+    public void addAll(Collection<AttrBean> data, boolean notifyDataSetChanged) {
         if(null == data || data.isEmpty()) {
             return;
         }
-        String attrName;
-        for (AttrValueBean attr : data) {
-            attrName = attr.getAttrName();
-            if(mData.containsKey(attrName)) {
-                mData.get(attrName).add(attr);
-            } else {
-                List<AttrValueBean> attrs = new ArrayList<>();
-                attrs.add(attr);
-                mData.put(attrName, attrs);
-            }
-        }
+        mData.addAll(data);
         if(notifyDataSetChanged) {
             notifyDataSetChanged();
         }
@@ -77,7 +83,10 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
      * @return 选中的值索引， -1表示没有选中任何值
      */
     public int getCheckedPosition(int position) {
-        return mAdapters.get(String.valueOf(mData.keySet().toArray()[position])).getCheckedPosition();
+        if(mData.isEmpty() || position >= mData.size()) {
+            return -1;
+        }
+        return mAdapters.get(mData.get(position).getAttrName()).getCheckedPosition();
     }
 
     @Override
@@ -86,8 +95,8 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
     }
 
     @Override
-    public List<AttrValueBean> getItem(int position) {
-        return mData.get(String.valueOf(mData.keySet().toArray()[position]));
+    public AttrBean getItem(int position) {
+        return mData.get(position);
     }
 
     @Override
@@ -97,7 +106,7 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if(null == convertView) {
             viewHolder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_product_detail_attr, null);
@@ -108,16 +117,18 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final String key = String.valueOf(mData.keySet().toArray()[position]);
+        final AttrBean attr = getItem(position);
+        final String attrName = attr.getAttrName();
 
-        viewHolder.tvAttrName.setText(String.format(mLabelFormat, key));
+
+        viewHolder.tvAttrName.setText(String.format(mLabelFormat, attrName));
 
         final ProductDetailAttrItemAdapter adapter;
-        if(mAdapters.containsKey(key)) {
-            adapter = mAdapters.get(key);
+        if(mAdapters.containsKey(attr.getAttrName())) {
+            adapter = mAdapters.get(attrName);
         } else {
             adapter = new ProductDetailAttrItemAdapter(mContext);
-            adapter.addAll(mData.get(key), true);
+            adapter.addAll(attr.getValues(), true);
             adapter.setOnCheckChangedListener(new ProductDetailAttrItemAdapter.OnCheckChangedListener() {
                 @Override
                 public void onCheckChanged(int subPosition, boolean isChecked) {
@@ -126,7 +137,7 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
                     }
                 }
             });
-            mAdapters.put(key, adapter);
+            mAdapters.put(attrName, adapter);
         }
         viewHolder.gvAttrValueName.setAdapter(adapter);
 

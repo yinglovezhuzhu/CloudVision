@@ -10,8 +10,6 @@ import android.os.Parcelable;
 
 public class AttrValueBean implements Parcelable {
 
-    private String attrId; // 属性名id
-    private String attrName; // 属性名
     private String attrValueId; // 属性值id
     private String attrValue; // 属性值
 
@@ -19,14 +17,11 @@ public class AttrValueBean implements Parcelable {
 
     }
 
-    public AttrValueBean(String attrName, String attrValue) {
-        this.attrName = attrName;
+    public AttrValueBean(String attrValue) {
         this.attrValue = attrValue;
     }
 
     protected AttrValueBean(Parcel in) {
-        attrId = in.readString();
-        attrName = in.readString();
         attrValueId = in.readString();
         attrValue = in.readString();
     }
@@ -43,21 +38,6 @@ public class AttrValueBean implements Parcelable {
         }
     };
 
-    public String getAttrId() {
-        return attrId;
-    }
-
-    public void setAttrId(String attrId) {
-        this.attrId = attrId;
-    }
-
-    public String getAttrName() {
-        return attrName;
-    }
-
-    public void setAttrName(String attrName) {
-        this.attrName = attrName;
-    }
 
     public String getAttrValueId() {
         return attrValueId;
@@ -78,8 +58,6 @@ public class AttrValueBean implements Parcelable {
     @Override
     public String toString() {
         return "AttrValueBean{" +
-                "attrId='" + attrId + '\'' +
-                ", attrName='" + attrName + '\'' +
                 ", attrValueId='" + attrValueId + '\'' +
                 ", attrValue='" + attrValue + '\'' +
                 '}';
@@ -92,8 +70,6 @@ public class AttrValueBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(attrId);
-        dest.writeString(attrName);
         dest.writeString(attrValueId);
         dest.writeString(attrValue);
     }
