@@ -24,8 +24,7 @@ public class BeanRefUtils {
 		}
 		Class<?> cls = bean.getClass();
 		Map<String, Field> fieldMap = getFields(cls);
-		Iterator<Map.Entry<String, Field>> iterator = fieldMap.entrySet()
-				.iterator();
+		Iterator<Map.Entry<String, Field>> iterator = fieldMap.entrySet().iterator();
 		while (iterator.hasNext()) {
 			try {
 				Field field = (Field) ((Map.Entry<String, Field>) iterator.next()).getValue();
@@ -75,8 +74,7 @@ public class BeanRefUtils {
 				.iterator();
 		while (iterator.hasNext()) {
 			try {
-				Field field = (Field) fieldMap
-						.get(((Map.Entry<String, Object>) iterator.next()).getKey());
+				Field field = (Field) fieldMap.get(((Map.Entry<String, Object>) iterator.next()).getKey());
 				if (field != null) {
 					field.setAccessible(true);
 					field.set(bean, valMap.get(field.getName()));

@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.http;
 
+import com.google.gson.Gson;
 import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
@@ -22,6 +23,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -225,16 +227,21 @@ public final class HttpRequest {
 		for (String key : keys) {
 			Object value = params.get(key);
 			if ((null != value) || (includeEmptyValue)) {
-				String stringValue = String.valueOf(value);
-				if (((null != stringValue) && (stringValue.length() >= 1))
-						|| (includeEmptyValue)) {
+                final String stringValue;
+                if(null == value) {
+                    stringValue = "";
+                } else if(value instanceof List || value instanceof Map) {
+                    stringValue = new Gson().toJson(value);
+                } else {
+                    stringValue = String.valueOf(value);
+                }
+				if (!StringUtils.isEmpty(stringValue) || (includeEmptyValue)) {
 					if (sb.length() > 0) {
 						sb.append("&");
 					}
 					sb.append(key)
 							.append("=")
-							.append(encodeByURLEncoder ? URLEncoder.encode(
-									stringValue, "UTF-8") : stringValue);
+							.append(encodeByURLEncoder ? URLEncoder.encode(stringValue, "UTF-8") : stringValue);
 				}
 			}
 		}

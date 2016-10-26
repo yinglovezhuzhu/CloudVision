@@ -8,6 +8,13 @@ package com.vrcvp.cloudvision.bean.resp;
 public class QuerySkuPriceResp extends BaseResp {
     private String price;
 
+    public QuerySkuPriceResp() {
+    }
+
+    public QuerySkuPriceResp(int httpCode, String msg) {
+        super(httpCode, msg);
+    }
+
     public String getPrice() {
         return price;
     }
