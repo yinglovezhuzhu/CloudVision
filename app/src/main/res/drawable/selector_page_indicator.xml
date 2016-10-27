@@ -6,8 +6,8 @@
             <item>
                 <shape
                     android:shape="ring"
-                    android:thickness="@dimen/divider_size_level2"
-                    android:innerRadius="@dimen/contentPadding_level2"
+                    android:thickness="@dimen/page_indicator_outer_ring_size"
+                    android:innerRadius="@dimen/page_indicator_outer_ring_inner_radius"
                     android:useLevel="false" >
                     <solid android:color="@color/colorActivateBtnNormal" />
                     <size android:height="@dimen/page_indicator_outer_size"

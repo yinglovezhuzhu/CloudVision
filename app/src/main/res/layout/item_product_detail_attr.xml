@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/contentPadding_level5"
+        android:horizontalSpacing="@dimen/contentPadding_level3"
         android:verticalSpacing="@dimen/contentPadding_level5"
         android:numColumns="4"
         android:listSelector="@color/transparent"

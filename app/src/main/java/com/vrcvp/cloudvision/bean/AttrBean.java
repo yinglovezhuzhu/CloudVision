@@ -1,5 +1,8 @@
 package com.vrcvp.cloudvision.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/26.
  */
 
-public class AttrBean {
+public class AttrBean implements Parcelable{
     private String attrId;
     private String attrName;
     private List<AttrValueBean> values = new ArrayList<>();
@@ -21,6 +24,24 @@ public class AttrBean {
     public AttrBean(String attrName) {
         this.attrName = attrName;
     }
+
+    protected AttrBean(Parcel in) {
+        attrId = in.readString();
+        attrName = in.readString();
+        values = in.createTypedArrayList(AttrValueBean.CREATOR);
+    }
+
+    public static final Creator<AttrBean> CREATOR = new Creator<AttrBean>() {
+        @Override
+        public AttrBean createFromParcel(Parcel in) {
+            return new AttrBean(in);
+        }
+
+        @Override
+        public AttrBean[] newArray(int size) {
+            return new AttrBean[size];
+        }
+    };
 
     public String getAttrId() {
         return attrId;
@@ -61,5 +82,17 @@ public class AttrBean {
                 ", attrName='" + attrName + '\'' +
                 ", values=" + values +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(attrId);
+        dest.writeString(attrName);
+        dest.writeTypedList(values);
     }
 }

@@ -26,6 +26,7 @@ import com.vrcvp.cloudvision.bean.AttrValueBean;
 import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.bean.resp.QueryProductDetailResp;
+import com.vrcvp.cloudvision.bean.resp.QuerySkuPriceResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.ui.adapter.ProductDetailAttrAdapter;
 import com.vrcvp.cloudvision.presenter.ProductDetailPresenter;
@@ -52,6 +53,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
 
+    private TextView mTvPrice;
     private View mDetailLoadingView;
     private WebView mWebView;
 
@@ -119,7 +121,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                         mPageIndicator.setPageCount(mImgAdapter.getCount());
                         mPageIndicator.setCurrentPage(0);
                         mImgPager.setAdapter(mImgAdapter);
-
+                        mAttrAdapter.addAll(product.getAttrValues(), true);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
@@ -127,6 +129,22 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                     break;
                 default:
                     // TODO 错误
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onQuerySkuPriceResult(QuerySkuPriceResp result) {
+        if(null == result) {
+            mTvPrice.setText(mProduct.getPrice());
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    mTvPrice.setText(result.getPrice());
+                    break;
+                default:
+                    mTvPrice.setText(mProduct.getPrice());
                     break;
             }
         }
@@ -219,28 +237,28 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         });
 
         final NoScrollListView lvAttr = (NoScrollListView) findViewById(R.id.lv_product_detail_attr);
-        final TextView tvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
+        mTvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
 
-        AttrBean attrColor = new AttrBean("颜色");
-        attrColor.addAttrValue(new AttrValueBean("黄色"));
-        attrColor.addAttrValue(new AttrValueBean("紫色"));
-        attrColor.addAttrValue(new AttrValueBean("蓝色"));
-        attrColor.addAttrValue(new AttrValueBean("白色"));
+//        AttrBean attrColor = new AttrBean("颜色");
+//        attrColor.addAttrValue(new AttrValueBean("黄色"));
+//        attrColor.addAttrValue(new AttrValueBean("紫色"));
+//        attrColor.addAttrValue(new AttrValueBean("蓝色"));
+//        attrColor.addAttrValue(new AttrValueBean("白色"));
+//
+//        mAttrAdapter.add(attrColor, false);
+//
+//        AttrBean attrSize = new AttrBean("尺寸");
+//        attrSize.addAttrValue(new AttrValueBean("S"));
+//        attrSize.addAttrValue(new AttrValueBean("M"));
+//        attrSize.addAttrValue(new AttrValueBean("L"));
+//        attrSize.addAttrValue(new AttrValueBean("XL"));
+//        attrSize.addAttrValue(new AttrValueBean("XXL"));
+//        attrSize.addAttrValue(new AttrValueBean("XXXL"));
+//        mAttrAdapter.add(attrSize, true);
 
-        mAttrAdapter.add(attrColor, false);
-
-        AttrBean attrSize = new AttrBean("尺寸");
-        attrSize.addAttrValue(new AttrValueBean("S"));
-        attrSize.addAttrValue(new AttrValueBean("M"));
-        attrSize.addAttrValue(new AttrValueBean("L"));
-        attrSize.addAttrValue(new AttrValueBean("XL"));
-        attrSize.addAttrValue(new AttrValueBean("XXL"));
-        attrSize.addAttrValue(new AttrValueBean("XXXL"));
-        mAttrAdapter.add(attrSize, true);
-
-        tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
+        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
 
         mAttrAdapter.setOnAttrCheckChangedListener(new ProductDetailAttrAdapter.OnAttrCheckChangedListener() {
             @Override
@@ -259,19 +277,19 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                     if(updatePrice) {
                         switch (subPosition) {
                             case 0:
-                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
+                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
                                 break;
                             case 1:
-                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
+                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
                                 break;
                             case 2:
-                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
+                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
                                 break;
                             case 3:
-                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
+                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
                                 break;
                             default:
-                                tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "220"));
+                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "220"));
                                 break;
                         }
                     }

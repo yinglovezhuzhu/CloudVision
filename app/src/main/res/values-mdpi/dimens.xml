@@ -42,8 +42,10 @@
 
     <!-- 页面指示器 -->
     <dimen name="page_indicator_inner_size">12dp</dimen>
-    <dimen name="page_indicator_normal_size">16dp</dimen>
+    <dimen name="page_indicator_normal_size">15dp</dimen>
     <dimen name="page_indicator_outer_size">24dp</dimen>
+    <dimen name="page_indicator_outer_ring_inner_radius">8dp</dimen>
+    <dimen name="page_indicator_outer_ring_size">2dp</dimen>
 
     <!-- 激活页面 -->
     <dimen name="activate_widget_margin">40dp</dimen>

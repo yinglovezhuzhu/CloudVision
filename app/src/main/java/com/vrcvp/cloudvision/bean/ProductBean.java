@@ -20,7 +20,7 @@ public class ProductBean implements Parcelable {
     private String imageUrl;	// 图片url
     private List<ImageBean> detailImages = new ArrayList<>(); // 细节图
     private String detail; // 产品详情
-    private List<SkuBean> skus = new ArrayList<>(); // 产品sku
+    private List<AttrBean> attrValues = new ArrayList<>(); // 属性名和属性值列表
 
     public ProductBean() {
 
@@ -35,7 +35,7 @@ public class ProductBean implements Parcelable {
         imageUrl = in.readString();
         detailImages = in.createTypedArrayList(ImageBean.CREATOR);
         detail = in.readString();
-        skus = in.createTypedArrayList(SkuBean.CREATOR);
+        attrValues = in.createTypedArrayList(AttrBean.CREATOR);
     }
 
     public static final Creator<ProductBean> CREATOR = new Creator<ProductBean>() {
@@ -49,93 +49,6 @@ public class ProductBean implements Parcelable {
             return new ProductBean[size];
         }
     };
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getOrderWeight() {
-        return orderWeight;
-    }
-
-    public void setOrderWeight(String orderWeight) {
-        this.orderWeight = orderWeight;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public List<ImageBean> getDetailImages() {
-        return detailImages;
-    }
-
-    public void setDetailImages(List<ImageBean> detailImages) {
-        this.detailImages = detailImages;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public List<SkuBean> getSkus() {
-        return skus;
-    }
-
-    public void setSkus(List<SkuBean> skus) {
-        this.skus = skus;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductBean{" +
-                "id='" + id + '\'' +
-                ", categoryName='" + categoryName + '\'' +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", orderWeight='" + orderWeight + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", detailImages=" + detailImages +
-                ", detail='" + detail + '\'' +
-                ", skus=" + skus +
-                '}';
-    }
 
     @Override
     public int describeContents() {
@@ -152,6 +65,57 @@ public class ProductBean implements Parcelable {
         dest.writeString(imageUrl);
         dest.writeTypedList(detailImages);
         dest.writeString(detail);
-        dest.writeTypedList(skus);
+        dest.writeTypedList(attrValues);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getOrderWeight() {
+        return orderWeight;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public List<ImageBean> getDetailImages() {
+        return detailImages;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public List<AttrBean> getAttrValues() {
+        return attrValues;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductBean{" +
+                "id='" + id + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", orderWeight='" + orderWeight + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", detailImages=" + detailImages +
+                ", detail='" + detail + '\'' +
+                ", attrValues=" + attrValues +
+                '}';
     }
 }

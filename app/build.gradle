@@ -24,17 +24,20 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
+                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2"]
         }
         debug {
             signingConfig signingConfigs.config
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
+                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2"]
         }
         dev {
             debuggable true
             signingConfig signingConfigs.config
             zipAlignEnabled true
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi"]
+            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
+                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2"]
         }
     }
 

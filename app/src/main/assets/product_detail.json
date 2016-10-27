@@ -29,58 +29,58 @@
         "imgUrl": "http://img10.360buyimg.com/n0/jfs/t3556/23/277738011/77257/73db473/580871e1Nfb44c7b0.jpg"
       }
     ],
-    "skus": [
+    "attrValues": [
       {
-        "skuId": "",
-        "price": "5399.00",
-        "attrValue": [
+        "attrId": "1",
+        "attrName": "CPU",
+        "values": [
           {
-            "attrId": "1",
-            "attrName": "CPU",
             "attrValueId": "11",
             "attrValue": "I5-6300HQ"
           },
           {
-            "attrId": "2",
-            "attrName": "内存",
+            "attrValueId": "12",
+            "attrValue": "i7-6700HQ"
+          }
+        ]
+      },
+      {
+        "attrId": "2",
+        "attrName": "硬盘",
+        "values": [
+          {
             "attrValueId": "21",
-            "attrValue": "8G"
+            "attrValue": "1TB机械"
           },
           {
-            "attrId": "3",
-            "attrName": "显存",
+            "attrValueId": "22",
+            "attrValue": "128固态+1TB机械"
+          },
+          {
+            "attrValueId": "23",
+            "attrValue": "256固态+1TB机械"
+          },
+          {
+            "attrValueId": "24",
+            "attrValue": "512固态"
+          },
+          {
+            "attrValueId": "25",
+            "attrValue": "1T固态"
+          }
+        ]
+      },
+      {
+        "attrId": "3",
+        "attrName": "显卡",
+        "values": [
+          {
             "attrValueId": "31",
-            "attrValue": "4G独显"
+            "attrValue": "GTX960M"
           },
           {
-            "attrId": "4",
-            "attrName": "硬盘",
-            "attrValueId": "41",
-            "attrValue": "1T"
-          }
-        ]
-      },
-      {
-        "skuId": "",
-        "price": "5788.00",
-        "attrValue": [
-          {
-            "attrId": "",
-            "attrName": "定制版I5-6300HQ 8G1T+120固态定制版I5-6300HQ 8G1T+120固态",
-            "attrValueId": "",
-            "attrValue": ""
-          }
-        ]
-      },
-      {
-        "skuId": "",
-        "price": "6099.00",
-        "attrValue": [
-          {
-            "attrId": "",
-            "attrName": "定制版I5-6300HQ 8G1T+256固态定制版I5-6300HQ 8G1T+256固态",
-            "attrValueId": "",
-            "attrValue": ""
+            "attrValueId": "32",
+            "attrValue": "GTX965M"
           }
         ]
       }

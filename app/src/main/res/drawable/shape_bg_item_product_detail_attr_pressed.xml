@@ -7,6 +7,6 @@
     <stroke android:color="@color/colorTextRed" android:width="@dimen/divider_size_level2" />
     <padding android:top="@dimen/contentPadding_level3"
         android:bottom="@dimen/contentPadding_level3"
-        android:left="@dimen/contentPadding_level4"
-        android:right="@dimen/contentPadding_level4"/>
+        android:left="@dimen/contentPadding_level3"
+        android:right="@dimen/contentPadding_level3"/>
 </shape>

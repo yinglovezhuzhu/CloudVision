@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minEms="4"
-        android:maxEms="4"
         android:gravity="center"
         android:maxLines="1"
         android:clickable="true"
