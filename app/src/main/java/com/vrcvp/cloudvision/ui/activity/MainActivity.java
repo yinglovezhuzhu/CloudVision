@@ -1,11 +1,17 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -13,7 +19,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -29,7 +34,10 @@ import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 主界面Activity
@@ -43,6 +51,24 @@ public class MainActivity extends BaseActivity implements IMainView {
 //    /** 打开注册页面 **/
     private static final int RC_ACTIVATE_PAGE = 0x002;
 
+    /** 动态申请权限 **/
+    private static final int RC_REQUEST_PERMISSIONS = 0x003;
+
+    private static final List<String> DANGEROUS_PERMISSIONS = new ArrayList<>();
+    static {
+        DANGEROUS_PERMISSIONS.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        DANGEROUS_PERMISSIONS.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        DANGEROUS_PERMISSIONS.add(Manifest.permission.READ_PHONE_STATE);
+        DANGEROUS_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            try {
+                DANGEROUS_PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+        DANGEROUS_PERMISSIONS.add(Manifest.permission.WRITE_SETTINGS);
+    }
     private View mViewTopBar;
     private TextView mTvTopBarTime;
     private TextView mTvTopBarCity;
@@ -69,6 +95,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            checkSelfPermission();
+        }
 
         mMainPresenter = new MainPresenter(this, this);
         mNoticeEnterAnim = AnimationUtils.loadAnimation(this, R.anim.anim_main_menu_notice_enter);
@@ -119,6 +149,21 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1 && RC_REQUEST_PERMISSIONS == requestCode) {
+            if(permissions.length > 0 && grantResults.length > 0 && permissions.length == grantResults.length ) {
+                for (int result : grantResults) {
+                    if(PackageManager.PERMISSION_DENIED == result) {
+                        showPermissionSettingDialog();
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -396,5 +441,53 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_logout).setOnClickListener(this);
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_switch).setOnClickListener(this);
+    }
+
+    /**
+     * 权限是否已经授权
+     * @param permission
+     * @return
+     */
+    private boolean isPermissionGranted(String permission) {
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, permission);
+    }
+
+    /**
+     * 自检权限
+     */
+    private void checkSelfPermission() {
+        final Set<String> needRequestPermissions = new HashSet<>();
+        for (String permission : DANGEROUS_PERMISSIONS) {
+            if(isPermissionGranted(permission)) {
+                // 权限已授权
+                continue;
+            }
+            needRequestPermissions.add(permission);
+        }
+
+        // 权限未授权
+        if(needRequestPermissions.isEmpty()) {
+            return;
+        }
+        ActivityCompat.requestPermissions(this, needRequestPermissions.toArray(new String []{}), RC_REQUEST_PERMISSIONS);
+    }
+
+    private void showPermissionSettingDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.str_need_request_permission)
+                .setNegativeButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                checkSelfPermission();
+                            }
+                        })
+                .setPositiveButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                .create()
+                .show();
     }
 }

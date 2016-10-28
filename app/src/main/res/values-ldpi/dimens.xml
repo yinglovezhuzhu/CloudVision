@@ -44,7 +44,7 @@
     <dimen name="page_indicator_inner_size">15dp</dimen>
     <dimen name="page_indicator_inner_padding">8dp</dimen>
     <dimen name="page_indicator_normal_size">15dp</dimen>
-    <dimen name="page_indicator_outer_size">28dp</dimen>
+    <dimen name="page_indicator_outer_size">25dp</dimen>
     <dimen name="page_indicator_outer_ring_inner_radius">10dp</dimen>
     <dimen name="page_indicator_outer_ring_size">3dp</dimen>
 

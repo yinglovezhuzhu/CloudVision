@@ -44,8 +44,8 @@
     <dimen name="page_indicator_inner_size">12dp</dimen>
     <dimen name="page_indicator_inner_padding">5dp</dimen>
     <dimen name="page_indicator_normal_size">12dp</dimen>
-    <dimen name="page_indicator_outer_size">24dp</dimen>
-    <dimen name="page_indicator_outer_ring_inner_radius">18dp</dimen>
+    <dimen name="page_indicator_outer_size">22dp</dimen>
+    <dimen name="page_indicator_outer_ring_inner_radius">8dp</dimen>
     <dimen name="page_indicator_outer_ring_size">2dp</dimen>
 
     <!-- 激活页面 -->

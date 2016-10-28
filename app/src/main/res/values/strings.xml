@@ -3,6 +3,10 @@
 
     <string name="str_no_more_data">没有更多数据</string>
 
+    <string name="str_need_request_permission">部分权限授权没有通过，没有这些权限，程序将可能无法正常运行，是否重新授权？</string>
+    <string name="str_confirm">确定</string>
+    <string name="str_cancel">取消</string>
+
     <!-- 激活 -->
     <string name="str_please_input_activation_code">请输入激活码</string>
     <string name="str_activate">激活</string>
