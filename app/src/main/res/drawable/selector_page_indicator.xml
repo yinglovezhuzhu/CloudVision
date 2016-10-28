@@ -14,10 +14,10 @@
                         android:width="@dimen/page_indicator_outer_size" />
                 </shape>
             </item>
-            <item android:left="@dimen/contentPadding_level2"
-                android:right="@dimen/contentPadding_level2"
-                android:top="@dimen/contentPadding_level2"
-                android:bottom="@dimen/contentPadding_level2">
+            <item android:left="@dimen/page_indicator_inner_padding"
+                android:right="@dimen/page_indicator_inner_padding"
+                android:top="@dimen/page_indicator_inner_padding"
+                android:bottom="@dimen/page_indicator_inner_padding">
                 <shape android:shape="oval">
                     <size android:width="@dimen/page_indicator_inner_size"
                         android:height="@dimen/page_indicator_inner_size" />
@@ -29,10 +29,10 @@
 
     <item>
         <layer-list>
-            <item android:left="@dimen/contentPadding_level1"
-                android:right="@dimen/contentPadding_level1"
-                android:top="@dimen/contentPadding_level1"
-                android:bottom="@dimen/contentPadding_level1">
+            <item android:left="@dimen/page_indicator_inner_padding"
+                android:right="@dimen/page_indicator_inner_padding"
+                android:top="@dimen/page_indicator_inner_padding"
+                android:bottom="@dimen/page_indicator_inner_padding">
                 <shape android:shape="oval">
                     <size android:width="@dimen/page_indicator_normal_size"
                         android:height="@dimen/page_indicator_normal_size" />
