@@ -41,7 +41,7 @@
     <dimen name="shape_corner_radius_level3">12dp</dimen>
 
     <!-- 页面指示器 -->
-    <dimen name="page_indicator_inner_size">12dp</dimen>
+    <dimen name="page_indicator_inner_size">11dp</dimen>
     <dimen name="page_indicator_normal_size">15dp</dimen>
     <dimen name="page_indicator_outer_size">24dp</dimen>
     <dimen name="page_indicator_outer_ring_inner_radius">8dp</dimen>
