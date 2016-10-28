@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -73,6 +74,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private TextView mTvTopBarTime;
     private TextView mTvTopBarCity;
     private TextView mTvTopBarWeather;
+    private ImageView mIvTopBarWeatherIcon;
 
     private View mViewBottomBar;
     private TextView mTvNotice;
@@ -299,6 +301,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mTvTopBarTime = (TextView) findViewById(R.id.tv_main_top_bar_time);
         mTvTopBarCity = (TextView) findViewById(R.id.tv_main_top_bar_city);
         mTvTopBarWeather = (TextView) findViewById(R.id.tv_main_top_bar_weather);
+        mIvTopBarWeatherIcon = (ImageView) findViewById(R.id.iv_main_top_bar_weather_icon);
 
         mViewBottomBar = findViewById(R.id.ll_main_bottom_bar);
         mTvNotice = (TextView) findViewById(R.id.tv_main_notice);

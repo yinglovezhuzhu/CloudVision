@@ -28,8 +28,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="佛山"/>
+                android:gravity="center"/>
+            <ImageView
+                android:id="@+id/iv_main_top_bar_weather_icon"
+                android:layout_width="@dimen/main_weather_icon_size"
+                android:layout_height="@dimen/main_weather_icon_size"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_main_top_bar_weather"
+                android:layout_toStartOf="@+id/tv_main_top_bar_weather"
+                android:layout_marginRight="@dimen/contentPadding_level1"
+                android:layout_marginEnd="@dimen/contentPadding_level1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_weather_lot_cloud"
+                android:contentDescription="@null"/>
             <TextView
                 android:id="@+id/tv_main_top_bar_weather"
                 style="@style/MainTopBarTextTheme"
@@ -38,7 +49,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_weather_lot_cloud"
                 android:drawablePadding="@dimen/contentPadding_level2"
                 android:text="晴 33℃~36℃"/>
         </RelativeLayout>

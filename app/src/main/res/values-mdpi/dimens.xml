@@ -55,6 +55,7 @@
     <!-- 主页面 -->
     <dimen name="main_menu_btn_width">50dp</dimen>
     <dimen name="main_video_play_icon_size">45dp</dimen>
+    <dimen name="main_weather_icon_size">50dp</dimen>
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">60dp</dimen>
