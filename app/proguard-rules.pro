@@ -16,8 +16,12 @@
 #   public *;
 #}
 
+# JPush
 -dontoptimize
 -dontpreverify
 
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
+
+# 讯飞语音
+-keep class com.iflytek.**{*;}

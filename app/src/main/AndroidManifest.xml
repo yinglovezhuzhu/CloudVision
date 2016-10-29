@@ -41,6 +41,12 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+    <!-- 讯飞语音 -->
+    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!--读取联系人权限，上传联系人需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -193,6 +199,8 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
         <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APP_KEY}"/>
+
+        <meta-data android:name="XFYUN_APPID" android:value="${XFYUN_APPID}" />
 
     </application>
 
