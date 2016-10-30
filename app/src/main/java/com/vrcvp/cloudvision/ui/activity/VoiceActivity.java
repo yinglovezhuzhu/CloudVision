@@ -9,15 +9,20 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.iflytek.cloud.RecognizerListener;
+import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechUtility;
-import com.iflytek.speech.RecognizerResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.XFSpeechResult;
+import com.vrcvp.cloudvision.bean.XFWordArrayBean;
+import com.vrcvp.cloudvision.bean.XFWordBean;
 import com.vrcvp.cloudvision.ui.adapter.VoiceAdapter;
 import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
@@ -137,15 +142,22 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
 
         @Override
         public void onBeginOfSpeech() {
+            Log.e("Start", "Start of speech--------------------------");
 
         }
 
         //结束录音
-        public void onEndOfSpeech() {}
+        public void onEndOfSpeech() {
+
+            Log.e("End", "end of speech--------------------------");
+        }
 
         @Override
-        public void onResult(com.iflytek.cloud.RecognizerResult recognizerResult, boolean b) {
-            Log.d("Result:",recognizerResult.getResultString ());
+        public void onResult(RecognizerResult recognizerResult, boolean b) {
+            Log.e("Result:",recognizerResult.getResultString ());
+
+
+            Log.e("ResultString: ", parseResult(recognizerResult));
         }
 
         @Override
@@ -156,4 +168,39 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         //扩展用接口
         public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {}
     };
+
+    /**
+     * 解析语音识别结果
+     * @param result
+     * @return
+     */
+    private String parseResult(RecognizerResult result) {
+        if(null == result) {
+            return "";
+        }
+        final String resultString = result.getResultString();
+        if(StringUtils.isEmpty(resultString)) {
+            return "";
+        }
+
+        XFSpeechResult speechResult = null;
+        try {
+            speechResult = new Gson().fromJson(resultString, XFSpeechResult.class);
+        } catch (JsonSyntaxException e) {
+            // do nothing
+        }
+        if(null == speechResult) {
+            return "";
+        }
+        XFWordBean wordBean;
+        StringBuilder textSb = new StringBuilder();
+        for (XFWordArrayBean arrayBean : speechResult.getWs()) {
+            // 这里只拿第一个结果，不做多个识别
+            wordBean = arrayBean.getWordAt(0);
+            if(null != wordBean) {
+                textSb.append(wordBean.getW());
+            }
+        }
+        return textSb.toString();
+    }
 }
