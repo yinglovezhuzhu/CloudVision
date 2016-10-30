@@ -18,7 +18,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_item_product_list_view_desc"
@@ -37,9 +37,9 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="@dimen/contentPadding_level3"
-                android:gravity="start|center_vertical">
+                android:gravity="start|bottom">
                 <!--<TextView-->
                     <!--android:id="@+id/tv_item_product_list_view_currency"-->
                     <!--android:layout_width="wrap_content"-->
