@@ -1,7 +1,10 @@
 package com.vrcvp.cloudvision.utils;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.graphics.Rect;
 
+import com.baidu.location.Poi;
 import com.google.gson.Gson;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.CorporateBean;
@@ -177,6 +180,78 @@ public class DataManager {
             }
         }
         return mCorporateInfo;
+    }
+
+    /**
+     * 保存公告设置
+     * @param enabled 是否开启， true 开启， false 关闭
+     * @return 是否保存成功
+     */
+    public boolean onNoticeSettingsChanged(boolean enabled) {
+        if(!mInitialized) {
+            return false;
+        }
+        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), enabled);
+    }
+
+    /**
+     * 保存首页顶部栏天气设置
+     * @param enabled 是否开启， true 开启， false 关闭
+     * @return 是否保存成功
+     */
+    public boolean onWeatherSettingsChanged(boolean enabled) {
+        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), enabled);
+    }
+
+    /**
+     * 首页公告是否开启
+     * @return true 开启， false 关闭
+     */
+    public boolean isNoticeEnabled() {
+
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), false);
+    }
+
+    /**
+     *  首页顶部栏天气是否开启
+     * @return true 开启， false 关闭
+     */
+    public boolean isWeatherEnabled() {
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), false);
+    }
+
+    /**
+     * 是否已激活
+     * @return true 已经激活， false 未激活
+     */
+    public boolean isActivated() {
+        // FIXME 修改为正确的判断是否激活的代码
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_ACTIVATE_CODE, false);
+    }
+
+
+    /**
+     * 保存首页菜单按钮位置
+     * @param position 位置
+     * @return 是否保存成功
+     */
+    public boolean saveMainMenuPosition(Point position) {
+        return mSharedPrefHelper.saveInt(Config.SP_KEY_MAIN_MENU_POSITION_X_PREFIX + getCorporateId(), position.x)
+                && mSharedPrefHelper.saveInt(Config.SP_KEY_MAIN_MENU_POSITION_Y_PREFIX + getCorporateId(), position.y);
+    }
+
+    /**
+     * 获取首页菜单按钮位置
+     * @return 首页菜单按钮位置
+     */
+    public Point getMainMenuPosition() {
+        if(!mInitialized) {
+            return null;
+        }
+        final Point position = new Point(0, 0);
+        position.set(mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_X_PREFIX + getCorporateId(), 0),
+                mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_Y_PREFIX + getCorporateId(), 0));
+        return position;
     }
 
     /**

@@ -22,11 +22,11 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 public class ActivateModel implements IActivateModel {
 
     private Context mContext;
-    private SharedPrefHelper mSharePrefHelper = null;
+//    private SharedPrefHelper mSharePrefHelper = null;
 
     public ActivateModel(Context context) {
         this.mContext = context;
-        mSharePrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CONFIG);
+//        mSharePrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CONFIG);
     }
 
     @Override

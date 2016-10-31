@@ -13,9 +13,13 @@ public class Config {
     public static final String SP_FILE_CACHE = "sp_file_cache";
 
     /** SP配置文件key：是否禁用用首页天气（boolean）true 禁用， false 启用 **/
-    public static final String SP_KEY_MAIN_WEATHER_DISABLED = "disable_main_weather";
+    public static final String SP_KEY_MAIN_WEATHER_DISABLED_PREFIX = "disable_main_weather_";
     /** SP配置文件key：是否禁用首页公告（boolean）true 禁用， false 启用 **/
-    public static final String SP_KEY_MAIN_NOTICE_DISABLED = "disable_main_notice";
+    public static final String SP_KEY_MAIN_NOTICE_DISABLED_PREFIX = "disable_main_notice_";
+    /** SP配置文件key：首页菜单按钮位置X坐标 **/
+    public static final String SP_KEY_MAIN_MENU_POSITION_X_PREFIX = "main_menu_position_x_";
+    /** SP配置文件key：首页菜单按钮位置Y坐标 **/
+    public static final String SP_KEY_MAIN_MENU_POSITION_Y_PREFIX = "main_menu_position_y_";
     /** SP配置文件key：激活码（String） **/
     public static final String SP_KEY_ACTIVATE_CODE = "activate_code";
 

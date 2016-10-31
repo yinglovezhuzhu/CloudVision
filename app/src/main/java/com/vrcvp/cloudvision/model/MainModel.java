@@ -15,7 +15,6 @@ import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
-import com.vrcvp.cloudvision.utils.SharedPrefHelper;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -28,33 +27,33 @@ import java.util.List;
 public class MainModel implements IMainModel {
 
     private Context mContext;
-    private SharedPrefHelper mSharePrefHelper = null;
+//    private SharedPrefHelper mSharePrefHelper = null;
     private final List<NoticeBean> mNotices = new ArrayList<>();
     private int mCurrentNoticeIndex = 0;
 
     public MainModel(Context context) {
         this.mContext = context;
-        mSharePrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CONFIG);
+        DataManager.getInstance().initialize(context);
     }
 
     @Override
-    public void onNoticeSettingsChanged(boolean disabled) {
-        mSharePrefHelper.saveBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED, disabled);
+    public void onNoticeSettingsChanged(boolean enabled) {
+        DataManager.getInstance().onNoticeSettingsChanged(enabled);
     }
 
     @Override
-    public void onWeatherSettingsChanged(boolean disabled) {
-        mSharePrefHelper.saveBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED, disabled);
+    public void onWeatherSettingsChanged(boolean enabled) {
+        DataManager.getInstance().onWeatherSettingsChanged(enabled);
     }
 
     @Override
     public boolean isNoticeEnabled() {
-        return !mSharePrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED, false);
+        return DataManager.getInstance().isNoticeEnabled();
     }
 
     @Override
     public boolean isWeatherEnabled() {
-        return !mSharePrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED, false);
+        return DataManager.getInstance().isWeatherEnabled();
     }
 
 
@@ -71,8 +70,7 @@ public class MainModel implements IMainModel {
 
     @Override
     public boolean isActivated() {
-        // FIXME 修改为正确的判断是否激活的代码
-        return !StringUtils.isEmpty(mSharePrefHelper.getString(Config.SP_KEY_ACTIVATE_CODE, null));
+        return DataManager.getInstance().isActivated();
     }
 
     @Override

@@ -12,12 +12,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -317,23 +319,75 @@ public class MainActivity extends BaseActivity implements IMainView {
         ibtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isOpened = false;
-                Object tag = v.getTag();
-                if(null != tag && tag instanceof Boolean) {
-                    isOpened = (boolean) tag;
-                }
-                if(isOpened) {
+                if(View.VISIBLE == menuItemView.getVisibility()) {
                     menuItemView.startAnimation(menuItemHideAnimation);
                     ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
-                    v.setTag(false);
                 } else {
                     menuItemView.startAnimation(menuItemShowAnimation);
                     menuItemView.setVisibility(View.VISIBLE);
                     ibtnMenu.setImageResource(R.drawable.ic_main_menu_pressed);
-                    v.setTag(true);
                 }
                 mCbVoice.setChecked(false);
                 mCbSetting.setChecked(false);
+            }
+        });
+        final View menuBar = findViewById(R.id.ll_main_menu_bar);
+        final Rect contentFrame = new Rect();
+        final FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) menuBar.getLayoutParams();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(contentFrame);
+        final int contentWidth = contentFrame.right - contentFrame.left;
+        final int contentHeight = contentFrame.bottom - contentFrame.top;
+        Rect menuFrame = new Rect();
+        menuBar.getWindowVisibleDisplayFrame(menuFrame);
+        ibtnMenu.setOnTouchListener(new View.OnTouchListener() {
+            float startX;
+            float startY;
+            float lastX;
+            float lastY;
+            boolean start;
+            int width = 0;
+            int height = 0;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(View.VISIBLE == menuItemView.getVisibility()) {
+                    menuItemView.setVisibility(View.INVISIBLE);
+                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                    ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+                    return false;
+                }
+                ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = event.getRawX();
+                        startY = event.getRawY();
+                        lastX = event.getRawX();
+                        lastY = event.getRawY();
+                        width = ibtnMenu.getWidth();
+                        height = ibtnMenu.getHeight();
+                        start = true;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (start && Math.abs(event.getRawX() - startX) < 5 && Math.abs(event.getRawY() - startY) < 5) {
+                            start = false;
+                            return false;
+                        }
+                        lp.leftMargin = lp.leftMargin + (int)(event.getRawX() - lastX);
+                        lp.topMargin = lp.topMargin + (int)(event.getRawY() - lastY);
+                        lp.leftMargin = lp.leftMargin < 0 ? 0 : lp.leftMargin;
+//                        lp.topMargin = lp.topMargin < 0 ? 0 : lp.topMargin;
+//                        lp.leftMargin = (lp.leftMargin + width) > contentWidth ? (contentWidth - width) : lp.leftMargin;
+//                        lp.topMargin = (lp.topMargin + height) > contentHeight ? (lp.topMargin - height) : lp.topMargin;
+                        menuBar.setLayoutParams(lp);
+                        lastX = event.getRawX();
+                        lastY = event.getRawY();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                        return Math.abs(event.getRawX() - startX) > 5 || Math.abs(event.getRawY() - startY) > 5;
+                    default:
+                        break;
+                }
+                return false;
             }
         });
         findViewById(R.id.btn_main_menu_home).setOnClickListener(this);
@@ -385,7 +439,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                             Rect rect = new Rect();
                             mCbSetting.getGlobalVisibleRect(rect);
                             int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level2);
-                            mPwSettingMenu.showAsDropDown(mCbSetting, rect.right + padding, -(rect.bottom - rect.top));
+                            mPwSettingMenu.showAsDropDown(mCbSetting, rect.right - rect.left + padding, -(rect.bottom - rect.top));
                         }
                         break;
                     default:
@@ -402,6 +456,9 @@ public class MainActivity extends BaseActivity implements IMainView {
         mAdOne = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_one);
         mAdTwo = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_two);
         mAdThree = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_three);
+
+        mViewTopBar.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.GONE);
+        mViewBottomBar.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.GONE);
     }
 
     /**

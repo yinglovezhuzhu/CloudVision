@@ -6,7 +6,9 @@
             <solid android:color="@color/colorMainMenuBackground" />
             <stroke android:color="@color/colorMainMenuBorder" android:width="@dimen/divider_size_level1" />
             <corners android:topRightRadius="@dimen/shape_corner_radius_level2"
-                android:bottomRightRadius="@dimen/shape_corner_radius_level2"/>
+                android:bottomRightRadius="@dimen/shape_corner_radius_level2"
+                android:topLeftRadius="@dimen/shape_corner_radius_level2"
+                android:bottomLeftRadius="@dimen/shape_corner_radius_level2"/>
         </shape>
     </item>
 </layer-list>
