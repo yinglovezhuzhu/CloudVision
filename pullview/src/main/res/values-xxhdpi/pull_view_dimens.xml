@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C)2016. The Android Open Source Project.
+  ~
+  ~          yinglovezhuzhu@gmail.com
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<resources>
+
+    <!-- HeaderView -->
+    <dimen name="pullview_header_arrow_content_minSize">50dp</dimen>
+    <dimen name="pullview_header_progress_size">35dp</dimen>
+    <dimen name="pullview_header_title_marginLeft">5dp</dimen>
+    <dimen name="pullview_header_title_textSize">16sp</dimen>
+    <dimen name="pullview_header_label_textSize">12sp</dimen>
+    <dimen name="pullview_header_label_paddingTop">5dp</dimen>
+
+    <!-- FooterView -->
+    <dimen name="pullview_footer_arrow_content_minSize">55dp</dimen>
+    <dimen name="pullview_footer_progress_size">45dp</dimen>
+    <dimen name="pullview_footer_title_padding">10dp</dimen>
+    <dimen name="pullview_footer_title_textSize">16sp</dimen>
+
+    <!-- HeaderView2 -->
+    <dimen name="pullview_header2_top_content_minHeight">200dp</dimen>
+</resources>
