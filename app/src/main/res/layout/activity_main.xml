@@ -20,8 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:text="2016/09/15 21:37:22"/>
+                android:layout_centerVertical="true"/>
             <TextView
                 style="@style/MainTopBarTextTheme"
                 android:id="@+id/tv_main_top_bar_city"
@@ -104,6 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left|center_vertical">
+
         <ImageButton
             android:id="@+id/ibtn_main_menu"
             android:layout_width="match_parent"
@@ -113,6 +113,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/selector_ic_main_menu"
             android:contentDescription="@null"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

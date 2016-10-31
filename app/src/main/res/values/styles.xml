@@ -44,6 +44,7 @@
         <item name="android:textColor">@color/text_color_white_red</item>
         <item name="android:textSize">@dimen/textSize_level7</item>
         <item name="android:drawablePadding">@dimen/contentPadding_level2</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <!-- 主页标题栏文字样式 -->
