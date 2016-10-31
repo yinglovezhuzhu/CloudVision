@@ -2,19 +2,19 @@
 <resources>
 
     <!-- 字体大小 -->
-    <dimen name="textSize_level1">4sp</dimen>
-    <dimen name="textSize_level2">5sp</dimen>
-    <dimen name="textSize_level3">8sp</dimen>
-    <dimen name="textSize_level4">10sp</dimen>
-    <dimen name="textSize_level5">12sp</dimen>
-    <dimen name="textSize_level6">14sp</dimen>
-    <dimen name="textSize_level7">16sp</dimen>
-    <dimen name="textSize_level8">18sp</dimen>
-    <dimen name="textSize_level9">20sp</dimen>
-    <dimen name="textSize_level10">22sp</dimen>
-    <dimen name="textSize_level11">24sp</dimen>
-    <dimen name="textSize_level12">28sp</dimen>
-    <dimen name="textSize_level13">32sp</dimen>
+    <dimen name="textSize_level1">3sp</dimen>
+    <dimen name="textSize_level2">4sp</dimen>
+    <dimen name="textSize_level3">5sp</dimen>
+    <dimen name="textSize_level4">6sp</dimen>
+    <dimen name="textSize_level5">8sp</dimen>
+    <dimen name="textSize_level6">10sp</dimen>
+    <dimen name="textSize_level7">12sp</dimen>
+    <dimen name="textSize_level8">14sp</dimen>
+    <dimen name="textSize_level9">16sp</dimen>
+    <dimen name="textSize_level10">18sp</dimen>
+    <dimen name="textSize_level11">20sp</dimen>
+    <dimen name="textSize_level12">24sp</dimen>
+    <dimen name="textSize_level13">28sp</dimen>
 
     <!-- 边距 -->
     <dimen name="contentPadding_level1">3dp</dimen>
@@ -23,8 +23,8 @@
     <dimen name="contentPadding_level4">10dp</dimen>
     <dimen name="contentPadding_level5">12dp</dimen>
     <dimen name="contentPadding_level6">15dp</dimen>
-    <dimen name="contentPadding_level7">20dp</dimen>
-    <dimen name="contentPadding_level8">25dp</dimen>
+    <dimen name="contentPadding_level7">18dp</dimen>
+    <dimen name="contentPadding_level8">24dp</dimen>
 
     <!-- 分割线 -->
     <dimen name="divider_size_level1">0.5dp</dimen>
@@ -43,36 +43,36 @@
     <!-- 页面指示器 -->
     <dimen name="page_indicator_inner_size">8dp</dimen>
     <dimen name="page_indicator_inner_padding">5dp</dimen>
-    <dimen name="page_indicator_normal_size">10dp</dimen>
-    <dimen name="page_indicator_outer_size">15dp</dimen>
+    <dimen name="page_indicator_normal_size">8dp</dimen>
+    <dimen name="page_indicator_outer_size">12dp</dimen>
     <dimen name="page_indicator_outer_ring_inner_radius">5dp</dimen>
     <dimen name="page_indicator_outer_ring_size">1dp</dimen>
 
     <!-- 激活页面 -->
-    <dimen name="activate_widget_margin">20dp</dimen>
-    <dimen name="activate_btn_height">35dp</dimen>
+    <dimen name="activate_widget_margin">15dp</dimen>
+    <dimen name="activate_btn_height">25dp</dimen>
 
     <!-- 主页面 -->
     <dimen name="main_menu_btn_width">30dp</dimen>
     <dimen name="main_video_play_icon_size">40dp</dimen>
-    <dimen name="main_weather_icon_size">25dp</dimen>
+    <dimen name="main_weather_icon_size">20dp</dimen>
 
     <!-- 语音界面 -->
-    <dimen name="voice_android_icon_size">35dp</dimen>
+    <dimen name="voice_android_icon_size">30dp</dimen>
 
     <!-- 企业首页 -->
-    <dimen name="corporate_header_logo_size">80dp</dimen>
-    <dimen name="corporate_red_divider_width">50dp</dimen>
-    <dimen name="corporate_btn_more_product_height">40dp</dimen>
+    <dimen name="corporate_header_logo_size">60dp</dimen>
+    <dimen name="corporate_red_divider_width">45dp</dimen>
+    <dimen name="corporate_btn_more_product_height">35dp</dimen>
     <dimen name="corporate_btn_more_product_corner_radio">50dp</dimen>
 
     <!-- 产品界面 -->
-    <dimen name="product_bottom_btn_minSize">30dp</dimen>
-    <dimen name="product_pager_view_index_view_size">120dp</dimen>
-    <dimen name="product_list_view_img_size">120dp</dimen>
+    <dimen name="product_bottom_btn_minSize">25dp</dimen>
+    <dimen name="product_pager_view_index_view_size">100dp</dimen>
+    <dimen name="product_list_view_img_size">100dp</dimen>
 
     <!-- 产品详情 -->
     <dimen name="product_detail_img_page_margin">0dp</dimen>
-    <dimen name="product_detail_loading_progress_size">20dp</dimen>
+    <dimen name="product_detail_loading_progress_size">15dp</dimen>
 
 </resources>

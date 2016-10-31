@@ -242,15 +242,19 @@ public class DataManager {
 
     /**
      * 获取首页菜单按钮位置
+     * @param frame 显示区域
      * @return 首页菜单按钮位置
      */
-    public Point getMainMenuPosition() {
-        if(!mInitialized) {
-            return null;
-        }
+    public Point getMainMenuPosition(Rect frame) {
         final Point position = new Point(0, 0);
-        position.set(mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_X_PREFIX + getCorporateId(), 0),
-                mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_Y_PREFIX + getCorporateId(), 0));
+        if(mInitialized) {
+            position.set(mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_X_PREFIX
+                    + getCorporateId(), 0),
+                    mSharedPrefHelper.getInt(Config.SP_KEY_MAIN_MENU_POSITION_Y_PREFIX
+                            + getCorporateId(), (frame.bottom - frame.top) / 3));
+        } else {
+            position.set(0, (frame.bottom - frame.top) / 3);
+        }
         return position;
     }
 

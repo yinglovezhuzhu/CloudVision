@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -33,6 +34,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
 import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
+import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
@@ -332,13 +334,16 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
         final View menuBar = findViewById(R.id.ll_main_menu_bar);
-        final Rect contentFrame = new Rect();
         final FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) menuBar.getLayoutParams();
+        final Rect contentFrame = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(contentFrame);
         final int contentWidth = contentFrame.right - contentFrame.left;
         final int contentHeight = contentFrame.bottom - contentFrame.top;
-        Rect menuFrame = new Rect();
-        menuBar.getWindowVisibleDisplayFrame(menuFrame);
+        // 设置初始位置
+        final Point position = DataManager.getInstance().getMainMenuPosition(contentFrame);
+        lp.leftMargin = position.x;
+        lp.topMargin = position.y;
+        menuBar.setLayoutParams(lp);
         ibtnMenu.setOnTouchListener(new View.OnTouchListener() {
             float startX;
             float startY;
@@ -374,9 +379,10 @@ public class MainActivity extends BaseActivity implements IMainView {
                         lp.leftMargin = lp.leftMargin + (int)(event.getRawX() - lastX);
                         lp.topMargin = lp.topMargin + (int)(event.getRawY() - lastY);
                         lp.leftMargin = lp.leftMargin < 0 ? 0 : lp.leftMargin;
-//                        lp.topMargin = lp.topMargin < 0 ? 0 : lp.topMargin;
-//                        lp.leftMargin = (lp.leftMargin + width) > contentWidth ? (contentWidth - width) : lp.leftMargin;
-//                        lp.topMargin = (lp.topMargin + height) > contentHeight ? (lp.topMargin - height) : lp.topMargin;
+                        lp.topMargin = lp.topMargin < 0 ? 0 : lp.topMargin;
+                        lp.leftMargin = (lp.leftMargin + width) > contentWidth ? (contentWidth - width) : lp.leftMargin;
+                        lp.topMargin = (lp.topMargin + height) > contentHeight ? (lp.topMargin - height) : lp.topMargin;
+                        DataManager.getInstance().saveMainMenuPosition(new Point(lp.leftMargin, lp.topMargin));
                         menuBar.setLayoutParams(lp);
                         lastX = event.getRawX();
                         lastY = event.getRawY();
