@@ -10,4 +10,6 @@ import com.vrcvp.cloudvision.http.HttpAsyncTask;
 public interface IActivateModel extends IModel {
 
     void activate(String code, HttpAsyncTask.Callback<ActivateResp> callback);
+
+    void cancelActivate();
 }

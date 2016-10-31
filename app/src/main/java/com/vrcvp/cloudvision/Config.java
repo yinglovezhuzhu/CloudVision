@@ -24,6 +24,12 @@ public class Config {
     public static final String SP_KEY_ACTIVATE_CODE = "activate_code";
 
 
+    /** HTTP请求Host **/
+    public static final String HTTP_HOST = BuildConfig.HTTP_HOST;
+    /** 接口字--激活 **/
+    public static final String API_ACTIVATE = HTTP_HOST + "/activate/check";
+
+
 
     /** Intent传参Data的key **/
     public static final String EXTRA_DATA = "extra_data";

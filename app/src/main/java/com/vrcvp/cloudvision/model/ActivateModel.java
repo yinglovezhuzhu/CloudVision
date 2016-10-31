@@ -14,6 +14,7 @@ import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.SharedPrefHelper;
 import com.vrcvp.cloudvision.utils.StringUtils;
+import com.vrcvp.cloudvision.utils.Utils;
 
 /**
  * 激活页面Model
@@ -22,25 +23,24 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 public class ActivateModel implements IActivateModel {
 
     private Context mContext;
-//    private SharedPrefHelper mSharePrefHelper = null;
+    private HttpAsyncTask<ActivateResp> mActivateTask;
 
     public ActivateModel(Context context) {
         this.mContext = context;
-//        mSharePrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CONFIG);
     }
 
     @Override
     public void activate(String code, final HttpAsyncTask.Callback<ActivateResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "activate.json";
+        final String url = Config.API_ACTIVATE;
         final ActivateReq reqParam = new ActivateReq();
         reqParam.setEquipmentNo(DataManager.getInstance().getDeviceNo());
         reqParam.setActivateCode(code);
+        reqParam.setMac(Utils.getMac(mContext));
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<ActivateResp>(mContext).execute(url, reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
+            mActivateTask = new HttpAsyncTask<>();
+            mActivateTask.execute(url, reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
                 @Override
                 public void onPreExecute() {
                     if(null != callback) {
@@ -94,6 +94,13 @@ public class ActivateModel implements IActivateModel {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelActivate() {
+        if(null != mActivateTask) {
+            mActivateTask.cancel();
         }
     }
 }

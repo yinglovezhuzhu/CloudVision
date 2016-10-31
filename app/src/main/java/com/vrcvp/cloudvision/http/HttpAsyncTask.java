@@ -60,28 +60,31 @@ public class HttpAsyncTask<B extends BaseResp> {
 				BaseResp errorResult = null;
 				try {
                     errorResult = (BaseResp) resultClass.newInstance();
-//					HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
-//					String responseData = httpResult.getResponseData();
-//	                if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
-//	                	return (B) new Gson().fromJson(responseData, resultClass);
-//	                } else {
-//	                	errorResult.setHttpCode(httpResult.getResponseCode());
-//	                	errorResult.setMsg(httpResult.getResponseMessage());
-//	                }
-
-					// FIXME TEST ONLY
 					if(null == mContext) {
-						errorResult.setHttpCode(HttpStatus.SC_GONE);
-						errorResult.setMsg("构造方法不对");
-					} else {
-						String responseData = StringUtils.readStringFromAssetsFile(mContext, url);
-						if(StringUtils.isEmpty(responseData)) {
-							errorResult.setHttpCode(HttpStatus.SC_NOT_FOUND);
-							errorResult.setMsg("文件不存在");
-						} else {
+						HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
+						String responseData = httpResult.getResponseData();
+						if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
 							return (B) new Gson().fromJson(responseData, resultClass);
+						} else {
+							errorResult.setHttpCode(httpResult.getResponseCode());
+							errorResult.setMsg(httpResult.getResponseMessage());
+						}
+					} else {
+						// FIXME TEST ONLY
+						if(null == mContext) {
+							errorResult.setHttpCode(HttpStatus.SC_GONE);
+							errorResult.setMsg("构造方法不对");
+						} else {
+							String responseData = StringUtils.readStringFromAssetsFile(mContext, url);
+							if(StringUtils.isEmpty(responseData)) {
+								errorResult.setHttpCode(HttpStatus.SC_NOT_FOUND);
+								errorResult.setMsg("文件不存在");
+							} else {
+								return (B) new Gson().fromJson(responseData, resultClass);
+							}
 						}
 					}
+
 
 				} catch (IOException|IllegalAccessException|InstantiationException e) {
 					e.printStackTrace();
@@ -97,6 +100,12 @@ public class HttpAsyncTask<B extends BaseResp> {
 			@Override
 			protected void onPostExecute(B result) {
 				super.onPostExecute(result);
+                if(isCancelled()) {
+                    if(null != callback) {
+                        callback.onCanceled();
+                    }
+                    return;
+                }
 				if(null != callback) {
 					if(isCancelled()) {
 						callback.onCanceled();

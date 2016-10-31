@@ -5,9 +5,11 @@ package com.vrcvp.cloudvision.bean.resp;
  * 
  * Create by yinglovezhuzhu@gmail.com 2016/08/20
  */
-public class BaseResp {
+public class BaseResp<T> {
 	private int httpCode;
 	private String msg;
+	private long timestamp;
+    private T data;
 
 	public BaseResp() {
 
@@ -34,10 +36,22 @@ public class BaseResp {
 		return msg;
 	}
 
-
-	@Override
-	public String toString() {
-		return "BaseResp [httpCode=" + httpCode + ", msg=" + msg + "]";
+	public long getTimestamp() {
+		return timestamp;
 	}
+
+    public T getData() {
+        return data;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseResp{" +
+                "httpCode=" + httpCode +
+                ", msg='" + msg + '\'' +
+                ", timestamp=" + timestamp +
+                ", data=" + data +
+                '}';
+    }
 
 }

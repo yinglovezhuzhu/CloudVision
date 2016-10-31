@@ -68,4 +68,8 @@ public class Utils {
         }
         return bundle.getString(key, "");
     }
+
+    public static String getMac(Context context) {
+        return "AA:BB:CC:DD:EE";
+    }
 }

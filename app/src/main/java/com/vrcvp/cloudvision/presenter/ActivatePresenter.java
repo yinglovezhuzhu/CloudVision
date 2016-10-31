@@ -46,4 +46,8 @@ public class ActivatePresenter {
             }
         });
     }
+
+    public void cancel() {
+        mModel.cancelActivate();
+    }
 }
