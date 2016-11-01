@@ -98,4 +98,10 @@ public class CorporatePresenter {
             }
         });
     }
+
+    public void onDestory() {
+        mModel.cancelQueryCorporateInfo();
+        mModel.cancelQueryRecommendedProduct();
+        mModel.cancelQueryRecommendedVideo();
+    }
 }

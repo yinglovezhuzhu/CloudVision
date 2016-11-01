@@ -24,6 +24,7 @@ import com.vrcvp.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
 import com.vrcvp.cloudvision.ui.adapter.RecommendedVideoAdapter;
 import com.vrcvp.cloudvision.ui.widget.NoScrollGridView;
 import com.vrcvp.cloudvision.utils.DataManager;
+import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.ICorporateView;
 
 import java.util.List;
@@ -55,6 +56,12 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         mCorporatePresenter.queryCorporateInfo();
         mCorporatePresenter.queryRecommendedProduct();
         mCorporatePresenter.queryRecommendVideo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mCorporatePresenter.onDestory();
+        super.onDestroy();
     }
 
     @Override
@@ -106,12 +113,16 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    final CorporateBean corporate = result.getEnterprise();
+                    final CorporateBean corporate = result.getData();
                     if(null == corporate) {
                         // TODO 错误
                     } else {
                         DataManager.getInstance().updateCorporateInfo(corporate);
                         mTvCorporateName.setText(corporate.getName());
+                        final String logo = corporate.getLogo();
+                        if(!StringUtils.isEmpty(logo)) {
+                            loadImage(logo, mIvCorporateLogo, R.drawable.ic_launcher, R.drawable.ic_launcher);
+                        }
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:

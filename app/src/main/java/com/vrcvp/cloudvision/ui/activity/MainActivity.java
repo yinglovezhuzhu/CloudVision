@@ -30,7 +30,7 @@ import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
-import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
+import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
 import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
@@ -133,10 +133,10 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if(null != mMainPresenter) {
             mMainPresenter.onDestroy();
         }
+        super.onDestroy();
     }
 
     @Override
@@ -181,10 +181,14 @@ public class MainActivity extends BaseActivity implements IMainView {
                 startActivity(new Intent(this, CorporateActivity.class));
                 break;
             case R.id.btn_main_menu_setting_logout:
-                startActivity(new Intent(this, ActivateActivity.class));
+//                mMainPresenter.logout();
+//                startActivity(new Intent(this, ActivateActivity.class));
                 finish();
                 break;
             case R.id.btn_main_menu_setting_switch:
+                mMainPresenter.logout();
+                startActivity(new Intent(this, ActivateActivity.class));
+                finish();
                 break;
             default:
                 break;
@@ -255,13 +259,13 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void onQueryAdvertiseResult(QueryHomeDataResp result) {
+    public void onQueryAdvertiseResult(QueryAdvertiseResp result) {
         if(null == result) {
 
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<AdvertiseBean> advertises = result.getAdvertise();
+                    List<AdvertiseBean> advertises = result.getData();
                     if(null == advertises || advertises.isEmpty()) {
                         // TODO 错误
                     } else {

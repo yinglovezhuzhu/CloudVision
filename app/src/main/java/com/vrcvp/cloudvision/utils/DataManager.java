@@ -29,8 +29,7 @@ public class DataManager {
     private boolean mInitialized = false;
     private SharedPrefHelper mSharedPrefHelper;
 
-    private String mDeviceNo;
-    private ActivateResp mActivateData;
+    private ActivateResp.ActivateRespData mActivateData;
     private CorporateBean mCorporateInfo;
     private String mToken;
 
@@ -58,41 +57,22 @@ public class DataManager {
         mSharedPrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CACHE);
         mInitialized = true;
 
-        getDeviceNo();
-
         getActivateData();
-    }
 
-    /**
-     * 获取设备编号
-     * @return 设备编号
-     */
-    public String getDeviceNo() {
-        if(!mInitialized) {
-            return null;
-        }
-        if(StringUtils.isEmpty(mDeviceNo)) {
-            mDeviceNo = mSharedPrefHelper.getString(SP_KEY_DEVICE_NO, "");
-            if(StringUtils.isEmpty(mDeviceNo)) {
-                // FIXME 获取设备编号
-                mDeviceNo = "ABCDEFG";
-                mSharedPrefHelper.saveString(SP_KEY_DEVICE_NO, mDeviceNo);
-            }
-        }
-        return mDeviceNo;
+        getToken();
     }
 
     /**
      * 获取激活数据
      * @return 激活数据
      */
-    public ActivateResp getActivateData() {
+    public ActivateResp.ActivateRespData getActivateData() {
         if(!mInitialized) {
             return null;
         }
         if(null == mActivateData) {
             try {
-                mActivateData = mGson.fromJson(mSharedPrefHelper.getString(SP_KEY_ACTIVATE_DATA, ""), ActivateResp.class);
+                mActivateData = mGson.fromJson(mSharedPrefHelper.getString(SP_KEY_ACTIVATE_DATA, ""), ActivateResp.ActivateRespData.class);
             } catch (Exception e) {
                 // do nothing
             }
@@ -102,15 +82,19 @@ public class DataManager {
 
     /**
      * 更新激活数据
-     * @param data 激活数据
+     * @param respData 激活数据
      * @return 是否更新成功
      */
-    public boolean updateActivateData(ActivateResp data) {
-        if(!mInitialized || null == data) {
+    public boolean updateActivateData(ActivateResp respData) {
+        if(!mInitialized || null == respData) {
             return false;
         }
-        updateToken(data.getToken());
+        ActivateResp.ActivateRespData data = respData.getData();
+        if(null == data) {
+            return false;
+        }
         mActivateData = data;
+        updateToken(data.getToken());
         return mSharedPrefHelper.saveString(SP_KEY_ACTIVATE_DATA, mGson.toJson(data));
     }
 
@@ -225,8 +209,7 @@ public class DataManager {
      * @return true 已经激活， false 未激活
      */
     public boolean isActivated() {
-        // FIXME 修改为正确的判断是否激活的代码
-        return mSharedPrefHelper.getBoolean(Config.SP_KEY_ACTIVATE_CODE, false);
+        return null != mActivateData && !StringUtils.isEmpty(getToken());
     }
 
 

@@ -39,7 +39,7 @@ public class VideoModel implements IVideoModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {

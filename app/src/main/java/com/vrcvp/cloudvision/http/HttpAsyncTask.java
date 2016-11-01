@@ -1,7 +1,7 @@
 package com.vrcvp.cloudvision.http;
 
-import android.content.Context;
 import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.vrcvp.cloudvision.bean.resp.BaseResp;
 import com.vrcvp.cloudvision.utils.BeanRefUtils;
@@ -16,18 +16,10 @@ public class HttpAsyncTask<B extends BaseResp> {
 	
 	private AsyncTask<Object, Integer, B> mTask;
 
-	// FIXME TEST ONLY
-	private Context mContext;
-
 	public HttpAsyncTask() {
 
 	}
 
-	// FIXME TEST ONLY
-	public HttpAsyncTask(Context context) {
-		this.mContext = context;
-	}
-	
 	/**
 	 * 执行一个异步网络请求
 	 * @param url 请求URL地址
@@ -60,32 +52,14 @@ public class HttpAsyncTask<B extends BaseResp> {
 				BaseResp errorResult = null;
 				try {
                     errorResult = (BaseResp) resultClass.newInstance();
-					if(null == mContext) {
-						HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
-						String responseData = httpResult.getResponseData();
-						if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
-							return (B) new Gson().fromJson(responseData, resultClass);
-						} else {
-							errorResult.setHttpCode(httpResult.getResponseCode());
-							errorResult.setMsg(httpResult.getResponseMessage());
-						}
+					HttpResult<String> httpResult = HttpRequest.httpPostRequest(url, paramsMap);
+					String responseData = httpResult.getResponseData();
+					if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
+						return (B) new Gson().fromJson(responseData, resultClass);
 					} else {
-						// FIXME TEST ONLY
-						if(null == mContext) {
-							errorResult.setHttpCode(HttpStatus.SC_GONE);
-							errorResult.setMsg("构造方法不对");
-						} else {
-							String responseData = StringUtils.readStringFromAssetsFile(mContext, url);
-							if(StringUtils.isEmpty(responseData)) {
-								errorResult.setHttpCode(HttpStatus.SC_NOT_FOUND);
-								errorResult.setMsg("文件不存在");
-							} else {
-								return (B) new Gson().fromJson(responseData, resultClass);
-							}
-						}
+						errorResult.setHttpCode(httpResult.getResponseCode());
+						errorResult.setMsg(httpResult.getResponseMessage());
 					}
-
-
 				} catch (IOException|IllegalAccessException|InstantiationException e) {
 					e.printStackTrace();
                     if(null != errorResult) {
@@ -130,23 +104,23 @@ public class HttpAsyncTask<B extends BaseResp> {
 	 *
 	 * @param <T> 结果数据实体类类型
 	 */
-	public static interface Callback<T>{
+	public interface Callback<T>{
 		
 		/**
 		 * 异步执行前
 		 */
-		public void onPreExecute();
+		void onPreExecute();
 		
 		/**
 		 * 取消异步任务
 		 */
-		public void onCanceled();
+		void onCanceled();
 		
 		/**
 		 * 异步任务返回结果
 		 * @param result 结果数据
 		 */
-		public void onResult(T result);
+		void onResult(T result);
 		
 	}
 

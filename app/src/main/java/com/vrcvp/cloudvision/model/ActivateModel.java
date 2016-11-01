@@ -33,8 +33,8 @@ public class ActivateModel implements IActivateModel {
     public void activate(String code, final HttpAsyncTask.Callback<ActivateResp> callback) {
         final String url = Config.API_ACTIVATE;
         final ActivateReq reqParam = new ActivateReq();
-        reqParam.setEquipmentNo(DataManager.getInstance().getDeviceNo());
         reqParam.setActivateCode(code);
+        reqParam.setEquipmentNo(Utils.getDeviceId(mContext));
         reqParam.setMac(Utils.getMac(mContext));
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);

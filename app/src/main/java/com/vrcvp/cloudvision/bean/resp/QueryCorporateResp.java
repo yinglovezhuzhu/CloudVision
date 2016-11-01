@@ -7,9 +7,7 @@ import com.vrcvp.cloudvision.bean.CorporateBean;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryCorporateResp extends BaseResp{
-
-    private CorporateBean enterprise;
+public class QueryCorporateResp extends BaseResp<CorporateBean> {
 
     public QueryCorporateResp() {
     }
@@ -18,14 +16,8 @@ public class QueryCorporateResp extends BaseResp{
         super(httpCode, msg);
     }
 
-    public CorporateBean getEnterprise() {
-        return enterprise;
-    }
-
     @Override
     public String toString() {
-        return "QueryCorporateResp{" +
-                "enterprise=" + enterprise +
-                "} " + super.toString();
+        return "QueryCorporateResp{} " + super.toString();
     }
 }

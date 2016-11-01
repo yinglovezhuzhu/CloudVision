@@ -18,14 +18,29 @@ public interface ICorporateModel {
     void queryCorporateInfo(HttpAsyncTask.Callback<QueryCorporateResp> callback);
 
     /**
+     * 取消查询企业信息异步线程任务
+     */
+    void cancelQueryCorporateInfo();
+
+    /**
      * 查询推荐商品
      * @param callback 回调
      */
     void queryRecommendedProduct(HttpAsyncTask.Callback<QueryProductResp> callback);
 
     /**
+     * 取消查询推荐产品异步线程任务
+     */
+    void cancelQueryRecommendedProduct();
+
+    /**
      * 查询推荐视频
      * @param callback 回调
      */
     void queryRecommendedVideo(HttpAsyncTask.Callback<QueryVideoResp> callback);
+
+    /**
+     * 取消查询推荐视频异步线程任务
+     */
+    void cancelQueryRecommendedVideo();
 }

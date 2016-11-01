@@ -9,11 +9,12 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.vrcvp.cloudvision.bean.NoticeBean;
-import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
+import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.model.IMainModel;
 import com.vrcvp.cloudvision.model.MainModel;
+import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
 
@@ -49,6 +50,22 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     }
 
     /**
+     * Activity回到前台
+     */
+    public void onCreate() {
+        mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
+        mMainView.onNoticeUpdate(mMainModel.nextNotice());
+
+        updateTime();
+
+        initLocation();
+
+        if(!mLocationClient.isStarted()) {
+            mLocationClient.start();
+        }
+    }
+
+    /**
      * Activity放到后台
      */
     public void onDestroy() {
@@ -64,22 +81,9 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         if(mLocationClient.isStarted()) {
             mLocationClient.stop();
         }
-    }
 
-    /**
-     * Activity回到前台
-     */
-    public void onCreate() {
-        mMainView.onTimeUpdate(StringUtils.formatTimeMillis(System.currentTimeMillis()));
-        mMainView.onNoticeUpdate(mMainModel.nextNotice());
-
-        updateTime();
-
-        initLocation();
-
-        if(!mLocationClient.isStarted()) {
-            mLocationClient.start();
-        }
+        cancelQueryAdvertise();
+        cancelQueryNotice();
     }
 
     /**
@@ -151,8 +155,15 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      * 激活成功
      */
     public void onActivateSuccess() {
-        queryHomeAdvertise();
+        queryAdvertise();
         queryNotice();
+    }
+
+    /**
+     * 登出
+     */
+    public void logout() {
+        DataManager.getInstance().logout();
     }
 
     @Override
@@ -189,8 +200,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     /**
      * 查询首页广告
      */
-    private void queryHomeAdvertise() {
-        mMainModel.queryHomeData(new HttpAsyncTask.Callback<QueryHomeDataResp>() {
+    private void queryAdvertise() {
+        mMainModel.queryHomeData(new HttpAsyncTask.Callback<QueryAdvertiseResp>() {
             @Override
             public void onPreExecute() {
                 mMainView.onPreExecute(null);
@@ -202,10 +213,17 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             }
 
             @Override
-            public void onResult(QueryHomeDataResp result) {
+            public void onResult(QueryAdvertiseResp result) {
                 mMainView.onQueryAdvertiseResult(result);
             }
         });
+    }
+
+    /**
+     * 取消查询广告异步任务
+     */
+    private void cancelQueryAdvertise() {
+        mMainModel.cancelQueryAdvertise();
     }
 
     /**
@@ -230,6 +248,13 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
                 }
             }
         });
+    }
+
+    /**
+     * 取消查询公告异步任务
+     */
+    private void cancelQueryNotice() {
+        mMainModel.cancelQueryNotice();
     }
 
     /**

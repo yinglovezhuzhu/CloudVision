@@ -144,10 +144,21 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * @param imageView 显示图片的ImageView控件
      */
 	protected void loadImage(String path, ImageView imageView) {
-		Picasso.with(this)
-				.load(path)
-				.placeholder(R.drawable.ic_launcher)
-				.error(R.drawable.ic_launcher)
-				.into(imageView);
+		loadImage(path, imageView, R.drawable.ic_launcher, R.drawable.ic_launcher);
 	}
+
+    /**
+     * 加载图片
+     * @param path 图片地址
+     * @param imageView 显示图片的ImageView
+     * @param placeholder 加载占位图
+     * @param error 加载错误占位图
+     */
+	protected void loadImage(String path, ImageView imageView, int placeholder, int error) {
+        Picasso.with(this)
+                .load(path)
+                .placeholder(placeholder)
+                .error(error)
+                .into(imageView);
+    }
 }

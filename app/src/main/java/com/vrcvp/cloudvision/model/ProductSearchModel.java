@@ -38,7 +38,7 @@ public class ProductSearchModel implements IProductSearchModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {

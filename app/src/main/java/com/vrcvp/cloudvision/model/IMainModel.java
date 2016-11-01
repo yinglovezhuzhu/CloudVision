@@ -1,7 +1,7 @@
 package com.vrcvp.cloudvision.model;
 
 import com.vrcvp.cloudvision.bean.NoticeBean;
-import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
+import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 
@@ -50,11 +50,21 @@ public interface IMainModel extends IModel {
      * 查询首页数据
      * @param callback 回调
      */
-    void queryHomeData(final HttpAsyncTask.Callback<QueryHomeDataResp> callback);
+    void queryHomeData(final HttpAsyncTask.Callback<QueryAdvertiseResp> callback);
+
+    /**
+     * 取消查询首页广告数据的异步线程任务
+     */
+    void cancelQueryAdvertise();
 
     /**
      * 查询公告
      * @param callback 回调
      */
     void queryNotice(final HttpAsyncTask.Callback<QueryNoticeResp> callback);
+
+    /**
+     * 取消查询公告数据的异步线程任务
+     */
+    void cancelQueryNotice();
 }

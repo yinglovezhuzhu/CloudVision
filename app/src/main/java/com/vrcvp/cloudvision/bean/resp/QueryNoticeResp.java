@@ -10,9 +10,8 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/25.
  */
 
-public class QueryNoticeResp extends BaseResp {
+public class QueryNoticeResp extends BaseResp<List<NoticeBean>> {
 
-    private List<NoticeBean> notices = new ArrayList<>();
 
     public QueryNoticeResp() {
     }
@@ -21,14 +20,8 @@ public class QueryNoticeResp extends BaseResp {
         super(httpCode, msg);
     }
 
-    public List<NoticeBean> getNotices() {
-        return notices;
-    }
-
     @Override
     public String toString() {
-        return "QueryNoticeResp{" +
-                "notices=" + notices +
-                "} " + super.toString();
+        return "QueryNoticeResp{} " + super.toString();
     }
 }

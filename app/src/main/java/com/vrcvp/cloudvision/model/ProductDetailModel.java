@@ -42,7 +42,7 @@ public class ProductDetailModel implements IProductDetailModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductDetailResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QueryProductDetailResp>().execute(url, reqParam,
                     QueryProductDetailResp.class, new HttpAsyncTask.Callback<QueryProductDetailResp>() {
                         @Override
                         public void onPreExecute() {
@@ -112,7 +112,7 @@ public class ProductDetailModel implements IProductDetailModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QuerySkuPriceResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QuerySkuPriceResp>().execute(url, reqParam,
                     QuerySkuPriceResp.class, new HttpAsyncTask.Callback<QuerySkuPriceResp>() {
                         @Override
                         public void onPreExecute() {

@@ -2,7 +2,7 @@ package com.vrcvp.cloudvision.view;
 
 import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.bean.NoticeBean;
-import com.vrcvp.cloudvision.bean.resp.QueryHomeDataResp;
+import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 
 /**
  * Main页面视图接口
@@ -58,7 +58,7 @@ public interface IMainView {
      * 首页广告查询结果
      * @param result 广告数据
      */
-    void onQueryAdvertiseResult(QueryHomeDataResp result);
+    void onQueryAdvertiseResult(QueryAdvertiseResp result);
 
 //    /**
 //     * 公告查询结果

@@ -5,13 +5,13 @@ package com.vrcvp.cloudvision.bean.req;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryHomeDataReq extends BaseReq {
+public class QueryAdvertiseReq extends BaseReq {
     private String enterpriseId;
 
-    public QueryHomeDataReq() {
+    public QueryAdvertiseReq() {
     }
 
-    public QueryHomeDataReq(String token) {
+    public QueryAdvertiseReq(String token) {
         super(token);
     }
 
@@ -21,7 +21,7 @@ public class QueryHomeDataReq extends BaseReq {
 
     @Override
     public String toString() {
-        return "QueryHomeDataReq{" +
+        return "QueryAdvertiseReq{" +
                 "enterpriseId='" + enterpriseId + '\'' +
                 "} " + super.toString();
     }

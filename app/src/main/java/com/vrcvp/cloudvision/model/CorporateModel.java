@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.vrcvp.cloudvision.Config;
+import com.vrcvp.cloudvision.bean.CorporateBean;
 import com.vrcvp.cloudvision.bean.req.QueryCorporateReq;
 import com.vrcvp.cloudvision.bean.req.QueryProductReq;
 import com.vrcvp.cloudvision.bean.req.QueryVideoReq;
@@ -25,6 +27,8 @@ public class CorporateModel implements ICorporateModel {
 
     private Context mContext;
 
+    private HttpAsyncTask<QueryCorporateResp> mQueryCorporateTask;
+
     public CorporateModel(Context context) {
         this.mContext = context;
     }
@@ -32,22 +36,22 @@ public class CorporateModel implements ICorporateModel {
 
     @Override
     public void queryCorporateInfo(final HttpAsyncTask.Callback<QueryCorporateResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "corporate.json";
+        final String url = Config.API_CORPORATE_INFO;
         final QueryCorporateReq reqParam = new QueryCorporateReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryCorporateResp>(mContext).execute(url, reqParam,
+            mQueryCorporateTask = new HttpAsyncTask<>();
+            mQueryCorporateTask.execute(url, reqParam,
                     QueryCorporateResp.class, new HttpAsyncTask.Callback<QueryCorporateResp>() {
                         @Override
                         public void onPreExecute() {
                             if(null != callback) {
                                 callback.onPreExecute();
                             }
+                            mQueryCorporateTask = null;
                         }
 
                         @Override
@@ -55,6 +59,7 @@ public class CorporateModel implements ICorporateModel {
                             if(null != callback) {
                                 callback.onCanceled();
                             }
+                            mQueryCorporateTask = null;
                         }
 
                         @Override
@@ -67,6 +72,7 @@ public class CorporateModel implements ICorporateModel {
                             if(null != callback) {
                                 callback.onResult(result);
                             }
+                            mQueryCorporateTask = null;
                         }
                     });
         } else {
@@ -99,6 +105,13 @@ public class CorporateModel implements ICorporateModel {
     }
 
     @Override
+    public void cancelQueryCorporateInfo() {
+        if(null != mQueryCorporateTask) {
+            mQueryCorporateTask.cancel();
+        }
+    }
+
+    @Override
     public void queryRecommendedProduct(final HttpAsyncTask.Callback<QueryProductResp> callback) {
         // FIXME 请求地址修改
         final String url = "product.json";
@@ -109,7 +122,7 @@ public class CorporateModel implements ICorporateModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {
@@ -167,6 +180,11 @@ public class CorporateModel implements ICorporateModel {
     }
 
     @Override
+    public void cancelQueryRecommendedProduct() {
+
+    }
+
+    @Override
     public void queryRecommendedVideo(final HttpAsyncTask.Callback<QueryVideoResp> callback) {
         // FIXME 请求地址修改
         final String url = "video.json";
@@ -177,7 +195,7 @@ public class CorporateModel implements ICorporateModel {
         // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>(mContext).execute(url, reqParam,
+            new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {
@@ -232,5 +250,10 @@ public class CorporateModel implements ICorporateModel {
                 }
             }
         }
+    }
+
+    @Override
+    public void cancelQueryRecommendedVideo() {
+
     }
 }
