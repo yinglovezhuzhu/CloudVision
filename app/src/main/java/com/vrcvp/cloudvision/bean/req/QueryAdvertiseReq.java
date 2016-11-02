@@ -5,7 +5,7 @@ package com.vrcvp.cloudvision.bean.req;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryAdvertiseReq extends BaseReq {
+public class QueryAdvertiseReq extends PageReq {
     private String enterpriseId;
 
     public QueryAdvertiseReq() {

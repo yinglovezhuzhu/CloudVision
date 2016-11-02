@@ -111,7 +111,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    final ProductBean product = result.getProduct();
+                    final ProductBean product = result.getData();
                     if(null == product) {
                         // TODO 错误
                     } else {

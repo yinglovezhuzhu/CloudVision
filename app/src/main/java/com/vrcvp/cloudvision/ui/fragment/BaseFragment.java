@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 /**
  * Fragment基类，包含一些公共方法
@@ -60,6 +61,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param imageView 显示图片的ImageView
      */
     protected void loadImage(String path, int placeholder, int error, ImageView imageView) {
+        if(StringUtils.isEmpty(path) || null == imageView) {
+            return;
+        }
         Picasso.with(getActivity())
                 .load(path)
                 .placeholder(placeholder)
@@ -73,6 +77,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param imageView 显示图片的ImageView控件
      */
     protected void loadImage(String path, ImageView imageView) {
+        if(StringUtils.isEmpty(path) || null == imageView) {
+            return;
+        }
         loadImage(path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
     }
 }

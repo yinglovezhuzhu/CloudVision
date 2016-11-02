@@ -81,6 +81,7 @@ public class MainModel implements IMainModel {
         final QueryAdvertiseReq reqParam = new QueryAdvertiseReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
+        reqParam.setPageNo(1);
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
