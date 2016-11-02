@@ -10,9 +10,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryVideoResp extends BaseResp{
-
-    private List<VideoBean> video = new ArrayList<>();
+public class QueryVideoResp extends BaseResp<List<VideoBean>> {
 
     public QueryVideoResp() {
     }
@@ -21,14 +19,8 @@ public class QueryVideoResp extends BaseResp{
         super(httpCode, msg);
     }
 
-    public List<VideoBean> getVideo() {
-        return video;
-    }
-
     @Override
     public String toString() {
-        return "QueryVideoResp{" +
-                "video=" + video +
-                "} " + super.toString();
+        return "QueryVideoResp{} " + super.toString();
     }
 }

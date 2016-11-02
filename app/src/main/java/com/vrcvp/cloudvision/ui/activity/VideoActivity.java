@@ -99,7 +99,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<VideoBean> video = result.getVideo();
+                    List<VideoBean> video = result.getData();
                     if(null == video || video.isEmpty()) {
                         // TODO 错误
                     } else {

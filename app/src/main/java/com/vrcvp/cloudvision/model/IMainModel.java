@@ -67,4 +67,9 @@ public interface IMainModel extends IModel {
      * 取消查询公告数据的异步线程任务
      */
     void cancelQueryNotice();
+
+    /**
+     * 登出操作
+     */
+    void logout();
 }

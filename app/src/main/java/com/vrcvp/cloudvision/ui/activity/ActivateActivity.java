@@ -70,14 +70,13 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
 
     @Override
     public void onActivateResult(ActivateResp result) {
-        if(HttpStatus.SC_OK == result.getHttpCode()) {
-            if(null != result.getData()) {
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
                 finish(RESULT_OK, null);
-            } else {
-                showShortToast("激活失败");
-            }
-        } else {
-            showShortToast(result.getMsg());
+                break;
+            default:
+                showShortToast(result.getMsg());
+                break;
         }
     }
 

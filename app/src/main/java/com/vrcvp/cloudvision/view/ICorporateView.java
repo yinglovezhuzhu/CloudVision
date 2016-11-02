@@ -40,5 +40,5 @@ public interface ICorporateView {
      * 查询推荐视频结果
      * @param result 推荐视频列表数据
      */
-    void onQueryRecommendedVideoReseult(QueryVideoResp result);
+    void onQueryRecommendedVideoResult(QueryVideoResp result);
 }

@@ -81,7 +81,7 @@ public class ProductPresenter {
                     mHasMoreProduct = false;
                     mProductPage--;
                 } else {
-                    mHasMoreProduct = null != result.getProduct() && !result.getProduct().isEmpty();
+                    mHasMoreProduct = null != result.getData() && !result.getData().isEmpty();
                     mProductPage = HttpStatus.SC_OK == result.getHttpCode() ? mProductPage : mProductPage--;
                 }
                 if(!mHasMoreProduct) {

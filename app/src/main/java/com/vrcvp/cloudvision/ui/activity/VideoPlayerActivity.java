@@ -27,8 +27,10 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.presenter.VideoPlayerPresenter;
@@ -52,6 +54,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         mVideoView = (VideoView) findViewById(R.id.video_player_surface_view);
         mProgressView = findViewById(R.id.video_player_progress_indicator);
         findViewById(R.id.ibtn_video_player_back).setOnClickListener(this);
+        final TextView tvTitle = (TextView) findViewById(R.id.tv_video_player_title);
 
 //        mVideoView.setMediaController(new MediaController(this));
         // make the video view handle keys for seeking and pausing
@@ -85,6 +88,16 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         WindowManager.LayoutParams winParams = window.getAttributes();
         winParams.buttonBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
         window.setAttributes(winParams);
+
+        if(intent.hasExtra(Config.EXTRA_TITLE_STR)) {
+            tvTitle.setText(intent.getStringExtra(Config.EXTRA_TITLE_STR));
+        } else if(intent.hasExtra(Config.EXTRA_TITLE_RES)) {
+            int resId = intent.getIntExtra(Config.EXTRA_TITLE_STR, 0);
+            if(0 != resId) {
+                tvTitle.setText(resId);
+            }
+        }
+
     }
 
     @Override

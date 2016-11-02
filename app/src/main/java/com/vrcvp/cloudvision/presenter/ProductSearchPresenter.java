@@ -80,7 +80,7 @@ public class ProductSearchPresenter {
                     mHasMore = false;
                     mPage--;
                 } else {
-                    mHasMore = null != result.getProduct() && !result.getProduct().isEmpty();
+                    mHasMore = null != result.getData() && !result.getData().isEmpty();
                     mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
                 }
                 if(!mHasMore) {

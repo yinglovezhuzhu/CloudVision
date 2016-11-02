@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.AttrValueBean;
 import com.vrcvp.cloudvision.bean.req.QueryProductDetailReq;
 import com.vrcvp.cloudvision.bean.req.QuerySkuPriceReq;
@@ -33,13 +34,11 @@ public class ProductDetailModel implements IProductDetailModel {
 
     @Override
     public void queryProductDetail(String productId, final HttpAsyncTask.Callback<QueryProductDetailResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "product_detail.json";
+        final String url = Config.API_PRODUCT_DETAIL;
         final QueryProductDetailReq reqParam = new QueryProductDetailReq();
         reqParam.setProductId(productId);
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QueryProductDetailResp>().execute(url, reqParam,
@@ -102,14 +101,12 @@ public class ProductDetailModel implements IProductDetailModel {
     @Override
     public void querySkuPrice(String productId, List<AttrValueBean> attrValueList,
                               final HttpAsyncTask.Callback<QuerySkuPriceResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "sku_price.json";
+        final String url = Config.API_PRODUCT_SKU_PRICE;
         final QuerySkuPriceReq reqParam = new QuerySkuPriceReq();
         reqParam.setProductId(productId);
         reqParam.addAttrValues(attrValueList);
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QuerySkuPriceResp>().execute(url, reqParam,

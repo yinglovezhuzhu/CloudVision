@@ -142,7 +142,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<ProductBean> product = result.getProduct();
+                    List<ProductBean> product = result.getData();
                     if(null == product || product.isEmpty()) {
                         // TODO 错误
                     } else {
@@ -160,13 +160,13 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     }
 
     @Override
-    public void onQueryRecommendedVideoReseult(QueryVideoResp result) {
+    public void onQueryRecommendedVideoResult(QueryVideoResp result) {
         if(null == result) {
 
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<VideoBean> video = result.getVideo();
+                    List<VideoBean> video = result.getData();
                     if(null == video || video.isEmpty()) {
                         // TODO 错误
                     } else {

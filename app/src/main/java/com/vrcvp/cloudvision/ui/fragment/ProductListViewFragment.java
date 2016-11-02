@@ -38,7 +38,7 @@ public class ProductListViewFragment extends BaseFragment {
             if(isRefresh) {
                 mAdapter.clear(true);
             }
-            mAdapter.addAll(result.getProduct(), true);
+            mAdapter.addAll(result.getData(), true);
             if(null != mLvProduct) {
                 mLvProduct.refreshCompleted();
                 // 是否可以加载更多根据加载分页结果决定

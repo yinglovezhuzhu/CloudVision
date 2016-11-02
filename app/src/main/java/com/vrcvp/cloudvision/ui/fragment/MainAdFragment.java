@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
+import com.vrcvp.cloudvision.ui.activity.VideoActivity;
 import com.vrcvp.cloudvision.ui.activity.VideoPlayerActivity;
 import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
 
@@ -35,6 +37,10 @@ public class MainAdFragment extends BaseFragment {
         return contentView;
     }
 
+    /**
+     * 设置数据
+     * @param advertise
+     */
     public void setData(AdvertiseBean advertise) {
         if(null == advertise) {
             return;
@@ -67,34 +73,47 @@ public class MainAdFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 清除数据
+     */
+    public void clearData() {
+        mData = null;
+        mIvImage.setImageBitmap(null);
+        mIvPlay.setVisibility(View.GONE);
+    }
+
     private void initView(View contentView) {
         mIvImage = (ImageView) contentView.findViewById(R.id.iv_fragment_main_ad_img);
         mIvPlay = (ImageView) contentView.findViewById(R.id.iv_fragment_main_ad_video_play);
         contentView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(null == mData) {
-                    return;
-                }
-                switch (mData.getType()) {
-                    case AdvertiseBean.TYPE_IMAGE:
-                        openWebView(mData.getOutLink());
-                        break;
-                    case AdvertiseBean.TYPE_VIDEO:
-                        playVideo(mData.getOutLink());
-                        break;
-                    case AdvertiseBean.TYPE_PRODUCT:
-                        openWebView(mData.getOutLink());
-                        break;
-                    case AdvertiseBean.TYPE_CORPORATE:
-                        openWebView(mData.getOutLink());
-                        break;
-                    case AdvertiseBean.TYPE_OUTER_LINK:
-                        openWebView(mData.getOutLink());
-                        break;
-                    default:
-                        break;
-                }
+            public void onClick(View v) {Intent i = new Intent(getActivity(), VideoPlayerActivity.class);
+                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+                i.putExtra(Config.EXTRA_TITLE_STR, "年度最佳电影剪辑");
+                startActivity(i);
+
+//                if(null == mData) {
+//                    return;
+//                }
+//                switch (mData.getType()) {
+//                    case AdvertiseBean.TYPE_IMAGE:
+//                        openWebView(mData.getOutLink());
+//                        break;
+//                    case AdvertiseBean.TYPE_VIDEO:
+//                        playVideo(mData.getOutLink());
+//                        break;
+//                    case AdvertiseBean.TYPE_PRODUCT:
+//                        openWebView(mData.getOutLink());
+//                        break;
+//                    case AdvertiseBean.TYPE_CORPORATE:
+//                        openWebView(mData.getOutLink());
+//                        break;
+//                    case AdvertiseBean.TYPE_OUTER_LINK:
+//                        openWebView(mData.getOutLink());
+//                        break;
+//                    default:
+//                        break;
+//                }
             }
         });
     }

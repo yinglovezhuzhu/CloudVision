@@ -42,7 +42,7 @@ public class ProductPagerViewFragment extends BaseFragment {
 //            if(isRefresh) {
 //                mAdapter.clear(true);
 //            }
-            mAdapter.addAll(result.getProduct(), true);
+            mAdapter.addAll(result.getData(), true);
             if(null != mTvPageCount) {
                 mTvPageCount.setText(String.valueOf(mAdapter.getCount()));
             }

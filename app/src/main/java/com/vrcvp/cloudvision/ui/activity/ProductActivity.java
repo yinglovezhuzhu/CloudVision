@@ -85,7 +85,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<ProductBean> products = result.getProduct();
+                    List<ProductBean> products = result.getData();
                     if(null == products || products.isEmpty()) {
                         // TODO 错误
                     } else {

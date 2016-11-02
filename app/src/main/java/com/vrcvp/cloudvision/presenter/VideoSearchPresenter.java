@@ -80,7 +80,7 @@ public class VideoSearchPresenter {
                     mHasMore = false;
                     mPage--;
                 } else {
-                    mHasMore = null != result.getVideo() && !result.getVideo().isEmpty();
+                    mHasMore = null != result.getData() && !result.getData().isEmpty();
                     mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
                 }
                 if(!mHasMore) {

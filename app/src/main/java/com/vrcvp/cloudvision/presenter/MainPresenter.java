@@ -163,6 +163,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      * 登出
      */
     public void logout() {
+        mMainModel.logout();
         DataManager.getInstance().logout();
     }
 

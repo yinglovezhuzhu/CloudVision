@@ -86,6 +86,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     private CheckBox mCbVoice;
     private CheckBox mCbSetting;
 
+    private View mMenuItemView;
+    private ImageButton mIBtnMenu;
     private PopupWindow mPwSettingMenu;
 
     private MainPresenter mMainPresenter;
@@ -186,9 +188,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 finish();
                 break;
             case R.id.btn_main_menu_setting_switch:
-                mMainPresenter.logout();
-                startActivity(new Intent(this, ActivateActivity.class));
-                finish();
+                switchAccount();
                 break;
             default:
                 break;
@@ -317,21 +317,21 @@ public class MainActivity extends BaseActivity implements IMainView {
         mCbVoice = (CheckBox) findViewById(R.id.cb_main_menu_vice);
         mCbSetting = (CheckBox) findViewById(R.id.cb_main_menu_setting);
 
-        final View menuItemView = findViewById(R.id.ll_main_menu_items);
-        final ImageButton ibtnMenu = (ImageButton) findViewById(R.id.ibtn_main_menu);
+        mMenuItemView = findViewById(R.id.ll_main_menu_items);
+        mIBtnMenu = (ImageButton) findViewById(R.id.ibtn_main_menu);
         final Animation menuItemShowAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_main_menu_items_show);
         final Animation menuItemHideAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_main_menu_items_hide);
 
-        ibtnMenu.setOnClickListener(new View.OnClickListener() {
+        mIBtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(View.VISIBLE == menuItemView.getVisibility()) {
-                    menuItemView.startAnimation(menuItemHideAnimation);
-                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                if(View.VISIBLE == mMenuItemView.getVisibility()) {
+                    mMenuItemView.startAnimation(menuItemHideAnimation);
+                    mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
                 } else {
-                    menuItemView.startAnimation(menuItemShowAnimation);
-                    menuItemView.setVisibility(View.VISIBLE);
-                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_pressed);
+                    mMenuItemView.startAnimation(menuItemShowAnimation);
+                    mMenuItemView.setVisibility(View.VISIBLE);
+                    mIBtnMenu.setImageResource(R.drawable.ic_main_menu_pressed);
                 }
                 mCbVoice.setChecked(false);
                 mCbSetting.setChecked(false);
@@ -348,7 +348,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         lp.leftMargin = position.x;
         lp.topMargin = position.y;
         menuBar.setLayoutParams(lp);
-        ibtnMenu.setOnTouchListener(new View.OnTouchListener() {
+        mIBtnMenu.setOnTouchListener(new View.OnTouchListener() {
             float startX;
             float startY;
             float lastX;
@@ -358,21 +358,21 @@ public class MainActivity extends BaseActivity implements IMainView {
             int height = 0;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(View.VISIBLE == menuItemView.getVisibility()) {
-                    menuItemView.setVisibility(View.INVISIBLE);
-                    ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
-                    ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
-                    return false;
+                if(View.VISIBLE == mMenuItemView.getVisibility()) {
+                    mMenuItemView.setVisibility(View.INVISIBLE);
+                    mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                    mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+                    return true;
                 }
-                ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         startX = event.getRawX();
                         startY = event.getRawY();
                         lastX = event.getRawX();
                         lastY = event.getRawY();
-                        width = ibtnMenu.getWidth();
-                        height = ibtnMenu.getHeight();
+                        width = mIBtnMenu.getWidth();
+                        height = mIBtnMenu.getHeight();
                         start = true;
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -392,7 +392,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         lastY = event.getRawY();
                         return true;
                     case MotionEvent.ACTION_UP:
-                        ibtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+                        mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
                         return Math.abs(event.getRawX() - startX) > 5 || Math.abs(event.getRawY() - startY) > 5;
                     default:
                         break;
@@ -404,9 +404,9 @@ public class MainActivity extends BaseActivity implements IMainView {
         menuItemShowAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
+                mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
                 int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
-                ibtnMenu.setPadding(padding, padding, padding, padding);
+                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override
@@ -422,10 +422,10 @@ public class MainActivity extends BaseActivity implements IMainView {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                menuItemView.setVisibility(View.INVISIBLE);
-                ibtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+                mMenuItemView.setVisibility(View.INVISIBLE);
+                mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
                 int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
-                ibtnMenu.setPadding(padding, padding, padding, padding);
+                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override
@@ -559,5 +559,23 @@ public class MainActivity extends BaseActivity implements IMainView {
                         })
                 .create()
                 .show();
+    }
+
+    /**
+     * 切换账号
+     */
+    private void switchAccount() {
+        mAdOne.clearData();
+        mAdTwo.clearData();
+        mAdThree.clearData();
+        mMainPresenter.logout();
+        mPwSettingMenu.dismiss();
+        mMenuItemView.setVisibility(View.INVISIBLE);
+        mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
+        mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+        int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
+        mIBtnMenu.setPadding(padding, padding, padding, padding);
+        startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
+//                finish();
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.req.QueryVideoReq;
 import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.db.HttpCacheDBUtils;
@@ -28,15 +29,12 @@ public class VideoModel implements IVideoModel {
 
     @Override
     public void queryVideo(int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback) {
-
-        // FIXME 请求地址修改
-        final String url = "video.json";
+        final String url = Config.API_VIDEO_LIST;
         final QueryVideoReq reqParam = new QueryVideoReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         reqParam.setPageNo(pageNo);
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,

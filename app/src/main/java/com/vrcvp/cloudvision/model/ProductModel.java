@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.req.QueryProductReq;
 import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
 import com.vrcvp.cloudvision.db.HttpCacheDBUtils;
@@ -27,14 +28,12 @@ public class ProductModel implements IProductModel {
 
     @Override
     public void queryProduct(int pageNo, final HttpAsyncTask.Callback<QueryProductResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "product.json";
+        final String url = Config.API_PRODUCT_LIST;
         final QueryProductReq reqParam = new QueryProductReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         reqParam.setPageNo(pageNo);
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,

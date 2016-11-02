@@ -94,7 +94,7 @@ public class CorporatePresenter {
 
             @Override
             public void onResult(QueryVideoResp result) {
-                mView.onQueryRecommendedVideoReseult(result);
+                mView.onQueryRecommendedVideoResult(result);
             }
         });
     }

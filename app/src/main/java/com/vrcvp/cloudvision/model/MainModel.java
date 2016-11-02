@@ -27,7 +27,6 @@ import java.util.List;
 public class MainModel implements IMainModel {
 
     private Context mContext;
-//    private SharedPrefHelper mSharePrefHelper = null;
     private final List<NoticeBean> mNotices = new ArrayList<>();
     private int mCurrentNoticeIndex = 0;
 
@@ -237,5 +236,12 @@ public class MainModel implements IMainModel {
         if(null != mQueryNoticeTask) {
             mQueryNoticeTask.cancel();
         }
+    }
+
+    @Override
+    public void logout() {
+        cancelQueryAdvertise();
+        cancelQueryNotice();
+        mNotices.clear();
     }
 }

@@ -113,13 +113,11 @@ public class CorporateModel implements ICorporateModel {
 
     @Override
     public void queryRecommendedProduct(final HttpAsyncTask.Callback<QueryProductResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "product.json";
+        final String url = Config.API_RECOMMENDED_PRODUCT;
         final QueryProductReq reqParam = new QueryProductReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,

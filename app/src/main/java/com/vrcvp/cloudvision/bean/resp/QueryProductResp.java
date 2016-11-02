@@ -10,9 +10,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/10/11.
  */
 
-public class QueryProductResp extends BaseResp{
-
-    private List<ProductBean> product = new ArrayList<>();
+public class QueryProductResp extends BaseResp<List<ProductBean>> {
 
     public QueryProductResp() {
     }
@@ -21,14 +19,8 @@ public class QueryProductResp extends BaseResp{
         super(httpCode, msg);
     }
 
-    public List<ProductBean> getProduct() {
-        return product;
-    }
-
     @Override
     public String toString() {
-        return "QueryProductResp{" +
-                "product=" + product +
-                "} " + super.toString();
+        return "QueryProductResp{} " + super.toString();
     }
 }
