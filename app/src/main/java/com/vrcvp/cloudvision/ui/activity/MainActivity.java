@@ -269,7 +269,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                     if(null == advertises || advertises.isEmpty()) {
                         // TODO 错误
                     } else {
-
                         final AdvertiseBean advertiseOne = advertises.get(0);
                         if(null != mAdOne) {
                             mAdOne.setData(advertiseOne);

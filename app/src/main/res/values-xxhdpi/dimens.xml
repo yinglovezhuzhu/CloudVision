@@ -17,14 +17,14 @@
     <dimen name="textSize_level13">28sp</dimen>
 
     <!-- 边距 -->
-    <dimen name="contentPadding_level1">3dp</dimen>
-    <dimen name="contentPadding_level2">5dp</dimen>
-    <dimen name="contentPadding_level3">8dp</dimen>
-    <dimen name="contentPadding_level4">10dp</dimen>
-    <dimen name="contentPadding_level5">12dp</dimen>
-    <dimen name="contentPadding_level6">15dp</dimen>
+    <dimen name="contentPadding_level1">2dp</dimen>
+    <dimen name="contentPadding_level2">4dp</dimen>
+    <dimen name="contentPadding_level3">6dp</dimen>
+    <dimen name="contentPadding_level4">8dp</dimen>
+    <dimen name="contentPadding_level5">10dp</dimen>
+    <dimen name="contentPadding_level6">12dp</dimen>
     <dimen name="contentPadding_level7">18dp</dimen>
-    <dimen name="contentPadding_level8">24dp</dimen>
+    <dimen name="contentPadding_level8">22dp</dimen>
 
     <!-- 分割线 -->
     <dimen name="divider_size_level1">0.5dp</dimen>

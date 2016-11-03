@@ -28,6 +28,7 @@ import com.vrcvp.cloudvision.downloader.DownloadListener;
 import com.vrcvp.cloudvision.downloader.Downloader;
 import com.vrcvp.cloudvision.observer.NetworkObserver;
 import com.vrcvp.cloudvision.utils.NetworkManager;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.io.File;
 
@@ -48,21 +49,33 @@ public class VideoPlayerModel implements IVideoPlayerModel {
         @Override
         public void onNetworkStateChanged(boolean networkConnected, NetworkInfo currentNetwork, NetworkInfo lastNetwork) {
             if(networkConnected && null != mDownloader && mDownloader.isStop() && !mDownloader.isFinished()) {
-                downloadVideo();
+                if(!StringUtils.isEmpty(mUrl)) {
+                    downloadVideo(mUrl);
+                }
             }
         }
     };
 
-    public VideoPlayerModel(Context context, String downloadUrl, DownloadListener listener) {
+    /**
+     * 视频播放Model构造函数
+     * @param context Context对象
+     * @param listener 下载监听
+     */
+    public VideoPlayerModel(Context context, DownloadListener listener) {
         this.mContext = context;
-        this.mUrl = downloadUrl;
-        mDownloader = new Downloader(context, mUrl,
-                new File(context.getExternalCacheDir(), "Video"), null);
         this.mDownloadListener = listener;
+        mDownloader = new Downloader(context, new File(context.getExternalCacheDir(), "Video"), null);
     }
 
     @Override
-    public void downloadVideo() {
+    public void downloadVideo(String url) {
+        if(StringUtils.isEmpty(url)) {
+            if(null != mDownloadListener) {
+                mDownloadListener.onError(DownloadListener.CODE_EMPTY_URL, "Download url is null");
+            }
+            return;
+        }
+        this.mUrl = url;
         if(mDownloader.isStop()) {
             DownloadLog history = DownloadDBUtils.getHistoryByUrl(mContext, mUrl);
             if(null != history && (new File(history.getSavedFile())).exists()) {
@@ -72,7 +85,7 @@ public class VideoPlayerModel implements IVideoPlayerModel {
                 @Override
                 public void run() {
                     try {
-                        mDownloader.download(".mp4", new DownloadListener() {
+                        mDownloader.download(mUrl, ".mp4", new DownloadListener() {
                             @Override
                             public void onProgressUpdate(final int downloadedSize, final int totalSize) {
                                 if(null != mDownloadListener) {
@@ -134,7 +147,9 @@ public class VideoPlayerModel implements IVideoPlayerModel {
 
     @Override
     public void onResume() {
-        downloadVideo();
+        if(!StringUtils.isEmpty(mUrl)) {
+            downloadVideo(mUrl);
+        }
     }
 
     @Override

@@ -7,18 +7,18 @@ package com.vrcvp.cloudvision.bean;
 
 public class AdvertiseBean {
     /** 广告类型：1-图片 **/
-    public static final String TYPE_IMAGE = "1";
+    public static final int TYPE_IMAGE = 1;
     /** 广告类型：2-视频 **/
-    public static final String TYPE_VIDEO = "2";
+    public static final int TYPE_VIDEO = 2;
     /** 广告类型：3-产品 **/
-    public static final String TYPE_PRODUCT = "3";
+    public static final int TYPE_PRODUCT = 3;
     /** 广告类型：4-企业 **/
-    public static final String TYPE_CORPORATE = "4";
+    public static final int TYPE_CORPORATE = 4;
     /** 广告类型：5-外部链接 **/
-    public static final String TYPE_OUTER_LINK = "5";
+    public static final int TYPE_OUTER_LINK = 5;
 
     private String id;	// 广告id
-    private String type;	// 广告类型
+    private int type;	// 广告类型
     private String relationId;	// 关联ID
     private String orderWeight;	// 序号
     private String url;	// url
@@ -32,11 +32,11 @@ public class AdvertiseBean {
         this.id = id;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

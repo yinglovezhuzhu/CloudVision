@@ -64,13 +64,11 @@ public class Downloader {
      * Constructor<br><br>
      *
      * @param context     Context对象
-     * @param downloadUrl 下载地址
      * @param saveFolder  保存目录
      * @param fileName    保存文件名称，可以为null，如果为null，将从服务器解析文件名，如果解析失败，则随机生成一个文件名称
      */
-    public Downloader(Context context, String downloadUrl, File saveFolder, String fileName) {
+    public Downloader(Context context, File saveFolder, String fileName) {
         this.mContext = context;
-        this.mUrl = downloadUrl;
         this.mSaveFolder = saveFolder;
         this.mFileName = fileName;
 
@@ -80,12 +78,16 @@ public class Downloader {
     /**
      * Download file，this method has network, don't use it on ui thread.
      *
-     * @param listener      The listener to listen downloadVideo state, can be null if not need.
+     * @param downloadUrl 下载地址
      * @param defaultSuffix 默认后缀，没有设置文件名的时候生效，带点，例如".mp4"
+     * @param listener      The listener to listen downloadVideo state, can be null if not need.
      * @return The size that downloaded.
      * @throws Exception The error happened when downloading.
      */
-    public File download(String defaultSuffix, DownloadListener listener) throws Exception {
+    public File download(String downloadUrl, String defaultSuffix, DownloadListener listener) throws Exception {
+
+        this.mUrl = downloadUrl;
+
         if (null != mDownloadLog && mDownloadLog.isLocked()) {
             Log.e(TAG, "File downloading now. url = " + mUrl);
             return mSavedFile;

@@ -49,8 +49,8 @@
             android:id="@android:id/progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="@dimen/main_video_play_icon_size"
+            android:layout_height="@dimen/main_video_play_icon_size" />
 
         <TextView
             android:paddingTop="5dip"
@@ -62,7 +62,14 @@
             android:textColor="@color/colorWhite" />
     </LinearLayout>
 
-
+    <ImageView
+        style="@style/PlayIconTheme"
+        android:id="@+id/iv_video_player_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@null"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/ibtn_video_player_back"

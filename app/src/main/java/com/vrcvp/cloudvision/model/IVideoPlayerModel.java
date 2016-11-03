@@ -30,7 +30,7 @@ public interface IVideoPlayerModel {
     /**
      * 下载视频文件
      */
-    void downloadVideo();
+    void downloadVideo(String url);
 
     /**
      * 获取本地缓存的视频文件地址

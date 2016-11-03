@@ -27,6 +27,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -43,6 +44,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
     private VideoView mVideoView;
     private View mProgressView;
+    private ImageView mIvPlay;
 
     private VideoPlayerPresenter mVideoPlayer;
 
@@ -53,7 +55,9 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
         mVideoView = (VideoView) findViewById(R.id.video_player_surface_view);
         mProgressView = findViewById(R.id.video_player_progress_indicator);
+        mIvPlay = (ImageView) findViewById(R.id.iv_video_player_play);
         findViewById(R.id.ibtn_video_player_back).setOnClickListener(this);
+        findViewById(R.id.iv_video_player_play).setOnClickListener(this);
         final TextView tvTitle = (TextView) findViewById(R.id.tv_video_player_title);
 
 //        mVideoView.setMediaController(new MediaController(this));
@@ -63,7 +67,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
         Intent intent = getIntent();
 
-        mVideoPlayer = new VideoPlayerPresenter(this, this, intent.getData(), new VideoPlayListener() {
+        mVideoPlayer = new VideoPlayerPresenter(this, this, new VideoPlayListener() {
             @Override
             public void onCompletion() {
                 finish();
@@ -71,10 +75,19 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
             @Override
             public void onError(int what, String msg) {
-
+                switch (what) {
+                    case VideoPlayListener.WHAT_DOWNLOAD_ERROR:
+                        hideLoadingProgress();
+                        mIvPlay.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         mVideoPlayer.onCreate();
+        mIvPlay.setVisibility(View.GONE);
+        mVideoPlayer.playVideo(intent.getData());
 
         if (intent.hasExtra(MediaStore.EXTRA_SCREEN_ORIENTATION)) {
             int orientation = intent.getIntExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -153,6 +166,9 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         switch (v.getId()) {
             case R.id.ibtn_video_player_back:
                 finish(RESULT_CANCELED, null);
+                break;
+            case R.id.iv_video_player_play:
+                mVideoPlayer.replayVideo();
                 break;
             default:
                 break;

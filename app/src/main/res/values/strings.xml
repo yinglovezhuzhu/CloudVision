@@ -48,5 +48,5 @@
 
 
     <!-- 视频 -->
-    <string name="str_loading_video">正在加载视频</string>
+    <string name="str_loading_video">视频加载中</string>
 </resources>
