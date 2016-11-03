@@ -89,8 +89,14 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
         mLvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final VideoBean video = mAdapter.getItem(position);
+                if(null == video) {
+                    return;
+                }
                 Intent i = new Intent(VideoSearchActivity.this, VideoPlayerActivity.class);
+                // FIXME 去掉测试数据
                 i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+//                i.setData(Uri.parse(video.getVideoUrl()));
                 startActivity(i);
             }
         });

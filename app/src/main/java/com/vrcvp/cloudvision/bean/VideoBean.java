@@ -10,6 +10,7 @@ public class VideoBean {
     private String name;
     private String orderWeight;
     private String imageUrl;
+    private String videoUrl;
 
     public String getId() {
         return id;
@@ -27,6 +28,10 @@ public class VideoBean {
         return imageUrl;
     }
 
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
     @Override
     public String toString() {
         return "VideoBean{" +
@@ -34,6 +39,7 @@ public class VideoBean {
                 ", name='" + name + '\'' +
                 ", orderWeight='" + orderWeight + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
                 '}';
     }
 }
