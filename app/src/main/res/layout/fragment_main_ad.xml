@@ -3,8 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="@color/colorBlack">
+    android:clickable="true">
     <ImageView
         android:id="@+id/iv_fragment_main_ad_img"
         android:layout_width="match_parent"
