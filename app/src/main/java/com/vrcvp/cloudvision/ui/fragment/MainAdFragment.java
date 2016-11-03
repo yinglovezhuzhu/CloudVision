@@ -59,6 +59,8 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 switch (what) {
                     case VideoPlayListener.WHAT_DOWNLOAD_ERROR:
                         hideLoadingProgress();
+                        mVideoView.setVisibility(View.GONE);
+                        mIvImage.setVisibility(View.VISIBLE);
                         mIvPlay.setVisibility(View.VISIBLE);
                         break;
                     default:
@@ -222,6 +224,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 switch (mData.getType()) {
                     case AdvertiseBean.TYPE_VIDEO:
                         if(null != mVideoPlayer) {
+                            mVideoView.setVisibility(View.VISIBLE);
+                            mIvImage.setVisibility(View.GONE);
+                            mIvPlay.setVisibility(View.GONE);
                             mVideoPlayer.replayVideo();
                         }
                         break;

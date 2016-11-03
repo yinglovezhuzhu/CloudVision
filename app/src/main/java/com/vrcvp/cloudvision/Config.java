@@ -47,7 +47,7 @@ public class Config {
     /** 产品SKU价格查询 **/
     public static final String API_PRODUCT_SKU_PRICE = BuildConfig.HTTP_HOST + "/product/findPrice";
     /** 推荐视频 **/
-    public static final String API_RECOMMENDED_VIDEO = BuildConfig.HTTP_HOST + "/recommendProdInfo/queryRecommendProdInfo";
+    public static final String API_RECOMMENDED_VIDEO = BuildConfig.HTTP_HOST + "/video/recommend";
     /** 视频列表 **/
     public static final String API_VIDEO_LIST = BuildConfig.HTTP_HOST + "/video/cloud";
     /** 视频搜索 **/

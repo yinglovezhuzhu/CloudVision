@@ -13,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:contentDescription="@null"
-            android:src="@drawable/bg_activate"/>
+            android:contentDescription="@null"/>
         <ImageView
             style="@style/PlayIconTheme"
             android:id="@+id/iv_item_cloud_video_play"

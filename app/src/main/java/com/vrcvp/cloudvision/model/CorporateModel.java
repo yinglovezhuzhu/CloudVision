@@ -184,13 +184,11 @@ public class CorporateModel implements ICorporateModel {
 
     @Override
     public void queryRecommendedVideo(final HttpAsyncTask.Callback<QueryVideoResp> callback) {
-        // FIXME 请求地址修改
-        final String url = "video.json";
+        final String url = Config.API_RECOMMENDED_VIDEO;
         final QueryVideoReq reqParam = new QueryVideoReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
-        // FIXME 请求标识修改
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,
