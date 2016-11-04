@@ -24,8 +24,8 @@
                 android:id="@+id/tv_item_voice_android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/contentPadding_level6"
-                android:layout_marginRight="@dimen/contentPadding_level6"
+                android:layout_marginLeft="@dimen/voice_android_text_marginLeft"
+                android:layout_marginRight="@dimen/voice_android_text_marginLeft"
                 android:background="@drawable/shape_bg_voice_android"
                 android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/colorTextBlack"/>

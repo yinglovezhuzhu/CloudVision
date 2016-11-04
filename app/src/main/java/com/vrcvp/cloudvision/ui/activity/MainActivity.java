@@ -404,8 +404,8 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onAnimationStart(Animation animation) {
                 mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
-                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
-                mIBtnMenu.setPadding(padding, padding, padding, padding);
+//                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
+//                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override
@@ -423,8 +423,8 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onAnimationEnd(Animation animation) {
                 mMenuItemView.setVisibility(View.INVISIBLE);
                 mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
-                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
-                mIBtnMenu.setPadding(padding, padding, padding, padding);
+//                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
+//                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override

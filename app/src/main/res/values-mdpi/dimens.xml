@@ -53,12 +53,13 @@
     <dimen name="activate_btn_height">38dp</dimen>
 
     <!-- 主页面 -->
-    <dimen name="main_menu_btn_width">50dp</dimen>
+    <dimen name="main_menu_btn_width">60dp</dimen>
     <dimen name="main_video_play_icon_size">45dp</dimen>
     <dimen name="main_weather_icon_size">50dp</dimen>
 
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">60dp</dimen>
+    <dimen name="voice_android_text_marginLeft">450dp</dimen>
 
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">160dp</dimen>

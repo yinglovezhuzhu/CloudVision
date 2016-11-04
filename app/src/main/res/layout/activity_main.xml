@@ -106,11 +106,11 @@
 
         <ImageButton
             android:id="@+id/ibtn_main_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/main_menu_btn_width"
+            android:layout_height="@dimen/main_menu_btn_width"
             android:adjustViewBounds="true"
             android:background="@drawable/layer_list_bg_main_menu"
-            android:padding="@dimen/contentPadding_level4"
+            android:padding="@dimen/contentPadding_level1"
             android:scaleType="centerInside"
             android:src="@drawable/selector_ic_main_menu"
             android:contentDescription="@null"/>
@@ -135,8 +135,6 @@
                 <CheckBox
                     style="@style/MainMenuItemTheme"
                     android:id="@+id/cb_main_menu_vice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:button="@null"
                     android:drawableTop="@drawable/selector_ic_main_menu_voice"
@@ -152,8 +150,6 @@
                 <Button
                     style="@style/MainMenuItemTheme"
                     android:id="@+id/btn_main_menu_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:drawableTop="@drawable/selector_ic_main_menu_home"
                     android:text="@string/str_home_vertical" />
@@ -168,8 +164,6 @@
                 <CheckBox
                     style="@style/MainMenuItemTheme"
                     android:id="@+id/cb_main_menu_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:button="@null"
                     android:drawableTop="@drawable/selector_ic_main_menu_setting"
