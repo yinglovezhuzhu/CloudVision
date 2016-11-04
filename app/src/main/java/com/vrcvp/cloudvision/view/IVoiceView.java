@@ -7,14 +7,15 @@ package com.vrcvp.cloudvision.view;
 public interface IVoiceView {
 
     int ERROR_APPID_INVALID = 0;
-    /** 语音引擎初始化失败 **/
-    int ERROR_SPEECH_INI_FAILED = 1;
     /** 语音合成（文字转语音）引擎初始化失败 **/
-    int ERROR_SPEECH_SYNTHESIZER_INI_FAILED = 2;
+    int ERROR_SPEECH_SYNTHESIZER_INI_FAILED = 1;
     /** 语音识别（语音转文字）引擎初始化失败 **/
-    int ERROR_SPEECH_RECOGNIZER_INI_FAILED = 3;
+    int ERROR_SPEECH_RECOGNIZER_INI_FAILED = 2;
 
+    /** 动作-无 **/
     int ACTION_NONE = 0;
+//    /** 动作-语音播报 **/
+//    int ACTION_SPEAK = 1;
 
     /**
      * 讯飞引擎错误
@@ -31,4 +32,8 @@ public interface IVoiceView {
      * @param action 动作，更新语音后需要做的操作
      */
     void onNewVoiceData(int type, String text, int action);
+
+//    void onSpeakBegin();
+//
+//    void onSpeakCompleted();
 }

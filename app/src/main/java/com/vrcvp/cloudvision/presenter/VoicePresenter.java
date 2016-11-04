@@ -15,6 +15,7 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
+import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
@@ -31,8 +32,11 @@ import com.vrcvp.cloudvision.view.IVoiceView;
  */
 public class VoicePresenter {
 
-    private IVoiceView mVoiceView;
-    private IVoiceModel mVoiceModel;
+    private final IVoiceView mVoiceView;
+    private final IVoiceModel mVoiceModel;
+
+    private final String mStrAndroidStartWord;
+    private final String mStrAndroidUnknowWhat;
 
     private SpeechSynthesizer mSpeechSynthesizer;
     private SpeechRecognizer mSpeechRecognizer;
@@ -43,8 +47,13 @@ public class VoicePresenter {
     public VoicePresenter(Context context, IVoiceView voiceView) {
         this.mVoiceView = voiceView;
         this.mVoiceModel = new VoiceModel();
+        mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
+        mStrAndroidUnknowWhat = context.getString(R.string.str_voice_unknow_what_to_do);
 
         initEngine(context);
+
+        mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidStartWord, IVoiceView.ACTION_NONE);
+        startSpeak(mStrAndroidStartWord);
     }
 
     /**
@@ -75,6 +84,7 @@ public class VoicePresenter {
         if(null == mSpeechRecognizer || !mSpeechSynthesizerInitialized) {
             return;
         }
+        stopSpeak();
         mSpeechRecognizer.startListening(mRecognizerListener);
     }
 
@@ -160,6 +170,8 @@ public class VoicePresenter {
             mmResultString.append(parseResult(recognizerResult));
             if(isLast) {
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_HUMAN, mmResultString.toString(), IVoiceView.ACTION_NONE);
+                // TODO 处理用户语音输入的请求
+
             }
         }
 

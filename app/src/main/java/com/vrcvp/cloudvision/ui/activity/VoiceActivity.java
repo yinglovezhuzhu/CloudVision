@@ -27,9 +27,9 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
 
         setContentView(R.layout.activity_voice);
 
-        mVoicePresenter = new VoicePresenter(this, this);
-
         initView();
+
+        mVoicePresenter = new VoicePresenter(this, this);
     }
 
     @Override
@@ -52,6 +52,8 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     public void onNewVoiceData(int type, String text, int action) {
         mAdapter.add(new VoiceBean(type, text), true);
         switch (action) {
+//            case ACTION_SPEAK:
+//                break;
             default:
                 break;
         }
@@ -81,9 +83,5 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                 return false;
             }
         });
-
-        final String androidStartWord = getString(R.string.str_voice_android_start);
-        mAdapter.add(new VoiceBean(VoiceBean.TYPE_ANDROID, androidStartWord), true);
-        mVoicePresenter.startSpeak(androidStartWord);
     }
 }
