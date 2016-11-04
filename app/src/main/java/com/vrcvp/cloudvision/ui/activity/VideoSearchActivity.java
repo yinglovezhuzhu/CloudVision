@@ -91,7 +91,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
         mLvVideo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final VideoBean video = mAdapter.getItem(position - mLvVideo.getHeaderViewsCount());
+                final VideoBean video = mAdapter.getItem(position);
                 if(null == video) {
                     return;
                 }
