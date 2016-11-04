@@ -17,7 +17,8 @@ public class AttrValueBean implements Parcelable {
 
     }
 
-    public AttrValueBean(String attrValue) {
+    public AttrValueBean(String attrValueId, String attrValue) {
+        this.attrValueId = attrValueId;
         this.attrValue = attrValue;
     }
 

@@ -33,12 +33,13 @@ import com.vrcvp.cloudvision.presenter.ProductDetailPresenter;
 import com.vrcvp.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.vrcvp.cloudvision.ui.widget.NoScrollListView;
 import com.vrcvp.cloudvision.ui.widget.PageControlBar;
-import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.view.IProductDetailView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品详情页面
@@ -121,7 +122,27 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                         mPageIndicator.setPageCount(mImgAdapter.getCount());
                         mPageIndicator.setCurrentPage(0);
                         mImgPager.setAdapter(mImgAdapter);
+                        // FIXME 测试数据
+//                        AttrBean attrColor = new AttrBean("1", "颜色");
+//                        attrColor.addAttrValue(new AttrValueBean("1","黄色"));
+//                        attrColor.addAttrValue(new AttrValueBean("2","紫色"));
+//                        attrColor.addAttrValue(new AttrValueBean("3","蓝色"));
+//                        attrColor.addAttrValue(new AttrValueBean("4","白色"));
+//
+//                        mAttrAdapter.add(attrColor, false);
+//
+//                        AttrBean attrSize = new AttrBean("2", "尺寸");
+//                        attrSize.addAttrValue(new AttrValueBean("5","S"));
+//                        attrSize.addAttrValue(new AttrValueBean("6","M"));
+//                        attrSize.addAttrValue(new AttrValueBean("7","L"));
+//                        attrSize.addAttrValue(new AttrValueBean("8","XL"));
+//                        attrSize.addAttrValue(new AttrValueBean("9","XXL"));
+//                        attrSize.addAttrValue(new AttrValueBean("10","XXXL"));
+//
+//                        mAttrAdapter.add(attrSize, true);
+
                         mAttrAdapter.addAll(product.getAttrValues(), true);
+                        mWebView.loadData(mProduct.getDetail(), "text/html;charset=UTF-8", "UTF-8");
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
@@ -141,10 +162,10 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    mTvPrice.setText(result.getPrice());
+                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), result.getPrice()));
                     break;
                 default:
-                    mTvPrice.setText(mProduct.getPrice());
+                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                     break;
             }
         }
@@ -241,58 +262,30 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
 
-//        AttrBean attrColor = new AttrBean("颜色");
-//        attrColor.addAttrValue(new AttrValueBean("黄色"));
-//        attrColor.addAttrValue(new AttrValueBean("紫色"));
-//        attrColor.addAttrValue(new AttrValueBean("蓝色"));
-//        attrColor.addAttrValue(new AttrValueBean("白色"));
-//
-//        mAttrAdapter.add(attrColor, false);
-//
-//        AttrBean attrSize = new AttrBean("尺寸");
-//        attrSize.addAttrValue(new AttrValueBean("S"));
-//        attrSize.addAttrValue(new AttrValueBean("M"));
-//        attrSize.addAttrValue(new AttrValueBean("L"));
-//        attrSize.addAttrValue(new AttrValueBean("XL"));
-//        attrSize.addAttrValue(new AttrValueBean("XXL"));
-//        attrSize.addAttrValue(new AttrValueBean("XXXL"));
-//        mAttrAdapter.add(attrSize, true);
+        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
 
-        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
-
+        final Map<String, AttrValueBean> attrsMap = new HashMap<>();
         mAttrAdapter.setOnAttrCheckChangedListener(new ProductDetailAttrAdapter.OnAttrCheckChangedListener() {
+            private AttrBean mmAttr;
+            private int mmCount;
             @Override
             public void onAttrCheckChanged(int position, int subPosition, boolean isChecked) {
-                LogUtils.e("XXXX", "Attr Check Changed: \nposition-> " + position
-                        + "\nsubPosition-> " + subPosition
-                        + "\nisChecked-> " + isChecked);
+                mmAttr = mAttrAdapter.getItem(position);
+                mmCount = mAttrAdapter.getCount();
                 if(isChecked) {
-                    boolean updatePrice = true;
-                    for(int i = 0; i < mAttrAdapter.getCount(); i++) {
-                        if(mAttrAdapter.getCheckedPosition(i) == -1) {
-                            updatePrice = false;
-                            break;
-                        }
+                    AttrValueBean attrValueBean = mmAttr.getValue(subPosition);
+                    if(null != attrValueBean) {
+                        attrsMap.put(mmAttr.getAttrId(), attrValueBean);
                     }
-                    if(updatePrice) {
-                        switch (subPosition) {
-                            case 0:
-                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "100"));
-                                break;
-                            case 1:
-                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "120"));
-                                break;
-                            case 2:
-                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "150"));
-                                break;
-                            case 3:
-                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "200"));
-                                break;
-                            default:
-                                mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), "220"));
-                                break;
-                        }
+                    if(attrsMap.size() == mmCount) {
+                        // 查询价格
+                        mProductDetailPresenter.querySkuPrice(mProduct.getId(), attrsMap.values());
                     }
+                } else {
+                    attrsMap.remove(mmAttr.getAttrId());
+                }
+                if(attrsMap.size() < mmCount) {
+                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                 }
             }
         });
@@ -303,10 +296,6 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         settingWebView(mWebView);
 
         tvProductName.setText(mProduct.getName());
-
-
-
-        mWebView.loadUrl("https://www.baidu.com/");
     }
 
     private void viewPic(int position) {

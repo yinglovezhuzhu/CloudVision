@@ -17,7 +17,7 @@ import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * 产品详情Model
@@ -99,7 +99,7 @@ public class ProductDetailModel implements IProductDetailModel {
     }
 
     @Override
-    public void querySkuPrice(String productId, List<AttrValueBean> attrValueList,
+    public void querySkuPrice(String productId, Collection<AttrValueBean> attrValueList,
                               final HttpAsyncTask.Callback<QuerySkuPriceResp> callback) {
         final String url = Config.API_PRODUCT_SKU_PRICE;
         final QuerySkuPriceReq reqParam = new QuerySkuPriceReq();

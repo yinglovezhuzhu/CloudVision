@@ -75,9 +75,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                     return;
                 }
                 Intent i = new Intent(VideoActivity.this, VideoPlayerActivity.class);
-                // FIXME 去掉测试数据
-                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
-//                i.setData(Uri.parse(video.getVideoUrl()));
+                i.setData(Uri.parse(video.getVideoUrl()));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

@@ -10,6 +10,7 @@ import com.vrcvp.cloudvision.model.IProductDetailModel;
 import com.vrcvp.cloudvision.model.ProductDetailModel;
 import com.vrcvp.cloudvision.view.IProductDetailView;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class ProductDetailPresenter {
      * @param productId 产品id
      * @param attrValues 属性组合列表
      */
-    public void querySkuPrice(String productId, List<AttrValueBean> attrValues) {
+    public void querySkuPrice(String productId, Collection<AttrValueBean> attrValues) {
         mModel.querySkuPrice(productId, attrValues, new HttpAsyncTask.Callback<QuerySkuPriceResp>() {
             @Override
             public void onPreExecute() {

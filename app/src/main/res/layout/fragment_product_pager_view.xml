@@ -38,7 +38,7 @@
                 android:id="@+id/ibtn_product_pager_view_pre_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/contentPadding_level5"
+                android:layout_margin="@dimen/contentPadding_level7"
                 android:padding="@dimen/contentPadding_level5"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_arrow_left_white"
@@ -58,8 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginBottom="@dimen/contentPadding_level3"
-                    android:gravity="center"
-                    android:text="2"/>
+                    android:gravity="center"/>
 
                 <View
                     android:layout_width="@dimen/product_pager_view_index_view_size"
@@ -74,8 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/contentPadding_level3"
-                    android:gravity="center"
-                    android:text="2000"/>
+                    android:gravity="center"/>
             </LinearLayout>
 
             <ImageButton
@@ -83,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/contentPadding_level5"
-                android:padding="@dimen/contentPadding_level5"
+                android:padding="@dimen/contentPadding_level7"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_arrow_right_white"
                 android:contentDescription="@null"/>

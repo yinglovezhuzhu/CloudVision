@@ -1,12 +1,11 @@
 package com.vrcvp.cloudvision.model;
 
 import com.vrcvp.cloudvision.bean.AttrValueBean;
-import com.vrcvp.cloudvision.bean.req.QuerySkuPriceReq;
 import com.vrcvp.cloudvision.bean.resp.QueryProductDetailResp;
 import com.vrcvp.cloudvision.bean.resp.QuerySkuPriceResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * 产品详情Model接口
@@ -28,6 +27,6 @@ public interface IProductDetailModel {
      * @param attrValueList 属性组合列表
      * @param callback 回调
      */
-    void querySkuPrice(String productId, List<AttrValueBean> attrValueList,
+    void querySkuPrice(String productId, Collection<AttrValueBean> attrValueList,
                        HttpAsyncTask.Callback<QuerySkuPriceResp> callback);
 }

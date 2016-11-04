@@ -21,7 +21,8 @@ public class AttrBean implements Parcelable{
 
     }
 
-    public AttrBean(String attrName) {
+    public AttrBean(String attrId, String attrName) {
+        this.attrId = attrId;
         this.attrName = attrName;
     }
 
@@ -53,6 +54,13 @@ public class AttrBean implements Parcelable{
 
     public List<AttrValueBean> getValues() {
         return values;
+    }
+
+    public AttrValueBean getValue(int position) {
+        if(null == values || values.isEmpty() || position >= values.size()) {
+            return null;
+        }
+        return values.get(position);
     }
 
     public void addAttrValue(AttrValueBean attrValue) {

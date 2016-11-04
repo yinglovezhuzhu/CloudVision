@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -230,7 +231,7 @@ public final class HttpRequest {
                 final String stringValue;
                 if(null == value) {
                     stringValue = "";
-                } else if(value instanceof List || value instanceof Map) {
+                } else if(value instanceof Collection || value instanceof Map) {
                     stringValue = new Gson().toJson(value);
                 } else {
                     stringValue = String.valueOf(value);

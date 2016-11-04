@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.CorporateBean;
@@ -27,6 +28,7 @@ import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.ICorporateView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -148,6 +150,13 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                     } else {
                         mRecommendedProductAdapter.addAll(product, true);
                     }
+                    // FIXME 测试数据
+//                    if(null == product) {
+//                        product = new ArrayList<>();
+//                    }
+//                    ProductBean p = new Gson().fromJson("{\"id\":\"1\",\"categoryName\":\"电脑\",\"name\":\"送游戏键鼠 联想（Lenovo）小新700尊享版四核 15.6英寸超薄游戏本笔记本电脑 官方版 I5-6300HQ 8G1T 4G独显\",\"price\":\"5399.00\",\"orderWeight\":\"1\",\"imageUrl\":\"http://img10.360buyimg.com/n0/jfs/t2716/157/3992030303/98257/c75eb732/57a29d53Nd783d5e1.jpg\",\"detail\":\"\",\"detailImages\":[],\"skus\":[]}", ProductBean.class);
+//                    product.add(p);
+//                    mRecommendedProductAdapter.addAll(product, true);
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // TODO 无网络，读取缓存错误
@@ -224,8 +233,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                     return;
                 }
                 Intent i = new Intent(CorporateActivity.this, VideoPlayerActivity.class);
-                // FIXME 改为视频地址
-                i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
+                i.setData(Uri.parse(video.getVideoUrl()));
                 startActivity(i);
             }
         });
