@@ -12,6 +12,7 @@ import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VideoBean;
 import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
@@ -97,6 +98,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 // FIXME 去掉测试数据
                 i.setData(Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4"));
 //                i.setData(Uri.parse(video.getVideoUrl()));
+                i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }
         });

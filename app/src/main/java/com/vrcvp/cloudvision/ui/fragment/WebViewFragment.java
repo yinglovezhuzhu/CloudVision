@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.utils.NetworkManager;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 /**
  * WebView Fragment
@@ -29,14 +30,19 @@ public class WebViewFragment extends BaseFragment {
 
     private ProgressBar mPbLoadProgress;
 
+    private String mData;
     private String mUrl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
-        if(null != args && args.containsKey(Config.EXTRA_DATA)) {
-            mUrl = args.getString(Config.EXTRA_DATA);
+        if(null != args) {
+            if(args.containsKey(Config.EXTRA_URL)) {
+                mUrl = args.getString(Config.EXTRA_URL);
+            } else if(args.containsKey(Config.EXTRA_DATA)) {
+                mData = args.getString(Config.EXTRA_DATA);
+            }
         }
     }
 
@@ -52,7 +58,11 @@ public class WebViewFragment extends BaseFragment {
         final WebView webView = (WebView) contentView.findViewById(R.id.wv_webview_fragment_web);
         settingWebView(webView);
 
-        webView.loadUrl(mUrl);
+        if(!StringUtils.isEmpty(mUrl)) {
+            webView.loadUrl(mUrl);
+        } else if(!StringUtils.isEmpty(mData)) {
+            webView.loadData(mData, "text/html;charset=UTF-8", "UTF-8");
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

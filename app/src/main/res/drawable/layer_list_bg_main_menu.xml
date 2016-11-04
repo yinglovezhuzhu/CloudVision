@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="@dimen/divider_hide_margin_level1">
+    <item>
         <shape>
             <solid android:color="@color/colorMainMenuBackground" />
             <stroke android:color="@color/colorMainMenuBorder" android:width="@dimen/divider_size_level1" />

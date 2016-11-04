@@ -20,8 +20,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_video_player_root"
     android:layout_width="match_parent" 
-    android:layout_height="match_parent"
-    android:background="@color/colorVideoPlayerBackground">
+    android:layout_height="match_parent">
 
     <VideoView android:id="@+id/video_player_surface_view"
             android:layout_width="match_parent"
@@ -31,8 +30,8 @@
         android:id="@+id/tv_video_player_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/contentPadding_level5"
-        android:layout_below="@+id/video_player_surface_view"
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/contentPadding_level3"
         android:gravity="center"
         android:maxLines="1"
         android:ellipsize="end"

@@ -70,6 +70,7 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         Intent intent = getIntent();
         if(null == intent) {
             finish(RESULT_CANCELED, null);
+            return;
         }
 
         mCorporateData = intent.getParcelableExtra(Config.EXTRA_DATA);

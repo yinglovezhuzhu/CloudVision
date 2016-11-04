@@ -60,4 +60,5 @@ public class Config {
     public static final String EXTRA_POSITION = "extra_position";
     public static final String EXTRA_TITLE_STR = "extra_title_str";
     public static final String EXTRA_TITLE_RES = "extra_title_res";
+    public static final String EXTRA_URL = "extra_url";
 }

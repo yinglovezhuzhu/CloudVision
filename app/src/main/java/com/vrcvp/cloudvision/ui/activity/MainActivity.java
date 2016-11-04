@@ -447,8 +447,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                             mCbVoice.setChecked(false);
                             Rect rect = new Rect();
                             mCbSetting.getGlobalVisibleRect(rect);
-                            int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level2);
-                            mPwSettingMenu.showAsDropDown(mCbSetting, rect.right - rect.left + padding, -(rect.bottom - rect.top));
+                            mPwSettingMenu.showAsDropDown(mCbSetting, rect.right - rect.left, -(rect.bottom - rect.top));
                         }
                         break;
                     default:
