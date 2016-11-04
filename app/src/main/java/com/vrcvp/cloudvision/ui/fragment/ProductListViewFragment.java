@@ -97,7 +97,7 @@ public class ProductListViewFragment extends BaseFragment {
         mLvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final ProductBean product = mAdapter.getItem(position);
+                final ProductBean product = mAdapter.getItem(position - mLvProduct.getHeaderViewsCount());
                 if(null == product) {
                     return;
                 }
