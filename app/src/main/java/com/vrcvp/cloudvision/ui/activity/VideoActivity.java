@@ -17,6 +17,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.VideoPresenter;
 import com.vrcvp.cloudvision.ui.adapter.VideoAdapter;
+import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoView;
 
 import java.util.List;
@@ -74,8 +75,12 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                 if(null == video) {
                     return;
                 }
+                final String videoUrl = video.getVideoUrl();
+                if(StringUtils.isEmpty(videoUrl)) {
+                    return;
+                }
                 Intent i = new Intent(VideoActivity.this, VideoPlayerActivity.class);
-                i.setData(Uri.parse(video.getVideoUrl()));
+                i.setData(Uri.parse(videoUrl));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }
