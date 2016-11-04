@@ -27,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 /**
@@ -68,6 +69,7 @@ public abstract class BasePullListView extends ListView implements IPullView, Ab
 
     protected int mState = IDEL;
 
+    protected OnItemClickListener mOnItemClickListener;
     protected OnRefreshListener mRefreshListener;
     protected OnLoadMoreListener mLoadMoreListener;
     protected OnScrollListener mScrollListener;
@@ -243,6 +245,17 @@ public abstract class BasePullListView extends ListView implements IPullView, Ab
         this.mScrollListener = l;
     }
 
+
+    @Override
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+        super.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mOnItemClickListener.onItemClick(parent, view, position - getHeaderViewsCount(), id);
+            }
+        });
+    }
 
     /**
      * Can load more or not
