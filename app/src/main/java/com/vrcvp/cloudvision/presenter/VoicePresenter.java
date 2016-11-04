@@ -16,6 +16,7 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.bean.VideoBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
@@ -170,8 +171,9 @@ public class VoicePresenter {
             mmResultString.append(parseResult(recognizerResult));
             if(isLast) {
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_HUMAN, mmResultString.toString(), IVoiceView.ACTION_NONE);
-                // TODO 处理用户语音输入的请求
-
+                // FIXME 处理用户语音输入的请求
+                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknowWhat, IVoiceView.ACTION_NONE);
+                startSpeak(mStrAndroidUnknowWhat);
             }
         }
 

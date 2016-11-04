@@ -50,6 +50,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
     private ProductDetailPresenter mProductDetailPresenter;
 
+    private TextView mTvTitle;
     private ViewPager mImgPager;
     private PageControlBar mPageIndicator;
     private ProductDetailImgAdapter mImgAdapter;
@@ -118,31 +119,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                     } else {
                         // TODO 设置数据
                         mProduct = product;
-                        mImgAdapter.addAll(product.getDetailImages(), true);
-                        mPageIndicator.setPageCount(mImgAdapter.getCount());
-                        mPageIndicator.setCurrentPage(0);
-                        mImgPager.setAdapter(mImgAdapter);
-                        // FIXME 测试数据
-//                        AttrBean attrColor = new AttrBean("1", "颜色");
-//                        attrColor.addAttrValue(new AttrValueBean("1","黄色"));
-//                        attrColor.addAttrValue(new AttrValueBean("2","紫色"));
-//                        attrColor.addAttrValue(new AttrValueBean("3","蓝色"));
-//                        attrColor.addAttrValue(new AttrValueBean("4","白色"));
-//
-//                        mAttrAdapter.add(attrColor, false);
-//
-//                        AttrBean attrSize = new AttrBean("2", "尺寸");
-//                        attrSize.addAttrValue(new AttrValueBean("5","S"));
-//                        attrSize.addAttrValue(new AttrValueBean("6","M"));
-//                        attrSize.addAttrValue(new AttrValueBean("7","L"));
-//                        attrSize.addAttrValue(new AttrValueBean("8","XL"));
-//                        attrSize.addAttrValue(new AttrValueBean("9","XXL"));
-//                        attrSize.addAttrValue(new AttrValueBean("10","XXXL"));
-//
-//                        mAttrAdapter.add(attrSize, true);
-
-                        mAttrAdapter.addAll(product.getAttrValues(), true);
-                        mWebView.loadData(mProduct.getDetail(), "text/html;charset=UTF-8", "UTF-8");
+                        updateUI();
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
@@ -193,7 +170,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
      */
     private void initView() {
 
-        final TextView tvProductName = (TextView) findViewById(R.id.tv_product_detail_name);
+        mTvTitle = (TextView) findViewById(R.id.tv_product_detail_name);
 
         findViewById(R.id.ibtn_product_detail_back).setOnClickListener(this);
         findViewById(R.id.ibtn_product_720_view_img).setOnClickListener(this);
@@ -258,12 +235,8 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         });
 
         final NoScrollListView lvAttr = (NoScrollListView) findViewById(R.id.lv_product_detail_attr);
-        mTvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
         mAttrAdapter = new ProductDetailAttrAdapter(this);
         lvAttr.setAdapter(mAttrAdapter);
-
-        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
-
         final Map<String, AttrValueBean> attrsMap = new HashMap<>();
         mAttrAdapter.setOnAttrCheckChangedListener(new ProductDetailAttrAdapter.OnAttrCheckChangedListener() {
             private AttrBean mmAttr;
@@ -290,12 +263,43 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
             }
         });
 
+        mTvPrice = (TextView) findViewById(R.id.tv_product_detail_price);
 
         mDetailLoadingView = findViewById(R.id.ll_product_detail_loading);
         mWebView = (WebView) findViewById(R.id.wv_product_detail);
         settingWebView(mWebView);
 
-        tvProductName.setText(mProduct.getName());
+        updateUI();
+    }
+
+    private void updateUI() {
+        mTvTitle.setText(mProduct.getName());
+        mImgAdapter.addAll(mProduct.getDetailImages(), true);
+        mPageIndicator.setPageCount(mImgAdapter.getCount());
+        mPageIndicator.setCurrentPage(0);
+        mImgPager.setAdapter(mImgAdapter);
+        // FIXME 测试数据
+//                        AttrBean attrColor = new AttrBean("1", "颜色");
+//                        attrColor.addAttrValue(new AttrValueBean("1","黄色"));
+//                        attrColor.addAttrValue(new AttrValueBean("2","紫色"));
+//                        attrColor.addAttrValue(new AttrValueBean("3","蓝色"));
+//                        attrColor.addAttrValue(new AttrValueBean("4","白色"));
+//
+//                        mAttrAdapter.add(attrColor, false);
+//
+//                        AttrBean attrSize = new AttrBean("2", "尺寸");
+//                        attrSize.addAttrValue(new AttrValueBean("5","S"));
+//                        attrSize.addAttrValue(new AttrValueBean("6","M"));
+//                        attrSize.addAttrValue(new AttrValueBean("7","L"));
+//                        attrSize.addAttrValue(new AttrValueBean("8","XL"));
+//                        attrSize.addAttrValue(new AttrValueBean("9","XXL"));
+//                        attrSize.addAttrValue(new AttrValueBean("10","XXXL"));
+//
+//                        mAttrAdapter.add(attrSize, true);
+
+        mAttrAdapter.addAll(mProduct.getAttrValues(), true);
+        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
+        mWebView.loadData(mProduct.getDetail(), "text/html;charset=UTF-8", "UTF-8");
     }
 
     private void viewPic(int position) {

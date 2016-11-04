@@ -83,7 +83,7 @@ public class VoiceAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        VoiceItemView itemView = null;
+        VoiceItemView itemView;
         if(null == convertView) {
             itemView = new VoiceItemView(mContext);
             convertView = itemView;

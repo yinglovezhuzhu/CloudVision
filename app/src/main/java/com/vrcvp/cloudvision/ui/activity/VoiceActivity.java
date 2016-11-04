@@ -19,6 +19,7 @@ import com.vrcvp.cloudvision.view.IVoiceView;
 public class VoiceActivity extends BaseActivity implements IVoiceView {
 
     private VoicePresenter mVoicePresenter;
+    private ListView mLvVoice;
     private VoiceAdapter mAdapter;
 
     @Override
@@ -51,6 +52,7 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     @Override
     public void onNewVoiceData(int type, String text, int action) {
         mAdapter.add(new VoiceBean(type, text), true);
+        mLvVoice.setSelection(mAdapter.getCount());
         switch (action) {
 //            case ACTION_SPEAK:
 //                break;
@@ -62,9 +64,9 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     private void initView() {
         findViewById(R.id.ibtn_voice_close).setOnClickListener(this);
 
-        final ListView lvVoice = (ListView) findViewById(R.id.lv_voice_list);
+        mLvVoice = (ListView) findViewById(R.id.lv_voice_list);
         mAdapter = new VoiceAdapter(this);
-        lvVoice.setAdapter(mAdapter);
+        mLvVoice.setAdapter(mAdapter);
 
         final ImageButton btnRecord = (ImageButton) findViewById(R.id.ibtn_voice_record);
         btnRecord.setOnTouchListener(new View.OnTouchListener() {

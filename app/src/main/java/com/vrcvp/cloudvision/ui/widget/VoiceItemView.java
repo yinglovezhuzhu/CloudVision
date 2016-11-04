@@ -49,9 +49,11 @@ public class VoiceItemView extends LinearLayout {
         switch (bean.getType()) {
             case VoiceBean.TYPE_ANDROID:
                 mViewAndroid.setVisibility(View.VISIBLE);
+                mViewHuman.setVisibility(View.GONE);
                 mTvAndroid.setText(bean.getText());
                 break;
             case VoiceBean.TYPE_HUMAN:
+                mViewAndroid.setVisibility(View.GONE);
                 mViewHuman.setVisibility(View.VISIBLE);
                 mTvHuman.setText(bean.getText());
                 break;
