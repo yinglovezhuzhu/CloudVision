@@ -8,6 +8,7 @@ import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.req.PageReq;
 import com.vrcvp.cloudvision.bean.req.QueryAdvertiseReq;
+import com.vrcvp.cloudvision.bean.req.QueryNoticeReq;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.db.HttpCacheDBUtils;
@@ -76,7 +77,7 @@ public class MainModel implements IMainModel {
     }
 
     @Override
-    public void queryHomeData(final HttpAsyncTask.Callback<QueryAdvertiseResp> callback) {
+    public void queryAdvertise(final HttpAsyncTask.Callback<QueryAdvertiseResp> callback) {
         final String url = Config.API_ADVERTISE_LIST;
         final QueryAdvertiseReq reqParam = new QueryAdvertiseReq();
         reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
@@ -155,8 +156,9 @@ public class MainModel implements IMainModel {
     @Override
     public void queryNotice(final HttpAsyncTask.Callback<QueryNoticeResp> callback) {
         final String url = Config.API_NOTICE_LIST;
-        final PageReq reqParam = new PageReq();
+        final QueryNoticeReq reqParam = new QueryNoticeReq();
         reqParam.setToken(DataManager.getInstance().getToken());
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setPageNo(1);
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);

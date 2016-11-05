@@ -202,7 +202,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      * 查询首页广告
      */
     private void queryAdvertise() {
-        mMainModel.queryHomeData(new HttpAsyncTask.Callback<QueryAdvertiseResp>() {
+        mMainModel.queryAdvertise(new HttpAsyncTask.Callback<QueryAdvertiseResp>() {
             @Override
             public void onPreExecute() {
                 mMainView.onPreExecute(null);
@@ -247,6 +247,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
                 if(null != result) {
                     updateNotice();
                 }
+                mMainView.onQueryNoticeResult(result);
             }
         });
     }

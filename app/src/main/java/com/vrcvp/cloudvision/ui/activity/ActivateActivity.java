@@ -74,6 +74,9 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
             case HttpStatus.SC_OK:
                 finish(RESULT_OK, null);
                 break;
+            case HttpStatus.SC_BAD_REQUEST:
+                showShortToast(R.string.str_invalid_activate_code);
+                break;
             default:
                 showShortToast(result.getMsg());
                 break;

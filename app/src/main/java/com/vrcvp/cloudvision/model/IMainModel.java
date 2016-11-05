@@ -50,7 +50,7 @@ public interface IMainModel extends IModel {
      * 查询首页数据
      * @param callback 回调
      */
-    void queryHomeData(final HttpAsyncTask.Callback<QueryAdvertiseResp> callback);
+    void queryAdvertise(final HttpAsyncTask.Callback<QueryAdvertiseResp> callback);
 
     /**
      * 取消查询首页广告数据的异步线程任务

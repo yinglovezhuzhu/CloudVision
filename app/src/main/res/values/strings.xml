@@ -10,6 +10,7 @@
     <!-- 激活 -->
     <string name="str_please_input_activation_code">请输入激活码</string>
     <string name="str_activate">激活</string>
+    <string name="str_invalid_activate_code">无效的激活码</string>
 
     <!-- 主界面 -->
     <string name="str_voice_vertical">语\n音</string>

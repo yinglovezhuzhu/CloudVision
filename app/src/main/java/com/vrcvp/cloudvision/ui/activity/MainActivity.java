@@ -31,6 +31,7 @@ import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
+import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
 import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
@@ -121,8 +122,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(mMainPresenter.isActivated()) {
             mMainPresenter.onActivateSuccess();
         } else {
-            Intent intent = new Intent(this, ActivateActivity.class);
-            startActivityForResult(intent, RC_ACTIVATE_PAGE);
+            resetAndActivate();
         }
 
     }
@@ -262,40 +262,58 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onQueryAdvertiseResult(QueryAdvertiseResp result) {
         if(null == result) {
 
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    List<AdvertiseBean> advertises = result.getData();
-                    if(null == advertises || advertises.isEmpty()) {
-                        // TODO 错误
-                    } else {
-                        final AdvertiseBean advertiseOne = advertises.get(0);
-                        if(null != mAdOne) {
-                            mAdOne.setData(advertiseOne);
-                        }
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                List<AdvertiseBean> advertises = result.getData();
+                if(null == advertises || advertises.isEmpty()) {
+                    // TODO 错误
+                } else {
+                    final AdvertiseBean advertiseOne = advertises.get(0);
+                    if(null != mAdOne) {
+                        mAdOne.setData(advertiseOne);
+                    }
 
-                        if(advertises.size() > 1) {
-                            final AdvertiseBean advertiseTwo = advertises.get(1);
-                            if(null != mAdTwo) {
-                                mAdTwo.setData(advertiseTwo);
-                            }
-                        }
-
-                        if(advertises.size() > 2) {
-                            final AdvertiseBean advertiseThree = advertises.get(2);
-                            if(null != mAdThree) {
-                                mAdThree.setData(advertiseThree);
-                            }
+                    if(advertises.size() > 1) {
+                        final AdvertiseBean advertiseTwo = advertises.get(1);
+                        if(null != mAdTwo) {
+                            mAdTwo.setData(advertiseTwo);
                         }
                     }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
-                default:
-                    // TODO 错误
-                    break;
-            }
+
+                    if(advertises.size() > 2) {
+                        final AdvertiseBean advertiseThree = advertises.get(2);
+                        if(null != mAdThree) {
+                            mAdThree.setData(advertiseThree);
+                        }
+                    }
+                }
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                // 需要登录
+                resetAndActivate();
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // TODO 无网络，读取缓存错误
+                break;
+            default:
+                // TODO 错误
+                break;
+        }
+    }
+
+    @Override
+    public void onQueryNoticeResult(QueryNoticeResp result) {
+        if(null == result) {
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_UNAUTHORIZED:
+                resetAndActivate();
+                break;
+            default:
+                break;
         }
     }
 
@@ -404,8 +422,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onAnimationStart(Animation animation) {
                 mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu_on_open);
-//                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
-//                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override
@@ -423,8 +439,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void onAnimationEnd(Animation animation) {
                 mMenuItemView.setVisibility(View.INVISIBLE);
                 mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
-//                int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level4);
-//                mIBtnMenu.setPadding(padding, padding, padding, padding);
             }
 
             @Override
@@ -513,8 +527,8 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     /**
      * 权限是否已经授权
-     * @param permission
-     * @return
+     * @param permission 权限
+     * @return 是否已经授权
      */
     private boolean isPermissionGranted(String permission) {
         return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, permission);
@@ -563,6 +577,15 @@ public class MainActivity extends BaseActivity implements IMainView {
      * 切换账号
      */
     private void switchAccount() {
+        resetAndActivate();
+//                finish();
+    }
+
+    /**
+     * 重置并且跳转到激活页面
+     */
+    private void resetAndActivate() {
+        // 清除数据和重置UI
         mAdOne.clearData();
         mAdTwo.clearData();
         mAdThree.clearData();
@@ -571,9 +594,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         mMenuItemView.setVisibility(View.INVISIBLE);
         mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
         mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
-        int padding = getResources().getDimensionPixelSize(R.dimen.contentPadding_level3);
-        mIBtnMenu.setPadding(padding, padding, padding, padding);
-        startActivityForResult(new Intent(this, ActivateActivity.class), RC_ACTIVATE_PAGE);
-//                finish();
+        // 跳转
+        Intent intent = new Intent(this, ActivateActivity.class);
+        startActivityForResult(intent, RC_ACTIVATE_PAGE);
     }
 }
