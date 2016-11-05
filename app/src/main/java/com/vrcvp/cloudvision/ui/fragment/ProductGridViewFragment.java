@@ -20,6 +20,7 @@ import com.vrcvp.cloudvision.observer.ProductObserver;
 import com.vrcvp.cloudvision.ui.activity.ProductActivity;
 import com.vrcvp.cloudvision.ui.activity.ProductDetailActivity;
 import com.vrcvp.cloudvision.ui.adapter.ProductGridViewAdapter;
+import com.vrcvp.cloudvision.ui.widget.ErrorPage;
 
 /**
  * 产品网格模式Fragment（列表模式）
@@ -30,6 +31,8 @@ public class ProductGridViewFragment extends BaseFragment {
 
     private PullListView mLvProduct;
     private ProductGridViewAdapter mAdapter;
+    private ErrorPage mErrorPage;
+
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
         public void onQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result) {
@@ -131,6 +134,7 @@ public class ProductGridViewFragment extends BaseFragment {
                 }
             }
         });
+        mErrorPage = (ErrorPage) contentView.findViewById(R.id.ep_product_grid_view);
     }
 
 }
