@@ -17,6 +17,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.VideoPresenter;
 import com.vrcvp.cloudvision.ui.adapter.VideoAdapter;
+import com.vrcvp.cloudvision.ui.widget.ErrorPage;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoView;
 
@@ -33,6 +34,8 @@ public class VideoActivity extends BaseActivity implements IVideoView {
 
     private PullListView mLvVideo;
     private VideoAdapter mAdapter;
+
+    private ErrorPage mErrorPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
             }
         });
 
+        mErrorPage = (ErrorPage) findViewById(R.id.ep_video_list);
     }
 
     @Override
