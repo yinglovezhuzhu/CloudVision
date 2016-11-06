@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.opensource.widget.ZoomableImageView;
-import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.ImageBean;
@@ -50,11 +49,7 @@ public class Img720ViewFragment extends BaseFragment {
             final ImageBean image = args.getParcelable(Config.EXTRA_DATA);
             // 显示图片
             if(null != image) {
-                Picasso.with(getActivity())
-                        .load(image.getImgUrl())
-                        .placeholder(R.drawable.ic_launcher)
-                        .error(R.drawable.ic_launcher)
-                        .into(imageView);
+                loadImage(image.getImgUrl(), R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
             }
         }
     }

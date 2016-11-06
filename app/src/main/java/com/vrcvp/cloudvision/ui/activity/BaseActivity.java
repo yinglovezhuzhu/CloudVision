@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 
 import java.util.List;
@@ -156,7 +157,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      */
 	protected void loadImage(String path, ImageView imageView, int placeholder, int error) {
         Picasso.with(this)
-                .load(path)
+                .load(BuildConfig.HTTP_HOST + path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);

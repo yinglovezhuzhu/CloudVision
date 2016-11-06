@@ -12,6 +12,7 @@ import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VideoBean;
@@ -101,7 +102,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                     return;
                 }
                 Intent i = new Intent(VideoSearchActivity.this, VideoPlayerActivity.class);
-                i.setData(Uri.parse(videoUrl));
+                i.setData(Uri.parse(BuildConfig.HTTP_HOST + videoUrl));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

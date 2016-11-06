@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.ui.activity.ProductDetailActivity;
 

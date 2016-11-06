@@ -5,6 +5,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
@@ -25,8 +26,15 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
      * @param imageView 显示图片的ImageView
      */
     protected void loadImage(Context context, String path, int placeholder, int error, ImageView imageView) {
+        if( null == imageView) {
+            return;
+        }
+        if(StringUtils.isEmpty(path)) {
+            // TODO 设置默认图片
+            return;
+        }
         Picasso.with(context)
-                .load(path)
+                .load(BuildConfig.HTTP_HOST + path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);
@@ -38,13 +46,6 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
      * @param imageView 显示图片的ImageView控件
      */
     protected void loadImage(Context context, String path, ImageView imageView) {
-        if( null == imageView) {
-            return;
-        }
-        if(StringUtils.isEmpty(path)) {
-            // TODO 设置默认图片
-            return;
-        }
-        loadImage(context, path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
+        loadImage(context, BuildConfig.HTTP_HOST + path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
     }
 }

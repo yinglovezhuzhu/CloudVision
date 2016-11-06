@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
@@ -65,7 +66,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
             return;
         }
         Picasso.with(getActivity())
-                .load(path)
+                .load(BuildConfig.HTTP_HOST + path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);

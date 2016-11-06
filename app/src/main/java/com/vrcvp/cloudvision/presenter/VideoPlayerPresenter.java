@@ -144,6 +144,9 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
      * @param videoUri 视频地址
      */
     public void playVideo(Uri videoUri) {
+        if(null == videoUri) {
+            return;
+        }
         // For streams that we expect to be slow to start up, show a
         // progress spinner until playback starts.
         mVideoUri = videoUri;

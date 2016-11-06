@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
+import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.presenter.VideoPlayerPresenter;
-import com.vrcvp.cloudvision.ui.activity.VideoPlayerActivity;
 import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoPlayerView;
@@ -189,10 +189,10 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 break;
             case AdvertiseBean.TYPE_VIDEO:
                 mVideoView.setVisibility(View.VISIBLE);
-                final String url = mData.getOutLink();
+                final String url = mData.getUrl();
                 if(null != mVideoPlayer && !StringUtils.isEmpty(url)) {
 //                        Uri uri = Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4");
-                    final Uri uri = Uri.parse(url);
+                    final Uri uri = Uri.parse(BuildConfig.HTTP_HOST + url);
                     mVideoPlayer.playVideo(uri);
                 } else {
                     mIvPlay.setVisibility(View.VISIBLE);
@@ -233,6 +233,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                         }
                         break;
                     default:
+                        openWebView(mData.getOutLink());
                         break;
                 }
             }
@@ -268,6 +269,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
      * @param url
      */
     private void openWebView(String url) {
+        if(StringUtils.isEmpty(url)) {
+            return;
+        }
         Intent i = new Intent(getActivity(), WebViewActivity.class);
         i.setData(Uri.parse(url));
         startActivity(i);
