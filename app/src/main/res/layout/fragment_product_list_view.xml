@@ -14,7 +14,7 @@
         android:footerDividersEnabled="false"
         android:descendantFocusability="afterDescendants"/>
 
-    <com.vrcvp.cloudvision.ui.widget.ErrorPage
+    <com.vrcvp.cloudvision.ui.widget.TipPageView
         android:id="@+id/ep_product_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

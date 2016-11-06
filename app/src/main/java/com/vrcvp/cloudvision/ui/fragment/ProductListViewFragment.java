@@ -21,7 +21,7 @@ import com.vrcvp.cloudvision.observer.ProductObserver;
 import com.vrcvp.cloudvision.ui.activity.ProductActivity;
 import com.vrcvp.cloudvision.ui.activity.ProductDetailActivity;
 import com.vrcvp.cloudvision.ui.adapter.ProductListViewAdapter;
-import com.vrcvp.cloudvision.ui.widget.ErrorPage;
+import com.vrcvp.cloudvision.ui.widget.TipPageView;
 
 /**
  * 产品列表模式Fragment（列表模式）
@@ -32,7 +32,7 @@ public class ProductListViewFragment extends BaseFragment {
 
     private PullListView mLvProduct;
     private ProductListViewAdapter mAdapter;
-    private ErrorPage mErrorPage;
+    private TipPageView mErrorPage;
 
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
@@ -134,6 +134,6 @@ public class ProductListViewFragment extends BaseFragment {
                 }
             }
         });
-        mErrorPage = (ErrorPage) contentView.findViewById(R.id.ep_product_list_view);
+        mErrorPage = (TipPageView) contentView.findViewById(R.id.ep_product_list_view);
     }
 }

@@ -11,7 +11,7 @@
         android:dividerHeight="0dp"
         android:headerDividersEnabled="false"
         android:footerDividersEnabled="false"/>
-    <com.vrcvp.cloudvision.ui.widget.ErrorPage
+    <com.vrcvp.cloudvision.ui.widget.TipPageView
         android:id="@+id/ep_video_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
