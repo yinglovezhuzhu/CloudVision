@@ -1,6 +1,7 @@
 package com.vrcvp.cloudvision.model;
 
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
@@ -67,6 +68,18 @@ public interface IMainModel extends IModel {
      * 取消查询公告数据的异步线程任务
      */
     void cancelQueryNotice();
+
+    /**
+     * 查询城市天气任务
+     * @param cityName 城市名称
+     * @param callback 回调
+     */
+    void queryCityWeather(String cityName, HttpAsyncTask.Callback<WeatherInfo> callback);
+
+    /**
+     * 取消查询城市天气任务
+     */
+    void cancelQueryWeather();
 
     /**
      * 登出操作

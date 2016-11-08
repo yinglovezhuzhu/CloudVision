@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.view;
 
 import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 
@@ -22,6 +23,12 @@ public interface IMainView {
      * @param bdLocation 百度定位数据
      */
     void onBDLocationUpdate(BDLocation bdLocation);
+
+    /**
+     * 天气数据更新
+     * @param weatherInfo 天气数据，为null说明更新失败
+     */
+    void onWeatherUpdate(WeatherInfo weatherInfo);
 
     /**
      * 公告设置改变

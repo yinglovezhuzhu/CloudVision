@@ -6,11 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.req.QueryAdvertiseReq;
 import com.vrcvp.cloudvision.bean.req.QueryNoticeReq;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
+import com.vrcvp.cloudvision.bean.resp.QueryWeatherResp;
 import com.vrcvp.cloudvision.db.HttpCacheDBUtils;
+import com.vrcvp.cloudvision.db.WeatherDBHelper;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.utils.DataManager;
@@ -32,6 +35,7 @@ public class MainModel implements IMainModel {
 
     private HttpAsyncTask<QueryAdvertiseResp> mQueryAdvertiseTask;
     private HttpAsyncTask<QueryNoticeResp> mQueryNoticeTask;
+    private HttpAsyncTask<QueryWeatherResp> mQueryWeatherTask;
 
     public MainModel(Context context) {
         this.mContext = context;
@@ -237,6 +241,48 @@ public class MainModel implements IMainModel {
     public void cancelQueryNotice() {
         if(null != mQueryNoticeTask) {
             mQueryNoticeTask.cancel();
+        }
+    }
+
+    @Override
+    public void queryCityWeather(String cityName, final HttpAsyncTask.Callback<WeatherInfo> callback) {
+        final String cityCode = WeatherDBHelper.getCityCode(mContext, cityName);
+        if(StringUtils.isEmpty(cityCode)) {
+            if(null != callback) {
+                callback.onResult(null);
+            }
+            return;
+        }
+        mQueryWeatherTask = new HttpAsyncTask<>();
+        mQueryWeatherTask.doGet(Config.API_WEATHER + cityCode + ".html", null, null,
+                QueryWeatherResp.class, new HttpAsyncTask.Callback<QueryWeatherResp>() {
+            @Override
+            public void onPreExecute() {
+                if(null != callback) {
+                    callback.onPreExecute();
+                }
+            }
+
+            @Override
+            public void onCanceled() {
+                if(null != callback) {
+                    callback.onCanceled();
+                }
+            }
+
+            @Override
+            public void onResult(QueryWeatherResp result) {
+                if(null != callback) {
+                    callback.onResult(null == result ? null : result.getWeatherinfo());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void cancelQueryWeather() {
+        if(null != mQueryWeatherTask) {
+            mQueryWeatherTask.cancel();
         }
     }
 

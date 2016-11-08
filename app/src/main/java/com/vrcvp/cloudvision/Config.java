@@ -24,6 +24,10 @@ public class Config {
     public static final String SP_KEY_MAIN_MENU_POSITION_Y_PREFIX = "main_menu_position_y_";
     /** SP配置缓存文件key：激活码（String） **/
     public static final String SP_KEY_ACTIVATE_CODE = "activate_code";
+    /** 城市代码数据库文件MD5 **/
+    public static final String SP_KEY_CITY_CODE_DB_FILE_MD5 = "city_code_database_file_md5";
+    /** 城市代码数据库文件是否准备好（boolean） **/
+    public static final String SP_KEY_CITY_CODE_DB_FILE_READY = "city_code_database_file_ready";
 
 
 //    /** HTTP请求Host **/

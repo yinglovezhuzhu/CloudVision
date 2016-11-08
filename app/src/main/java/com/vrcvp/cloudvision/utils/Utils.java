@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.vrcvp.cloudvision.Config;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -97,6 +99,35 @@ public class Utils {
     }
 
     /**
+     * 获取文件MD5
+     * @param is InputStream对象
+     * @return MD5字符串
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
+    public static String getFileMD5(InputStream is) throws IOException, NoSuchAlgorithmException{
+        if(null == is) {
+            return null;
+        }
+        try {
+            byte[] buffer = new byte[1024 * 16]; // 16KB
+            final MessageDigest md5 = MessageDigest.getInstance("MD5");
+            int len;
+            while((len = is.read(buffer)) != -1){
+                md5.update(buffer, 0, len);
+            }
+            return convertByteToHex(md5.digest());
+        } finally {
+            try {
+                is.close();
+            } catch (Exception e) {
+                // do nothing
+            }
+        }
+    }
+
+
+    /**
      * 获取手机特征号(设备号)
      * @return 设备特征号，平板等没有的可能返回空
      */
@@ -171,11 +202,7 @@ public class Utils {
         return wifiInfo.getMacAddress();
     }
 
-//    public static String getMac(Context context) {
-//        return "AA:BB:CC:DD:EE";
-//    }
-
-    private static String convertByteToHex(byte[] byteData) {
+    public static String convertByteToHex(byte[] byteData) {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < byteData.length; i++) {

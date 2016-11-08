@@ -39,7 +39,8 @@
                 android:layout_marginEnd="@dimen/contentPadding_level1"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_weather_lot_cloud"
-                android:contentDescription="@null"/>
+                android:contentDescription="@null"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/tv_main_top_bar_weather"
                 style="@style/MainTopBarTextTheme"
@@ -49,7 +50,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:drawablePadding="@dimen/contentPadding_level2"
-                android:text="晴 33℃~36℃"/>
+                android:visibility="gone"/>
         </RelativeLayout>
         <fragment
             android:id="@+id/fragment_main_add_one"

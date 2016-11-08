@@ -6,9 +6,15 @@ import android.widget.EditText;
 
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.resp.ActivateResp;
+import com.vrcvp.cloudvision.db.WeatherDBHelper;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.ActivatePresenter;
+import com.vrcvp.cloudvision.utils.LogUtils;
+import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IActivateView;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 激活页面
@@ -29,6 +35,11 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
         initView();
 
         mActivatePresenter = new ActivatePresenter(this, this);
+
+
+        LogUtils.e("BBBBBBBB", WeatherDBHelper.getCityCode(this, "广州市"));
+        LogUtils.e("BBBBBBBB", WeatherDBHelper.getCityCode(this, "广州"));
+
     }
 
     @Override

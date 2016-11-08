@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision;
 
 import android.app.Application;
 
+import com.vrcvp.cloudvision.db.WeatherDBHelper;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 
@@ -17,6 +18,7 @@ public class CVApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        WeatherDBHelper.copyDatabaseFileIfNeeded(this);
         NetworkManager.getInstance().initialized(this);
         DataManager.getInstance().initialize(this);
         JPushInterface.setDebugMode(BuildConfig.DEBUG);

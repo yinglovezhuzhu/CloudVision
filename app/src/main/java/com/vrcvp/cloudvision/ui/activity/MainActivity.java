@@ -30,6 +30,7 @@ import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
@@ -203,10 +204,22 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onBDLocationUpdate(BDLocation bdLocation) {
         if(null == bdLocation) {
-            mTvTopBarCity.setText("");
-        } else {
-            mTvTopBarCity.setText(bdLocation.getCity());
+            mTvTopBarCity.setVisibility(View.GONE);
+            return;
         }
+        mTvTopBarCity.setVisibility(View.VISIBLE);
+        mTvTopBarCity.setText(bdLocation.getCity());
+    }
+
+    @Override
+    public void onWeatherUpdate(WeatherInfo weatherInfo) {
+        if(null == weatherInfo) {
+            mTvTopBarWeather.setVisibility(View.GONE);
+            return;
+        }
+        mTvTopBarWeather.setVisibility(View.VISIBLE);
+        mTvTopBarWeather.setText(String.format(getString(R.string.str_weather_format),
+                weatherInfo.getWeather(), weatherInfo.getTemp1(), weatherInfo.getTemp2()));
     }
 
     @Override

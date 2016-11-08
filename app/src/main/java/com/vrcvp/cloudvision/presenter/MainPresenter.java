@@ -9,6 +9,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
@@ -171,10 +172,26 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public void onReceiveLocation(BDLocation bdLocation) {
         //Receive Location
         mMainView.onBDLocationUpdate(bdLocation);
-//        if(null != bdLocation && !StringUtils.isEmpty(bdLocation.getCity())) {
+        if(null != bdLocation && !StringUtils.isEmpty(bdLocation.getCity())) {
+            mMainModel.queryCityWeather(bdLocation.getCity(), new HttpAsyncTask.Callback<WeatherInfo>() {
+                @Override
+                public void onPreExecute() {
+
+                }
+
+                @Override
+                public void onCanceled() {
+
+                }
+
+                @Override
+                public void onResult(WeatherInfo result) {
+                    mMainView.onWeatherUpdate(result);
+                }
+            });
 //            mBDLocation = bdLocation;
 //            mLocationClient.stop();
-//        }
+        }
     }
 
     /**
