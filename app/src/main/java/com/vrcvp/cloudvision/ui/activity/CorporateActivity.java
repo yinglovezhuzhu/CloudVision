@@ -124,7 +124,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                         mTvCorporateName.setText(corporate.getName());
                         final String logo = corporate.getLogo();
                         if(!StringUtils.isEmpty(logo)) {
-                            loadImage(logo, mIvCorporateLogo, R.drawable.ic_launcher, R.drawable.ic_launcher);
+                            loadImage(logo, mIvCorporateLogo, R.drawable.default_logo, R.drawable.default_logo);
                         }
                     }
                     break;

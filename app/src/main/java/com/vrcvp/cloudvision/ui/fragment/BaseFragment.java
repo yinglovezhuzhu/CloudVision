@@ -62,7 +62,11 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param imageView 显示图片的ImageView
      */
     protected void loadImage(String path, int placeholder, int error, ImageView imageView) {
-        if(StringUtils.isEmpty(path) || null == imageView) {
+        if( null == imageView) {
+            return;
+        }
+        if(StringUtils.isEmpty(path)) {
+            imageView.setImageResource(placeholder);
             return;
         }
         Picasso.with(getActivity())
@@ -78,9 +82,6 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param imageView 显示图片的ImageView控件
      */
     protected void loadImage(String path, ImageView imageView) {
-        if(StringUtils.isEmpty(path) || null == imageView) {
-            return;
-        }
-        loadImage(path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
+        loadImage(path, R.drawable.default_img, R.drawable.default_img, imageView);
     }
 }

@@ -70,7 +70,7 @@
     <!-- 产品界面 -->
     <dimen name="product_bottom_btn_minSize">25dp</dimen>
     <dimen name="product_pager_view_index_view_size">85dp</dimen>
-    <dimen name="product_list_view_img_size">100dp</dimen>
+    <dimen name="product_list_view_img_size">90dp</dimen>
 
     <!-- 产品详情 -->
     <dimen name="product_detail_img_page_margin">0dp</dimen>

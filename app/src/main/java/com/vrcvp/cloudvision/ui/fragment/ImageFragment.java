@@ -68,7 +68,7 @@ public class ImageFragment extends BaseFragment {
             }
         });
 
-        loadImage(args.getString(ARG_PATH), imageView);
+        loadImage(args.getString(ARG_PATH), R.drawable.default_img2, R.drawable.default_img2, imageView);
     }
 
 

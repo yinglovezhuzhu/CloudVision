@@ -101,7 +101,7 @@ class ProductGridViewItemAdapter extends AbsBaseAdapter {
 
         final ProductBean product = getItem(i);
 
-        loadImage(mContext, product.getImageUrl(), viewHolder.ivImg);
+        loadImage(mContext, product.getImageUrl(), R.drawable.default_img2, R.drawable.default_img2, viewHolder.ivImg);
         viewHolder.tvDesc.setText(product.getName());
         viewHolder.tvPrice.setText(String.format(mPriceFormat, product.getPrice()));
 

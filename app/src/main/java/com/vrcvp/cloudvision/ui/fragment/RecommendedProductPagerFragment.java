@@ -64,7 +64,7 @@ public class RecommendedProductPagerFragment extends BaseFragment {
         if(null != args && args.containsKey(Config.EXTRA_DATA)) {
             final ProductBean product = args.getParcelable(Config.EXTRA_DATA);
             if(null != product) {
-                loadImage(product.getImageUrl(), ivImg);
+                loadImage(product.getImageUrl(), R.drawable.default_img2, R.drawable.default_img2, ivImg);
                 tvDesc.setText(product.getName());
                 tvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), product.getPrice()));
 

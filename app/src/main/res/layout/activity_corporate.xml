@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/corporate_header_logo_size"
                 android:layout_height="@dimen/corporate_header_logo_size"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/default_logo"
                 imagecontrol:border_color="@color/colorLightGray"
                 imagecontrol:border_thickness="1dp"
                 imagecontrol:corner_rate="2" />

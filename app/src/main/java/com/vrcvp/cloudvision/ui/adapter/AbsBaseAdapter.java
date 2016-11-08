@@ -30,7 +30,7 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
             return;
         }
         if(StringUtils.isEmpty(path)) {
-            // TODO 设置默认图片
+            imageView.setImageResource(placeholder);
             return;
         }
         Picasso.with(context)
@@ -46,6 +46,6 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
      * @param imageView 显示图片的ImageView控件
      */
     protected void loadImage(Context context, String path, ImageView imageView) {
-        loadImage(context, path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
+        loadImage(context, path, R.drawable.default_img, R.drawable.default_img, imageView);
     }
 }

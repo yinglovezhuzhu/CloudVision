@@ -7,5 +7,6 @@
         android:id="@+id/iv_img_720_view_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/default_img"/>
 </LinearLayout>

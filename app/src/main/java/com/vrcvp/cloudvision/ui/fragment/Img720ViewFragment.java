@@ -49,7 +49,7 @@ public class Img720ViewFragment extends BaseFragment {
             final ImageBean image = args.getParcelable(Config.EXTRA_DATA);
             // 显示图片
             if(null != image) {
-                loadImage(image.getImgUrl(), R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
+                loadImage(image.getImgUrl(), R.drawable.default_img2, R.drawable.default_img2, imageView);
             }
         }
     }

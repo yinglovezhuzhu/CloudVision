@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.util.List;
 
@@ -145,7 +146,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * @param imageView 显示图片的ImageView控件
      */
 	protected void loadImage(String path, ImageView imageView) {
-		loadImage(path, imageView, R.drawable.ic_launcher, R.drawable.ic_launcher);
+		loadImage(path, imageView, R.drawable.default_img, R.drawable.default_img);
 	}
 
     /**
@@ -156,6 +157,13 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param error 加载错误占位图
      */
 	protected void loadImage(String path, ImageView imageView, int placeholder, int error) {
+		if( null == imageView) {
+			return;
+		}
+		if(StringUtils.isEmpty(path)) {
+			imageView.setImageResource(placeholder);
+            return;
+		}
         Picasso.with(this)
                 .load(path)
                 .placeholder(placeholder)

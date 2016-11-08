@@ -17,6 +17,8 @@
             android:layout_marginTop="@dimen/contentPadding_level4"
             android:layout_marginBottom="@dimen/contentPadding_level4"
             android:scaleType="fitCenter"
+            android:src="@drawable/default_img"
+            android:adjustViewBounds="true"
             android:contentDescription="@null"/>
         <LinearLayout
             android:orientation="vertical"
@@ -33,8 +35,7 @@
                 android:gravity="start|top"
                 android:minLines="3"
                 android:maxLines="3"
-                android:ellipsize="end"
-                android:text="中国黄金500g,绝对真金，柜金真金，柜台验货，带证书"/>
+                android:ellipsize="end"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -48,8 +49,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="@dimen/textSize_level10"
-                    android:textColor="@color/colorTextRed"
-                    android:text="100"/>
+                    android:textColor="@color/colorTextRed"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
