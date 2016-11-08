@@ -84,7 +84,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                     return;
                 }
                 Intent i = new Intent(VideoActivity.this, VideoPlayerActivity.class);
-                i.setData(Uri.parse(BuildConfig.HTTP_HOST + videoUrl));
+                i.setData(Uri.parse(videoUrl));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

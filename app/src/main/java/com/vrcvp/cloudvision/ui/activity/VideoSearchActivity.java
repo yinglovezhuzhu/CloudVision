@@ -102,7 +102,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                     return;
                 }
                 Intent i = new Intent(VideoSearchActivity.this, VideoPlayerActivity.class);
-                i.setData(Uri.parse(BuildConfig.HTTP_HOST + videoUrl));
+                i.setData(Uri.parse(videoUrl));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

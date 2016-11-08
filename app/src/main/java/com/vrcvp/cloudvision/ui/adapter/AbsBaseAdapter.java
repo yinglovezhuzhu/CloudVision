@@ -34,7 +34,7 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
             return;
         }
         Picasso.with(context)
-                .load(BuildConfig.HTTP_HOST + path)
+                .load(path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);
@@ -46,6 +46,6 @@ public abstract class AbsBaseAdapter extends BaseAdapter {
      * @param imageView 显示图片的ImageView控件
      */
     protected void loadImage(Context context, String path, ImageView imageView) {
-        loadImage(context, BuildConfig.HTTP_HOST + path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
+        loadImage(context, path, R.drawable.ic_launcher, R.drawable.ic_launcher, imageView);
     }
 }

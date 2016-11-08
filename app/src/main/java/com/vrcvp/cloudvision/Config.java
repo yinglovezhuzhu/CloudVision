@@ -27,31 +27,31 @@ public class Config {
 
 
 //    /** HTTP请求Host **/
-    public static final String API_HOST = BuildConfig.HTTP_HOST + "/yhy-app-web";
+//    public static final String API_HOST = BuildConfig.HTTP_HOST;
     /** 接口字--激活 **/
-    public static final String API_ACTIVATE = API_HOST + "/activate/check";
+    public static final String API_ACTIVATE = BuildConfig.HTTP_HOST + "/activate/check";
     /** 首页广告 **/
-    public static final String API_ADVERTISE_LIST = API_HOST + "/advertise/list";
+    public static final String API_ADVERTISE_LIST = BuildConfig.HTTP_HOST + "/advertise/list";
     /** 首页公告 **/
-    public static final String API_NOTICE_LIST = API_HOST + "/notice/list";
+    public static final String API_NOTICE_LIST = BuildConfig.HTTP_HOST + "/notice/list";
     /** 企业信息 **/
-    public static final String API_CORPORATE_INFO = API_HOST + "/enterprise/one";
+    public static final String API_CORPORATE_INFO = BuildConfig.HTTP_HOST + "/enterprise/one";
     /** 推荐产品 **/
-    public static final String API_RECOMMENDED_PRODUCT = API_HOST + "/recommendProdInfo/queryRecommendProdInfo";
+    public static final String API_RECOMMENDED_PRODUCT = BuildConfig.HTTP_HOST + "/recommendProdInfo/queryRecommendProdInfo";
     /** 产品列表 **/
-    public static final String API_PRODUCT_LIST = API_HOST + "/product/queryProductList";
+    public static final String API_PRODUCT_LIST = BuildConfig.HTTP_HOST + "/product/queryProductList";
     /** 产品搜索 **/
-    public static final String API_PRODUCT_SEARCH = API_HOST + "/productSearch/productSearch";
+    public static final String API_PRODUCT_SEARCH = BuildConfig.HTTP_HOST + "/productSearch/productSearch";
     /** 产品详情 **/
-    public static final String API_PRODUCT_DETAIL = API_HOST + "/productDetail/queryProductDetail";
+    public static final String API_PRODUCT_DETAIL = BuildConfig.HTTP_HOST + "/productDetail/queryProductDetail";
     /** 产品SKU价格查询 **/
-    public static final String API_PRODUCT_SKU_PRICE = API_HOST + "/product/findPrice";
+    public static final String API_PRODUCT_SKU_PRICE = BuildConfig.HTTP_HOST + "/product/findPrice";
     /** 推荐视频 **/
-    public static final String API_RECOMMENDED_VIDEO = API_HOST + "/video/recommend";
+    public static final String API_RECOMMENDED_VIDEO = BuildConfig.HTTP_HOST + "/video/recommend";
     /** 视频列表 **/
-    public static final String API_VIDEO_LIST = API_HOST + "/video/cloud";
+    public static final String API_VIDEO_LIST = BuildConfig.HTTP_HOST + "/video/cloud";
     /** 视频搜索 **/
-    public static final String API_VIDEO_SEARCH = API_HOST + "/video/list";
+    public static final String API_VIDEO_SEARCH = BuildConfig.HTTP_HOST + "/video/list";
 
 
 

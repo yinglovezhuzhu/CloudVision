@@ -157,7 +157,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      */
 	protected void loadImage(String path, ImageView imageView, int placeholder, int error) {
         Picasso.with(this)
-                .load(BuildConfig.HTTP_HOST + path)
+                .load(path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);

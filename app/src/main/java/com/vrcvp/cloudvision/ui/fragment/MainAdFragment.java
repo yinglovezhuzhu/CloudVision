@@ -192,7 +192,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 final String url = mData.getUrl();
                 if(null != mVideoPlayer && !StringUtils.isEmpty(url)) {
 //                        Uri uri = Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4");
-                    final Uri uri = Uri.parse(BuildConfig.HTTP_HOST + url);
+                    final Uri uri = Uri.parse(url);
                     mVideoPlayer.playVideo(uri);
                 } else {
                     mIvPlay.setVisibility(View.VISIBLE);

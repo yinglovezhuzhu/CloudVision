@@ -66,7 +66,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
             return;
         }
         Picasso.with(getActivity())
-                .load(BuildConfig.HTTP_HOST + path)
+                .load(path)
                 .placeholder(placeholder)
                 .error(error)
                 .into(imageView);
