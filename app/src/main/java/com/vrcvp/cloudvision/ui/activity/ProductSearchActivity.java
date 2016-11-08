@@ -115,6 +115,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(EditorInfo.IME_ACTION_SEARCH == actionId) {
                     mProductSearchPresenter.search();
+                    hideSoftInputFromWindow(mEtKeyword);
                     return true;
                 }
                 return false;
