@@ -6,8 +6,6 @@ import android.widget.EditText;
 
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.resp.ActivateResp;
-import com.vrcvp.cloudvision.bean.resp.BaseResp;
-import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.ActivatePresenter;
 import com.vrcvp.cloudvision.view.IActivateView;
@@ -31,7 +29,6 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
         initView();
 
         mActivatePresenter = new ActivatePresenter(this, this);
-
     }
 
     @Override
