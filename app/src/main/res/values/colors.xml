@@ -21,6 +21,10 @@
     <color name="colorTextHint">#FFBEBEBE</color>
     <!-- 文字红色 -->
     <color name="colorTextRed">#FFFB2525</color>
+    <!-- 文字淡红色 -->
+    <color name="colorTextLightRed">#FFFF5F5F</color>
+    <!-- 文字橙色 -->
+    <color name="colorTextOrange">#FFF5A623</color>
 
 
     <!-- 激活按钮通常颜色 -->

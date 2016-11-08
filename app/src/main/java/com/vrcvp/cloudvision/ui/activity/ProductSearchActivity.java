@@ -2,8 +2,11 @@ package com.vrcvp.cloudvision.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
@@ -15,6 +18,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.ProductSearchPresenter;
 import com.vrcvp.cloudvision.ui.adapter.ProductGridViewAdapter;
+import com.vrcvp.cloudvision.ui.widget.TipPageView;
 import com.vrcvp.cloudvision.view.IProductSearchView;
 
 import java.util.List;
@@ -29,6 +33,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
     private ProductSearchPresenter mProductSearchPresenter;
 
     private EditText mEtKeyword;
+    private TipPageView mTipPageView;
 
     private PullListView mLvProduct;
     private ProductGridViewAdapter mAdapter;
@@ -74,6 +79,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
 
     private void initView() {
         mEtKeyword = (EditText) findViewById(R.id.et_product_search_keyword);
+        mTipPageView = (TipPageView) findViewById(R.id.tpv_product_search);
         findViewById(R.id.btn_product_search).setOnClickListener(this);
         findViewById(R.id.ibtn_product_search_back).setOnClickListener(this);
 
@@ -104,6 +110,16 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                 mProductSearchPresenter.nextPage();
             }
         });
+        mEtKeyword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(EditorInfo.IME_ACTION_SEARCH == actionId) {
+                    mProductSearchPresenter.search();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -129,18 +145,25 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                     List<ProductBean> products = result.getData();
                     if(null == products || products.isEmpty()) {
                         // TODO 错误
+                        mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data, R.color.colorTextOrange);
+                        mTipPageView.setVisibility(View.VISIBLE);
                     } else {
                         mAdapter.addAll(products, true);
+                        mTipPageView.setVisibility(View.GONE);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // TODO 无网络，读取缓存错误
+                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error, R.color.colorTextLightRed);
+                    mTipPageView.setVisibility(View.VISIBLE);
                     break;
                 case HttpStatus.SC_NO_MORE_DATA:
                     showShortToast(R.string.str_no_more_data);
                     break;
                 default:
                     // TODO 错误
+                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error, R.color.colorTextLightRed);
+                    mTipPageView.setVisibility(View.VISIBLE);
                     break;
             }
         }

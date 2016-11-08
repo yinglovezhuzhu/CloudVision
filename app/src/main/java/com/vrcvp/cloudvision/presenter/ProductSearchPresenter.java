@@ -83,7 +83,7 @@ public class ProductSearchPresenter {
                     mHasMore = null != result.getData() && !result.getData().isEmpty();
                     mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
                 }
-                if(!mHasMore) {
+                if(!mHasMore && mPage > 1) {
                     if(null == result) {
                         result = new QueryProductResp();
                     }
