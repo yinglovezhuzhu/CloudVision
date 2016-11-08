@@ -20,8 +20,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_video_player_root"
     android:layout_width="match_parent" 
-    android:layout_height="match_parent"
-    android:background="@color/colorVideoPlayerBackground">
+    android:layout_height="match_parent">
 
     <VideoView android:id="@+id/video_player_surface_view"
             android:layout_width="match_parent"
