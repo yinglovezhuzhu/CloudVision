@@ -12,7 +12,6 @@ import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
-import com.vrcvp.cloudvision.utils.SharedPrefHelper;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 
@@ -40,7 +39,7 @@ public class ActivateModel implements IActivateModel {
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             mActivateTask = new HttpAsyncTask<>();
-            mActivateTask.execute(url, reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
+            mActivateTask.doPost(url, reqParam, ActivateResp.class, new HttpAsyncTask.Callback<ActivateResp>() {
                 @Override
                 public void onPreExecute() {
                     if(null != callback) {

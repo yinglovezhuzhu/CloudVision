@@ -6,6 +6,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -15,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -49,7 +51,7 @@ public final class HttpRequest {
 	private static final int DOWNLOAD_BUFFER_SIZE = 1024 * 1024 * 8;
 
 	/**
-	 * HTTP POST请求
+	 * HTTP GET请求
 	 * @param urlString URL地址
 	 * @param params Map参数
 	 * @return 网络请求结果 {@linkplain HttpResult}类型
@@ -117,6 +119,96 @@ public final class HttpRequest {
 			if (null != os) {
 				os.close();
 			}
+			if (null != connection) {
+				connection.disconnect();
+			}
+		}
+	}
+
+	/**
+	 * HTTP POST请求
+	 * @param urlString URL地址
+     * @param header 请求Header
+	 * @param params Map参数
+	 * @return 网络请求结果 {@linkplain HttpResult}类型
+	 * @throws MalformedURLException 异常
+	 * @throws UnsupportedEncodingException 不支持编码异常
+	 * @throws ProtocolException 协议异常
+	 * @throws IOException IO异常
+	 */
+	public static HttpResult<String> httpGetRequest(String urlString, Map<String, String> header,
+                                                    Map<String, Object> params)
+			throws MalformedURLException, UnsupportedEncodingException, ProtocolException, IOException {
+
+		LogUtils.i(TAG, "HTTP request url: " + urlString);
+
+		String paramString = "";
+		if ((null != params) && (!params.isEmpty())) {
+			paramString = getParamsString(params, true, true);
+			LogUtils.i(TAG, "HTTP request parameter: " + paramString);
+		}
+
+		URL url = new URL(urlString + "?" + paramString);
+		HttpURLConnection connection = null;
+		HttpResult<String> httpResult;
+		try {
+			connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(CONNECTION_TIMEOUT);
+            connection.setRequestProperty("Accept", "*/*");
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Content-type", "text/html");
+            connection.setRequestProperty("Referer", urlString);
+            connection.setRequestProperty( "Accept-Encoding", "" );
+            // 设置用户代理
+            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; "
+                    + "MSIE 8.0; Windows NT 5.2;"
+                    + " Trident/4.0; .NET CLR 1.1.4322;"
+                    + ".NET CLR 2.0.50727; " + ".NET CLR 3.0.04506.30;"
+                    + " .NET CLR 3.0.4506.2152; " + ".NET CLR 3.5.30729)");
+
+            if(null != header && !header.isEmpty()) {
+                final Set<Map.Entry<String, String>> entrySet = header.entrySet();
+                for (Map.Entry<String, String> entry : entrySet) {
+                    connection.addRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
+
+			connection.connect();
+
+            String resultString = readFromStream(connection.getInputStream());
+
+			LogUtils.i(TAG, "HTTP request response data: " + resultString);
+
+			httpResult = new HttpResult<String>(connection.getResponseCode(),
+					connection.getResponseMessage());
+			httpResult.setResponseData(resultString);
+			return httpResult;
+		} catch (EOFException e) {
+			String resultString;
+			if (null != connection) {
+				resultString = readFromStream(connection.getErrorStream());
+				httpResult = new HttpResult<String>(connection.getResponseCode(),
+						connection.getResponseMessage());
+				httpResult.setResponseData(resultString);
+			} else {
+				httpResult = new HttpResult<String>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
+						+ e.getMessage());
+			}
+			return httpResult;
+		} catch (FileNotFoundException e) {
+			if (null != connection) {
+				String resultString = readFromStream(connection.getErrorStream());
+				httpResult = new HttpResult<String>(connection.getResponseCode(),
+						connection.getResponseMessage());
+				httpResult.setResponseData(resultString);
+			} else {
+				httpResult = new HttpResult<String>(HttpStatus.SC_NOT_FOUND, "Page not found:"
+						+ e.getMessage());
+			}
+			return httpResult;
+		} finally {
 			if (null != connection) {
 				connection.disconnect();
 			}
@@ -301,7 +393,11 @@ public final class HttpRequest {
 			return new String(data, DEFAULT_CHARSET);
 		} finally {
 			if (null != baos) {
-				baos.close();
+                try {
+				    baos.close();
+                } catch (Exception e) {
+                    // do nothing
+                }
 			}
 		}
 	}

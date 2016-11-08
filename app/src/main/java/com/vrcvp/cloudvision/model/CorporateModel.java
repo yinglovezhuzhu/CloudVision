@@ -5,7 +5,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
-import com.vrcvp.cloudvision.bean.CorporateBean;
 import com.vrcvp.cloudvision.bean.req.QueryCorporateReq;
 import com.vrcvp.cloudvision.bean.req.QueryProductReq;
 import com.vrcvp.cloudvision.bean.req.QueryVideoReq;
@@ -44,7 +43,7 @@ public class CorporateModel implements ICorporateModel {
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             mQueryCorporateTask = new HttpAsyncTask<>();
-            mQueryCorporateTask.execute(url, reqParam,
+            mQueryCorporateTask.doPost(url, reqParam,
                     QueryCorporateResp.class, new HttpAsyncTask.Callback<QueryCorporateResp>() {
                         @Override
                         public void onPreExecute() {
@@ -120,7 +119,7 @@ public class CorporateModel implements ICorporateModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,
+            new HttpAsyncTask<QueryProductResp>().doPost(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {
@@ -191,7 +190,7 @@ public class CorporateModel implements ICorporateModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,
+            new HttpAsyncTask<QueryVideoResp>().doPost(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {

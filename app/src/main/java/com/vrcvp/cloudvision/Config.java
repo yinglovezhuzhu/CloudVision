@@ -54,6 +54,10 @@ public class Config {
     public static final String API_VIDEO_SEARCH = BuildConfig.HTTP_HOST + "/video/list";
 
 
+    /** 天气查询 **/
+    public static final String API_WEATHER = "http://www.weather.com.cn/data/cityinfo/";
+
+
 
     /** Intent传参Data的key **/
     public static final String EXTRA_DATA = "extra_data";

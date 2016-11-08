@@ -36,7 +36,7 @@ public class ProductModel implements IProductModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>().execute(url, reqParam,
+            new HttpAsyncTask<QueryProductResp>().doPost(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {

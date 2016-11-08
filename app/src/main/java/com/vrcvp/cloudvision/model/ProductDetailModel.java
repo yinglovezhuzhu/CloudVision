@@ -41,7 +41,7 @@ public class ProductDetailModel implements IProductDetailModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductDetailResp>().execute(url, reqParam,
+            new HttpAsyncTask<QueryProductDetailResp>().doPost(url, reqParam,
                     QueryProductDetailResp.class, new HttpAsyncTask.Callback<QueryProductDetailResp>() {
                         @Override
                         public void onPreExecute() {
@@ -109,7 +109,7 @@ public class ProductDetailModel implements IProductDetailModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QuerySkuPriceResp>().execute(url, reqParam,
+            new HttpAsyncTask<QuerySkuPriceResp>().doPost(url, reqParam,
                     QuerySkuPriceResp.class, new HttpAsyncTask.Callback<QuerySkuPriceResp>() {
                         @Override
                         public void onPreExecute() {

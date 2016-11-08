@@ -21,14 +21,16 @@ public class HttpAsyncTask<B extends BaseResp> {
 	}
 
 	/**
-	 * 执行一个异步网络请求
+	 * 执行一个异步网络POST请求
 	 * @param url 请求URL地址
 	 * @param reqParamBean 请求参数Bean
 	 * @param resultClass 结果数据实体类Class
 	 * @param callback 毁掉
 	 */
-	public void execute(final String url, final Object reqParamBean,
-						final Class<? extends BaseResp> resultClass, final Callback<B> callback) {
+	public void doPost(final String url, final Object reqParamBean,
+					   final Class<? extends BaseResp> resultClass, final Callback<B> callback) {
+		cancel();
+
 		mTask = new AsyncTask<Object, Integer, B>(){
 			
 			@Override
@@ -92,7 +94,80 @@ public class HttpAsyncTask<B extends BaseResp> {
 		};
 		mTask.execute(reqParamBean);
 	}
-	
+	/**
+	 * 执行一个异步网络POST请求
+	 * @param url 请求URL地址
+	 * @param reqParamBean 请求参数Bean
+	 * @param resultClass 结果数据实体类Class
+	 * @param callback 毁掉
+	 */
+	public void doGet(final String url, final Map<String, String> header, final Object reqParamBean,
+					   final Class<? extends BaseResp> resultClass, final Callback<B> callback) {
+		cancel();
+		mTask = new AsyncTask<Object, Integer, B>(){
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				if(null != callback) {
+					callback.onPreExecute();
+				}
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected B doInBackground(Object... params) {
+
+				Object paramsBean = params[0];
+				Map<String, Object> paramsMap = new HashMap<String, Object>();
+				if(null != paramsBean) {
+					paramsMap.putAll(BeanRefUtils.getFieldValueMap(paramsBean));
+				}
+
+				BaseResp errorResult = null;
+				try {
+                    errorResult = (BaseResp) resultClass.newInstance();
+					HttpResult<String> httpResult = HttpRequest.httpGetRequest(url, header, paramsMap);
+					String responseData = httpResult.getResponseData();
+					if (HttpStatus.SC_OK == httpResult.getResponseCode()) {
+						return (B) new Gson().fromJson(responseData, resultClass);
+					} else {
+						errorResult.setHttpCode(httpResult.getResponseCode());
+						errorResult.setMsg(httpResult.getResponseMessage());
+					}
+				} catch (IOException|IllegalAccessException|InstantiationException e) {
+					e.printStackTrace();
+                    if(null != errorResult) {
+                        errorResult.setHttpCode(HttpStatus.SC_EXPECTATION_FAILED);
+                        errorResult.setMsg(e.getMessage());
+                    }
+				}
+
+				return (B) errorResult;
+			}
+
+			@Override
+			protected void onPostExecute(B result) {
+				super.onPostExecute(result);
+                if(isCancelled()) {
+                    if(null != callback) {
+                        callback.onCanceled();
+                    }
+                    return;
+                }
+				if(null != callback) {
+					if(isCancelled()) {
+						callback.onCanceled();
+						return;
+					}
+					callback.onResult(result);
+				}
+			}
+
+		};
+		mTask.execute(reqParamBean);
+	}
+
 	public void cancel() {
 		if(null != mTask && !mTask.isCancelled()) {
 			mTask.cancel(true);

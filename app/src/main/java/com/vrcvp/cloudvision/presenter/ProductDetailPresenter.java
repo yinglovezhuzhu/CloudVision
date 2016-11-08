@@ -11,7 +11,6 @@ import com.vrcvp.cloudvision.model.ProductDetailModel;
 import com.vrcvp.cloudvision.view.IProductDetailView;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 产品详情Presenter

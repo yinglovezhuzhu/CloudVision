@@ -36,7 +36,7 @@ public class VideoSearchModel implements IVideoSearchModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>().execute(url, reqParam,
+            new HttpAsyncTask<QueryVideoResp>().doPost(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {

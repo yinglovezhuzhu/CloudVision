@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.NoticeBean;
-import com.vrcvp.cloudvision.bean.req.PageReq;
 import com.vrcvp.cloudvision.bean.req.QueryAdvertiseReq;
 import com.vrcvp.cloudvision.bean.req.QueryNoticeReq;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
@@ -87,7 +86,7 @@ public class MainModel implements IMainModel {
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             mQueryAdvertiseTask = new HttpAsyncTask<>();
-            mQueryAdvertiseTask.execute(url, reqParam,
+            mQueryAdvertiseTask.doPost(url, reqParam,
                     QueryAdvertiseResp.class, new HttpAsyncTask.Callback<QueryAdvertiseResp>() {
                 public void onPreExecute() {
                     if(null != callback) {
@@ -164,7 +163,7 @@ public class MainModel implements IMainModel {
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
             mQueryNoticeTask = new HttpAsyncTask<>();
-            mQueryNoticeTask.execute(url, reqParam,
+            mQueryNoticeTask.doPost(url, reqParam,
                     QueryNoticeResp.class, new HttpAsyncTask.Callback<QueryNoticeResp>() {
                         public void onPreExecute() {
                             if(null != callback) {
