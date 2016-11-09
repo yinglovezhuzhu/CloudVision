@@ -8,6 +8,7 @@
     <string name="str_cancel">取消</string>
     <string name="str_no_data">没有相关数据</string>
     <string name="str_network_error">网络连接失败</string>
+    <string name="str_touch_to_refresh">点击刷新</string>
 
     <!-- 激活 -->
     <string name="str_please_input_activation_code">请输入激活码</string>

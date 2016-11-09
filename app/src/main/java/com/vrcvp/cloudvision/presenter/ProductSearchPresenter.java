@@ -33,11 +33,12 @@ public class ProductSearchPresenter {
      * 搜索
      */
     public void search() {
-        mKeyword = mView.getKeyword();
-        if(StringUtils.isEmpty(mKeyword)) {
+        final String keyword = mView.getKeyword();
+        if(StringUtils.isEmpty(mKeyword) && StringUtils.isEmpty(keyword)) {
             mView.onKeywordEmptyError();
             return;
         }
+        mKeyword = keyword;
         mPage = 1;
         loadData(mPage);
     }
@@ -56,6 +57,20 @@ public class ProductSearchPresenter {
      */
     public boolean hasMore() {
         return mHasMore;
+    }
+
+    /**
+     * 取消任务
+     */
+    public void cancelLoadDataTask() {
+        mModel.cancelSearchProduct();
+    }
+
+    /**
+     *
+     */
+    public void onDestroy() {
+        cancelLoadDataTask();
     }
 
     /**
@@ -78,17 +93,19 @@ public class ProductSearchPresenter {
             public void onResult(QueryProductResp result) {
                 if(null == result) {
                     mHasMore = false;
+                    if(mPage > 1) {
+                        result = new QueryProductResp();
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
+                    }
                     mPage--;
                 } else {
                     mHasMore = null != result.getData() && !result.getData().isEmpty();
-                    mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
-                }
-                if(!mHasMore && mPage > 1) {
-                    if(null == result) {
-                        result = new QueryProductResp();
+                    if(!mHasMore && mPage > 1) {
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
                     }
-                    result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
-                    result.setMsg("No more data");
+                    mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
                 }
                 mView.onSearchProductResult(result);
             }

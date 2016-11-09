@@ -15,5 +15,14 @@
         android:id="@+id/tv_tip_page_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize_level8"
         android:layout_marginTop="@dimen/contentPadding_level3"/>
+    <TextView
+        android:id="@+id/tv_tip_page_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextGray"
+        android:textSize="@dimen/textSize_level7"
+        android:layout_marginTop="@dimen/contentPadding_level1"/>
+
 </LinearLayout>

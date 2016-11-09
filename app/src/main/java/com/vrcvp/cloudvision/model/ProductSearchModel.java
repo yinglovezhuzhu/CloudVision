@@ -23,6 +23,8 @@ public class ProductSearchModel implements IProductSearchModel {
 
     private Context mContext;
 
+    private HttpAsyncTask<QueryProductResp> mSearchTask;
+
     public ProductSearchModel(Context context) {
         this.mContext = context;
     }
@@ -32,12 +34,14 @@ public class ProductSearchModel implements IProductSearchModel {
         final String url = Config.API_PRODUCT_SEARCH;
         final SearchReq reqParam = new SearchReq();
         reqParam.setToken(DataManager.getInstance().getToken());
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setKeywords(keyword);
         reqParam.setPageNo(pageNo);
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>().doPost(url, reqParam,
+            mSearchTask = new HttpAsyncTask<>();
+            mSearchTask.doPost(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {
@@ -91,6 +95,14 @@ public class ProductSearchModel implements IProductSearchModel {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelSearchProduct() {
+        if(null != mSearchTask) {
+            mSearchTask.cancel();
+            mSearchTask = null;
         }
     }
 }

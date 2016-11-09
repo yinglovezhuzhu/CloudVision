@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class TipPageView extends LinearLayout {
 
     private ImageView mIvIcon;
     private TextView mTvMessage;
+    private TextView mTvMemo;
 
     public TipPageView(Context context) {
         super(context);
@@ -42,14 +44,34 @@ public class TipPageView extends LinearLayout {
 
     /**
      * 设置消息
-     * @param iconResId
-     * @param textResId
-     * @param textColorResId
+     * @param iconResId 图标资源id
+     * @param textResId 文字资源id
+     * @param textColorResId 文字颜色资源id
      */
     public void setTips(int iconResId, int textResId, int textColorResId) {
         mIvIcon.setImageResource(iconResId);
         mTvMessage.setText(textResId);
         mTvMessage.setTextColor(getResourceColor(textColorResId));
+        mTvMemo.setVisibility(View.INVISIBLE);
+        setOnClickListener(null);
+    }
+
+    /**
+     * 设置消息
+     * @param iconResId 图标资源id
+     * @param textResId 文字资源id
+     * @param textColorResId 文字颜色资源id
+     * @param memeResId 备注文字资源id
+     * @param listener 页面点击监听
+     */
+    public void setTips(int iconResId, int textResId, int textColorResId, int memeResId,
+                        View.OnClickListener listener) {
+        mIvIcon.setImageResource(iconResId);
+        mTvMessage.setText(textResId);
+        mTvMessage.setTextColor(getResourceColor(textColorResId));
+        mTvMemo.setVisibility(View.VISIBLE);
+        mTvMemo.setText(memeResId);
+        this.setOnClickListener(listener);
     }
 
     private void initView(Context context) {
@@ -57,7 +79,9 @@ public class TipPageView extends LinearLayout {
 
         mIvIcon = (ImageView) findViewById(R.id.iv_tip_page_icon);
         mTvMessage = (TextView) findViewById(R.id.tv_tip_page_msg);
+        mTvMemo = (TextView) findViewById(R.id.tv_tip_page_memo);
 
+        this.setClickable(true);
     }
 
     private int getResourceColor(int colorResId) {

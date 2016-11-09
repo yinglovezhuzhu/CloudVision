@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -50,14 +51,22 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
     }
 
     @Override
+    protected void onDestroy() {
+        mProductSearchPresenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ibtn_product_search_back:
                 finish(RESULT_CANCELED, null);
                 break;
             case R.id.btn_product_search:
-                mProductSearchPresenter.search();
-                hideSoftInputFromWindow(mEtKeyword);
+                search();
+                break;
+            case R.id.tpv_product_search:
+                search();
                 break;
             default:
                 break;
@@ -74,7 +83,57 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
 
     @Override
     public void onKeywordEmptyError() {
+        cancelLoadingDialog();
         showShortToast(R.string.str_input_keyword);
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onSearchProductResult(QueryProductResp result) {
+        mLvProduct.refreshCompleted();
+        // 根据分页数据是否能加载更多
+        mLvProduct.loadMoreCompleted(mProductSearchPresenter.hasMore());
+        if(null == result) {
+            // 错误
+            mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+            mTipPageView.setVisibility(View.VISIBLE);
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<ProductBean> products = result.getData();
+                    if(null == products || products.isEmpty()) {
+                        // 请求成功，但是没有数据
+                        mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data, R.color.colorTextOrange);
+                        mTipPageView.setVisibility(View.VISIBLE);
+                    } else {
+                        mAdapter.addAll(products, true);
+                        mTipPageView.setVisibility(View.GONE);
+                    }
+                    break;
+                case HttpStatus.SC_NO_MORE_DATA:
+                    showShortToast(R.string.str_no_more_data);
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // 无网络，读取缓存错误或者没有缓存
+                default:
+                    // 错误
+                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                    mTipPageView.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+        cancelLoadingDialog();
     }
 
     private void initView() {
@@ -123,51 +182,18 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
         });
     }
 
-    @Override
-    public void onPreExecute(String key) {
-
-    }
-
-    @Override
-    public void onCanceled(String key) {
-
-    }
-
-    @Override
-    public void onSearchProductResult(QueryProductResp result) {
-        mLvProduct.refreshCompleted();
-        // 根据分页数据是否能加载更多
-        mLvProduct.loadMoreCompleted(mProductSearchPresenter.hasMore());
-        if(null == result) {
-
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    List<ProductBean> products = result.getData();
-                    if(null == products || products.isEmpty()) {
-                        // TODO 错误
-                        mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data, R.color.colorTextOrange);
-                        mTipPageView.setVisibility(View.VISIBLE);
-                    } else {
-                        mAdapter.addAll(products, true);
-                        mTipPageView.setVisibility(View.GONE);
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error, R.color.colorTextLightRed);
-                    mTipPageView.setVisibility(View.VISIBLE);
-                    break;
-                case HttpStatus.SC_NO_MORE_DATA:
-                    showShortToast(R.string.str_no_more_data);
-                    break;
-                default:
-                    // TODO 错误
-                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error, R.color.colorTextLightRed);
-                    mTipPageView.setVisibility(View.VISIBLE);
-                    break;
+    /**
+     * 搜索
+     */
+    private void search() {
+        hideSoftInputFromWindow(mEtKeyword);
+        showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mProductSearchPresenter.cancelLoadDataTask();
             }
-        }
+        });
+        mProductSearchPresenter.search();
     }
 
 }

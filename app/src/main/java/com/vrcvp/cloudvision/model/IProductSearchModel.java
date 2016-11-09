@@ -17,4 +17,9 @@ public interface IProductSearchModel {
      * @param callback 回调
      */
     void searchProduct(String keyword, int pageNo, final HttpAsyncTask.Callback<QueryProductResp> callback);
+
+    /**
+     * 取消搜索产品异步线程任务
+     */
+    void cancelSearchProduct();
 }

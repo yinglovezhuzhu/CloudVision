@@ -6,6 +6,7 @@ package com.vrcvp.cloudvision.bean.req;
  */
 
 public class SearchReq extends PageReq {
+    private String enterpriseId;
     private String keywords;	// 关键词
 
     public SearchReq() {
@@ -15,6 +16,10 @@ public class SearchReq extends PageReq {
         super(token);
     }
 
+    public void setEnterpriseId(String enterpriseId) {
+        this.enterpriseId = enterpriseId;
+    }
+
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
@@ -22,7 +27,8 @@ public class SearchReq extends PageReq {
     @Override
     public String toString() {
         return "SearchReq{" +
-                "keywords='" + keywords + '\'' +
+                "enterpriseId='" + enterpriseId + '\'' +
+                ", keywords='" + keywords + '\'' +
                 "} " + super.toString();
     }
 }

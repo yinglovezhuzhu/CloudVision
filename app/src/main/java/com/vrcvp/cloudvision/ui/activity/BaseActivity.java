@@ -3,6 +3,7 @@ package com.vrcvp.cloudvision.ui.activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.ui.widget.LoadingDialog;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.List;
 public class BaseActivity extends FragmentActivity implements View.OnClickListener {
 	
 	protected final String TAG = getClass().getSimpleName();
+
+	protected LoadingDialog mLoadingDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,35 +86,74 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected void showLongToast(int resId) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
-	
-	
+
 	/**
-     * 程序是否在前台运行
-     * 
-     * @return
+	 * 显示加载框
+	 * @param message 消息文字
      */
-    public boolean isAppOnForeground() {
-            // Returns a list of application processes that are running on the
-            // device
-             
-            ActivityManager activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-            String packageName = getApplicationContext().getPackageName();
+	protected void showLoadingDialog(String message) {
+		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
+			mLoadingDialog.cancel();
+		}
+		mLoadingDialog = LoadingDialog.showLoadingDialog(this, message);
+	}
 
-            List<RunningAppProcessInfo> appProcesses = activityManager
-                            .getRunningAppProcesses();
-            if (appProcesses == null)
-                    return false;
+	/**
+	 * 显示加载框
+	 * @param messageTextResId 消息文字资源id
+	 */
+	protected void showLoadingDialog(int messageTextResId) {
+		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
+			mLoadingDialog.cancel();
+		}
+		if(0 == messageTextResId) {
+			mLoadingDialog = LoadingDialog.showLoadingDialog(this, null);
+		} else {
+			mLoadingDialog = LoadingDialog.showLoadingDialog(this, getString(messageTextResId));
+		}
+	}
 
-            for (RunningAppProcessInfo appProcess : appProcesses) {
-                    // The name of the process that this object is associated with.
-                    if (appProcess.processName.equals(packageName)
-                                    && appProcess.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                            return true;
-                    }
-            }
-
-            return false;
+    /**
+     * 显示加载框
+     * @param message 消息文字
+     * @param cancelable 是否可取消
+     * @param cancelListener 取消监听
+     */
+    protected void showLoadingDialog(String message, boolean cancelable,
+                                     DialogInterface.OnCancelListener cancelListener) {
+        if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
+            mLoadingDialog.cancel();
+        }
+        mLoadingDialog = LoadingDialog.showLoadingDialog(this, message, cancelable, false, cancelListener);
     }
+
+    /**
+     * 显示加载框
+     * @param messageTextResId 消息文字资源id
+     * @param cancelable 是否可取消
+     * @param cancelListener 取消监听
+     */
+    protected void showLoadingDialog(int messageTextResId, boolean cancelable,
+                                     DialogInterface.OnCancelListener cancelListener) {
+        if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
+            mLoadingDialog.cancel();
+        }
+        if(0 == messageTextResId) {
+            mLoadingDialog = LoadingDialog.showLoadingDialog(this, null, cancelable, false, cancelListener);
+        } else {
+            mLoadingDialog = LoadingDialog.showLoadingDialog(this, getString(messageTextResId), cancelable, false, cancelListener);
+        }
+    }
+
+	/**
+	 * 隐藏加载框
+	 */
+	protected void cancelLoadingDialog() {
+		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
+			mLoadingDialog.cancel();
+		}
+		mLoadingDialog = null;
+	}
 
 	/**
 	 * 隐藏软键盘

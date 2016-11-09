@@ -76,4 +76,8 @@
     <dimen name="product_detail_img_page_margin">0dp</dimen>
     <dimen name="product_detail_loading_progress_size">15dp</dimen>
 
+    <!-- LoadingDialog -->
+    <dimen name="loading_dialog_size">80dp</dimen>
+    <dimen name="loading_dialog_progress_size">40dp</dimen>
+
 </resources>
