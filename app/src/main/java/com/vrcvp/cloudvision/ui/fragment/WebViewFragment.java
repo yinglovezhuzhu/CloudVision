@@ -96,8 +96,10 @@ public class WebViewFragment extends BaseFragment {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             // 当progress小于100的时候显示，等于100的时候隐藏，一次请求多个url的时候不会出现卡顿现象
-            mPbLoadProgress.setVisibility( newProgress < 100 ? View.VISIBLE : View.GONE);
-            mPbLoadProgress.setProgress(newProgress);
+            if(null != mPbLoadProgress) {
+                mPbLoadProgress.setVisibility( newProgress < 100 ? View.VISIBLE : View.GONE);
+                mPbLoadProgress.setProgress(newProgress);
+            }
             super.onProgressChanged(view, newProgress);
         }
 
