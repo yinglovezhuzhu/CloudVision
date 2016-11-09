@@ -22,6 +22,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 public class VideoModel implements IVideoModel {
 
     private Context mContext;
+    private HttpAsyncTask<QueryVideoResp> mQueryTask;
 
     public VideoModel(Context context) {
         this.mContext = context;
@@ -37,7 +38,8 @@ public class VideoModel implements IVideoModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>().doPost(url, reqParam,
+            mQueryTask = new HttpAsyncTask<>();
+            mQueryTask.doPost(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {
@@ -91,6 +93,13 @@ public class VideoModel implements IVideoModel {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelQueryVideo() {
+        if(null != mQueryTask) {
+            mQueryTask.cancel();
         }
     }
 }

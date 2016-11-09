@@ -19,8 +19,9 @@ public class VideoPresenter {
     private IVideoView mView;
     private IVideoModel mModel;
 
-    private int mVideoPage = 1;
-    private boolean mHasMoreVideo = true;
+    private int mPageNo = 1;
+    private boolean mHasMore = true;
+    private boolean mLoadMore = false;
 
     public VideoPresenter(Context context, IVideoView view) {
         this.mView = view;
@@ -30,17 +31,19 @@ public class VideoPresenter {
      * 查询第一页数据
      */
     public void queryVideoFirstPage() {
-        mVideoPage = 1;
-        queryVideo(mVideoPage);
+        mPageNo = 1;
+        mLoadMore = false;
+        queryVideo();
     }
 
     /**
      * 查询下一页数据
      */
     public void queryVideoNextPage() {
-        if(mHasMoreVideo) {
-            mVideoPage++;
-            queryVideo(mVideoPage);
+        if(mHasMore) {
+            mPageNo++;
+            mLoadMore = true;
+            queryVideo();
         } else {
             QueryVideoResp result = new QueryVideoResp();
             result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
@@ -53,17 +56,32 @@ public class VideoPresenter {
      * 是否有更多视频
      * @return true 有更多，false 没有更多
      */
-    public boolean hasMoreVideo() {
-        return mHasMoreVideo;
+    public boolean hasMore() {
+        return mHasMore;
     }
 
 
     /**
-     * 查询视频
-     * @param pageNo 页码
+     * 是否加载更多操作
+     * @return 是否加载更多操作， true 是， false 否
      */
-    private void queryVideo(int pageNo) {
-        mModel.queryVideo(pageNo, new HttpAsyncTask.Callback<QueryVideoResp>() {
+    public boolean isLoadMore() {
+        return mLoadMore;
+    }
+
+    public void cancelQueryVideo() {
+        mModel.cancelQueryVideo();
+    }
+
+    public void onDestroy() {
+        cancelQueryVideo();
+    }
+
+    /**
+     * 查询视频
+     */
+    private void queryVideo() {
+        mModel.queryVideo(mPageNo, new HttpAsyncTask.Callback<QueryVideoResp>() {
             @Override
             public void onPreExecute() {
                 mView.onPreExecute(null);
@@ -76,6 +94,22 @@ public class VideoPresenter {
 
             @Override
             public void onResult(QueryVideoResp result) {
+                if(null == result) {
+                    mHasMore = false;
+                    if(mPageNo > 1) {
+                        result = new QueryVideoResp();
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
+                    }
+                    mPageNo--;
+                } else {
+                    mHasMore = null != result.getData() && !result.getData().isEmpty();
+                    if(!mHasMore && mPageNo > 1) {
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
+                    }
+                    mPageNo = HttpStatus.SC_OK == result.getHttpCode() ? mPageNo : mPageNo--;
+                }
                 mView.onQueryVideoResult(result);
             }
         });

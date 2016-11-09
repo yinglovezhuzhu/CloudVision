@@ -16,4 +16,9 @@ public interface IVideoModel {
      * @param callback 回调
      */
     void queryVideo(int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback);
+
+    /**
+     * 取消查询视频异步线程任务
+     */
+    void cancelQueryVideo();
 }
