@@ -91,7 +91,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * 显示加载框
 	 * @param message 消息文字
      */
-	protected void showLoadingDialog(String message) {
+    public void showLoadingDialog(String message) {
 		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
 			mLoadingDialog.cancel();
 		}
@@ -102,7 +102,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * 显示加载框
 	 * @param messageTextResId 消息文字资源id
 	 */
-	protected void showLoadingDialog(int messageTextResId) {
+    public void showLoadingDialog(int messageTextResId) {
 		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
 			mLoadingDialog.cancel();
 		}
@@ -119,7 +119,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param cancelable 是否可取消
      * @param cancelListener 取消监听
      */
-    protected void showLoadingDialog(String message, boolean cancelable,
+    public void showLoadingDialog(String message, boolean cancelable,
                                      DialogInterface.OnCancelListener cancelListener) {
         if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
             mLoadingDialog.cancel();
@@ -133,7 +133,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param cancelable 是否可取消
      * @param cancelListener 取消监听
      */
-    protected void showLoadingDialog(int messageTextResId, boolean cancelable,
+    public void showLoadingDialog(int messageTextResId, boolean cancelable,
                                      DialogInterface.OnCancelListener cancelListener) {
         if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
             mLoadingDialog.cancel();
@@ -148,7 +148,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	/**
 	 * 隐藏加载框
 	 */
-	protected void cancelLoadingDialog() {
+    public void cancelLoadingDialog() {
 		if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
 			mLoadingDialog.cancel();
 		}
@@ -159,7 +159,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * 隐藏软键盘
 	 * @param view View
 	 */
-	protected void hideSoftInputFromWindow(View view) {
+    public void hideSoftInputFromWindow(View view) {
 		if(null == view) {
 			return;
 		}
@@ -174,7 +174,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	 * @param resultCode 结果吗
 	 * @param extras 额外传递数据
 	 */
-	protected void finish(int resultCode, Bundle extras) {
+    public void finish(int resultCode, Bundle extras) {
 		Intent data = new Intent();
 		if(null != extras && !extras.isEmpty()) {
 			data.putExtras(extras);

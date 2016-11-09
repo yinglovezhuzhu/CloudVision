@@ -88,34 +88,6 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
     @Override
     public void onQueryProductResult(QueryProductResp result) {
-//        if(null == result) {
-//
-//        } else {
-//            switch (result.getHttpCode()) {
-//                case HttpStatus.SC_OK:
-//                    List<ProductBean> products = result.getData();
-//                    if(null == products || products.isEmpty()) {
-//                        // TODO 错误
-//                    } else {
-//                        if(mRefresh) {
-//                            mProductData.clear();
-//                        }
-//                        mProductData.addAll(products);
-//                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
-//                    }
-//                    break;
-//                case HttpStatus.SC_CACHE_NOT_FOUND:
-//                    // TODO 无网络，读取缓存错误
-//                    break;
-//                case HttpStatus.SC_NO_MORE_DATA:
-//                    // 提示没有更多数据
-//                    showShortToast(R.string.str_no_more_data);
-//                    break;
-//                default:
-//                    // TODO 错误
-//                    break;
-//            }
-//        }
         if(null == result) {
             // 错误
             if(mProductPresenter.isLoadMore()) {
@@ -197,6 +169,13 @@ public class ProductActivity extends BaseActivity implements IProductView {
     public void loadMore() {
         mRefresh = false;
         mProductPresenter.queryProductNextPage();
+    }
+
+    /**
+     * 取消加载更多
+     */
+    public void cancelQueryProduct() {
+        mProductPresenter.cancelQueryProduct();
     }
 
     public List<ProductBean> getProductData() {

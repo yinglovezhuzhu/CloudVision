@@ -30,6 +30,7 @@ public class ProductGridViewFragment extends BaseFragment {
 
     private PullListView mLvProduct;
     private ProductGridViewAdapter mAdapter;
+    private ProductActivity mAttachedActivity;
 
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
@@ -68,8 +69,9 @@ public class ProductGridViewFragment extends BaseFragment {
 
         final Activity activity = getActivity();
         if(activity instanceof ProductActivity) {
-            mAdapter.addAll(((ProductActivity) activity).getProductData(), true);
-            ((ProductActivity) activity).registerProductObserver(mProductObserver);
+            mAttachedActivity = (ProductActivity) activity;
+            mAdapter.addAll(mAttachedActivity.getProductData(), true);
+            mAttachedActivity.registerProductObserver(mProductObserver);
         } else {
             throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
         }
@@ -95,12 +97,7 @@ public class ProductGridViewFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        final Activity activity = getActivity();
-        if(activity instanceof ProductActivity) {
-            ((ProductActivity) activity).unregisterProductObserver(mProductObserver);
-        } else {
-            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-        }
+        mAttachedActivity.unregisterProductObserver(mProductObserver);
     }
 
     private void initView(View contentView) {
@@ -112,24 +109,14 @@ public class ProductGridViewFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 // 刷新数据
-                final Activity activity = getActivity();
-                if(activity instanceof ProductActivity) {
-                    ((ProductActivity) activity).refresh();
-                } else {
-                    throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-                }
+                mAttachedActivity.refresh();
             }
         });
         mLvProduct.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // 加载下一页
-                final Activity activity = getActivity();
-                if(activity instanceof ProductActivity) {
-                    ((ProductActivity) activity).loadMore();
-                } else {
-                    throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-                }
+                mAttachedActivity.loadMore();
             }
         });
     }

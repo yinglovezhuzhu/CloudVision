@@ -1,6 +1,7 @@
 package com.vrcvp.cloudvision.ui.fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ public class ProductPagerViewFragment extends BaseFragment {
     private TextView mTvPageNum;
     private TextView mTvPageCount;
     private ProductPagerViewAdapter mAdapter;
+    private ProductActivity mAttachedActivity;
 
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
@@ -56,8 +58,9 @@ public class ProductPagerViewFragment extends BaseFragment {
 
         final Activity activity = getActivity();
         if(activity instanceof ProductActivity) {
-            mAdapter.addAll(((ProductActivity) activity).getProductData(), true);
-            ((ProductActivity) activity).registerProductObserver(mProductObserver);
+            mAttachedActivity = (ProductActivity) activity;
+            mAdapter.addAll(mAttachedActivity.getProductData(), true);
+            mAttachedActivity.registerProductObserver(mProductObserver);
         } else {
             throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
         }
@@ -84,12 +87,7 @@ public class ProductPagerViewFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        final Activity activity = getActivity();
-        if(activity instanceof ProductActivity) {
-            ((ProductActivity) activity).unregisterProductObserver(mProductObserver);
-        } else {
-            throw new IllegalStateException("Only attach by " + ProductActivity.class.getName());
-        }
+        mAttachedActivity.unregisterProductObserver(mProductObserver);
     }
 
     @Override
@@ -124,6 +122,15 @@ public class ProductPagerViewFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 mTvPageNum.setText(String.valueOf(position + 1));
+                if(position == mAdapter.getCount() - 1) {
+                    mAttachedActivity.showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            mAttachedActivity.cancelQueryProduct();
+                        }
+                    });
+                    mAttachedActivity.loadMore();
+                }
             }
 
             @Override
