@@ -15,14 +15,17 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
+import com.iflytek.cloud.TextUnderstander;
+import com.iflytek.cloud.TextUnderstanderListener;
+import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
-import com.vrcvp.cloudvision.bean.VideoBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
 import com.vrcvp.cloudvision.bean.XFWordBean;
 import com.vrcvp.cloudvision.model.IVoiceModel;
 import com.vrcvp.cloudvision.model.VoiceModel;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IVoiceView;
@@ -37,10 +40,11 @@ public class VoicePresenter {
     private final IVoiceModel mVoiceModel;
 
     private final String mStrAndroidStartWord;
-    private final String mStrAndroidUnknowWhat;
+    private final String mStrAndroidUnknownWhat;
 
     private SpeechSynthesizer mSpeechSynthesizer;
     private SpeechRecognizer mSpeechRecognizer;
+    private TextUnderstander mTextUnderstander;
 
     private boolean mSpeechRecognizerInitialized = false;
     private boolean mSpeechSynthesizerInitialized = false;
@@ -49,7 +53,7 @@ public class VoicePresenter {
         this.mVoiceView = voiceView;
         this.mVoiceModel = new VoiceModel();
         mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
-        mStrAndroidUnknowWhat = context.getString(R.string.str_voice_unknow_what_to_do);
+        mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknow_what_to_do);
 
         initEngine(context);
 
@@ -171,9 +175,11 @@ public class VoicePresenter {
             mmResultString.append(parseResult(recognizerResult));
             if(isLast) {
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_HUMAN, mmResultString.toString(), IVoiceView.ACTION_NONE);
+
+                mTextUnderstander.understandText(mmResultString.toString(), mTextUnderstanderListener);
                 // FIXME 处理用户语音输入的请求
-                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknowWhat, IVoiceView.ACTION_NONE);
-                startSpeak(mStrAndroidUnknowWhat);
+//                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+//                startSpeak(mStrAndroidUnknownWhat);
             }
         }
 
@@ -204,6 +210,9 @@ public class VoicePresenter {
         initSpeechSynthesizer(context);
 
         initSpeechRecognizer(context);
+
+        initTextUnderstander(context);
+
     }
 
     /**
@@ -298,5 +307,25 @@ public class VoicePresenter {
         }
         return textSb.toString();
     }
+
+    private void initTextUnderstander(Context context) {
+        //创建文本语义理解对象
+        mTextUnderstander = TextUnderstander.createTextUnderstander(context,  null);
+        //开始语义理解
+//        mTextUnderstander.understandText("科大讯飞", mTextUnderstanderListener);
+    }
+
+    //初始化监听器
+    private TextUnderstanderListener mTextUnderstanderListener = new TextUnderstanderListener(){
+        //语义结果回调
+        public void onResult(UnderstanderResult result){
+            LogUtils.e("BBBBBBBBB", result.getResultString());
+        }
+        //语义错误回调
+        public void onError(SpeechError error) {
+            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+            startSpeak(mStrAndroidUnknownWhat);
+        }
+    };
 
 }
