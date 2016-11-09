@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.VideoSearchPresenter;
 import com.vrcvp.cloudvision.ui.adapter.VideoAdapter;
+import com.vrcvp.cloudvision.ui.widget.TipPageView;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoSearchView;
 
@@ -36,6 +38,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
 
     private EditText mEtKeyword;
     private PullListView mLvVideo;
+    private TipPageView mTipPageView;
 
     private VideoAdapter mAdapter;
 
@@ -51,14 +54,22 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
     }
 
     @Override
+    protected void onDestroy() {
+        mVideoSearchPresenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ibtn_video_search_back:
                 finish(RESULT_CANCELED, null);
                 break;
             case R.id.btn_video_search:
-                mVideoSearchPresenter.search();
-                hideSoftInputFromWindow(mEtKeyword);
+                search();
+                break;
+            case R.id.tpv_video_search:
+                search();
                 break;
             default:
                 break;
@@ -75,11 +86,73 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
 
     @Override
     public void onKeywordEmptyError() {
+        cancelLoadingDialog();
         showShortToast(R.string.str_input_keyword);
+    }
+
+    @Override
+    public void onSearchVideoResult(QueryVideoResp result) {
+        mLvVideo.refreshCompleted();
+        mLvVideo.loadMoreCompleted(mVideoSearchPresenter.hasMore());
+        if(null == result) {
+            // 错误
+            if(mVideoSearchPresenter.isLoadMore()) {
+                showShortToast(R.string.str_no_more_data);
+            } else {
+                mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                        R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                mTipPageView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            switch (result.getHttpCode()) {
+                case HttpStatus.SC_OK:
+                    List<VideoBean> video = result.getData();
+                    if(null == video || video.isEmpty()) {
+                        // 请求成功，但是没有数据
+                        if(mVideoSearchPresenter.isLoadMore()) {
+                            showShortToast(R.string.str_no_more_data);
+                        } else {
+                            mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data,
+                                    R.color.colorTextOrange);
+                            mTipPageView.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        mAdapter.addAll(video, true);
+                    }
+                    break;
+                case HttpStatus.SC_NO_MORE_DATA:
+                    showShortToast(R.string.str_no_more_data);
+                    break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // 无网络，读取缓存错误或者没有缓存
+                default:
+                    // 错误
+                    if(mVideoSearchPresenter.isLoadMore()) {
+                        showShortToast(R.string.str_network_error);
+                    } else {
+                        mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                                R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                        mTipPageView.setVisibility(View.VISIBLE);
+                    }
+                    break;
+            }
+        }
+        cancelLoadingDialog();
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+        cancelLoadingDialog();
     }
 
     private void initView() {
         mEtKeyword = (EditText) findViewById(R.id.et_video_search_keyword);
+        mTipPageView = (TipPageView) findViewById(R.id.tpv_video_search);
 
         findViewById(R.id.ibtn_video_search_back).setOnClickListener(this);
         findViewById(R.id.btn_video_search).setOnClickListener(this);
@@ -107,67 +180,34 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 startActivity(i);
             }
         });
-        final Handler handler = new Handler();
         mLvVideo.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
         mLvVideo.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // TODO 刷新数据
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvVideo.refreshCompleted();
-                    }
-                }, 3000);
+                // 刷新数据
+                mVideoSearchPresenter.search();
             }
         });
         mLvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                // TODO 加载下一页
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLvVideo.loadMoreCompleted(true);
-                    }
-                }, 3000);
+                // 加载下一页
+                mVideoSearchPresenter.nextPage();
             }
         });
     }
 
-    @Override
-    public void onSearchVideoResult(QueryVideoResp result) {
-        mLvVideo.refreshCompleted();
-        mLvVideo.loadMoreCompleted(true);
-        if(null == result) {
-
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    List<VideoBean> video = result.getData();
-                    if(null == video || video.isEmpty()) {
-                        // TODO 错误
-                    } else {
-                        mAdapter.addAll(video, true);
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
-                default:
-                    // TODO 错误
-                    break;
+    /**
+     * 搜索
+     */
+    private void search() {
+        hideSoftInputFromWindow(mEtKeyword);
+        showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mVideoSearchPresenter.cancelLoadDataTask();
             }
-        }
-    }
-
-    @Override
-    public void onPreExecute(String key) {
-
-    }
-
-    @Override
-    public void onCanceled(String key) {
-
+        });
+        mVideoSearchPresenter.search();
     }
 }

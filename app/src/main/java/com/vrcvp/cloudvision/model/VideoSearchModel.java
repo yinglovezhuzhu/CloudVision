@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.req.SearchReq;
+import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
 import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.db.HttpCacheDBUtils;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
@@ -22,6 +23,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 public class VideoSearchModel implements IVideoSearchModel {
 
     private Context mContext;
+    private HttpAsyncTask<QueryVideoResp> mSearchTask;
 
     public VideoSearchModel(Context context) {
         this.mContext = context;
@@ -36,7 +38,8 @@ public class VideoSearchModel implements IVideoSearchModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryVideoResp>().doPost(url, reqParam,
+            mSearchTask = new HttpAsyncTask<>();
+            mSearchTask.doPost(url, reqParam,
                     QueryVideoResp.class, new HttpAsyncTask.Callback<QueryVideoResp>() {
                         @Override
                         public void onPreExecute() {
@@ -90,6 +93,14 @@ public class VideoSearchModel implements IVideoSearchModel {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelSearchVideo() {
+        if(null != mSearchTask) {
+            mSearchTask.cancel();
+            mSearchTask = null;
         }
     }
 }

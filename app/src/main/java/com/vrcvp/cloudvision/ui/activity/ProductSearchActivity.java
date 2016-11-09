@@ -94,7 +94,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
 
     @Override
     public void onCanceled(String key) {
-
+        cancelLoadingDialog();
     }
 
     @Override
@@ -104,17 +104,26 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
         mLvProduct.loadMoreCompleted(mProductSearchPresenter.hasMore());
         if(null == result) {
             // 错误
-            mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
-            mTipPageView.setVisibility(View.VISIBLE);
+            if(mProductSearchPresenter.isLoadMore()) {
+                showShortToast(R.string.str_no_more_data);
+            } else {
+                mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                        R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                mTipPageView.setVisibility(View.VISIBLE);
+            }
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
                     List<ProductBean> products = result.getData();
                     if(null == products || products.isEmpty()) {
                         // 请求成功，但是没有数据
-                        mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data, R.color.colorTextOrange);
-                        mTipPageView.setVisibility(View.VISIBLE);
+                        if(mProductSearchPresenter.isLoadMore()) {
+                            showShortToast(R.string.str_no_more_data);
+                        } else {
+                            mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data,
+                                    R.color.colorTextOrange);
+                            mTipPageView.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         mAdapter.addAll(products, true);
                         mTipPageView.setVisibility(View.GONE);
@@ -127,9 +136,13 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                     // 无网络，读取缓存错误或者没有缓存
                 default:
                     // 错误
-                    mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
-                    mTipPageView.setVisibility(View.VISIBLE);
+                    if(mProductSearchPresenter.isLoadMore()) {
+                        showShortToast(R.string.str_network_error);
+                    } else {
+                        mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                                R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                        mTipPageView.setVisibility(View.VISIBLE);
+                    }
                     break;
             }
         }

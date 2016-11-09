@@ -52,17 +52,26 @@
             android:textColor="@color/text_color_black"
             android:textSize="@dimen/textSize_level9"
             android:text="@string/str_search_result_label"/>
-        <com.opensource.pullview.PullListView
-            android:id="@+id/lv_video_search"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/contentPadding_level4"
-            android:paddingTop="@dimen/contentPadding_level4"
-            android:paddingRight="@dimen/contentPadding_level4"
-            android:divider="@color/transparent"
-            android:dividerHeight="0dp"
-            android:headerDividersEnabled="false"
-            android:footerDividersEnabled="false"/>
+            android:layout_height="match_parent">
+            <com.opensource.pullview.PullListView
+                android:id="@+id/lv_video_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/contentPadding_level4"
+                android:paddingTop="@dimen/contentPadding_level4"
+                android:paddingRight="@dimen/contentPadding_level4"
+                android:divider="@color/transparent"
+                android:dividerHeight="0dp"
+                android:headerDividersEnabled="false"
+                android:footerDividersEnabled="false"/>
+            <com.vrcvp.cloudvision.ui.widget.TipPageView
+                android:id="@+id/tpv_video_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+        </FrameLayout>
     </LinearLayout>
 
     <ImageButton

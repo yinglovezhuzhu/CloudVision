@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.presenter;
 
 import android.content.Context;
 
+import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
 import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
@@ -23,6 +24,7 @@ public class VideoSearchPresenter {
     private String mKeyword;
     private int mPage = 1;
     private boolean mHasMore = true;
+    private boolean mLoadMore = false;
 
     public VideoSearchPresenter(Context context, IVideoSearchView view) {
         this.mView = view;
@@ -33,12 +35,14 @@ public class VideoSearchPresenter {
      * 搜索
      */
     public void search() {
-        mKeyword = mView.getKeyword();
-        if(StringUtils.isEmpty(mKeyword)) {
+        final String keyword = mView.getKeyword();
+        if(StringUtils.isEmpty(mKeyword) && StringUtils.isEmpty(keyword)) {
             mView.onKeywordEmptyError();
             return;
         }
+        mKeyword = keyword;
         mPage = 1;
+        mLoadMore = false;
         loadData(mPage);
     }
 
@@ -47,6 +51,7 @@ public class VideoSearchPresenter {
      */
     public void nextPage() {
         mPage++;
+        mLoadMore = true;
         loadData(mPage);
     }
 
@@ -56,6 +61,28 @@ public class VideoSearchPresenter {
      */
     public boolean hasMore() {
         return mHasMore;
+    }
+
+    /**
+     * 是否加载更多操作
+     * @return 是否加载更多操作， true 是， false 否
+     */
+    public boolean isLoadMore() {
+        return mLoadMore;
+    }
+
+    /**
+     * 取消任务
+     */
+    public void cancelLoadDataTask() {
+        mModel.cancelSearchVideo();
+    }
+
+    /**
+     * 销毁
+     */
+    public void onDestroy() {
+        cancelLoadDataTask();
     }
 
     /**
@@ -78,17 +105,19 @@ public class VideoSearchPresenter {
             public void onResult(QueryVideoResp result) {
                 if(null == result) {
                     mHasMore = false;
+                    if(mPage > 1) {
+                        result = new QueryVideoResp();
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
+                    }
                     mPage--;
                 } else {
                     mHasMore = null != result.getData() && !result.getData().isEmpty();
-                    mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
-                }
-                if(!mHasMore) {
-                    if(null == result) {
-                        result = new QueryVideoResp();
+                    if(!mHasMore && mPage > 1) {
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
                     }
-                    result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
-                    result.setMsg("No more data");
+                    mPage = HttpStatus.SC_OK == result.getHttpCode() ? mPage : mPage--;
                 }
                 mView.onSearchVideoResult(result);
             }

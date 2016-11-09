@@ -23,6 +23,7 @@ public class ProductSearchPresenter {
     private String mKeyword;
     private int mPage = 1;
     private boolean mHasMore = true;
+    private boolean mLoadMore = false;
 
     public ProductSearchPresenter(Context context, IProductSearchView view) {
         this.mView = view;
@@ -40,6 +41,7 @@ public class ProductSearchPresenter {
         }
         mKeyword = keyword;
         mPage = 1;
+        mLoadMore = false;
         loadData(mPage);
     }
 
@@ -48,6 +50,7 @@ public class ProductSearchPresenter {
      */
     public void nextPage() {
         mPage++;
+        mLoadMore = true;
         loadData(mPage);
     }
 
@@ -60,6 +63,14 @@ public class ProductSearchPresenter {
     }
 
     /**
+     * 是否加载更多操作
+     * @return 是否加载更多操作， true 是， false 否
+     */
+    public boolean isLoadMore() {
+        return mLoadMore;
+    }
+
+    /**
      * 取消任务
      */
     public void cancelLoadDataTask() {
@@ -67,7 +78,7 @@ public class ProductSearchPresenter {
     }
 
     /**
-     *
+     * 销毁
      */
     public void onDestroy() {
         cancelLoadDataTask();
