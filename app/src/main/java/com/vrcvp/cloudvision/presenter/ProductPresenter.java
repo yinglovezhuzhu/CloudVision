@@ -3,6 +3,7 @@ package com.vrcvp.cloudvision.presenter;
 import android.content.Context;
 
 import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
+import com.vrcvp.cloudvision.bean.resp.QueryVideoResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.model.IProductModel;
@@ -19,8 +20,9 @@ public class ProductPresenter {
     private IProductView mView;
     private IProductModel mModel;
 
-    private int mProductPage = 1;
-    private boolean mHasMoreProduct = true;
+    private int mPageNo = 1;
+    private boolean mHasMore = true;
+    private boolean mLoadMore = false;
 
     public ProductPresenter(Context context, IProductView view) {
         this.mView = view;
@@ -31,17 +33,19 @@ public class ProductPresenter {
      * 查询第一页数据
      */
     public void queryProductFirstPage() {
-        mProductPage = 1;
-        queryProduct(mProductPage);
+        mPageNo = 1;
+        mLoadMore = false;
+        queryProduct(mPageNo);
     }
 
     /**
      * 查询下一页数据
      */
     public void queryProductNextPage() {
-        if(mHasMoreProduct) {
-            mProductPage++;
-            queryProduct(mProductPage);
+        if(mHasMore) {
+            mPageNo++;
+            mLoadMore = true;
+            queryProduct(mPageNo);
         } else {
             QueryProductResp result = new QueryProductResp();
             result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
@@ -54,8 +58,24 @@ public class ProductPresenter {
      * 是否有更多商品
      * @return true 有更多，false 没有更多
      */
-    public boolean hasMoreProduct() {
-        return mHasMoreProduct;
+    public boolean hasMore() {
+        return mHasMore;
+    }
+
+    /**
+     * 是否加载更多操作
+     * @return 是否加载更多操作， true 是， false 否
+     */
+    public boolean isLoadMore() {
+        return mLoadMore;
+    }
+
+    public void cancelQueryProduct() {
+        mModel.cancelQueryProduct();
+    }
+
+    public void onDestroy() {
+        cancelQueryProduct();
     }
 
     /**
@@ -71,25 +91,27 @@ public class ProductPresenter {
 
             @Override
             public void onCanceled() {
-                mProductPage--;
+                mPageNo--;
                 mView.onCanceled("");
             }
 
             @Override
             public void onResult(QueryProductResp result) {
                 if(null == result) {
-                    mHasMoreProduct = false;
-                    mProductPage--;
-                } else {
-                    mHasMoreProduct = null != result.getData() && !result.getData().isEmpty();
-                    mProductPage = HttpStatus.SC_OK == result.getHttpCode() ? mProductPage : mProductPage--;
-                }
-                if(!mHasMoreProduct) {
-                    if(null == result) {
+                    mHasMore = false;
+                    if(mPageNo > 1) {
                         result = new QueryProductResp();
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
                     }
-                    result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
-                    result.setMsg("No more data");
+                    mPageNo--;
+                } else {
+                    mHasMore = null != result.getData() && !result.getData().isEmpty();
+                    if(!mHasMore && mPageNo > 1) {
+                        result.setHttpCode(HttpStatus.SC_NO_MORE_DATA);
+                        result.setMsg("No more data");
+                    }
+                    mPageNo = HttpStatus.SC_OK == result.getHttpCode() ? mPageNo : mPageNo--;
                 }
                 mView.onQueryProductResult(result);
             }

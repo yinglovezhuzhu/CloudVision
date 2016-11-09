@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -9,6 +10,7 @@ import android.widget.ToggleButton;
 
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.ProductBean;
+import com.vrcvp.cloudvision.bean.VideoBean;
 import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.observer.ProductObservable;
@@ -17,6 +19,7 @@ import com.vrcvp.cloudvision.presenter.ProductPresenter;
 import com.vrcvp.cloudvision.ui.fragment.ProductGridViewFragment;
 import com.vrcvp.cloudvision.ui.fragment.ProductListViewFragment;
 import com.vrcvp.cloudvision.ui.fragment.ProductPagerViewFragment;
+import com.vrcvp.cloudvision.ui.widget.TipPageView;
 import com.vrcvp.cloudvision.view.IProductView;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import java.util.List;
 public class ProductActivity extends BaseActivity implements IProductView {
 
     private ProductPresenter mProductPresenter;
+    private TipPageView mTipPageView;
 
     private final ProductObservable mProductObservable = new ProductObservable();
     private final List<ProductBean> mProductData = new ArrayList<>();
@@ -45,13 +49,14 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
         initView();
 
-        mProductPresenter.queryProductFirstPage();
+        queryProduct();
     }
 
     @Override
     protected void onDestroy() {
+        mProductPresenter.onDestroy();
         super.onDestroy();
-        mProductObservable.unregisterAll();
+//        mProductObservable.unregisterAll();
     }
 
     @Override
@@ -62,6 +67,9 @@ public class ProductActivity extends BaseActivity implements IProductView {
                 break;
             case R.id.btn_product_search:
                 startActivity(new Intent(this, ProductSearchActivity.class));
+                break;
+            case R.id.tpv_product_list:
+                queryProduct();
                 break;
             default:
                 break;
@@ -75,40 +83,88 @@ public class ProductActivity extends BaseActivity implements IProductView {
 
     @Override
     public void onCanceled(String key) {
-
+        cancelLoadingDialog();
     }
 
     @Override
     public void onQueryProductResult(QueryProductResp result) {
+//        if(null == result) {
+//
+//        } else {
+//            switch (result.getHttpCode()) {
+//                case HttpStatus.SC_OK:
+//                    List<ProductBean> products = result.getData();
+//                    if(null == products || products.isEmpty()) {
+//                        // TODO 错误
+//                    } else {
+//                        if(mRefresh) {
+//                            mProductData.clear();
+//                        }
+//                        mProductData.addAll(products);
+//                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
+//                    }
+//                    break;
+//                case HttpStatus.SC_CACHE_NOT_FOUND:
+//                    // TODO 无网络，读取缓存错误
+//                    break;
+//                case HttpStatus.SC_NO_MORE_DATA:
+//                    // 提示没有更多数据
+//                    showShortToast(R.string.str_no_more_data);
+//                    break;
+//                default:
+//                    // TODO 错误
+//                    break;
+//            }
+//        }
         if(null == result) {
-
+            // 错误
+            if(mProductPresenter.isLoadMore()) {
+                showShortToast(R.string.str_no_more_data);
+            } else {
+                mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                        R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                mTipPageView.setVisibility(View.VISIBLE);
+            }
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
                     List<ProductBean> products = result.getData();
                     if(null == products || products.isEmpty()) {
-                        // TODO 错误
+                        // 请求成功，但是没有数据
+                        if(mProductPresenter.isLoadMore()) {
+                            showShortToast(R.string.str_no_more_data);
+                        } else {
+                            mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data,
+                                    R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                            mTipPageView.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         if(mRefresh) {
                             mProductData.clear();
                         }
                         mProductData.addAll(products);
-                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMoreProduct(), result);
+                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
                     }
                     break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
                 case HttpStatus.SC_NO_MORE_DATA:
-                    // 提示没有更多数据
                     showShortToast(R.string.str_no_more_data);
                     break;
+                case HttpStatus.SC_CACHE_NOT_FOUND:
+                    // 无网络，读取缓存错误或者没有缓存
                 default:
-                    // TODO 错误
+                    // 错误
+                    if(mProductPresenter.isLoadMore()) {
+                        showShortToast(R.string.str_network_error);
+                    } else {
+                        mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                                R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                        mTipPageView.setVisibility(View.VISIBLE);
+                    }
                     break;
             }
         }
         mRefresh = false;
+        cancelLoadingDialog();
     }
 
     /**
@@ -161,7 +217,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
         listViewModeSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tabHost.setCurrentTab(isChecked ? 0 : 2);
+                tabHost.setCurrentTab(isChecked ? 0 : 1);
             }
         });
 
@@ -169,12 +225,13 @@ public class ProductActivity extends BaseActivity implements IProductView {
         viewModeSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                tabHost.setCurrentTab(isChecked ? (listViewModeSwitcher.isChecked() ? 0 : 2) : 1);
+                tabHost.setCurrentTab(isChecked ? (listViewModeSwitcher.isChecked() ? 0 : 1) : 2);
                 listViewModeSwitcher.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                 listViewDivider.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
         });
         viewModeSwitcher.setChecked(true);
+        mTipPageView = (TipPageView) findViewById(R.id.tpv_product_list);
     }
 
     /**
@@ -182,6 +239,11 @@ public class ProductActivity extends BaseActivity implements IProductView {
      * @param tabHost
      */
     private void addTabs(FragmentTabHost tabHost) {
+
+        // GridView模式
+        final Bundle gridArgs = new Bundle();
+        tabHost.addTab(tabHost.newTabSpec("productGrid").setIndicator("productGrid"),
+                ProductGridViewFragment.class, gridArgs);
 
         // 列表模式
         final Bundle listArgs = new Bundle();
@@ -193,11 +255,19 @@ public class ProductActivity extends BaseActivity implements IProductView {
         tabHost.addTab(tabHost.newTabSpec("productPager").setIndicator("productPager"),
                 ProductPagerViewFragment.class, pagerArgs);
 
-        // GridView模式
-        final Bundle gridArgs = new Bundle();
-        tabHost.addTab(tabHost.newTabSpec("productGrid").setIndicator("productGrid"),
-                ProductGridViewFragment.class, gridArgs);
+
+    }
 
 
+
+    private void queryProduct() {
+//        mTipPageView.setVisibility(View.GONE);
+        showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mProductPresenter.cancelQueryProduct();
+            }
+        });
+        mProductPresenter.queryProductFirstPage();
     }
 }

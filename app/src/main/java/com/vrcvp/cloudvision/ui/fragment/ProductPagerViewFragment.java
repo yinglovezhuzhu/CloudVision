@@ -30,7 +30,6 @@ public class ProductPagerViewFragment extends BaseFragment {
     private TextView mTvPageCount;
     private ProductPagerViewAdapter mAdapter;
 
-
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
         public void onQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result) {

@@ -60,7 +60,6 @@ public class VideoPresenter {
         return mHasMore;
     }
 
-
     /**
      * 是否加载更多操作
      * @return 是否加载更多操作， true 是， false 否

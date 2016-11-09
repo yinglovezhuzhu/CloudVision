@@ -37,8 +37,6 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     private PullListView mLvVideo;
     private VideoAdapter mAdapter;
 
-    private TipPageView mErrorPage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +96,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                             showShortToast(R.string.str_no_more_data);
                         } else {
                             mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                    R.color.colorTextOrange);
+                                    R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
                             mTipPageView.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -175,12 +173,10 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                 mVideoPresenter.queryVideoNextPage();
             }
         });
-
-        mErrorPage = (TipPageView) findViewById(R.id.ep_video_list);
     }
 
     private void queryVideo() {
-
+//        mTipPageView.setVisibility(View.GONE);
         showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

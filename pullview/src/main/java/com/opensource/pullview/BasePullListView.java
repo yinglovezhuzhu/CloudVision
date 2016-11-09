@@ -257,6 +257,16 @@ public abstract class BasePullListView extends ListView implements IPullView, Ab
         });
     }
 
+    @Override
+    public int getLastVisiblePosition() {
+        return super.getLastVisiblePosition() - getHeaderViewsCount();
+    }
+
+    @Override
+    public int getFirstVisiblePosition() {
+        return super.getFirstVisiblePosition() - getHeaderViewsCount();
+    }
+
     /**
      * Can load more or not
      * @return

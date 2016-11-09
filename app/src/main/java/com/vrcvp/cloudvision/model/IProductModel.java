@@ -17,4 +17,9 @@ public interface IProductModel {
      */
     void queryProduct(int pageNo, final HttpAsyncTask.Callback<QueryProductResp> callback);
 
+    /**
+     * 取消查询产品列表异步线程任务
+     */
+    void cancelQueryProduct();
+
 }

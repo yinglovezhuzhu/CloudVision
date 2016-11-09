@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/contentPadding_level6"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/colorLightGray">
     <ImageView
         android:id="@+id/iv_tip_page_icon"
         android:layout_width="wrap_content"

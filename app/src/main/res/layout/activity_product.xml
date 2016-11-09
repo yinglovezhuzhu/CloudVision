@@ -5,22 +5,31 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/fl_product_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-    </FrameLayout>
-    <android.support.v4.app.FragmentTabHost
-        android:id="@+id/fth_product_tabs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-        <TabWidget
+        <FrameLayout
+            android:id="@+id/fl_product_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TabWidget>
-    </android.support.v4.app.FragmentTabHost>
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+        <android.support.v4.app.FragmentTabHost
+            android:id="@+id/fth_product_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <TabWidget
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TabWidget>
+        </android.support.v4.app.FragmentTabHost>
+        <com.vrcvp.cloudvision.ui.widget.TipPageView
+            android:id="@+id/tpv_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

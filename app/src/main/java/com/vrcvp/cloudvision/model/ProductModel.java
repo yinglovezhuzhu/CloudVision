@@ -21,6 +21,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 
 public class ProductModel implements IProductModel {
     private Context mContext;
+    private HttpAsyncTask<QueryProductResp> mQueryProductTask;
 
     public ProductModel(Context context) {
         this.mContext = context;
@@ -36,7 +37,8 @@ public class ProductModel implements IProductModel {
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {
-            new HttpAsyncTask<QueryProductResp>().doPost(url, reqParam,
+            mQueryProductTask = new HttpAsyncTask<>();
+            mQueryProductTask.doPost(url, reqParam,
                     QueryProductResp.class, new HttpAsyncTask.Callback<QueryProductResp>() {
                         @Override
                         public void onPreExecute() {
@@ -90,6 +92,13 @@ public class ProductModel implements IProductModel {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void cancelQueryProduct() {
+        if(null != mQueryProductTask) {
+            mQueryProductTask.cancel();
         }
     }
 }
