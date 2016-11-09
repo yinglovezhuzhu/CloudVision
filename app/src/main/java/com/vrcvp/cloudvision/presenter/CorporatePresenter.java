@@ -65,12 +65,12 @@ public class CorporatePresenter {
         mModel.queryRecommendedProduct(new HttpAsyncTask.Callback<QueryProductResp>() {
             @Override
             public void onPreExecute() {
-
+                mView.onPreExecute("product");
             }
 
             @Override
             public void onCanceled() {
-
+                mView.onCanceled("product");
             }
 
             @Override
@@ -99,9 +99,17 @@ public class CorporatePresenter {
         });
     }
 
-    public void onDestory() {
-        mModel.cancelQueryCorporateInfo();
+    public void cancelQueryRecommendedProduct() {
         mModel.cancelQueryRecommendedProduct();
+    }
+
+    public void cancelQueryRecommendedVideo() {
         mModel.cancelQueryRecommendedVideo();
+    }
+
+    public void onDestroy() {
+        mModel.cancelQueryCorporateInfo();
+        cancelQueryRecommendedProduct();
+        cancelQueryRecommendedVideo();
     }
 }

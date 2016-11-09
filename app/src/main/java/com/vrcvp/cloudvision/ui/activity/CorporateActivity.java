@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
@@ -25,11 +25,11 @@ import com.vrcvp.cloudvision.presenter.CorporatePresenter;
 import com.vrcvp.cloudvision.ui.adapter.RecommendedProductPagerAdapter;
 import com.vrcvp.cloudvision.ui.adapter.RecommendedVideoAdapter;
 import com.vrcvp.cloudvision.ui.widget.NoScrollGridView;
+import com.vrcvp.cloudvision.ui.widget.TipPageView;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.ICorporateView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +42,9 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     private ImageView mIvCorporateLogo;
     private TextView mTvCorporateName;
+
+    private TipPageView mTpvRecommendedProduct;
+    private TipPageView mTpvRecommendedVideo;
 
     private RecommendedProductPagerAdapter mRecommendedProductAdapter;
     private RecommendedVideoAdapter mRecommendedVideoAdapter;
@@ -63,7 +66,8 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     @Override
     protected void onDestroy() {
-        mCorporatePresenter.onDestory();
+        mCorporatePresenter.onDestroy();
+        cancelLoadingDialog();
         super.onDestroy();
     }
 
@@ -94,6 +98,24 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
             case R.id.ibtn_corporate_back:
                 finish(RESULT_CANCELED, null);
                 break;
+            case R.id.tpv_recommended_product:
+                showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mCorporatePresenter.cancelQueryRecommendedProduct();
+                    }
+                });
+                mCorporatePresenter.queryRecommendedProduct();
+                break;
+            case R.id.tpv_recommended_video:
+                showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mCorporatePresenter.cancelQueryRecommendedVideo();
+                    }
+                });
+                mCorporatePresenter.queryRecommendVideo();
+                break;
             default:
                 break;
         }
@@ -106,7 +128,9 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
 
     @Override
     public void onCanceled(String key) {
-
+        if("product".equals(key)) {
+            cancelLoadingDialog();
+        }
     }
 
     @Override
@@ -141,56 +165,69 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     @Override
     public void onQueryRecommendedProductResult(QueryProductResp result) {
         if(null == result) {
-
+            // 错误
+            mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+            mTpvRecommendedProduct.setVisibility(View.VISIBLE);
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<ProductBean> product = result.getData();
-                    if(null == product || product.isEmpty()) {
-                        // TODO 错误
+                    List<ProductBean> products = result.getData();
+                    if(null == products || products.isEmpty()) {
+                        // 请求成功，但是没有数据
+                        mTpvRecommendedProduct.setTips(R.drawable.ic_no_data, R.string.str_no_data,
+                                R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                        mTpvRecommendedProduct.setVisibility(View.VISIBLE);
                     } else {
-                        mRecommendedProductAdapter.addAll(product, true);
+                        mRecommendedProductAdapter.addAll(products, true);
+                        mTpvRecommendedProduct.setVisibility(View.GONE);
                     }
-                    // FIXME 测试数据
-//                    if(null == product) {
-//                        product = new ArrayList<>();
-//                    }
-//                    ProductBean p = new Gson().fromJson("{\"id\":\"1\",\"categoryName\":\"电脑\",\"name\":\"送游戏键鼠 联想（Lenovo）小新700尊享版四核 15.6英寸超薄游戏本笔记本电脑 官方版 I5-6300HQ 8G1T 4G独显\",\"price\":\"5399.00\",\"orderWeight\":\"1\",\"imageUrl\":\"http://img10.360buyimg.com/n0/jfs/t2716/157/3992030303/98257/c75eb732/57a29d53Nd783d5e1.jpg\",\"detail\":\"\",\"detailImages\":[],\"skus\":[]}", ProductBean.class);
-//                    product.add(p);
-//                    mRecommendedProductAdapter.addAll(product, true);
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
+                    // 无网络，读取缓存错误或者没有缓存
                 default:
-                    // TODO 错误
+                    // 错误
+                    mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                    mTpvRecommendedProduct.setVisibility(View.VISIBLE);
                     break;
             }
         }
+        cancelLoadingDialog();
     }
 
     @Override
     public void onQueryRecommendedVideoResult(QueryVideoResp result) {
         if(null == result) {
-
+            // 错误
+            mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+            mTpvRecommendedVideo.setVisibility(View.VISIBLE);
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    List<VideoBean> video = result.getData();
-                    if(null == video || video.isEmpty()) {
-                        // TODO 错误
+                    List<VideoBean> videos = result.getData();
+                    if(null == videos || videos.isEmpty()) {
+                        // 请求成功，但是没有数据
+                        mTpvRecommendedVideo.setTips(R.drawable.ic_no_data, R.string.str_no_data,
+                                R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                        mTpvRecommendedVideo.setVisibility(View.VISIBLE);
                     } else {
-                        mRecommendedVideoAdapter.addAll(video, true);
+                        mRecommendedVideoAdapter.addAll(videos, true);
+                        mTpvRecommendedVideo.setVisibility(View.GONE);
                     }
                     break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
+                    // 无网络，读取缓存错误或者没有缓存
                 default:
-                    // TODO 错误
+                    // 错误
+                    mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                    mTpvRecommendedVideo.setVisibility(View.VISIBLE);
                     break;
             }
         }
+        cancelLoadingDialog();
     }
 
     private void initView() {
@@ -221,6 +258,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.contentPadding_level6));
         mRecommendedProductAdapter = new RecommendedProductPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mRecommendedProductAdapter);
+        mTpvRecommendedProduct = (TipPageView) findViewById(R.id.tpv_recommended_product);
 
         final int videoItemWidth = (dmWidth - getResources().getDimensionPixelSize(R.dimen.contentPadding_level4) * 3) / 2;
         final NoScrollGridView videoGrid = (NoScrollGridView) findViewById(R.id.gv_corporate_recommended_video);
@@ -243,6 +281,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 startActivity(i);
             }
         });
+        mTpvRecommendedVideo = (TipPageView) findViewById(R.id.tpv_recommended_video);
 
     }
 

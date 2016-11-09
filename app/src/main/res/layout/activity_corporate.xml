@@ -139,24 +139,33 @@
                         android:layout_height="1dp"
                         android:layout_marginBottom="@dimen/contentPadding_level4"
                         android:background="@color/colorTextRed" />
-                    <LinearLayout
-                        android:id="@+id/ll_corporate_recommended_product_content"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="300dp"
-                        android:gravity="center"
-                        android:weightSum="5"
-                        android:clipChildren="false"
-                        android:baselineAligned="false">
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/vp_corporate_recommended_product"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="3"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:id="@+id/ll_corporate_recommended_product_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="300dp"
+                            android:gravity="center"
+                            android:weightSum="5"
                             android:clipChildren="false"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"/>
-                    </LinearLayout>
+                            android:baselineAligned="false">
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/vp_corporate_recommended_product"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:clipChildren="false"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"/>
+                        </LinearLayout>
+                        <com.vrcvp.cloudvision.ui.widget.TipPageView
+                            android:id="@+id/tpv_recommended_product"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"/>
+                    </FrameLayout>
                     <Button
                         android:id="@+id/btn_corporate_all_product"
                         android:layout_width="wrap_content"
@@ -187,16 +196,25 @@
                         android:layout_height="1dp"
                         android:layout_marginBottom="@dimen/contentPadding_level4"
                         android:background="@color/colorTextRed" />
-                    <com.vrcvp.cloudvision.ui.widget.NoScrollGridView
-                        android:id="@+id/gv_corporate_recommended_video"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/contentPadding_level4"
-                        android:layout_marginRight="@dimen/contentPadding_level4"
-                        android:horizontalSpacing="@dimen/contentPadding_level4"
-                        android:verticalSpacing="0dp"
-                        android:numColumns="2"
-                        android:gravity="center" />
+                        android:layout_height="wrap_content">
+                        <com.vrcvp.cloudvision.ui.widget.NoScrollGridView
+                            android:id="@+id/gv_corporate_recommended_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/contentPadding_level4"
+                            android:layout_marginRight="@dimen/contentPadding_level4"
+                            android:horizontalSpacing="@dimen/contentPadding_level4"
+                            android:verticalSpacing="0dp"
+                            android:numColumns="2"
+                            android:gravity="center" />
+                        <com.vrcvp.cloudvision.ui.widget.TipPageView
+                            android:id="@+id/tpv_recommended_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"/>
+                    </FrameLayout>
                     <Button
                         android:id="@+id/btn_corporate_all_video"
                         android:layout_width="wrap_content"

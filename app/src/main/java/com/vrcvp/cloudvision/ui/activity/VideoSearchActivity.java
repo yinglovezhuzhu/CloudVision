@@ -56,6 +56,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
     @Override
     protected void onDestroy() {
         mVideoSearchPresenter.onDestroy();
+        cancelLoadingDialog();
         super.onDestroy();
     }
 
@@ -118,6 +119,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                         }
                     } else {
                         mAdapter.addAll(video, true);
+                        mTipPageView.setVisibility(View.GONE);
                     }
                     break;
                 case HttpStatus.SC_NO_MORE_DATA:

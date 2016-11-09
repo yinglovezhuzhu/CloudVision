@@ -53,6 +53,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
     @Override
     protected void onDestroy() {
         mProductSearchPresenter.onDestroy();
+        cancelLoadingDialog();
         super.onDestroy();
     }
 

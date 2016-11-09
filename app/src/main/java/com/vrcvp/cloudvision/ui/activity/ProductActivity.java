@@ -55,6 +55,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
     @Override
     protected void onDestroy() {
         mProductPresenter.onDestroy();
+        cancelLoadingDialog();
         super.onDestroy();
 //        mProductObservable.unregisterAll();
     }
@@ -116,6 +117,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
                         }
                         mProductData.addAll(products);
                         mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
+                        mTipPageView.setVisibility(View.GONE);
                     }
                     break;
                 case HttpStatus.SC_NO_MORE_DATA:

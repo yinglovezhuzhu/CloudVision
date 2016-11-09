@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     /** 打开语音界面的RequestCode **/
     private static final int RC_VOICE_PAGE = 0x001;
 
-//    /** 打开注册页面 **/
+    /** 打开注册页面 **/
     private static final int RC_ACTIVATE_PAGE = 0x002;
 
     /** 动态申请权限 **/

@@ -53,6 +53,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     @Override
     protected void onDestroy() {
         mVideoPresenter.cancelQueryVideo();
+        cancelLoadingDialog();
         super.onDestroy();
     }
 
@@ -101,6 +102,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                         }
                     } else {
                         mAdapter.addAll(video, true);
+                        mTipPageView.setVisibility(View.GONE);
                     }
                     break;
                 case HttpStatus.SC_NO_MORE_DATA:
