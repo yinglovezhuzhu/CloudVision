@@ -35,11 +35,6 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
         initView();
 
         mActivatePresenter = new ActivatePresenter(this, this);
-
-
-        LogUtils.e("BBBBBBBB", WeatherDBHelper.getCityCode(this, "广州市"));
-        LogUtils.e("BBBBBBBB", WeatherDBHelper.getCityCode(this, "广州"));
-
     }
 
     @Override

@@ -27,7 +27,7 @@ public class CVApplication extends Application {
         DataManager.getInstance().initialize(this);
         JPushInterface.setDebugMode(BuildConfig.DEBUG);
         JPushInterface.init(this);
-        JPushInterface.setAlias(this, "AAAAAAAAAAAAAAAAA", new TagAliasCallback() {
+        JPushInterface.setAlias(this, "BBBBBBBBBBBBBB", new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
                 LogUtils.e("XXXXXXX", i + "<>" + s );
