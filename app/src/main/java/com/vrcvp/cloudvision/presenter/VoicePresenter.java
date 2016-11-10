@@ -20,6 +20,7 @@ import com.iflytek.cloud.TextUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.XFSemanticBean;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
 import com.vrcvp.cloudvision.bean.XFWordBean;
@@ -317,9 +318,25 @@ public class VoicePresenter {
 
     //初始化监听器
     private TextUnderstanderListener mTextUnderstanderListener = new TextUnderstanderListener(){
+
+        private Gson mmGson = new Gson();
+
         //语义结果回调
         public void onResult(UnderstanderResult result){
-            LogUtils.e("BBBBBBBBB", result.getResultString());
+            final String resultString = result.getResultString();
+            LogUtils.e("XFVoice", resultString);
+            if(StringUtils.isEmpty(resultString)) {
+                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+                startSpeak(mStrAndroidUnknownWhat);
+                return;
+            }
+            try {
+                XFSemanticBean bean = mmGson.fromJson(resultString, XFSemanticBean.class);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+                startSpeak(mStrAndroidUnknownWhat);
+            }
         }
         //语义错误回调
         public void onError(SpeechError error) {
