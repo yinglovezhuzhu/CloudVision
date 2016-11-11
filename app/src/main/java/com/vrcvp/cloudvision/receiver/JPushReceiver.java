@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.vrcvp.cloudvision.bean.JPushMessage;
+import com.vrcvp.cloudvision.utils.LogUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,24 +28,24 @@ public class JPushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+        LogUtils.d(TAG, "[JPushReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-            Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
+            Log.d(TAG, "[JPushReceiver] 接收Registration Id : " + regId);
             //send the Registration Id to your server...
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-            processCustomMessage(context, bundle);
+            Log.d(TAG, "[JPushReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            JPushMessage message = parseJPushMessage(bundle);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
+            Log.d(TAG, "[JPushReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-            Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+            Log.d(TAG, "[JPushReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            Log.d(TAG, "[JPushReceiver] 用户点击打开了通知");
 
             //打开自定义的Activity
 //            Intent i = new Intent(context, TestActivity.class);
@@ -52,15 +55,46 @@ public class JPushReceiver extends BroadcastReceiver {
 //            context.startActivity(i);
 
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
+            Log.d(TAG, "[JPushReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
 
         } else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
             boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-            Log.w(TAG, "[MyReceiver]" + intent.getAction() +" connected state change to "+connected);
+            Log.w(TAG, "[JPushReceiver]" + intent.getAction() +" connected state change to "+connected);
         } else {
-            Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
+            Log.d(TAG, "[JPushReceiver] Unhandled intent - " + intent.getAction());
         }
+    }
+
+    /**
+     * 解析推送数据
+     * @param bundle 推送数据
+     * @return JPushMessage对象
+     */
+    private JPushMessage parseJPushMessage(Bundle bundle) {
+        if(null == bundle) {
+            return null;
+        }
+        final JPushMessage message = new JPushMessage();
+        if(bundle.containsKey(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+            message.setId(bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID));
+        }
+        if(bundle.containsKey(JPushInterface.EXTRA_TITLE)) {
+            message.setTitle(bundle.getString(JPushInterface.EXTRA_TITLE));
+        }
+        if(bundle.containsKey(JPushInterface.EXTRA_MESSAGE)) {
+            message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+        }
+        if(bundle.containsKey(JPushInterface.EXTRA_EXTRA)) {
+            message.setExtra(JPushInterface.EXTRA_EXTRA);
+        }
+        if(bundle.containsKey(JPushInterface.EXTRA_CONTENT_TYPE)) {
+            message.setContentType(bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE));
+        }
+        if(bundle.containsKey(JPushInterface.EXTRA_APP_KEY)) {
+            message.setAppKey(bundle.getString(JPushInterface.EXTRA_APP_KEY));
+        }
+        return message;
     }
 
     // 打印所有的 intent extra 数据
@@ -95,27 +129,5 @@ public class JPushReceiver extends BroadcastReceiver {
             }
         }
         return sb.toString();
-    }
-
-    //send msg to MainActivity
-    private void processCustomMessage(Context context, Bundle bundle) {
-//        if (MainActivity.isForeground) {
-//            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-//            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-//            Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-//            msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-//            if (!ExampleUtil.isEmpty(extras)) {
-//                try {
-//                    JSONObject extraJson = new JSONObject(extras);
-//                    if (null != extraJson && extraJson.length() > 0) {
-//                        msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
-//                    }
-//                } catch (JSONException e) {
-//
-//                }
-//
-//            }
-//            context.sendBroadcast(msgIntent);
-//        }
     }
 }

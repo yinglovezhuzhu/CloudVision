@@ -62,8 +62,14 @@ public class CVApplication extends Application {
         JPushInterface.setAlias(this, alias, new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> set) {
-                DataManager.getInstance().saveJPushAliasSetResult(0 == i);
-                setJPushAlias(times + 1);
+                if(0 == i) {
+                    DataManager.getInstance().saveJPushAliasSetResult(true);
+                    LogUtils.e(TAG, "JPush alias set success: " + s);
+                } else {
+                    // 失败后重试3次（共4次）
+                    LogUtils.e(TAG, "JPush alias set failed: " + s);
+                    setJPushAlias(times + 1);
+                }
             }
         });
     }
