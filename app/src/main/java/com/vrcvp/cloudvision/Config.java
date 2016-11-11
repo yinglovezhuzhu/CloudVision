@@ -28,6 +28,8 @@ public class Config {
     public static final String SP_KEY_CITY_CODE_DB_FILE_MD5 = "city_code_database_file_md5";
     /** 城市代码数据库文件是否准备好（boolean） **/
     public static final String SP_KEY_CITY_CODE_DB_FILE_READY = "city_code_database_file_ready";
+    /** JPush别名是否设置成功（boolean） **/
+    public static final String SP_KEY_JPUSH_ALIAS_SET_SUCCESS = "jspush_alias_set_success";
 
 
 //    /** HTTP请求Host **/

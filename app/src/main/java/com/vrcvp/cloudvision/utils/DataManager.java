@@ -242,6 +242,29 @@ public class DataManager {
     }
 
     /**
+     * 保存JPush别名设置结果
+     * @param success 是否成功， true 成功； false 事变
+     * @return 是否保存成功
+     */
+    public boolean saveJPushAliasSetResult(boolean success) {
+        if(!mInitialized) {
+            return false;
+        }
+        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_JPUSH_ALIAS_SET_SUCCESS, success);
+    }
+
+    /**
+     * 读取JPush别名设置结果
+     * @return
+     */
+    public boolean getJPushAliasSetResult() {
+        if(!mInitialized) {
+            return false;
+        }
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_JPUSH_ALIAS_SET_SUCCESS, false);
+    }
+
+    /**
      * 设备注销
      */
     public void logout() {
