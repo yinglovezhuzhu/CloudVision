@@ -1,5 +1,7 @@
 package com.vrcvp.cloudvision.view;
 
+import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
+
 /**
  * 语音视图接口
  * Created by yinglovezhuzhu@gmail.com on 2016/9/17.
@@ -36,4 +38,6 @@ public interface IVoiceView {
 //    void onSpeakBegin();
 //
 //    void onSpeakCompleted();
+
+    void onVoiceSearchResult(VoiceSearchResp result);
 }

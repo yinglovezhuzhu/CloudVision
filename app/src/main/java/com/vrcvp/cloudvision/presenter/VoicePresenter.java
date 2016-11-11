@@ -52,7 +52,7 @@ public class VoicePresenter {
 
     public VoicePresenter(Context context, IVoiceView voiceView) {
         this.mVoiceView = voiceView;
-        this.mVoiceModel = new VoiceModel();
+        this.mVoiceModel = new VoiceModel(context);
         mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
         mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknow_what_to_do);
 
@@ -103,6 +103,8 @@ public class VoicePresenter {
         }
         mSpeechRecognizer.stopListening();
     }
+
+
 
     /**
      * 语音合成（文字转语音）监听

@@ -58,6 +58,8 @@ public class Config {
     public static final String API_VIDEO_LIST = BuildConfig.HTTP_HOST + "/video/cloud";
     /** 视频搜索 **/
     public static final String API_VIDEO_SEARCH = BuildConfig.HTTP_HOST + "/video/list";
+    /** 语音搜索 **/
+    public static final String API_VOICE_SEARCH = BuildConfig.HTTP_HOST + "/voice/search";
 
 
     /** 天气查询 **/

@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 import com.vrcvp.cloudvision.presenter.VoicePresenter;
 import com.vrcvp.cloudvision.ui.adapter.VoiceAdapter;
 import com.vrcvp.cloudvision.view.IVoiceView;
@@ -59,6 +60,11 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onVoiceSearchResult(VoiceSearchResp result) {
+
     }
 
     private void initView() {
