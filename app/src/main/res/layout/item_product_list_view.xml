@@ -24,7 +24,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:padding="@dimen/contentPadding_level4"
+            android:layout_margin="@dimen/contentPadding_level4"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_item_product_list_view_desc"
@@ -41,7 +41,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/contentPadding_level5"
+                android:layout_marginTop="@dimen/contentPadding_level5"
                 android:gravity="start|bottom">
                 <TextView
                     android:id="@+id/tv_item_product_list_view_price"
