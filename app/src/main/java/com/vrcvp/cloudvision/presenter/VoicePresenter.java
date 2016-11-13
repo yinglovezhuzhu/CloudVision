@@ -179,6 +179,9 @@ public class VoicePresenter {
             if(isLast) {
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_HUMAN, mmResultString.toString(), IVoiceView.ACTION_NONE);
 
+                if(mTextUnderstander.isUnderstanding()) {
+                    mTextUnderstander.cancel();
+                }
                 mTextUnderstander.understandText(mmResultString.toString(), mTextUnderstanderListener);
                 // FIXME 处理用户语音输入的请求
 //                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
@@ -334,6 +337,7 @@ public class VoicePresenter {
             }
             try {
                 XFSemanticBean bean = mmGson.fromJson(resultString, XFSemanticBean.class);
+                // FIXME 处理讯飞语义识别结果
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);

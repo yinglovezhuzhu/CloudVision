@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.opensource.pullview.PullListView
+        android:id="@+id/lv_voice_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/colorLightGray"
+        android:dividerHeight="@dimen/divider_size_level2"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"
+        android:descendantFocusability="afterDescendants"/>
+
+    <ImageButton
+        android:id="@+id/ibtn_voice_search_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/contentPadding_level6"
+        android:layout_gravity="start|bottom"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_back_round"
+        android:contentDescription="@null"
+        android:onClick="onClick"/>
+
+</FrameLayout>

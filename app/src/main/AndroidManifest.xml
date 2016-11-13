@@ -70,6 +70,8 @@
         <activity android:name=".ui.activity.VoiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/VoiceActivityTheme" />
+        <activity android:name=".ui.activity.VoiceSearchActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activity.CorporateActivity"
             android:screenOrientation="portrait" />
