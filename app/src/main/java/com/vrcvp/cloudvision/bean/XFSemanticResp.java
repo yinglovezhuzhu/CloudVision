@@ -1,6 +1,5 @@
 package com.vrcvp.cloudvision.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/11/10.
  */
 
-public class XFSemanticBean {
+public class XFSemanticResp {
     private int rc;
     private XFWebPage webPage;
     private XFSemantic semantic;
@@ -17,7 +16,7 @@ public class XFSemanticBean {
     private String service;
     private String data;
     private String text;
-    private List<XFSemanticBean> moreResults;
+    private List<XFSemanticResp> moreResults;
 
     public int getRc() {
         return rc;
@@ -51,13 +50,13 @@ public class XFSemanticBean {
         return text;
     }
 
-    public List<XFSemanticBean> getMoreResults() {
+    public List<XFSemanticResp> getMoreResults() {
         return moreResults;
     }
 
     @Override
     public String toString() {
-        return "XFSemanticBean{" +
+        return "XFSemanticResp{" +
                 "rc=" + rc +
                 ", webPage=" + webPage +
                 ", semantic=" + semantic +

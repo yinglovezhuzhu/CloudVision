@@ -20,24 +20,16 @@ import com.iflytek.cloud.TextUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
-import com.vrcvp.cloudvision.bean.XFSemantic;
-import com.vrcvp.cloudvision.bean.XFSemanticBean;
-import com.vrcvp.cloudvision.bean.XFSlots;
+import com.vrcvp.cloudvision.bean.XFSemanticResp;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
-import com.vrcvp.cloudvision.bean.XFWebPage;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
 import com.vrcvp.cloudvision.bean.XFWordBean;
-import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
-import com.vrcvp.cloudvision.http.HttpAsyncTask;
-import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.model.IVoiceModel;
 import com.vrcvp.cloudvision.model.VoiceModel;
 import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IVoiceView;
-
-import java.util.List;
 
 /**
  * 语音Presenter
@@ -348,7 +340,7 @@ public class VoicePresenter {
                 return;
             }
             try {
-                final XFSemanticBean bean = mmGson.fromJson(resultString, XFSemanticBean.class);
+                final XFSemanticResp bean = mmGson.fromJson(resultString, XFSemanticResp.class);
                 // 处理讯飞语义识别结果
                 handleTextUnderstanderResult(bean);
             } catch (JsonSyntaxException e) {
@@ -368,7 +360,7 @@ public class VoicePresenter {
      * 处理讯飞语义识别结果
      * @param bean 语义识别结果
      */
-    private void handleTextUnderstanderResult(XFSemanticBean bean) {
+    private void handleTextUnderstanderResult(XFSemanticResp bean) {
         if(null == bean) {
             mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
             startSpeak(mStrAndroidUnknownWhat);
