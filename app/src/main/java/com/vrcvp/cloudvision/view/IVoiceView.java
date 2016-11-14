@@ -2,11 +2,13 @@ package com.vrcvp.cloudvision.view;
 
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 
+import java.util.List;
+
 /**
  * 语音视图接口
  * Created by yinglovezhuzhu@gmail.com on 2016/9/17.
  */
-public interface IVoiceView {
+public interface IVoiceView extends IView {
 
     int ERROR_APPID_INVALID = 0;
     /** 语音合成（文字转语音）引擎初始化失败 **/
@@ -39,5 +41,15 @@ public interface IVoiceView {
 //
 //    void onSpeakCompleted();
 
-    void onVoiceSearchResult(VoiceSearchResp result);
+    /**
+     * 语音搜索结果
+     * @param result 结果数据
+     */
+    void onVoiceSearchResult(List<VoiceSearchResp.VoiceSearchData> result);
+
+    /**
+     * 浏览网页地址
+     * @param url 网页地址url
+     */
+    void viewWebURL(String url);
 }

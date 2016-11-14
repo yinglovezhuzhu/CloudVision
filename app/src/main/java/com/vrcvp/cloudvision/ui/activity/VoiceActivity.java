@@ -13,6 +13,8 @@ import com.vrcvp.cloudvision.presenter.VoicePresenter;
 import com.vrcvp.cloudvision.ui.adapter.VoiceAdapter;
 import com.vrcvp.cloudvision.view.IVoiceView;
 
+import java.util.List;
+
 /**
  * 语音Activity
  * Created by yinglovezhuzhu@gmail.com on 2016/9/17.
@@ -63,7 +65,22 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     }
 
     @Override
-    public void onVoiceSearchResult(VoiceSearchResp result) {
+    public void onPreExecute(String key) {
+
+    }
+
+    @Override
+    public void onCanceled(String key) {
+
+    }
+
+    @Override
+    public void onVoiceSearchResult(List<VoiceSearchResp.VoiceSearchData> result) {
+
+    }
+
+    @Override
+    public void viewWebURL(String url) {
 
     }
 

@@ -7,15 +7,39 @@ package com.vrcvp.cloudvision.bean;
 
 public class XFSlots {
     private String keywords;
+    private String name;
+    private String url;
+    private String code;
+    private String category;
 
     public String getKeywords() {
         return keywords;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     @Override
     public String toString() {
         return "XFSlots{" +
                 "keywords='" + keywords + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", code='" + code + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

@@ -56,5 +56,6 @@
 
     <!-- 语音机器人开场白 -->
     <string name="str_voice_android_start">我有什么可以帮到您？</string>
-    <string name="str_voice_unknow_what_to_do">对不起，我无法理解您的意图。</string>
+    <string name="str_voice_unknown_what_to_do">对不起，我无法理解您的意图。</string>
+    <string name="str_voice_search_not_found">没有找到相关内容。</string>
 </resources>

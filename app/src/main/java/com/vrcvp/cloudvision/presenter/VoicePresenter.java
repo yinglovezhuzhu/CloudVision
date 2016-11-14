@@ -20,16 +20,24 @@ import com.iflytek.cloud.TextUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.XFSemantic;
 import com.vrcvp.cloudvision.bean.XFSemanticBean;
+import com.vrcvp.cloudvision.bean.XFSlots;
 import com.vrcvp.cloudvision.bean.XFSpeechResult;
+import com.vrcvp.cloudvision.bean.XFWebPage;
 import com.vrcvp.cloudvision.bean.XFWordArrayBean;
 import com.vrcvp.cloudvision.bean.XFWordBean;
+import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
+import com.vrcvp.cloudvision.http.HttpAsyncTask;
+import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.model.IVoiceModel;
 import com.vrcvp.cloudvision.model.VoiceModel;
 import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IVoiceView;
+
+import java.util.List;
 
 /**
  * 语音Presenter
@@ -42,6 +50,7 @@ public class VoicePresenter {
 
     private final String mStrAndroidStartWord;
     private final String mStrAndroidUnknownWhat;
+    private final String mStrAndroidNotFound;
 
     private SpeechSynthesizer mSpeechSynthesizer;
     private SpeechRecognizer mSpeechRecognizer;
@@ -54,7 +63,8 @@ public class VoicePresenter {
         this.mVoiceView = voiceView;
         this.mVoiceModel = new VoiceModel(context);
         mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
-        mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknow_what_to_do);
+        mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknown_what_to_do);
+        mStrAndroidNotFound = context.getString(R.string.str_voice_search_not_found);
 
         initEngine(context);
 
@@ -317,6 +327,8 @@ public class VoicePresenter {
     private void initTextUnderstander(Context context) {
         //创建文本语义理解对象
         mTextUnderstander = TextUnderstander.createTextUnderstander(context,  null);
+        mTextUnderstander.setParameter(SpeechConstant.DOMAIN, "iat");
+        mTextUnderstander.setParameter(SpeechConstant.NLP_VERSION, "2.0");
         //开始语义理解
 //        mTextUnderstander.understandText("科大讯飞", mTextUnderstanderListener);
     }
@@ -336,8 +348,9 @@ public class VoicePresenter {
                 return;
             }
             try {
-                XFSemanticBean bean = mmGson.fromJson(resultString, XFSemanticBean.class);
-                // FIXME 处理讯飞语义识别结果
+                final XFSemanticBean bean = mmGson.fromJson(resultString, XFSemanticBean.class);
+                // 处理讯飞语义识别结果
+                handleTextUnderstanderResult(bean);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
                 mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
@@ -350,5 +363,77 @@ public class VoicePresenter {
             startSpeak(mStrAndroidUnknownWhat);
         }
     };
+
+    /**
+     * 处理讯飞语义识别结果
+     * @param bean 语义识别结果
+     */
+    private void handleTextUnderstanderResult(XFSemanticBean bean) {
+        if(null == bean) {
+            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+            startSpeak(mStrAndroidUnknownWhat);
+            return;
+        }
+//        if(0 == bean.getRc()) {
+//            final XFSemantic semantic = bean.getSemantic();
+//            if(null != semantic) {
+//                final XFSlots slots = semantic.getSlots();
+//                if(null != slots) {
+//                    final String keywords = slots.getKeywords();
+//                    if(!StringUtils.isEmpty(keywords)) {
+//                        // 请求后台搜索
+//                        mVoiceModel.searchVoiceRequest(keywords, 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
+//                            @Override
+//                            public void onPreExecute() {
+//                                mVoiceView.onPreExecute("voice_search");
+//                            }
+//
+//                            @Override
+//                            public void onCanceled() {
+//                                mVoiceView.onCanceled("voice_search");
+//                            }
+//
+//                            @Override
+//                            public void onResult(VoiceSearchResp result) {
+//                                if(null == result) {
+//                                    // TODO 没有找到内容
+//                                    return;
+//                                }
+//                                switch (result.getHttpCode()) {
+//                                    case HttpStatus.SC_OK:
+//                                        final List<VoiceSearchResp.VoiceSearchData> datas = result.getData();
+//                                        if(null == datas || datas.isEmpty()) {
+//                                            // TODO 没有找到内容
+//                                            return;
+//                                        }
+//                                        mVoiceView.onVoiceSearchResult(datas);
+//                                        break;
+//                                    default:
+//                                        // TODO 没有找到内容
+//                                        break;
+//                                }
+//                            }
+//                        });
+//                        return;
+//                    }
+//                }
+//            } else {
+//                final XFWebPage webPage = bean.getWebPage();
+//                if(null != webPage) {
+//                    final String url = webPage.getUrl();
+//                    if(!StringUtils.isEmpty(url)) {
+//                        // 打开URL
+//                        mVoiceView.viewWebURL(url);
+//                        return;
+//                    }
+//                }
+//            }
+//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+//            startSpeak(mStrAndroidUnknownWhat);
+//        } else {
+//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+//            startSpeak(mStrAndroidUnknownWhat);
+//        }
+    }
 
 }
