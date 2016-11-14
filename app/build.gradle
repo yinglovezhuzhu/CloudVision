@@ -80,6 +80,8 @@ def getDate() {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    sourceCompatibility = 1.5
+    targetCompatibility = 1.5
     compile 'com.android.support:cardview-v7:24.0.0'
     compile 'com.google.code.gson:gson:2.7'
     compile project(':OrientedViewPager')

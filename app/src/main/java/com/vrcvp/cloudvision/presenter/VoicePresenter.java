@@ -366,7 +366,7 @@ public class VoicePresenter {
             startSpeak(mStrAndroidUnknownWhat);
             return;
         }
-//        if(0 == bean.getRc()) {
+        if(XFSemanticResp.RC_SUCCESS == bean.getRc()) {
 //            final XFSemantic semantic = bean.getSemantic();
 //            if(null != semantic) {
 //                final XFSlots slots = semantic.getSlots();
@@ -425,7 +425,7 @@ public class VoicePresenter {
 //        } else {
 //            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
 //            startSpeak(mStrAndroidUnknownWhat);
-//        }
+        }
     }
 
 }
