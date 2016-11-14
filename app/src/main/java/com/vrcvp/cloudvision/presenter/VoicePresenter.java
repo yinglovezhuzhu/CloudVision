@@ -351,8 +351,8 @@ public class VoicePresenter {
         }
         //语义错误回调
         public void onError(SpeechError error) {
-            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-            startSpeak(mStrAndroidUnknownWhat);
+//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
+//            startSpeak(mStrAndroidUnknownWhat);
         }
     };
 
