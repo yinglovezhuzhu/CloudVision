@@ -20,10 +20,16 @@ import com.iflytek.cloud.TextUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
-import com.vrcvp.cloudvision.bean.XFSemanticResp;
-import com.vrcvp.cloudvision.bean.XFSpeechResult;
-import com.vrcvp.cloudvision.bean.XFWordArrayBean;
-import com.vrcvp.cloudvision.bean.XFWordBean;
+import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
+import com.vrcvp.cloudvision.http.HttpAsyncTask;
+import com.vrcvp.cloudvision.http.HttpStatus;
+import com.vrcvp.cloudvision.xfyun.XFOperation;
+import com.vrcvp.cloudvision.xfyun.bean.XFSemantic;
+import com.vrcvp.cloudvision.xfyun.bean.XFSemanticResp;
+import com.vrcvp.cloudvision.xfyun.bean.XFSlots;
+import com.vrcvp.cloudvision.xfyun.bean.XFSpeechResult;
+import com.vrcvp.cloudvision.xfyun.bean.XFWordArrayBean;
+import com.vrcvp.cloudvision.xfyun.bean.XFWordBean;
 import com.vrcvp.cloudvision.model.IVoiceModel;
 import com.vrcvp.cloudvision.model.VoiceModel;
 import com.vrcvp.cloudvision.utils.LogUtils;
@@ -31,11 +37,18 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IVoiceView;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * 语音Presenter
  * Created by yinglovezhuzhu@gmail.com on 2016/9/17.
  */
 public class VoicePresenter {
+
+    private static final String QUERY_REGULAR_EXPRESSION = XFOperation.QUERY.name() + "_\\w*";
 
     private final IVoiceView mVoiceView;
     private final IVoiceModel mVoiceModel;
@@ -367,64 +380,109 @@ public class VoicePresenter {
             return;
         }
         if(XFSemanticResp.RC_SUCCESS == bean.getRc()) {
-//            final XFSemantic semantic = bean.getSemantic();
-//            if(null != semantic) {
-//                final XFSlots slots = semantic.getSlots();
-//                if(null != slots) {
-//                    final String keywords = slots.getKeywords();
-//                    if(!StringUtils.isEmpty(keywords)) {
-//                        // 请求后台搜索
-//                        mVoiceModel.searchVoiceRequest(keywords, 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
-//                            @Override
-//                            public void onPreExecute() {
-//                                mVoiceView.onPreExecute("voice_search");
-//                            }
-//
-//                            @Override
-//                            public void onCanceled() {
-//                                mVoiceView.onCanceled("voice_search");
-//                            }
-//
-//                            @Override
-//                            public void onResult(VoiceSearchResp result) {
-//                                if(null == result) {
-//                                    // TODO 没有找到内容
-//                                    return;
-//                                }
-//                                switch (result.getHttpCode()) {
-//                                    case HttpStatus.SC_OK:
-//                                        final List<VoiceSearchResp.VoiceSearchData> datas = result.getData();
-//                                        if(null == datas || datas.isEmpty()) {
-//                                            // TODO 没有找到内容
-//                                            return;
-//                                        }
-//                                        mVoiceView.onVoiceSearchResult(datas);
-//                                        break;
-//                                    default:
-//                                        // TODO 没有找到内容
-//                                        break;
-//                                }
-//                            }
-//                        });
-//                        return;
-//                    }
-//                }
-//            } else {
-//                final XFWebPage webPage = bean.getWebPage();
-//                if(null != webPage) {
-//                    final String url = webPage.getUrl();
-//                    if(!StringUtils.isEmpty(url)) {
-//                        // 打开URL
-//                        mVoiceView.viewWebURL(url);
-//                        return;
-//                    }
-//                }
-//            }
-//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-//            startSpeak(mStrAndroidUnknownWhat);
-//        } else {
-//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-//            startSpeak(mStrAndroidUnknownWhat);
+            final Map<String, XFSemanticResp> resultMap = new HashMap<>();
+            resultMap.put(bean.getOperation() + "_" + bean.getService(), bean);
+            List<XFSemanticResp> moreResult = bean.getMoreResults();
+            if(null != moreResult) {
+                for (XFSemanticResp result : moreResult) {
+                    if(XFSemanticResp.RC_SUCCESS == result.getRc()) {
+                        resultMap.put(result.getOperation() + "_" + result.getService(), result);
+                    }
+                }
+            }
+
+            final Set<String> resultKeySet = resultMap.keySet();
+
+            if(handleSearch(resultMap, resultKeySet)) {
+                return;
+            }
+            // TODO 处理其他请求，比如打开网页等等
+            notFoundData(true);
+
+        } else {
+            notFoundData(true);
+        }
+    }
+
+    /**
+     * 处理查询
+     * @param resultMap 语义结果Map
+     * @param resultKeySet 语义结果Map keySet
+     * @return 是否已处理
+     */
+    private boolean handleSearch(final Map<String, XFSemanticResp> resultMap, final Set<String> resultKeySet) {
+        String keywords = null;
+        for (String key : resultKeySet) {
+            if(key.matches(QUERY_REGULAR_EXPRESSION)) {
+                final XFSemantic semantic = resultMap.get(key).getSemantic();
+                if(null == semantic) {
+                    continue;
+                }
+                final XFSlots slots = semantic.getSlots();
+                if(null == slots) {
+                    continue;
+                }
+                keywords = slots.getKeywords();
+                if(!StringUtils.isEmpty(keywords)) {
+                    break;
+                }
+            }
+        }
+
+        if(StringUtils.isEmpty(keywords)) {
+            return false;
+        }
+        search(keywords);
+        return true;
+    }
+
+    /**
+     * 请求后台搜索企业数据
+     * @param keywords 关键字
+     */
+    private void search(String keywords) {
+        // 请求后台搜索
+        mVoiceModel.searchVoiceRequest(keywords, 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
+            @Override
+            public void onPreExecute() {
+                mVoiceView.onPreExecute("voice_search");
+            }
+
+            @Override
+            public void onCanceled() {
+                mVoiceView.onCanceled("voice_search");
+            }
+
+            @Override
+            public void onResult(VoiceSearchResp result) {
+                if (null == result) {
+                    // 没有找到内容
+                    notFoundData(true);
+                    return;
+                }
+                switch (result.getHttpCode()) {
+                    case HttpStatus.SC_OK:
+                        final List<VoiceSearchResp.VoiceSearchData> datas = result.getData();
+                        if (null == datas || datas.isEmpty()) {
+                            // 没有找到内容
+                            notFoundData(true);
+                            return;
+                        }
+                        mVoiceView.onVoiceSearchResult(datas);
+                        break;
+                    default:
+                        // 没有找到内容
+                        notFoundData(true);
+                        break;
+                }
+            }
+        });
+    }
+
+    private void notFoundData(boolean speek) {
+        mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidNotFound, IVoiceView.ACTION_NONE);
+        if(speek) {
+            startSpeak(mStrAndroidUnknownWhat);
         }
     }
 

@@ -32,6 +32,7 @@ public class VoiceModel implements IVoiceModel {
         final String url = Config.API_VOICE_SEARCH;
         final SearchReq reqParam = new SearchReq();
         reqParam.setToken(DataManager.getInstance().getToken());
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setKeywords(keyword);
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);

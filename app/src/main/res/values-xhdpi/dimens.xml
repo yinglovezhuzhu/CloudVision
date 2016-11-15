@@ -58,8 +58,8 @@
     <dimen name="main_weather_icon_size">25dp</dimen>
 
     <!-- 语音界面 -->
-    <dimen name="voice_android_icon_size">30dp</dimen>
-    <dimen name="voice_android_text_marginLeft">20dp</dimen>
+    <dimen name="voice_android_icon_size">35dp</dimen>
+    <dimen name="voice_android_text_marginLeft">25dp</dimen>
 
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">80dp</dimen>

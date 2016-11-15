@@ -1,4 +1,4 @@
-package com.vrcvp.cloudvision.bean;
+package com.vrcvp.cloudvision.xfyun.bean;
 
 /**
  * 讯飞语音文字实体类

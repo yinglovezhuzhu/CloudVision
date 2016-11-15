@@ -41,6 +41,10 @@ public interface IVoiceView extends IView {
 //
 //    void onSpeakCompleted();
 
+    void showLoadingDialog();
+
+    void cancelLoadingDialog();
+
     /**
      * 语音搜索结果
      * @param result 结果数据

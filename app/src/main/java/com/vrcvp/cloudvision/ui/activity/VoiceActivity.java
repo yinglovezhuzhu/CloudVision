@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.ui.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -65,8 +66,18 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     }
 
     @Override
-    public void onPreExecute(String key) {
+    public void showLoadingDialog() {
+        showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
 
+            }
+        });
+    }
+
+    @Override
+    public void onPreExecute(String key) {
+        cancelLoadingDialog();
     }
 
     @Override
