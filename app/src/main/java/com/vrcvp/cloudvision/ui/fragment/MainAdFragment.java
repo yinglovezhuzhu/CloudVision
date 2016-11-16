@@ -17,6 +17,7 @@ import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.presenter.VideoPlayerPresenter;
 import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoPlayerView;
 
@@ -98,6 +99,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             mVideoView.suspend();
         }
         super.onPause();
+        LogUtils.e("XXXXXXXXXX", "onPause()--------------------");
     }
 
     @Override
@@ -109,6 +111,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             mVideoView.resume();
         }
         super.onResume();
+        LogUtils.e("XXXXXXXXXX", "onResume()----------------------");
     }
 
 
@@ -197,6 +200,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 } else {
                     mIvPlay.setVisibility(View.VISIBLE);
                 }
+                loadImage(advertise.getOutLink(), mIvImage);
                 break;
             default:
                 break;
@@ -262,18 +266,5 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 }
             }
         });
-    }
-
-    /**
-     * 打开网页
-     * @param url
-     */
-    private void openWebView(String url) {
-        if(StringUtils.isEmpty(url)) {
-            return;
-        }
-        Intent i = new Intent(getActivity(), WebViewActivity.class);
-        i.setData(Uri.parse(url));
-        startActivity(i);
     }
 }

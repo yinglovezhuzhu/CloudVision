@@ -5,6 +5,7 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.BuildConfig;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.ui.widget.LoadingDialog;
 import com.vrcvp.cloudvision.utils.StringUtils;
@@ -213,4 +215,32 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
                 .error(error)
                 .into(imageView);
     }
+
+	/**
+	 * 打开网页
+	 * @param url
+	 */
+	protected void openWebView(String url) {
+		if(StringUtils.isEmpty(url)) {
+			return;
+		}
+		Intent i = new Intent(this, WebViewActivity.class);
+		i.setData(Uri.parse(url));
+		startActivity(i);
+	}
+
+	/**
+	 * 播放视频
+	 * @param videoUrl 视频url地址
+	 * @param name 视频名称
+	 */
+	protected void playVideo(String videoUrl, String name) {
+		if(StringUtils.isEmpty(videoUrl)) {
+			return;
+		}
+		Intent i = new Intent(this, VideoPlayerActivity.class);
+		i.setData(Uri.parse(videoUrl));
+		i.putExtra(Config.EXTRA_TITLE_STR, name);
+		startActivity(i);
+	}
 }

@@ -55,7 +55,10 @@
     <string name="str_loading_video">视频加载中</string>
 
     <!-- 语音机器人开场白 -->
-    <string name="str_voice_android_start">我有什么可以帮到您？</string>
+    <string name="str_voice_android_start">语音助手为您服务</string>
     <string name="str_voice_unknown_what_to_do">对不起，我无法理解您的意图。</string>
     <string name="str_voice_search_not_found">没有找到相关内容。</string>
+    <string name="str_searching">搜索中......</string>
+    <string name="str_search_result">搜索结果</string>
+    <string name="str_search_result_about">关于“%1$s”的搜索结果</string>
 </resources>

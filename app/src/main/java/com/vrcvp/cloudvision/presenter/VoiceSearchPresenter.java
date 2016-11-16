@@ -11,6 +11,7 @@ import com.vrcvp.cloudvision.view.IVoiceSearchView;
 /**
  * 语音搜索Presenter
  * Created by yinglovezhuzhu@gmail.com on 2016/11/13.
+ * @deprecated
  */
 
 public class VoiceSearchPresenter {

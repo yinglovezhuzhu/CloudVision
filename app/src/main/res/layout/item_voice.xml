@@ -32,7 +32,8 @@
             <ImageView
                 android:layout_width="@dimen/voice_android_icon_size"
                 android:layout_height="@dimen/voice_android_icon_size"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="start|top"
+                android:layout_marginTop="@dimen/contentPadding_level1"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_launcher"/>
@@ -61,5 +62,21 @@
                 android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/colorWhite"/>
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_item_voice_search_result_content"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/contentPadding_level8"
+        android:layout_marginRight="@dimen/contentPadding_level8"
+        android:background="@drawable/shape_bg_voice_android"
+        android:visibility="visible">
+        <com.vrcvp.cloudvision.ui.widget.NoScrollListView
+            android:id="@+id/nlv_item_voice_android_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="0dp"
+            android:divider="@color/transparent"/>
     </LinearLayout>
 </FrameLayout>

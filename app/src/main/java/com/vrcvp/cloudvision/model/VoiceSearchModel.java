@@ -17,6 +17,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 /**
  * 语音搜索Model
  * Created by yinglovezhuzhu@gmail.com on 2016/11/13.
+ * @deprecated
  */
 
 public class VoiceSearchModel implements IVoiceSearchModel {

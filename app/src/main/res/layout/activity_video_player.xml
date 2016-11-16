@@ -30,13 +30,14 @@
         android:id="@+id/tv_video_player_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:padding="@dimen/contentPadding_level3"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/textSize_level8"/>
+        android:textSize="@dimen/textSize_level8"
+        android:background="@color/colorMainMenuBackground"/>
 
     <LinearLayout android:id="@+id/video_player_progress_indicator"
             android:orientation="vertical"

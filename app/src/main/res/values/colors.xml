@@ -45,5 +45,5 @@
     <color name="colorVoiceAndroidBackground">#FFEEEEEE</color>
 
     <!-- 视频播放器背景 -->
-    <color name="colorVideoPlayerBackground">#DD000000</color>
+    <color name="colorVideoPlayerBackground">#FF333333</color>
 </resources>

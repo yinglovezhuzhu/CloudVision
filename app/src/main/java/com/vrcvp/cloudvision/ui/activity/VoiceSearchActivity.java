@@ -12,6 +12,7 @@ import com.vrcvp.cloudvision.view.IVoiceSearchView;
 /**
  * 声音搜索结果Activity，企业搜索结果
  * Created by yinglovezhuzhu@gmail.com on 2016/11/13.
+ * @deprecated
  */
 
 public class VoiceSearchActivity extends BaseActivity implements IVoiceSearchView {

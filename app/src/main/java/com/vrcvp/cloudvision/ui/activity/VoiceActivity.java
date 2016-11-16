@@ -8,10 +8,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 import com.vrcvp.cloudvision.presenter.VoicePresenter;
 import com.vrcvp.cloudvision.ui.adapter.VoiceAdapter;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.view.IVoiceView;
 
 import java.util.List;
@@ -54,8 +57,11 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     }
 
     @Override
-    public void onNewVoiceData(int type, String text, int action) {
-        mAdapter.add(new VoiceBean(type, text), true);
+    public void onNewVoiceData(VoiceBean bean, int action) {
+        if(null == bean) {
+            return;
+        }
+        mAdapter.add(bean, true);
         mLvVoice.setSelection(mAdapter.getCount());
         switch (action) {
 //            case ACTION_SPEAK:
@@ -86,8 +92,18 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     }
 
     @Override
-    public void onVoiceSearchResult(List<VoiceSearchResp.VoiceSearchData> result) {
+    public void onVoiceSearchResult(List<VoiceSearchResultBean> result) {
 
+    }
+
+    @Override
+    public void clearListView(boolean keepFirst) {
+        mAdapter.clear(true, true);
+    }
+
+    @Override
+    public void updateLastAndroid(String text) {
+        mAdapter.updateLastAndroid(text, true);
     }
 
     @Override
@@ -100,6 +116,36 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
 
         mLvVoice = (ListView) findViewById(R.id.lv_voice_list);
         mAdapter = new VoiceAdapter(this);
+        mAdapter.setOnSubItemClickListener(new VoiceAdapter.OnSubItemClickListener() {
+            @Override
+            public void onSubItemClickListener(int position, int subPosition) {
+                final VoiceBean voiceBean = mAdapter.getItem(position);
+                if(null == voiceBean) {
+                    return;
+                }
+                final VoiceSearchResultBean searchResultBean = voiceBean.getSearchResultData(subPosition);
+                if(null == searchResultBean) {
+                    return;
+                }
+                switch (searchResultBean.getType()) {
+                    case AdvertiseBean.TYPE_VIDEO:
+//                        playVideo(mData.getOutLink());
+                        playVideo(searchResultBean.getUrl(), searchResultBean.getContent());
+                        break;
+                    case AdvertiseBean.TYPE_PRODUCT:
+                        openWebView(searchResultBean.getOutLink());
+                        break;
+                    case AdvertiseBean.TYPE_CORPORATE:
+                        openWebView(searchResultBean.getOutLink());
+                        break;
+                    case AdvertiseBean.TYPE_OUTER_LINK:
+                        openWebView(searchResultBean.getOutLink());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         mLvVoice.setAdapter(mAdapter);
 
         final ImageButton btnRecord = (ImageButton) findViewById(R.id.ibtn_voice_record);

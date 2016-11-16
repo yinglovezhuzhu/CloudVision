@@ -60,6 +60,8 @@
     <!-- 语音界面 -->
     <dimen name="voice_android_icon_size">70dp</dimen>
     <dimen name="voice_android_text_marginLeft">50dp</dimen>
+    <dimen name="voice_search_result_img_width">300dp</dimen>
+    <dimen name="voice_search_result_img_height">200dp</dimen>
 
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">200dp</dimen>

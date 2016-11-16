@@ -20,6 +20,7 @@ import com.iflytek.cloud.TextUnderstanderListener;
 import com.iflytek.cloud.UnderstanderResult;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
@@ -56,6 +57,9 @@ public class VoicePresenter {
     private final String mStrAndroidStartWord;
     private final String mStrAndroidUnknownWhat;
     private final String mStrAndroidNotFound;
+    private final String mStrSearching;
+    private final String mStrSearchResult;
+    private final String mStrSearchResultAbout;
 
     private SpeechSynthesizer mSpeechSynthesizer;
     private SpeechRecognizer mSpeechRecognizer;
@@ -70,10 +74,13 @@ public class VoicePresenter {
         mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
         mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknown_what_to_do);
         mStrAndroidNotFound = context.getString(R.string.str_voice_search_not_found);
+        mStrSearching = context.getString(R.string.str_searching);
+        mStrSearchResult = context.getString(R.string.str_search_result);
+        mStrSearchResultAbout = context.getString(R.string.str_search_result_about);
 
         initEngine(context);
 
-        mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidStartWord, IVoiceView.ACTION_NONE);
+        mVoiceView.onNewVoiceData(new VoiceBean(VoiceBean.TYPE_ANDROID, mStrAndroidStartWord), IVoiceView.ACTION_NONE);
         startSpeak(mStrAndroidStartWord);
     }
 
@@ -192,21 +199,28 @@ public class VoicePresenter {
         public void onResult(RecognizerResult recognizerResult, boolean isLast) {
             mmResultString.append(parseResult(recognizerResult));
             if(isLast) {
-                mVoiceView.onNewVoiceData(VoiceBean.TYPE_HUMAN, mmResultString.toString(), IVoiceView.ACTION_NONE);
+                final String resultString = mmResultString.toString();
+                if(StringUtils.isEmpty(resultString)) {
+                    return;
+                }
+
+                // 清除就的搜索记录
+                mVoiceView.clearListView(true);
+
+                mVoiceView.onNewVoiceData(new VoiceBean(VoiceBean.TYPE_HUMAN, resultString), IVoiceView.ACTION_NONE);
 
                 if(mTextUnderstander.isUnderstanding()) {
                     mTextUnderstander.cancel();
                 }
+                // 开始语义识别并搜索
+                onNewAndroidItem(mStrSearching, false);
                 mTextUnderstander.understandText(mmResultString.toString(), mTextUnderstanderListener);
-                // FIXME 处理用户语音输入的请求
-//                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-//                startSpeak(mStrAndroidUnknownWhat);
             }
         }
 
         @Override
         public void onError(SpeechError speechError) {
-
+            // TODO 语音输入错误
         }
 
         //扩展用接口
@@ -348,8 +362,7 @@ public class VoicePresenter {
             final String resultString = result.getResultString();
             LogUtils.e("XFVoice", resultString);
             if(StringUtils.isEmpty(resultString)) {
-                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-                startSpeak(mStrAndroidUnknownWhat);
+                mVoiceView.updateLastAndroid(mStrAndroidNotFound);
                 return;
             }
             try {
@@ -358,14 +371,12 @@ public class VoicePresenter {
                 handleTextUnderstanderResult(bean);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-                startSpeak(mStrAndroidUnknownWhat);
+                mVoiceView.updateLastAndroid(mStrAndroidNotFound);
             }
         }
         //语义错误回调
         public void onError(SpeechError error) {
-//            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-//            startSpeak(mStrAndroidUnknownWhat);
+            onNewAndroidItem(mStrAndroidNotFound, false);
         }
     };
 
@@ -375,8 +386,7 @@ public class VoicePresenter {
      */
     private void handleTextUnderstanderResult(XFSemanticResp bean) {
         if(null == bean) {
-            mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidUnknownWhat, IVoiceView.ACTION_NONE);
-            startSpeak(mStrAndroidUnknownWhat);
+            mVoiceView.updateLastAndroid(mStrAndroidNotFound);
             return;
         }
         if(XFSemanticResp.RC_SUCCESS == bean.getRc()) {
@@ -397,10 +407,10 @@ public class VoicePresenter {
                 return;
             }
             // TODO 处理其他请求，比如打开网页等等
-            notFoundData(true);
+            mVoiceView.updateLastAndroid(mStrAndroidNotFound);
 
         } else {
-            notFoundData(true);
+            mVoiceView.updateLastAndroid(mStrAndroidNotFound);
         }
     }
 
@@ -440,9 +450,10 @@ public class VoicePresenter {
      * 请求后台搜索企业数据
      * @param keywords 关键字
      */
-    private void search(String keywords) {
+    private void search(final String keywords) {
         // 请求后台搜索
-        mVoiceModel.searchVoiceRequest(keywords, 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
+        // FIXME 改为正确的关键字
+        mVoiceModel.searchVoiceRequest("aa", 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
             @Override
             public void onPreExecute() {
                 mVoiceView.onPreExecute("voice_search");
@@ -457,30 +468,35 @@ public class VoicePresenter {
             public void onResult(VoiceSearchResp result) {
                 if (null == result) {
                     // 没有找到内容
-                    notFoundData(true);
+                    mVoiceView.updateLastAndroid(mStrAndroidNotFound);
                     return;
                 }
                 switch (result.getHttpCode()) {
                     case HttpStatus.SC_OK:
-                        final List<VoiceSearchResp.VoiceSearchData> datas = result.getData();
+                        final List<VoiceSearchResultBean> datas = result.getData();
                         if (null == datas || datas.isEmpty()) {
                             // 没有找到内容
-                            notFoundData(true);
+                            mVoiceView.updateLastAndroid(mStrAndroidNotFound);
                             return;
                         }
+//                        mVoiceView.updateLastAndroid(mStrSearchResult);
+                        mVoiceView.updateLastAndroid(String.format(mStrSearchResultAbout, keywords));
                         mVoiceView.onVoiceSearchResult(datas);
+                        final VoiceBean bean = new VoiceBean(VoiceBean.TYPE_SEARCH_RESULT, null);
+                        bean.addSearchResult(datas);
+                        mVoiceView.onNewVoiceData(bean, IVoiceView.ACTION_NONE);
                         break;
                     default:
                         // 没有找到内容
-                        notFoundData(true);
+                        mVoiceView.updateLastAndroid(mStrAndroidNotFound);
                         break;
                 }
             }
         });
     }
 
-    private void notFoundData(boolean speek) {
-        mVoiceView.onNewVoiceData(VoiceBean.TYPE_ANDROID, mStrAndroidNotFound, IVoiceView.ACTION_NONE);
+    private void onNewAndroidItem(String text, boolean speek) {
+        mVoiceView.onNewVoiceData(new VoiceBean(VoiceBean.TYPE_ANDROID, text), IVoiceView.ACTION_NONE);
         if(speek) {
             startSpeak(mStrAndroidUnknownWhat);
         }

@@ -1,5 +1,7 @@
 package com.vrcvp.cloudvision.ui.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,7 +9,11 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.BuildConfig;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.ui.activity.VideoActivity;
+import com.vrcvp.cloudvision.ui.activity.VideoPlayerActivity;
+import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
 import com.vrcvp.cloudvision.utils.StringUtils;
 
 /**
@@ -83,5 +89,33 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      */
     protected void loadImage(String path, ImageView imageView) {
         loadImage(path, R.drawable.default_img, R.drawable.default_img, imageView);
+    }
+
+    /**
+     * 打开网页
+     * @param url
+     */
+    protected void openWebView(String url) {
+        if(StringUtils.isEmpty(url)) {
+            return;
+        }
+        Intent i = new Intent(getActivity(), WebViewActivity.class);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
+    /**
+     * 播放视频
+     * @param videoUrl 视频url地址
+     * @param name 视频名称
+     */
+    protected void playVideo(String videoUrl, String name) {
+        if(StringUtils.isEmpty(videoUrl)) {
+            return;
+        }
+        Intent i = new Intent(getActivity(), VideoPlayerActivity.class);
+        i.setData(Uri.parse(videoUrl));
+        i.putExtra(Config.EXTRA_TITLE_STR, name);
+        startActivity(i);
     }
 }

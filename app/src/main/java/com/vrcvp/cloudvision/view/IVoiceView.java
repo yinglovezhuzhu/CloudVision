@@ -1,5 +1,7 @@
 package com.vrcvp.cloudvision.view;
 
+import com.vrcvp.cloudvision.bean.VoiceBean;
+import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 
 import java.util.List;
@@ -29,13 +31,10 @@ public interface IVoiceView extends IView {
     void onXFEngineError(int code, String message);
 
     /**
-     * 新的语音数据
-     * @param type 类型 {@linkplain com.vrcvp.cloudvision.bean.VoiceBean#TYPE_ANDROID}
-     *             或者{@linkplain com.vrcvp.cloudvision.bean.VoiceBean#TYPE_HUMAN}
-     * @param text 语音文字内容
+     * @param bean 语音文字内容
      * @param action 动作，更新语音后需要做的操作
      */
-    void onNewVoiceData(int type, String text, int action);
+    void onNewVoiceData(VoiceBean bean, int action);
 
 //    void onSpeakBegin();
 //
@@ -49,7 +48,19 @@ public interface IVoiceView extends IView {
      * 语音搜索结果
      * @param result 结果数据
      */
-    void onVoiceSearchResult(List<VoiceSearchResp.VoiceSearchData> result);
+    void onVoiceSearchResult(List<VoiceSearchResultBean> result);
+
+    /**
+     * 清除列表数据
+     * @param keepFirst 是否保存第一个
+     */
+    void clearListView(boolean keepFirst);
+
+    /**
+     * 更新最后一个机器人列表数据（如果最后一个不是机器人数据，不操作）
+     * @param text 新文字
+     */
+    void updateLastAndroid(String text);
 
     /**
      * 浏览网页地址
