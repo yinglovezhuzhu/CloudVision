@@ -173,6 +173,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
             @Override
             public void onRefresh() {
                 // 刷新数据
+                mAdapter.clear(true);
                 mProductSearchPresenter.search();
             }
         });
@@ -207,6 +208,7 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
                 mProductSearchPresenter.cancelLoadDataTask();
             }
         });
+        mAdapter.clear(true);
         mProductSearchPresenter.search();
     }
 

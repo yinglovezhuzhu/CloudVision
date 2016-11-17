@@ -33,6 +33,7 @@ public class VideoSearchModel implements IVideoSearchModel {
     public void searchVideo(String keyword, int pageNo, final HttpAsyncTask.Callback<QueryVideoResp> callback) {
         final String url = Config.API_VIDEO_SEARCH;
         final SearchReq reqParam = new SearchReq();
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         reqParam.setKeywords(keyword);
         final Gson gson = new Gson();

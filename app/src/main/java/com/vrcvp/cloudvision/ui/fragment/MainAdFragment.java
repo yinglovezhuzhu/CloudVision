@@ -99,7 +99,6 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             mVideoView.suspend();
         }
         super.onPause();
-        LogUtils.e("XXXXXXXXXX", "onPause()--------------------");
     }
 
     @Override
@@ -111,7 +110,6 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             mVideoView.resume();
         }
         super.onResume();
-        LogUtils.e("XXXXXXXXXX", "onResume()----------------------");
     }
 
 

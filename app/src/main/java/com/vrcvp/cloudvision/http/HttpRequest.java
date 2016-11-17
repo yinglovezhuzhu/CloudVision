@@ -74,6 +74,7 @@ public final class HttpRequest {
 			connection.setRequestMethod("POST");
 			connection.setConnectTimeout(CONNECTION_TIMEOUT);
 			connection.setReadTimeout(READ_TIMEOUT);
+			connection.setRequestProperty("Accept", "*/*");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			connection.connect();

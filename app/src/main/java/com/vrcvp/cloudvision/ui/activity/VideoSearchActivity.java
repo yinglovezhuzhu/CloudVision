@@ -187,6 +187,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
             @Override
             public void onRefresh() {
                 // 刷新数据
+                mAdapter.clear(true);
                 mVideoSearchPresenter.search();
             }
         });
@@ -210,6 +211,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 mVideoSearchPresenter.cancelLoadDataTask();
             }
         });
+        mAdapter.clear(true);
         mVideoSearchPresenter.search();
     }
 }
