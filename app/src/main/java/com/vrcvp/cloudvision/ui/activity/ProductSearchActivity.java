@@ -13,6 +13,7 @@ import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
 import com.opensource.pullview.OnRefreshListener;
 import com.opensource.pullview.PullListView;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.bean.resp.QueryProductResp;
@@ -165,7 +166,13 @@ public class ProductSearchActivity extends BaseActivity implements IProductSearc
         mAdapter.setOnProductItemClickListener(new ProductGridViewAdapter.OnProductItemClickListener() {
             @Override
             public void onItemClicked(int row, int column) {
-                startActivity(new Intent(ProductSearchActivity.this, ProductDetailActivity.class));
+                final ProductBean product = mAdapter.getData(row, column);
+                if(null == product) {
+                    return;
+                }
+                Intent intent = new Intent(ProductSearchActivity.this, ProductDetailActivity.class);
+                intent.putExtra(Config.EXTRA_DATA, product);
+                startActivity(intent);
             }
         });
         mLvProduct.setLoadMode(IPullView.LoadMode.PULL_TO_LOAD); // 设置为上拉加载更多（默认滑动到底部自动加载）
