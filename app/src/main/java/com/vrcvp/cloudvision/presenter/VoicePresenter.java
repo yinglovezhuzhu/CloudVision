@@ -452,8 +452,7 @@ public class VoicePresenter {
      */
     private void search(final String keywords) {
         // 请求后台搜索
-        // FIXME 改为正确的关键字
-        mVoiceModel.searchVoiceRequest("aa", 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
+        mVoiceModel.searchVoiceRequest(keywords, 1, new HttpAsyncTask.Callback<VoiceSearchResp>() {
             @Override
             public void onPreExecute() {
                 mVoiceView.onPreExecute("voice_search");
