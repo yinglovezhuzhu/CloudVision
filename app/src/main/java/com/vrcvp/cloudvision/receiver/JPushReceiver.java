@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.vrcvp.cloudvision.bean.JPushExtra;
 import com.vrcvp.cloudvision.bean.JPushMessage;
 import com.vrcvp.cloudvision.utils.LogUtils;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,7 +89,14 @@ public class JPushReceiver extends BroadcastReceiver {
             message.setMessage(bundle.getString(JPushInterface.EXTRA_MESSAGE));
         }
         if(bundle.containsKey(JPushInterface.EXTRA_EXTRA)) {
-            message.setExtra(JPushInterface.EXTRA_EXTRA);
+            final String extra = JPushInterface.EXTRA_EXTRA;
+            if(!StringUtils.isEmpty(extra)) {
+                try {
+                    message.setExtra(new Gson().fromJson(extra, JPushExtra.class));
+                } catch (Exception e) {
+                    // do nothing
+                }
+            }
         }
         if(bundle.containsKey(JPushInterface.EXTRA_CONTENT_TYPE)) {
             message.setContentType(bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE));

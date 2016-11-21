@@ -1,5 +1,6 @@
 package com.vrcvp.cloudvision.utils;
 
+import android.app.smdt.SmdtManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -200,6 +201,8 @@ public class Utils {
             return "";
         }
         return wifiInfo.getMacAddress();
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
     }
 
     public static String convertByteToHex(byte[] byteData) {

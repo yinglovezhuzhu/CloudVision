@@ -12,7 +12,8 @@ public class JPushMessage implements Parcelable {
     private int id;
     private String title;
     private String message;
-    private String extra; // JSON字符串
+    private String alert;
+    private JPushExtra extra; // JSON字符串
     private String contentType;
     private String appKey;
 
@@ -24,7 +25,8 @@ public class JPushMessage implements Parcelable {
         id = in.readInt();
         title = in.readString();
         message = in.readString();
-        extra = in.readString();
+        alert = in.readString();
+        extra = in.readParcelable(JPushExtra.class.getClassLoader());
         contentType = in.readString();
         appKey = in.readString();
     }
@@ -65,11 +67,11 @@ public class JPushMessage implements Parcelable {
         this.message = message;
     }
 
-    public String getExtra() {
+    public JPushExtra getExtra() {
         return extra;
     }
 
-    public void setExtra(String extra) {
+    public void setExtra(JPushExtra extra) {
         this.extra = extra;
     }
 
@@ -92,9 +94,10 @@ public class JPushMessage implements Parcelable {
     @Override
     public String toString() {
         return "JPushMessage{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +
+                ", alert='" + alert + '\'' +
                 ", extra='" + extra + '\'' +
                 ", contentType='" + contentType + '\'' +
                 ", appKey='" + appKey + '\'' +
@@ -111,7 +114,8 @@ public class JPushMessage implements Parcelable {
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(message);
-        dest.writeString(extra);
+        dest.writeParcelable(extra, flags);
+        dest.writeString(alert);
         dest.writeString(contentType);
         dest.writeString(appKey);
     }
