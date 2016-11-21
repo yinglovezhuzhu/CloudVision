@@ -30,7 +30,8 @@
                 android:drawableStart="@drawable/ic_search_black"
                 android:drawablePadding="@dimen/contentPadding_level2"
                 android:hint="@string/str_input_keyword"
-                android:background="@drawable/selector_bg_et_search_left"/>
+                android:background="@drawable/selector_bg_et_search_left"
+                android:imeOptions="actionSearch"/>
 
             <Button
                 android:id="@+id/btn_video_search"

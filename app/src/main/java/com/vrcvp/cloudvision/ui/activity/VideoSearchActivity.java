@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.opensource.pullview.IPullView;
 import com.opensource.pullview.OnLoadMoreListener;
@@ -196,6 +199,18 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
             public void onLoadMore() {
                 // 加载下一页
                 mVideoSearchPresenter.nextPage();
+            }
+        });
+
+        mEtKeyword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(EditorInfo.IME_ACTION_SEARCH == actionId) {
+                    hideSoftInputFromWindow(mEtKeyword);
+                    search();
+                    return true;
+                }
+                return false;
             }
         });
     }
