@@ -9,6 +9,12 @@ import android.os.Parcelable;
  */
 
 public class JPushExtra implements Parcelable {
+
+    /** 类型：关机 **/
+    public static final String TYPE_SHUTDOWN = "1";
+    /** 类型：开机/重启 **/
+    public static final String TYPE_REBOOT = "2";
+
     private String type;
     private String code;
     private String extrasMessage;

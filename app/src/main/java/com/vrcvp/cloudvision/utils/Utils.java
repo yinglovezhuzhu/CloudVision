@@ -210,6 +210,48 @@ public class Utils {
     }
 
     /**
+     * 关闭系统
+     * @param context Context对象
+     */
+    public static void smdtShutdownSystem(Context context) {
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        if(null == smdtManager) {
+//            return;
+//        }
+//        smdtManager.shutDown();
+    }
+
+    /**
+     * 重启系统
+     * @param context Context对象
+     * @param reason 原因描述
+     */
+    public static void smdtRebootSystem(Context context, String reason) {
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        if(null == smdtManager) {
+//            return;
+//        }
+//        if(StringUtils.isEmpty(reason)) {
+//            smdtManager.smdtReboot();
+//        } else {
+//            smdtManager.smdtReboot(reason);
+//        }
+    }
+
+    /**
+     * 静默安装apk
+     * @param context Context对象
+     * @param apkPath apk文件路径（必须保证apk存在并且完整可用）
+     */
+    public void smdtSilentInstallApk(Context context, String apkPath) {
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        smdtManager.smdtSilentInstall(apkPath, context);
+    }
+
+    /**
      * 将byte数组转换成16进制字符串
      * @param byteData byte数组
      * @return 16进制字符串

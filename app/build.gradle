@@ -29,7 +29,7 @@ android {
             manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
 //                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-                                  "XFYUN_APPID":"57b85e57 "]
+                                  "XFYUN_APPID":"582145d8"]
         }
         debug {
             signingConfig signingConfigs.config
@@ -37,7 +37,7 @@ android {
             buildConfigField "String", "HTTP_HOST", "\"http://120.77.0.141:8080/yhy-app-web/\""
             manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-                                  "XFYUN_APPID":"57b85e57 "]
+                                  "XFYUN_APPID":"582145d8 "]
         }
         dev {
             debuggable true
