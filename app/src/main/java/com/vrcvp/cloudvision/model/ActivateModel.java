@@ -15,6 +15,8 @@ import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.utils.Utils;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 激活页面Model
  * Created by yinglovezhuzhu@gmail.com on 2016/8/20.
@@ -35,6 +37,11 @@ public class ActivateModel implements IActivateModel {
         reqParam.setActivateCode(code);
         reqParam.setEquipmentNo(Utils.getDeviceId(mContext));
         reqParam.setMac(Utils.getMac(mContext));
+        try {
+            reqParam.setAlias(Utils.getMD5Hex(Utils.getMac(mContext)));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {

@@ -272,6 +272,8 @@ public class DataManager {
         mSharedPrefHelper.remove(SP_KEY_ACTIVATE_DATA);
         // 清除Token
         mSharedPrefHelper.remove(SP_KEY_TOKEN);
+        // 清除alias
+        mSharedPrefHelper.remove(Config.SP_KEY_JPUSH_ALIAS_SET_SUCCESS);
 
         mActivateData = null;
         mToken = null;

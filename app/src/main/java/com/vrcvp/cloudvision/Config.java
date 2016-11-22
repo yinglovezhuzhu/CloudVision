@@ -73,4 +73,9 @@ public class Config {
     public static final String EXTRA_TITLE_STR = "extra_title_str";
     public static final String EXTRA_TITLE_RES = "extra_title_res";
     public static final String EXTRA_URL = "extra_url";
+
+    /**
+     * 日期时间格式
+     */
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }

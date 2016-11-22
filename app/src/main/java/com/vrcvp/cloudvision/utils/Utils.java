@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -205,6 +209,11 @@ public class Utils {
 //        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
     }
 
+    /**
+     * 将byte数组转换成16进制字符串
+     * @param byteData byte数组
+     * @return 16进制字符串
+     */
     public static String convertByteToHex(byte[] byteData) {
 
         StringBuilder sb = new StringBuilder();
@@ -213,5 +222,24 @@ public class Utils {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * 解析时间
+     * @param time 时间
+     * @param pattern 时间格式
+     * @return Date对象
+     */
+    public static Date parseTime(String time, String pattern) {
+        if(StringUtils.isEmpty(time) || StringUtils.isEmpty(pattern)) {
+            return null;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        try {
+            return dateFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
