@@ -49,13 +49,13 @@ public class JPushReceiver extends BroadcastReceiver {
                 return;
             }
             switch (extra.getType()) {
-                case JPushExtra.TYPE_SHUTDOWN:
-                    LogUtils.d(TAG, "接收到远程关机指令：" + message.toString());
-                    Utils.smdtShutdownSystem(context);
+                case JPushExtra.TYPE_CLOSE_LCD_BACKLIGHT:
+                    LogUtils.d(TAG, "接收到远程关闭显示器背光指令：" + message.toString());
+                    Utils.smdtSetLCDLight(context, false);
                     break;
-                case JPushExtra.TYPE_REBOOT:
-                    LogUtils.d(TAG, "接收到远程开机指令：" + message.toString());
-                    Utils.smdtRebootSystem(context, "远程开机");
+                case JPushExtra.TYPE_OPEN_LCD_BACKLIGHT:
+                    LogUtils.d(TAG, "接收到远程开启显示器背光指令：" + message.toString());
+                    Utils.smdtSetLCDLight(context, true);
                     break;
                 default:
                     break;

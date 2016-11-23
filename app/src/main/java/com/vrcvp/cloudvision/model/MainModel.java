@@ -7,8 +7,10 @@ import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.req.FindInfoReq;
 import com.vrcvp.cloudvision.bean.req.QueryAdvertiseReq;
 import com.vrcvp.cloudvision.bean.req.QueryNoticeReq;
+import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.bean.resp.QueryWeatherResp;
@@ -36,6 +38,7 @@ public class MainModel implements IMainModel {
     private HttpAsyncTask<QueryAdvertiseResp> mQueryAdvertiseTask;
     private HttpAsyncTask<QueryNoticeResp> mQueryNoticeTask;
     private HttpAsyncTask<QueryWeatherResp> mQueryWeatherTask;
+    private HttpAsyncTask<FindInfoResp> mFindInfoTask;
 
     public MainModel(Context context) {
         this.mContext = context;
@@ -283,6 +286,82 @@ public class MainModel implements IMainModel {
     public void cancelQueryWeather() {
         if(null != mQueryWeatherTask) {
             mQueryWeatherTask.cancel();
+        }
+    }
+
+    @Override
+    public void findInfo(final HttpAsyncTask.Callback<FindInfoResp> callback) {
+        final String url = Config.API_FIND_INFO;
+        final FindInfoReq reqParam = new FindInfoReq();
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
+        reqParam.setToken(DataManager.getInstance().getToken());
+        final Gson gson = new Gson();
+        final String key = gson.toJson(reqParam);
+        if(NetworkManager.getInstance().isNetworkConnected()) {
+            mFindInfoTask = new HttpAsyncTask<>();
+            mFindInfoTask.doPost(url, reqParam,
+                    FindInfoResp.class, new HttpAsyncTask.Callback<FindInfoResp>() {
+                        public void onPreExecute() {
+                            if(null != callback) {
+                                callback.onPreExecute();
+                            }
+                            mQueryAdvertiseTask = null;
+                        }
+
+                        @Override
+                        public void onCanceled() {
+                            if(null != callback) {
+                                callback.onCanceled();
+                            }
+                            mQueryAdvertiseTask = null;
+                        }
+
+                        @Override
+                        public void onResult(FindInfoResp result) {
+                            // 保存接口请求缓存，只有在请求成功的时候才保存
+                            if(HttpStatus.SC_OK == result.getHttpCode()) {
+                                HttpCacheDBUtils.saveHttpCache(mContext, url, key, gson.toJson(result));
+                            }
+
+                            if(null != callback) {
+                                callback.onResult(result);
+                            }
+                            mQueryAdvertiseTask = null;
+                        }
+                    });
+        } else {
+            FindInfoResp result;
+            String data = HttpCacheDBUtils.getHttpCache(mContext, url, key);
+            if(StringUtils.isEmpty(data)) {
+                // 错误
+                if(null != callback) {
+                    result = new FindInfoResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                    callback.onResult(result);
+                }
+            } else {
+                try {
+                    // 解析数据
+                    result = new Gson().fromJson(data, FindInfoResp.class);
+                    if(null != callback) {
+                        callback.onResult(result);
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    if(null != callback) {
+                        result = new FindInfoResp(HttpStatus.SC_CACHE_NOT_FOUND, "Cache not found");
+                        callback.onResult(result);
+                        // 解析错误的，删除掉记录
+                        HttpCacheDBUtils.deleteHttpCache(mContext, url, key);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void cancelFindInfo() {
+        if(null != mFindInfoTask) {
+            mFindInfoTask.cancel();
         }
     }
 

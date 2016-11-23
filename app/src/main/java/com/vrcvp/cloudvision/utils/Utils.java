@@ -214,11 +214,11 @@ public class Utils {
      * @param context Context对象
      */
     public static void smdtShutdownSystem(Context context) {
-//        SmdtManager smdtManager = SmdtManager.create(context);
-//        if(null == smdtManager) {
-//            return;
-//        }
-//        smdtManager.shutDown();
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        smdtManager.shutDown();
     }
 
     /**
@@ -227,15 +227,28 @@ public class Utils {
      * @param reason 原因描述
      */
     public static void smdtRebootSystem(Context context, String reason) {
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        if(StringUtils.isEmpty(reason)) {
+            smdtManager.smdtReboot();
+        } else {
+            smdtManager.smdtReboot(reason);
+        }
+    }
+
+    /**
+     * 设置屏幕背光
+     * @param context Context对象
+     * @param open 是否开启
+     */
+    public static void smdtSetLCDLight(Context context, boolean open) {
 //        SmdtManager smdtManager = SmdtManager.create(context);
 //        if(null == smdtManager) {
 //            return;
 //        }
-//        if(StringUtils.isEmpty(reason)) {
-//            smdtManager.smdtReboot();
-//        } else {
-//            smdtManager.smdtReboot(reason);
-//        }
+//        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
     }
 
     /**

@@ -11,9 +11,9 @@ import android.os.Parcelable;
 public class JPushExtra implements Parcelable {
 
     /** 类型：关机 **/
-    public static final String TYPE_SHUTDOWN = "1";
+    public static final String TYPE_CLOSE_LCD_BACKLIGHT = "1";
     /** 类型：开机/重启 **/
-    public static final String TYPE_REBOOT = "2";
+    public static final String TYPE_OPEN_LCD_BACKLIGHT = "2";
 
     private String type;
     private String code;

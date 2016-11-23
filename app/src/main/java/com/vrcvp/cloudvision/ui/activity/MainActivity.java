@@ -31,6 +31,7 @@ import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
@@ -328,6 +329,11 @@ public class MainActivity extends BaseActivity implements IMainView {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFindInfoResult(FindInfoResp result) {
+
     }
 
     /**

@@ -36,6 +36,8 @@ public class Config {
 //    public static final String API_HOST = BuildConfig.HTTP_HOST;
     /** 接口字--激活 **/
     public static final String API_ACTIVATE = BuildConfig.HTTP_HOST + "/activate/check";
+    /** 接口子--查找广告机信息 **/
+    public static final String API_FIND_INFO = BuildConfig.HTTP_HOST + "/activate/findInfo";
     /** 首页广告 **/
     public static final String API_ADVERTISE_LIST = BuildConfig.HTTP_HOST + "/advertise/list";
     /** 首页公告 **/

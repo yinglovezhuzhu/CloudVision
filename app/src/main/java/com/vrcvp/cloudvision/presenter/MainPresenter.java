@@ -10,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
@@ -83,6 +84,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             mLocationClient.stop();
         }
 
+        cancelFindInfo();
         cancelQueryAdvertise();
         cancelQueryNotice();
     }
@@ -156,6 +158,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      * 激活成功
      */
     public void onActivateSuccess() {
+        findInfo();
         queryAdvertise();
         queryNotice();
     }
@@ -274,6 +277,35 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      */
     private void cancelQueryNotice() {
         mMainModel.cancelQueryNotice();
+    }
+
+    /**
+     * 查找广告机信息
+     */
+    private void findInfo() {
+        mMainModel.findInfo(new HttpAsyncTask.Callback<FindInfoResp>() {
+            @Override
+            public void onPreExecute() {
+                mMainView.onPreExecute(null);
+            }
+
+            @Override
+            public void onCanceled() {
+                mMainView.onCanceled(null);
+            }
+
+            @Override
+            public void onResult(FindInfoResp result) {
+                mMainView.onFindInfoResult(result);
+            }
+        });
+    }
+
+    /**
+     * 取消查找广告机信息
+     */
+    private void cancelFindInfo() {
+        mMainModel.cancelFindInfo();
     }
 
     /**
