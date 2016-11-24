@@ -27,8 +27,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
+import com.vrcvp.cloudvision.bean.InfoBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
@@ -38,11 +40,14 @@ import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
 import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
 import com.vrcvp.cloudvision.utils.DataManager;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
+import com.vrcvp.cloudvision.utils.Utils;
 import com.vrcvp.cloudvision.view.IMainView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -333,6 +338,25 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onFindInfoResult(FindInfoResp result) {
+        if(null == result) {
+            return;
+        }
+        final InfoBean infoBean = result.getData();
+        if(null == infoBean) {
+            return;
+        }
+        Date endDate = Utils.parseTime(infoBean.getCloseTime(), Config.DATE_FORMAT);
+        if(null == endDate) {
+            return;
+        }
+        final long timeLimit = endDate.getTime() - result.getTimestamp();
+        if(timeLimit < 0) {
+            LogUtils.e(TAG, "激活码已经过期");
+            // TODO 激活码过期
+            return;
+        }
+
+        LogUtils.d(TAG, "激活码剩余时间：" + Utils.printTime(this, timeLimit));
 
     }
 

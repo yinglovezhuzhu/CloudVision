@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.resp.ActivateResp;
 import com.vrcvp.cloudvision.db.WeatherDBHelper;
@@ -15,6 +16,7 @@ import com.vrcvp.cloudvision.view.IActivateView;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 /**
  * 激活页面
@@ -77,6 +79,15 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
     public void onActivateResult(ActivateResp result) {
         switch (result.getHttpCode()) {
             case HttpStatus.SC_OK:
+                ActivateResp.ActivateRespData data = result.getData();
+                if(null != data) {
+                    Date date = Utils.parseTime(data.getEndTime(), Config.DATE_FORMAT);
+                    if(null != date && result.getTimestamp() > date.getTime()) {
+                        showShortToast(R.string.str_invalid_activate_code);
+                        return;
+                    }
+                }
+
                 finish(RESULT_OK, null);
                 break;
             case HttpStatus.SC_BAD_REQUEST:

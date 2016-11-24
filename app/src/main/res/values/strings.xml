@@ -10,6 +10,12 @@
     <string name="str_network_error">网络连接失败</string>
     <string name="str_touch_to_refresh">点击刷新</string>
 
+    <string name="str_time_mills_format">%d毫秒</string>
+    <string name="str_time_second_format">%d秒</string>
+    <string name="str_time_minutes_format">%d分钟</string>
+    <string name="str_time_hour_format">%d小时</string>
+    <string name="str_time_day_format">%d天</string>
+
     <!-- 激活 -->
     <string name="str_please_input_activation_code">请输入激活码</string>
     <string name="str_activate">激活</string>

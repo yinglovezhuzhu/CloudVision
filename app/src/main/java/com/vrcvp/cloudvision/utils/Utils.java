@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vrcvp.cloudvision.Config;
+import com.vrcvp.cloudvision.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -296,5 +297,40 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取打印时间
+     * @param context Context对象
+     * @param time 时间毫秒
+     * @return 打印结果
+     */
+    public static String printTime(Context context, long time) {
+        if(time < 0) {
+            return String.format(Locale.getDefault(), context.getString(R.string.str_time_mills_format), 0);
+        }
+
+        long t = time;
+        if(t / 1000 == 0) {
+            return String.format(Locale.getDefault(), context.getString(R.string.str_time_mills_format), t);
+        }
+
+        t /= 1000;
+        if(t / 60 == 0) {
+            return String.format(Locale.getDefault(), context.getString(R.string.str_time_second_format), t);
+        }
+
+        t /= 60;
+        if(t / 60 == 0) {
+            return String.format(Locale.getDefault(), context.getString(R.string.str_time_minutes_format), t);
+        }
+
+        t /= 60;
+        if(t / 24 == 0) {
+            return String.format(Locale.getDefault(), context.getString(R.string.str_time_hour_format), t);
+        }
+
+        t /= 24;
+        return String.format(Locale.getDefault(), context.getString(R.string.str_time_day_format), t);
     }
 }
