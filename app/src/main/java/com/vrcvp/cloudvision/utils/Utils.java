@@ -253,6 +253,16 @@ public class Utils {
     }
 
     /**
+     * 屏幕背景灯光是否开启
+     * @param context Context对象
+     * @return true 屏幕灯光开启， false 屏幕灯光关闭
+     */
+    public static boolean smdtIsLCDLightOn(Context context) {
+        SmdtManager smdtManager = SmdtManager.create(context);
+        return null != smdtManager && smdtManager.smdtGetLcdLightStatus() == 1;
+    }
+
+    /**
      * 静默安装apk
      * @param context Context对象
      * @param apkPath apk文件路径（必须保证apk存在并且完整可用）
