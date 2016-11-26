@@ -1,23 +1,20 @@
 package com.vrcvp.cloudvision.ui.fragment;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.VideoView;
 
-import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.presenter.VideoPlayerPresenter;
-import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
-import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IVideoPlayerView;
 
@@ -28,6 +25,7 @@ import com.vrcvp.cloudvision.view.IVideoPlayerView;
 
 public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
 
+    private View mContentView;
     private ImageView mIvImage;
     private ImageView mIvPlay;
     private AdvertiseBean mData;
@@ -38,9 +36,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_main_ad, container, false);
+        mContentView = inflater.inflate(R.layout.fragment_main_ad, container, false);
 
-        initView(contentView);
+        initView(mContentView);
 
         mVideoPlayer = new VideoPlayerPresenter(getActivity(), this, new VideoPlayListener() {
             @Override
@@ -72,7 +70,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         });
         mVideoPlayer.onCreate();
 
-        return contentView;
+        return mContentView;
     }
 
     @Override
@@ -212,6 +210,18 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         mData = null;
         mIvImage.setImageBitmap(null);
         mIvPlay.setVisibility(View.GONE);
+    }
+
+    /**
+     * 重新调整VideoView大小
+     */
+    public void resizeVideoView() {
+        if(null != mVideoView) {
+            SurfaceHolder holder = mVideoView.getHolder();
+            if(null != holder) {
+                holder.setSizeFromLayout();
+            }
+        }
     }
 
     private void initView(View contentView) {

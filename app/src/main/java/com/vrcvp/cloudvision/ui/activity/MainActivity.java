@@ -234,11 +234,17 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void onNoticeSettingsChanged(boolean disabled) {
         mViewBottomBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
+        mAdOne.resizeVideoView();
+        mAdTwo.resizeVideoView();
+        mAdThree.resizeVideoView();
     }
 
     @Override
     public void onWeatherSettingsChanged(boolean disabled) {
         mViewTopBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
+        mAdOne.resizeVideoView();
+        mAdTwo.resizeVideoView();
+        mAdThree.resizeVideoView();
     }
 
     @Override
