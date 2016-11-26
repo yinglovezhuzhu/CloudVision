@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.model;
 
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
@@ -92,6 +93,17 @@ public interface IMainModel extends IModel {
      * 取消查询广告机信息
      */
     void cancelFindInfo();
+
+    /**
+     * 检查更新
+     * @param callback 回调
+     */
+    void checkUpdate(HttpAsyncTask.Callback<CheckUpdateResp> callback);
+
+    /**
+     * 取消检查更新任务
+     */
+    void cancelCheckUpdate();
 
     /**
      * 登出操作

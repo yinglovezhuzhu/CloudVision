@@ -7,9 +7,11 @@ import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.req.CheckUpdateReq;
 import com.vrcvp.cloudvision.bean.req.FindInfoReq;
 import com.vrcvp.cloudvision.bean.req.QueryAdvertiseReq;
 import com.vrcvp.cloudvision.bean.req.QueryNoticeReq;
+import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
@@ -21,6 +23,7 @@ import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.NetworkManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
+import com.vrcvp.cloudvision.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class MainModel implements IMainModel {
     private HttpAsyncTask<QueryNoticeResp> mQueryNoticeTask;
     private HttpAsyncTask<QueryWeatherResp> mQueryWeatherTask;
     private HttpAsyncTask<FindInfoResp> mFindInfoTask;
+    private HttpAsyncTask<CheckUpdateResp> mCheckUpdateTask;
 
     public MainModel(Context context) {
         this.mContext = context;
@@ -305,7 +309,7 @@ public class MainModel implements IMainModel {
                             if(null != callback) {
                                 callback.onPreExecute();
                             }
-                            mQueryAdvertiseTask = null;
+                            mFindInfoTask = null;
                         }
 
                         @Override
@@ -313,7 +317,7 @@ public class MainModel implements IMainModel {
                             if(null != callback) {
                                 callback.onCanceled();
                             }
-                            mQueryAdvertiseTask = null;
+                            mFindInfoTask = null;
                         }
 
                         @Override
@@ -326,7 +330,7 @@ public class MainModel implements IMainModel {
                             if(null != callback) {
                                 callback.onResult(result);
                             }
-                            mQueryAdvertiseTask = null;
+                            mFindInfoTask = null;
                         }
                     });
         } else {
@@ -362,6 +366,47 @@ public class MainModel implements IMainModel {
     public void cancelFindInfo() {
         if(null != mFindInfoTask) {
             mFindInfoTask.cancel();
+        }
+    }
+
+    @Override
+    public void checkUpdate(final HttpAsyncTask.Callback<CheckUpdateResp> callback) {
+        final String url = Config.API_CHECK_UPDATE;
+        final CheckUpdateReq reqParam = new CheckUpdateReq(Utils.getVersionCode(mContext));
+        if(NetworkManager.getInstance().isNetworkConnected()) {
+            mCheckUpdateTask = new HttpAsyncTask<>();
+            mCheckUpdateTask.doPost(url, reqParam,
+                    CheckUpdateResp.class, new HttpAsyncTask.Callback<CheckUpdateResp>() {
+                        public void onPreExecute() {
+                            if(null != callback) {
+                                callback.onPreExecute();
+                            }
+                            mCheckUpdateTask = null;
+                        }
+
+                        @Override
+                        public void onCanceled() {
+                            if(null != callback) {
+                                callback.onCanceled();
+                            }
+                            mCheckUpdateTask = null;
+                        }
+
+                        @Override
+                        public void onResult(CheckUpdateResp result) {
+                            if(null != callback) {
+                                callback.onResult(result);
+                            }
+                            mCheckUpdateTask = null;
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void cancelCheckUpdate() {
+        if(null != mCheckUpdateTask) {
+            mCheckUpdateTask.cancel();
         }
     }
 

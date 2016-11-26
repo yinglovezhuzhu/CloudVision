@@ -32,7 +32,9 @@ import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
 import com.vrcvp.cloudvision.bean.InfoBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.UpdateInfo;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
@@ -50,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -352,12 +355,28 @@ public class MainActivity extends BaseActivity implements IMainView {
         final long timeLimit = endDate.getTime() - result.getTimestamp();
         if(timeLimit < 0) {
             LogUtils.e(TAG, "激活码已经过期");
-            // TODO 激活码过期
+            // 激活码过期
+            activateCodeTimeout();
             return;
         }
 
         LogUtils.d(TAG, "激活码剩余时间：" + Utils.printTime(this, timeLimit));
+        showActivateCodeTimeLimit(timeLimit);
+    }
 
+    @Override
+    public void onCheckUpdateResult(CheckUpdateResp result) {
+        // 处理检查更新结果
+        if(null == result || !(HttpStatus.SC_OK == result.getHttpCode())) {
+            LogUtils.e(TAG, "检查更新出现错误");
+            return;
+        }
+        final UpdateInfo updateInfo = result.getData();
+        if(null == updateInfo) {
+            LogUtils.d(TAG, "没有发现新版本");
+            return;
+        }
+        showUpdateDialog(updateInfo);
     }
 
     /**
@@ -625,20 +644,108 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     /**
-     * 重置并且跳转到激活页面
+     * 重置
      */
-    private void resetAndActivate() {
+    private void reset() {
         // 清除数据和重置UI
         mAdOne.clearData();
         mAdTwo.clearData();
         mAdThree.clearData();
-        mMainPresenter.logout();
         mPwSettingMenu.dismiss();
         mMenuItemView.setVisibility(View.INVISIBLE);
         mIBtnMenu.setImageResource(R.drawable.ic_main_menu_normal);
         mIBtnMenu.setBackgroundResource(R.drawable.layer_list_bg_main_menu);
+    }
+
+    /**
+     * 重置并且跳转到激活页面
+     */
+    private void resetAndActivate() {
+
+        reset();
+
+        mMainPresenter.logout();
+
         // 跳转
         Intent intent = new Intent(this, ActivateActivity.class);
         startActivityForResult(intent, RC_ACTIVATE_PAGE);
+    }
+
+    /**
+     * 激活码过期了
+     */
+    private void activateCodeTimeout() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.str_warning)
+                .setMessage(R.string.str_activate_code_time_out)
+                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 激活码过期，退出需要重新激活
+                        switchAccount();
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 显示激活码剩余时间
+     */
+    private void showActivateCodeTimeLimit(long timeLimit) {
+        if(timeLimit <= 0) {
+            return;
+        }
+        if(timeLimit > 1000 * 60 * 60 * 24 * 3) {
+            // 大于3天不提示
+            return;
+        }
+        final String timeLimitStr = Utils.printTime(this, timeLimit);
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.str_tips)
+                .setMessage(String.format(Locale.getDefault(), getString(R.string.str_activate_code_time_limit_format), timeLimitStr))
+                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 显示更新对话框
+     * @param updateInfo 更新信息
+     */
+    private void showUpdateDialog(UpdateInfo updateInfo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.str_found_new_version);
+        String message = String.format(Locale.getDefault(), getString(R.string.str_version_name_format), updateInfo.getVersion());
+        message += "\n";
+        message += updateInfo.getRemark();
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.str_update_now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO 下载文件
+            }
+        });
+        if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+            builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    reset();
+                    finish(RESULT_CANCELED, null);
+                }
+            });
+//        } else if(UpdateInfo.TYPE_NORMAL_UPDATE == updateInfo.getUpdateType()) {
+        } else {
+            builder.setNegativeButton(R.string.str_update_later, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+        builder.show();
     }
 }

@@ -3,6 +3,7 @@ package com.vrcvp.cloudvision.view;
 import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
@@ -80,4 +81,10 @@ public interface IMainView {
      * @param result 广告机信息结果数据
      */
     void onFindInfoResult(FindInfoResp result);
+
+    /**
+     * 检查更新结果
+     * @param result 结果数据
+     */
+    void onCheckUpdateResult(CheckUpdateResp result);
 }

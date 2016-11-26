@@ -3,6 +3,7 @@ package com.vrcvp.cloudvision.utils;
 import android.app.smdt.SmdtManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -197,17 +198,17 @@ public class Utils {
      * @return MAC网卡地址，可能为空
      */
     public static String getMac(Context context) {
-//        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-//        if(null == wifiManager) {
-//            return "";
-//        }
-//        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-//        if(null == wifiInfo) {
-//            return "";
-//        }
-//        return wifiInfo.getMacAddress();
-        SmdtManager smdtManager = SmdtManager.create(context);
-        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if(null == wifiManager) {
+            return "";
+        }
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        if(null == wifiInfo) {
+            return "";
+        }
+        return wifiInfo.getMacAddress();
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
     }
 
     /**
@@ -245,11 +246,11 @@ public class Utils {
      * @param open 是否开启
      */
     public static void smdtSetLCDLight(Context context, boolean open) {
-        SmdtManager smdtManager = SmdtManager.create(context);
-        if(null == smdtManager) {
-            return;
-        }
-        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        if(null == smdtManager) {
+//            return;
+//        }
+//        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
     }
 
     /**
@@ -342,5 +343,43 @@ public class Utils {
 
         t /= 24;
         return String.format(Locale.getDefault(), context.getString(R.string.str_time_day_format), t);
+    }
+
+    /**
+     * 获取版本号（versionCode）
+     * @param context Context对象
+     * @return 版本号（versionCode）
+     */
+    public static int getVersionCode(Context context) {
+        final PackageManager pm = context.getPackageManager();
+        if(null == pm) {
+            return 0;
+        }
+        try {
+            final PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * 获取版本名（versionName）
+     * @param context Context对象
+     * @return 版本名（versionName）
+     */
+    public static String getVersionName(Context context) {
+        final PackageManager pm = context.getPackageManager();
+        if(null == pm) {
+            return "";
+        }
+        try {
+            final PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

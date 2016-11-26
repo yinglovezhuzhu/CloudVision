@@ -10,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
+import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
@@ -65,6 +66,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         if(!mLocationClient.isStarted()) {
             mLocationClient.start();
         }
+
+        checkUpdate();
     }
 
     /**
@@ -87,6 +90,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         cancelFindInfo();
         cancelQueryAdvertise();
         cancelQueryNotice();
+
     }
 
     /**
@@ -306,6 +310,35 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
      */
     private void cancelFindInfo() {
         mMainModel.cancelFindInfo();
+    }
+
+    /**
+     * 检查更新
+     */
+    private void checkUpdate() {
+        mMainModel.checkUpdate(new HttpAsyncTask.Callback<CheckUpdateResp>() {
+            @Override
+            public void onPreExecute() {
+                mMainView.onPreExecute(null);
+            }
+
+            @Override
+            public void onCanceled() {
+                mMainView.onCanceled(null);
+            }
+
+            @Override
+            public void onResult(CheckUpdateResp result) {
+                mMainView.onCheckUpdateResult(result);
+            }
+        });
+    }
+
+    /**
+     * 取消检查更新任务
+     */
+    private void cancelCheckUpdate() {
+        mMainModel.cancelCheckUpdate();
     }
 
     /**

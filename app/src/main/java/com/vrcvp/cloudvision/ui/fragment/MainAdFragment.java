@@ -227,7 +227,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 }
                 switch (mData.getType()) {
                     case AdvertiseBean.TYPE_VIDEO:
-                        if(null != mVideoPlayer) {
+                        if(null != mVideoPlayer && null != mVideoView && !mVideoView.isPlaying()) {
                             mVideoView.setVisibility(View.VISIBLE);
                             mIvImage.setVisibility(View.GONE);
                             mIvPlay.setVisibility(View.GONE);

@@ -62,6 +62,8 @@ public class Config {
     public static final String API_VIDEO_SEARCH = BuildConfig.HTTP_HOST + "/video/list";
     /** 语音搜索 **/
     public static final String API_VOICE_SEARCH = BuildConfig.HTTP_HOST + "/voice/search";
+    /** 检查更新 **/
+    public static final String API_CHECK_UPDATE = BuildConfig.HTTP_HOST + "/version/find";
 
 
     /** 天气查询 **/

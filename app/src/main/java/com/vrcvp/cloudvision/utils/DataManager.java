@@ -193,7 +193,7 @@ public class DataManager {
      */
     public boolean isNoticeEnabled() {
 
-        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), false);
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), true);
     }
 
     /**
@@ -201,7 +201,7 @@ public class DataManager {
      * @return true 开启， false 关闭
      */
     public boolean isWeatherEnabled() {
-        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), false);
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), true);
     }
 
     /**
