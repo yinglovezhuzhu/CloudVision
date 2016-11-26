@@ -51,11 +51,19 @@ public class JPushReceiver extends BroadcastReceiver {
             switch (extra.getType()) {
                 case JPushExtra.TYPE_CLOSE_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程关闭显示器背光指令：" + message.toString());
-                    Utils.smdtSetLCDLight(context, false);
+                    if(Utils.smdtIsLCDLightOn(context)) {
+                        Utils.smdtSetLCDLight(context, false);
+                    } else {
+                        LogUtils.e(TAG, "设备显示器背光已经关闭");
+                    }
                     break;
                 case JPushExtra.TYPE_OPEN_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程开启显示器背光指令：" + message.toString());
-                    Utils.smdtSetLCDLight(context, true);
+                    if(Utils.smdtIsLCDLightOn(context)) {
+                        LogUtils.e(TAG, "设备显示器背光已经开启");
+                    } else {
+                        Utils.smdtSetLCDLight(context, true);
+                    }
                     break;
                 default:
                     break;

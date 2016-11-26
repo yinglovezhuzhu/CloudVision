@@ -197,17 +197,17 @@ public class Utils {
      * @return MAC网卡地址，可能为空
      */
     public static String getMac(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        if(null == wifiManager) {
-            return "";
-        }
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        if(null == wifiInfo) {
-            return "";
-        }
-        return wifiInfo.getMacAddress();
-//        SmdtManager smdtManager = SmdtManager.create(context);
-//        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
+//        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+//        if(null == wifiManager) {
+//            return "";
+//        }
+//        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+//        if(null == wifiInfo) {
+//            return "";
+//        }
+//        return wifiInfo.getMacAddress();
+        SmdtManager smdtManager = SmdtManager.create(context);
+        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
     }
 
     /**
@@ -245,11 +245,11 @@ public class Utils {
      * @param open 是否开启
      */
     public static void smdtSetLCDLight(Context context, boolean open) {
-//        SmdtManager smdtManager = SmdtManager.create(context);
-//        if(null == smdtManager) {
-//            return;
-//        }
-//        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
     }
 
     /**
