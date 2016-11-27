@@ -30,6 +30,7 @@ android {
 //                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
                                   "XFYUN_APPID":"582145d8"]
+//                                  "XFYUN_APPID":"57b85e57"]
         }
         debug {
             signingConfig signingConfigs.config
@@ -38,6 +39,7 @@ android {
             manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
                                   "XFYUN_APPID":"582145d8"]
+//                                  "XFYUN_APPID":"57b85e57"]
         }
         dev {
             debuggable true
@@ -48,6 +50,7 @@ android {
             manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
                                   "XFYUN_APPID":"582145d8"]
+//                                  "XFYUN_APPID":"57b85e57"]
         }
     }
 

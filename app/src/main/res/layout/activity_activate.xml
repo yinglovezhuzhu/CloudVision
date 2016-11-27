@@ -51,7 +51,9 @@
                 android:background="@drawable/selector_activate_input"
                 android:textSize="@dimen/textSize_level9"
                 android:textCursorDrawable="@drawable/shape_edit_cursor_white"
+                android:textIsSelectable="false"
                 android:hint="@string/str_please_input_activation_code"/>
+                <!--android:longClickable="true"-->
 
         </LinearLayout>
         <LinearLayout
