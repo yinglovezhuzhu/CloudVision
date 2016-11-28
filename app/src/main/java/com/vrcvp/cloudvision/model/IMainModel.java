@@ -30,13 +30,13 @@ public interface IMainModel extends IModel {
      * 公告是否启用
      * @return true 启用， false 禁用（默认启用）
      */
-    boolean isNoticeEnabled();
+    boolean isNoticeDisabled();
 
     /**
      * 天气是否启用
      * @return true 启用， false禁用（默认启用）
      */
-    boolean isWeatherEnabled();
+    boolean isWeatherDisabled();
 
     /**
      * 下一条通知， 如果通知栏禁用或者没有通知，返回null

@@ -233,18 +233,34 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onNoticeSettingsChanged(boolean disabled) {
-        mViewBottomBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
-        mAdOne.resizeVideoView();
-        mAdTwo.resizeVideoView();
-        mAdThree.resizeVideoView();
+        if(null != mViewBottomBar) {
+            mViewBottomBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
+        }
+        if(null != mAdOne) {
+            mAdOne.resizeVideoView();
+        }
+        if(null != mAdTwo) {
+            mAdTwo.resizeVideoView();
+        }
+        if(null != mAdThree) {
+            mAdThree.resizeVideoView();
+        }
     }
 
     @Override
     public void onWeatherSettingsChanged(boolean disabled) {
-        mViewTopBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
-        mAdOne.resizeVideoView();
-        mAdTwo.resizeVideoView();
-        mAdThree.resizeVideoView();
+        if(null != mViewTopBar) {
+            mViewTopBar.setVisibility(disabled ? View.GONE : View.VISIBLE);
+        }
+        if(null != mAdOne) {
+            mAdOne.resizeVideoView();
+        }
+        if(null != mAdTwo) {
+            mAdTwo.resizeVideoView();
+        }
+        if(null != mAdThree) {
+            mAdThree.resizeVideoView();
+        }
     }
 
     @Override
@@ -402,6 +418,9 @@ public class MainActivity extends BaseActivity implements IMainView {
         mCbVoice = (CheckBox) findViewById(R.id.cb_main_menu_vice);
         mCbSetting = (CheckBox) findViewById(R.id.cb_main_menu_setting);
 
+        mViewTopBar.setVisibility(mMainPresenter.isWeatherDisabled() ? View.GONE : View.VISIBLE);
+        mViewBottomBar.setVisibility(mMainPresenter.isNoticeDisabled() ? View.GONE : View.VISIBLE);
+
         mMenuItemView = findViewById(R.id.ll_main_menu_items);
         mIBtnMenu = (ImageButton) findViewById(R.id.ibtn_main_menu);
         final Animation menuItemShowAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_main_menu_items_show);
@@ -547,8 +566,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         mAdTwo = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_two);
         mAdThree = (MainAdFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_add_three);
 
-        mViewTopBar.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.GONE);
-        mViewBottomBar.setVisibility(mMainPresenter.isWeatherEnabled() ? View.VISIBLE : View.GONE);
+        mViewTopBar.setVisibility(mMainPresenter.isWeatherDisabled() ? View.GONE : View.VISIBLE);
+        mViewBottomBar.setVisibility(mMainPresenter.isWeatherDisabled() ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -586,8 +605,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         };
         cbNoticeSettings.setOnCheckedChangeListener(onCheckedChangeListener);
         cbWeatherSettings.setOnCheckedChangeListener(onCheckedChangeListener);
-        cbNoticeSettings.setChecked(!mMainPresenter.isNoticeEnabled());
-        cbWeatherSettings.setChecked(!mMainPresenter.isWeatherEnabled());
+        cbNoticeSettings.setChecked(mMainPresenter.isNoticeDisabled());
+        cbWeatherSettings.setChecked(mMainPresenter.isWeatherDisabled());
 
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_logout).setOnClickListener(this);
         settingMenuContentView.findViewById(R.id.btn_main_menu_setting_switch).setOnClickListener(this);

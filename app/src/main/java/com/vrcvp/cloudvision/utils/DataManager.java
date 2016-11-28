@@ -168,40 +168,40 @@ public class DataManager {
 
     /**
      * 保存公告设置
-     * @param enabled 是否开启， true 开启， false 关闭
+     * @param disabled 是否关闭， true 关闭， false 开启
      * @return 是否保存成功
      */
-    public boolean onNoticeSettingsChanged(boolean enabled) {
+    public boolean onNoticeSettingsChanged(boolean disabled) {
         if(!mInitialized) {
             return false;
         }
-        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), enabled);
+        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), disabled);
     }
 
     /**
      * 保存首页顶部栏天气设置
-     * @param enabled 是否开启， true 开启， false 关闭
+     * @param disabled 是否关闭， true 关闭， false 开启
      * @return 是否保存成功
      */
-    public boolean onWeatherSettingsChanged(boolean enabled) {
-        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), enabled);
+    public boolean onWeatherSettingsChanged(boolean disabled) {
+        return mSharedPrefHelper.saveBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), disabled);
     }
 
     /**
-     * 首页公告是否开启
-     * @return true 开启， false 关闭
+     * 首页公告是否关闭
+     * @return true 关闭， false 开启
      */
-    public boolean isNoticeEnabled() {
+    public boolean isNoticeDisabled() {
 
-        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), true);
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_NOTICE_DISABLED_PREFIX + getCorporateId(), false);
     }
 
     /**
-     *  首页顶部栏天气是否开启
-     * @return true 开启， false 关闭
+     *  首页顶部栏天气是否关闭
+     * @return true 关闭， false 开启
      */
-    public boolean isWeatherEnabled() {
-        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), true);
+    public boolean isWeatherDisabled() {
+        return mSharedPrefHelper.getBoolean(Config.SP_KEY_MAIN_WEATHER_DISABLED_PREFIX + getCorporateId(), false);
     }
 
     /**

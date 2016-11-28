@@ -50,29 +50,29 @@ public class MainModel implements IMainModel {
     }
 
     @Override
-    public void onNoticeSettingsChanged(boolean enabled) {
-        DataManager.getInstance().onNoticeSettingsChanged(enabled);
+    public void onNoticeSettingsChanged(boolean disabled) {
+        DataManager.getInstance().onNoticeSettingsChanged(disabled);
     }
 
     @Override
-    public void onWeatherSettingsChanged(boolean enabled) {
-        DataManager.getInstance().onWeatherSettingsChanged(enabled);
+    public void onWeatherSettingsChanged(boolean disabled) {
+        DataManager.getInstance().onWeatherSettingsChanged(disabled);
     }
 
     @Override
-    public boolean isNoticeEnabled() {
-        return DataManager.getInstance().isNoticeEnabled();
+    public boolean isNoticeDisabled() {
+        return DataManager.getInstance().isNoticeDisabled();
     }
 
     @Override
-    public boolean isWeatherEnabled() {
-        return DataManager.getInstance().isWeatherEnabled();
+    public boolean isWeatherDisabled() {
+        return DataManager.getInstance().isWeatherDisabled();
     }
 
 
     @Override
     public NoticeBean nextNotice() {
-        if(!isNoticeEnabled() || mNotices.size() == 0) {
+        if(isNoticeDisabled() || mNotices.size() == 0) {
             return null;
         }
         if(mCurrentNoticeIndex >= mNotices.size()) {

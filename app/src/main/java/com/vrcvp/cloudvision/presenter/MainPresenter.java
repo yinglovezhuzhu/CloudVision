@@ -114,19 +114,19 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     }
 
     /**
-     * 公告是否启用
-     * @return true 启用， false 禁用（默认启用）
+     * 公告是否关闭
+     * @return true 关闭， false 启用（默认启用）
      */
-    public boolean isNoticeEnabled() {
-        return mMainModel.isNoticeEnabled();
+    public boolean isNoticeDisabled() {
+        return mMainModel.isNoticeDisabled();
     }
 
     /**
-     * 天气是否启用
-     * @return true 启用， false禁用（默认启用）
+     * 天气是否禁用
+     * @return true 禁用， false启用（默认启用）
      */
-    public boolean isWeatherEnabled() {
-        return mMainModel.isWeatherEnabled();
+    public boolean isWeatherDisabled() {
+        return mMainModel.isWeatherDisabled();
     }
 
     @Override
@@ -349,7 +349,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
                 mHandler.removeMessages(MSG_TIME_UPDATE);
             }
-            if(isWeatherEnabled()) {
+            if(isWeatherDisabled()) {
                 // 延迟一秒
                 mHandler.sendEmptyMessage(MSG_TIME_UPDATE);
             }
@@ -364,7 +364,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
                 mHandler.removeMessages(MSG_NOTICE_UPDATE);
             }
-            if(isNoticeEnabled()) {
+            if(isNoticeDisabled()) {
                 mHandler.sendEmptyMessage(MSG_NOTICE_UPDATE);
             }
         }
