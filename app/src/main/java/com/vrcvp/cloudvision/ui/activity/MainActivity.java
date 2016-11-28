@@ -401,7 +401,8 @@ public class MainActivity extends BaseActivity implements IMainView {
             LogUtils.d(TAG, "没有发现新版本");
             return;
         }
-        showUpdateDialog(updateInfo);
+        // FIXME 打包的时候去掉注释
+//        showUpdateDialog(updateInfo);
     }
 
     @Override

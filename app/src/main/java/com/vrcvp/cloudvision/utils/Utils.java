@@ -207,6 +207,7 @@ public class Utils {
             return "";
         }
         return wifiInfo.getMacAddress();
+        // FIXME 打包去掉注释
 //        SmdtManager smdtManager = SmdtManager.create(context);
 //        return null == smdtManager ? null : smdtManager.smdtGetEthMacAddress();
     }
@@ -246,11 +247,11 @@ public class Utils {
      * @param open 是否开启
      */
     public static void smdtSetLCDLight(Context context, boolean open) {
-//        SmdtManager smdtManager = SmdtManager.create(context);
-//        if(null == smdtManager) {
-//            return;
-//        }
-//        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        smdtManager.smdtSetLcdBackLight(open ? 1 : 0);
     }
 
     /**
@@ -269,11 +270,11 @@ public class Utils {
      * @param apkPath apk文件路径（必须保证apk存在并且完整可用）
      */
     public static void smdtSilentInstallApk(Context context, String apkPath) {
-//        SmdtManager smdtManager = SmdtManager.create(context);
-//        if(null == smdtManager) {
-//            return;
-//        }
-//        smdtManager.smdtSilentInstall(apkPath, context);
+        SmdtManager smdtManager = SmdtManager.create(context);
+        if(null == smdtManager) {
+            return;
+        }
+        smdtManager.smdtSilentInstall(apkPath, context);
     }
 
     /**
