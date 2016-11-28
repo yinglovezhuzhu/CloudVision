@@ -278,24 +278,6 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         mPageIndicator.setPageCount(mImgAdapter.getCount());
         mPageIndicator.setCurrentPage(0);
         mImgPager.setAdapter(mImgAdapter);
-        // FIXME 测试数据
-//                        AttrBean attrColor = new AttrBean("1", "颜色");
-//                        attrColor.addAttrValue(new AttrValueBean("1","黄色"));
-//                        attrColor.addAttrValue(new AttrValueBean("2","紫色"));
-//                        attrColor.addAttrValue(new AttrValueBean("3","蓝色"));
-//                        attrColor.addAttrValue(new AttrValueBean("4","白色"));
-//
-//                        mAttrAdapter.add(attrColor, false);
-//
-//                        AttrBean attrSize = new AttrBean("2", "尺寸");
-//                        attrSize.addAttrValue(new AttrValueBean("5","S"));
-//                        attrSize.addAttrValue(new AttrValueBean("6","M"));
-//                        attrSize.addAttrValue(new AttrValueBean("7","L"));
-//                        attrSize.addAttrValue(new AttrValueBean("8","XL"));
-//                        attrSize.addAttrValue(new AttrValueBean("9","XXL"));
-//                        attrSize.addAttrValue(new AttrValueBean("10","XXXL"));
-//
-//                        mAttrAdapter.add(attrSize, true);
 
         mAttrAdapter.addAll(mProduct.getAttrValues(), true);
         mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));

@@ -35,14 +35,6 @@ public class ProductPagerViewFragment extends BaseFragment {
     private ProductObserver mProductObserver = new ProductObserver() {
         @Override
         public void onQueryProductResult(boolean isRefresh, boolean hasMore, QueryProductResp result) {
-//            if(null != mLvProduct) {
-//                mLvProduct.refreshCompleted();
-//                // FIXME 是否可以加载更多根据加载分页结果决定
-//                mLvProduct.loadMoreCompleted(true);
-//            }
-//            if(isRefresh) {
-//                mAdapter.clear(true);
-//            }
             mAdapter.addAll(result.getData(), true);
             if(null != mTvPageCount) {
                 mTvPageCount.setText(String.valueOf(mAdapter.getCount()));
