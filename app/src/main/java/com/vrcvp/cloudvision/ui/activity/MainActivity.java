@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -109,6 +110,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     private MainAdFragment mAdOne;
     private MainAdFragment mAdTwo;
     private MainAdFragment mAdThree;
+
+    private AlertDialog mDownloadApkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -399,6 +402,65 @@ public class MainActivity extends BaseActivity implements IMainView {
             return;
         }
         showUpdateDialog(updateInfo);
+    }
+
+    @Override
+    public void onDownloadApkProgressUpdate(UpdateInfo updateInfo, int downloadedSize, int totalSize) {
+        final int progress = downloadedSize * 100 / totalSize;
+        if(null != mTvProgress) {
+            mTvProgress.setText(String.format(Locale.getDefault(), getString(R.string.str_progress_text_format), progress));
+        }
+        if(null != mPbProgress) {
+            mPbProgress.setProgress(progress);
+        }
+    }
+
+    @Override
+    public void onDownloadApkError(final UpdateInfo updateInfo, int code, String message) {
+        LogUtils.e(TAG, "apk下载失败：\ncode: " + code + "\nmessage: " + message);
+        dismissDownloadApkDialog();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.str_download_failed);
+        builder.setMessage(R.string.str_download_failed_with_error);
+        builder.setPositiveButton(R.string.str_retry, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showDownloadDialog(updateInfo);
+            }
+        });
+        builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+                    // 强制更新，取消下载退出程序
+                    reset();
+                    finish(RESULT_CANCELED, null);
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    public void onDownloadApkFinished(UpdateInfo updateInfo, String path) {
+        LogUtils.d(TAG, "apk下载完成：" + path);
+        dismissDownloadApkDialog();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.str_tips);
+        builder.setMessage(R.string.str_installing_apk);
+        if(UpdateInfo.TYPE_NORMAL_UPDATE == updateInfo.getUpdateType()) {
+            builder.setPositiveButton(R.string.str_install_background, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+        builder.show();
+
+        Utils.smdtSilentInstallApk(this, path);
     }
 
     /**
@@ -741,8 +803,9 @@ public class MainActivity extends BaseActivity implements IMainView {
      * 显示更新对话框
      * @param updateInfo 更新信息
      */
-    private void showUpdateDialog(UpdateInfo updateInfo) {
+    private void showUpdateDialog(final UpdateInfo updateInfo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
         builder.setTitle(R.string.str_found_new_version);
         String message = String.format(Locale.getDefault(), getString(R.string.str_version_name_format), updateInfo.getVersion());
         message += "\n";
@@ -751,7 +814,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         builder.setPositiveButton(R.string.str_update_now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO 下载文件
+                // 下载文件
+                showDownloadDialog(updateInfo);
             }
         });
         if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
@@ -772,5 +836,52 @@ public class MainActivity extends BaseActivity implements IMainView {
             });
         }
         builder.show();
+    }
+
+    private View mDownloadView;
+    private TextView mTvProgress;
+    private ProgressBar mPbProgress;
+
+    /**
+     * 显示下载对话框
+     * @param updateInfo 更新信息
+     */
+    private void showDownloadDialog(final UpdateInfo updateInfo) {
+        if(null == mDownloadView) {
+            mDownloadView = View.inflate(this, R.layout.layout_download, null);
+            mTvProgress = (TextView) mDownloadView.findViewById(R.id.tv_download_progress);
+            mPbProgress = (ProgressBar) mDownloadView.findViewById(R.id.pb_download_progress);
+            mTvProgress.setText(String.format(Locale.getDefault(), getString(R.string.str_progress_text_format), 0));
+            mPbProgress.setProgress(0);
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle(R.string.str_downloading_new_apk);
+        builder.setView(mDownloadView);
+        builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+                    // 强制更新，取消下载退出程序
+                    reset();
+                    finish(RESULT_CANCELED, null);
+                } else {
+                    // 非强制更新，取消下载
+                    mMainPresenter.cancelDownloadApk();
+                }
+            }
+        });
+        mDownloadApkDialog = builder.show();
+        mMainPresenter.downloadApk(updateInfo);
+    }
+
+    /**
+     * 隐藏下载apk对话框
+     */
+    private void dismissDownloadApkDialog() {
+        if(null != mDownloadApkDialog && mDownloadApkDialog.isShowing()) {
+            mDownloadApkDialog.dismiss();
+        }
+        mDownloadApkDialog = null;
     }
 }

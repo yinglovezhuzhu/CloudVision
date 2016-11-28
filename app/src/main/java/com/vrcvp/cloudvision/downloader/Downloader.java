@@ -80,11 +80,13 @@ public class Downloader {
      *
      * @param downloadUrl 下载地址
      * @param defaultSuffix 默认后缀，没有设置文件名的时候生效，带点，例如".mp4"
+     * @param downloadEnd 是否需要先下载文件尾部， true需要， false不需要
      * @param listener      The listener to listen downloadVideo state, can be null if not need.
      * @return The size that downloaded.
      * @throws Exception The error happened when downloading.
      */
-    public File download(String downloadUrl, String defaultSuffix, DownloadListener listener) throws Exception {
+    public File download(String downloadUrl, String defaultSuffix, boolean downloadEnd,
+                         DownloadListener listener) throws Exception {
 
         this.mUrl = downloadUrl;
 
@@ -192,8 +194,10 @@ public class Downloader {
             mFileName = mSavedFile.getName();
         }
 
-        // 下载视频数据的尾部部分，否则播放器无法解析视频文件
-        downloadFileEnd(mContext, 1024 * 512);
+        if(downloadEnd) {
+            // 下载视频数据的尾部部分，否则播放器无法解析视频文件
+            downloadFileEnd(mContext, 1024 * 512);
+        }
 
         if (null != listener) {
             listener.onProgressUpdate(mDownloadLog.getDownloadedSize(), mDownloadLog.getTotalSize());

@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.view;
 
 import com.baidu.location.BDLocation;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.UpdateInfo;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
@@ -87,4 +88,27 @@ public interface IMainView {
      * @param result 结果数据
      */
     void onCheckUpdateResult(CheckUpdateResp result);
+
+    /**
+     * 下载进度更新
+     * @param updateInfo 更新信息
+     * @param downloadedSize 已下载大小
+     * @param totalSize 总大小
+     */
+    void onDownloadApkProgressUpdate(UpdateInfo updateInfo, int downloadedSize, int totalSize);
+
+    /**
+     * 下载出现错误
+     * @param updateInfo 更新信息
+     * @param code 错误码
+     * @param message 错误信息文字
+     */
+    void onDownloadApkError(UpdateInfo updateInfo, int code, String message);
+
+    /**
+     * 下载apk完成
+     * @param updateInfo 更新信息
+     * @param path 本地文件路径
+     */
+    void onDownloadApkFinished(UpdateInfo updateInfo, String path);
 }

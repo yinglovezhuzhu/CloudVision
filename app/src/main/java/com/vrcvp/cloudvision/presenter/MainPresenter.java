@@ -1,6 +1,7 @@
 package com.vrcvp.cloudvision.presenter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
@@ -9,17 +10,23 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.vrcvp.cloudvision.bean.NoticeBean;
+import com.vrcvp.cloudvision.bean.UpdateInfo;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
 import com.vrcvp.cloudvision.bean.resp.CheckUpdateResp;
 import com.vrcvp.cloudvision.bean.resp.FindInfoResp;
 import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
+import com.vrcvp.cloudvision.downloader.DownloadListener;
+import com.vrcvp.cloudvision.downloader.Downloader;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
+import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.model.IMainModel;
 import com.vrcvp.cloudvision.model.MainModel;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
+
+import java.io.File;
 
 /**
  * Main主页面Presenter
@@ -38,6 +45,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     private Context mContext;
     private IMainView mMainView;
     private IMainModel mMainModel;
+
+    private Downloader mApkDownloader;
 
     private Handler mHandler = new Handler(this);
 
@@ -90,7 +99,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         cancelFindInfo();
         cancelQueryAdvertise();
         cancelQueryNotice();
-
+        cancelCheckUpdate();
+        cancelDownloadApk();
     }
 
     /**
@@ -165,6 +175,74 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         findInfo();
         queryAdvertise();
         queryNotice();
+    }
+
+    /**
+     * 下载apk文件
+     * @param updateInfo 更新信息
+     */
+    public void downloadApk(final UpdateInfo updateInfo) {
+        if(null == updateInfo || StringUtils.isEmpty(updateInfo.getDownloadUrl())) {
+            mMainView.onDownloadApkError(updateInfo, HttpStatus.SC_BAD_REQUEST, "下载链接为空");
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File saveDir = mContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                if(null == saveDir) {
+                    saveDir = mContext.getFilesDir();
+                }
+                if(null == saveDir) {
+                    saveDir = Environment.getExternalStorageDirectory();
+                }
+
+                mApkDownloader = new Downloader(mContext, saveDir, null);
+                try {
+                    mApkDownloader.download(updateInfo.getDownloadUrl(), ".apk", false, new DownloadListener() {
+                        @Override
+                        public void onProgressUpdate(final int downloadedSize, final int totalSize) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mMainView.onDownloadApkProgressUpdate(updateInfo, downloadedSize, totalSize);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(final int code, final String message) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mMainView.onDownloadApkError(updateInfo, code, message);
+                                }
+                            });
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(mApkDownloader.isFinished()) {
+                    final File savedFile = mApkDownloader.getSavedFile();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mMainView.onDownloadApkFinished(updateInfo, savedFile.getPath());
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 取消下载文件
+     */
+    public void cancelDownloadApk() {
+        if(null != mApkDownloader && !mApkDownloader.isStop()) {
+            mApkDownloader.stop();
+        }
     }
 
     /**

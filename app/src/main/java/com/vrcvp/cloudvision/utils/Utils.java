@@ -268,12 +268,12 @@ public class Utils {
      * @param context Context对象
      * @param apkPath apk文件路径（必须保证apk存在并且完整可用）
      */
-    public void smdtSilentInstallApk(Context context, String apkPath) {
-        SmdtManager smdtManager = SmdtManager.create(context);
-        if(null == smdtManager) {
-            return;
-        }
-        smdtManager.smdtSilentInstall(apkPath, context);
+    public static void smdtSilentInstallApk(Context context, String apkPath) {
+//        SmdtManager smdtManager = SmdtManager.create(context);
+//        if(null == smdtManager) {
+//            return;
+//        }
+//        smdtManager.smdtSilentInstall(apkPath, context);
     }
 
     /**

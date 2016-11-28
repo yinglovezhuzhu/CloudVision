@@ -11,6 +11,13 @@
     <string name="str_update_now">立即更新</string>
     <string name="str_update_later">以后再说</string>
     <string name="str_version_name_format">版本：%s</string>
+    <string name="str_downloading_new_apk">正在下载新版本</string>
+    <string name="str_progress_text_format">已完成%d%%</string>
+    <string name="str_download_failed">下载失败</string>
+    <string name="str_download_failed_with_error">下载出现错误，是否重试？</string>
+    <string name="str_retry">重试</string>
+    <string name="str_installing_apk">正在安装升级包，请稍后&#8230;</string>
+    <string name="str_install_background">后台更新</string>
 
     <string name="str_need_request_permission">部分权限授权没有通过，没有这些权限，程序将可能无法正常运行，是否重新授权？</string>
     <string name="str_confirm">确定</string>

@@ -85,7 +85,7 @@ public class VideoPlayerModel implements IVideoPlayerModel {
                 @Override
                 public void run() {
                     try {
-                        mDownloader.download(mUrl, ".mp4", new DownloadListener() {
+                        mDownloader.download(mUrl, ".mp4", true, new DownloadListener() {
                             @Override
                             public void onProgressUpdate(final int downloadedSize, final int totalSize) {
                                 if(null != mDownloadListener) {
