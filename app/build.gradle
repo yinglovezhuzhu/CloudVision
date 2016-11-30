@@ -76,6 +76,11 @@ android {
             }
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 //获取时间戳
