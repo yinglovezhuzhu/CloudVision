@@ -15,8 +15,8 @@ android {
         applicationId "com.vrcvp.cloudvision"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 9
-        versionName "0.0.9"
+        versionCode 10
+        versionName "0.0.10"
     }
 
     buildTypes {
@@ -30,8 +30,8 @@ android {
             manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
 //                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-                                  "XFYUN_APPID":"582145d8"]
-//                                  "XFYUN_APPID":"57b85e57"]
+//                                  "XFYUN_APPID":"582145d8"]
+                                  "XFYUN_APPID":"57b85e57"]
         }
         debug {
             signingConfig signingConfigs.config
@@ -40,8 +40,8 @@ android {
 //            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
             manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-                                  "XFYUN_APPID":"582145d8"]
-//                                  "XFYUN_APPID":"57b85e57"]
+//                                  "XFYUN_APPID":"582145d8"]
+                                  "XFYUN_APPID":"57b85e57"]
         }
         dev {
             debuggable true
@@ -52,8 +52,8 @@ android {
 //            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
             manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-                                  "XFYUN_APPID":"582145d8"]
-//                                  "XFYUN_APPID":"57b85e57"]
+//                                  "XFYUN_APPID":"582145d8"]
+                                  "XFYUN_APPID":"57b85e57"]
         }
     }
 
