@@ -43,7 +43,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public static final int MSG_NOTICE_UPDATE = 0x01;
 
     /** 公告更新时间间隔 **/
-    private static final int NOTICE_UPDATE_TIME = 1000 * 6;
+    private static final int NOTICE_UPDATE_TIME = 1000 * 10;
 
     private Context mContext;
     private IMainView mMainView;

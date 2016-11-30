@@ -96,6 +96,8 @@
                 android:drawablePadding="@dimen/contentPadding_level3"
                 android:textSize="@dimen/textSize_level7"
                 android:textColor="@color/text_color_white"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="1"/>
         </LinearLayout>
     </LinearLayout>
