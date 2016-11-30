@@ -23,6 +23,7 @@ import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.model.IMainModel;
 import com.vrcvp.cloudvision.model.MainModel;
 import com.vrcvp.cloudvision.utils.DataManager;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IMainView;
 
@@ -33,6 +34,8 @@ import java.io.File;
  * Created by yinglovezhuzhu@gmail.com on 2016/9/16.
  */
 public class MainPresenter implements Handler.Callback, BDLocationListener {
+
+    private static final String TAG = "MainPresenter";
 
     /** 时间更新消息 **/
     private static final int MSG_TIME_UPDATE = 0x00;
@@ -51,7 +54,8 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     private Handler mHandler = new Handler(this);
 
     private LocationClient mLocationClient = null;
-//    private BDLocation mBDLocation;
+    private BDLocation mBDLocation;
+    private WeatherInfo mWeatherInfo;
 
     public MainPresenter(Context context, IMainView view) {
         mContext = context;
@@ -72,7 +76,9 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
 
         initLocation();
 
-        if(!mLocationClient.isStarted()) {
+        if(mLocationClient.isStarted()) {
+            mLocationClient.requestLocation();
+        } else {
             mLocationClient.start();
         }
 
@@ -120,7 +126,33 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
     public void onWeatherSettingsChanged(boolean disabled) {
         mMainModel.onWeatherSettingsChanged(disabled);
         mMainView.onWeatherSettingsChanged(disabled);
-        updateTime();
+        if(!disabled) {
+            if(null != mWeatherInfo) {
+                mMainView.onWeatherUpdate(mWeatherInfo);
+            }
+            if(null != mBDLocation) {
+                mMainView.onBDLocationUpdate(mBDLocation);
+                mMainModel.queryCityWeather(mBDLocation.getCity(), new HttpAsyncTask.Callback<WeatherInfo>() {
+                    @Override
+                    public void onPreExecute() {
+
+                    }
+
+                    @Override
+                    public void onCanceled() {
+
+                    }
+
+                    @Override
+                    public void onResult(WeatherInfo result) {
+                        mWeatherInfo = result;
+                        mMainView.onWeatherUpdate(result);
+                    }
+                });
+            }
+            updateTime();
+
+        }
     }
 
     /**
@@ -258,6 +290,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
         //Receive Location
         mMainView.onBDLocationUpdate(bdLocation);
         if(null != bdLocation && !StringUtils.isEmpty(bdLocation.getCity())) {
+            LogUtils.d(TAG, "百度定位成功，城市-" + bdLocation.getCity());
             mMainModel.queryCityWeather(bdLocation.getCity(), new HttpAsyncTask.Callback<WeatherInfo>() {
                 @Override
                 public void onPreExecute() {
@@ -271,10 +304,11 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
 
                 @Override
                 public void onResult(WeatherInfo result) {
+                    mWeatherInfo = result;
                     mMainView.onWeatherUpdate(result);
                 }
             });
-//            mBDLocation = bdLocation;
+            mBDLocation = bdLocation;
 //            mLocationClient.stop();
         }
     }
