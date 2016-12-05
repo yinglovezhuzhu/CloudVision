@@ -387,6 +387,7 @@ public class VoicePresenter {
     private void handleTextUnderstanderResult(XFSemanticResp bean) {
         if(null == bean) {
             mVoiceView.updateLastAndroid(mStrAndroidNotFound);
+            startSpeak(mStrAndroidNotFound);
             return;
         }
         if(XFSemanticResp.RC_SUCCESS == bean.getRc()) {
@@ -408,6 +409,7 @@ public class VoicePresenter {
             }
             // TODO 处理其他请求，比如打开网页等等
             mVoiceView.updateLastAndroid(mStrAndroidNotFound);
+            startSpeak(mStrAndroidNotFound);
 
         } else {
             mVoiceView.updateLastAndroid(mStrAndroidNotFound);
@@ -476,10 +478,12 @@ public class VoicePresenter {
                         if (null == datas || datas.isEmpty()) {
                             // 没有找到内容
                             mVoiceView.updateLastAndroid(mStrAndroidNotFound);
+                            startSpeak(mStrAndroidNotFound);
                             return;
                         }
 //                        mVoiceView.updateLastAndroid(mStrSearchResult);
                         mVoiceView.updateLastAndroid(String.format(mStrSearchResultAbout, keywords));
+                        startSpeak(String.format(mStrSearchResultAbout, keywords));
                         mVoiceView.onVoiceSearchResult(datas);
                         final VoiceBean bean = new VoiceBean(VoiceBean.TYPE_SEARCH_RESULT, null);
                         bean.addSearchResult(datas);
@@ -488,6 +492,7 @@ public class VoicePresenter {
                     default:
                         // 没有找到内容
                         mVoiceView.updateLastAndroid(mStrAndroidNotFound);
+                        startSpeak(mStrAndroidNotFound);
                         break;
                 }
             }
