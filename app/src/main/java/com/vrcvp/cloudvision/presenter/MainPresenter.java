@@ -476,7 +476,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             if(mHandler.hasMessages(MSG_NOTICE_UPDATE)) {
                 mHandler.removeMessages(MSG_NOTICE_UPDATE);
             }
-            if(isNoticeDisabled()) {
+            if(!isNoticeDisabled()) {
                 mHandler.sendEmptyMessage(MSG_NOTICE_UPDATE);
             }
         }
