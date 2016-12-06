@@ -221,6 +221,7 @@ public class VoicePresenter {
         @Override
         public void onError(SpeechError speechError) {
             // TODO 语音输入错误
+            LogUtils.e("VOICE", speechError.getErrorDescription());
         }
 
         //扩展用接口

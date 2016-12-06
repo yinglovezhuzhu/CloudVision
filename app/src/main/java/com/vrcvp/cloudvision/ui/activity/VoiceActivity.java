@@ -1,10 +1,13 @@
 package com.vrcvp.cloudvision.ui.activity;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.vrcvp.cloudvision.R;
@@ -28,6 +31,8 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     private VoicePresenter mVoicePresenter;
     private ListView mLvVoice;
     private VoiceAdapter mAdapter;
+
+    private AnimationDrawable mWaveAnimDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,15 +153,32 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         });
         mLvVoice.setAdapter(mAdapter);
 
+        final ImageView ivVoiceWave = (ImageView) findViewById(R.id.iv_voice_voice_wave);
+        mWaveAnimDrawable = (AnimationDrawable) ivVoiceWave.getDrawable();
+        if(null == mWaveAnimDrawable) {
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                mWaveAnimDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_voice_wave);
+            } else {
+                try {
+                    mWaveAnimDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_voice_wave, null);
+                } catch (Exception e) {
+                    mWaveAnimDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_voice_wave);
+                }
+            }
+            ivVoiceWave.setImageDrawable(mWaveAnimDrawable);
+        }
+
         final ImageButton btnRecord = (ImageButton) findViewById(R.id.ibtn_voice_record);
         btnRecord.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        mWaveAnimDrawable.start();
                         mVoicePresenter.startSpeech();
                         break;
                     case MotionEvent.ACTION_UP:
+                        mWaveAnimDrawable.stop();
                         mVoicePresenter.stopSpeech();
                         break;
                     default:
