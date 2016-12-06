@@ -94,7 +94,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             mVideoPlayer.onPause();
         }
         if(null != mVideoView) {
-            mVideoView.suspend();
+//            mVideoView.suspend();
+            mVideoView.stopPlayback();
+            mVideoView.setVideoURI(null);
         }
         super.onPause();
     }
@@ -104,8 +106,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         if(null != mVideoPlayer) {
             mVideoPlayer.onResume();
         }
-        if(null != mVideoView) {
-            mVideoView.resume();
+        if(null != mVideoView && null != mData && AdvertiseBean.TYPE_VIDEO == mData.getType()) {
+            setData(mData);
+//            mVideoView.resume();
         }
         super.onResume();
     }

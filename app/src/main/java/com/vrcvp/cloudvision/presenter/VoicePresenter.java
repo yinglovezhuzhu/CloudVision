@@ -92,6 +92,9 @@ public class VoicePresenter {
         if(null == mSpeechSynthesizer || !mSpeechRecognizerInitialized) {
             return;
         }
+        if(mSpeechSynthesizer.isSpeaking()) {
+            mSpeechSynthesizer.stopSpeaking();
+        }
         mSpeechSynthesizer.startSpeaking(words, mSynthesizerListener);
     }
 
@@ -214,6 +217,7 @@ public class VoicePresenter {
                 }
                 // 开始语义识别并搜索
                 onNewAndroidItem(mStrSearching, false);
+//                startSpeak(mStrSearching);
                 mTextUnderstander.understandText(mmResultString.toString(), mTextUnderstanderListener);
             }
         }
