@@ -133,6 +133,9 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                     return;
                 }
                 switch (searchResultBean.getType()) {
+                    case AdvertiseBean.TYPE_IMAGE:
+                        openWebView(searchResultBean.getOutLink());
+                        break;
                     case AdvertiseBean.TYPE_VIDEO:
 //                        playVideo(mData.getOutLink());
                         playVideo(searchResultBean.getUrl(), searchResultBean.getContent());
