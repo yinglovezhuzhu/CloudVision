@@ -23,5 +23,18 @@
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
 
+#==================gson && protobuf==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}
+
 # 讯飞语音
 -keep class com.iflytek.**{*;}
+
+# 百度地图
+-dontwarn com.baidu.**
+-keep class com.baidu.** { *; }
+
+-keep class com.squareup.picasso.** { *; }
+
+-keep class android.app.smdt.** { *; }

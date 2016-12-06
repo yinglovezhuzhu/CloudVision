@@ -153,6 +153,7 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         });
         mLvVoice.setAdapter(mAdapter);
 
+        // FIXME 改为动画
         final ImageView ivVoiceWave = (ImageView) findViewById(R.id.iv_voice_voice_wave);
         mWaveAnimDrawable = (AnimationDrawable) ivVoiceWave.getDrawable();
         if(null == mWaveAnimDrawable) {

@@ -15,8 +15,10 @@ android {
         applicationId "com.vrcvp.cloudvision"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 10
-        versionName "0.0.10"
+//        versionCode 10
+//        versionName "0.0.10"
+        versionCode 1
+        versionName "1.0.0"
     }
 
     buildTypes {
@@ -24,38 +26,41 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+
+
+
+    productFlavors {
+
+        dev {
+//            applicationIdSuffix 'dev'
+            versionCode 10
+            versionName "0.0.10"
             // HTTP请求HOST地址
             buildConfigField "String", "HTTP_HOST", "\"http://120.77.0.141:8080/yhy-app-web/\""
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
-//            manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
+//            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
+            manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
 //                                  "JPUSH_APP_KEY":"ee73a119453bfbdb41bac2e2",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
 //                                  "XFYUN_APPID":"582145d8"]
                                   "XFYUN_APPID":"57b85e57"]
         }
-        debug {
-            signingConfig signingConfigs.config
+
+        product {
+            versionCode 1
+            versionName "1.0.0"
             // HTTP请求HOST地址
             buildConfigField "String", "HTTP_HOST", "\"http://120.77.0.141:8080/yhy-app-web/\""
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
-//            manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
+            manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
                                   "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-//                                  "XFYUN_APPID":"582145d8"]
-                                  "XFYUN_APPID":"57b85e57"]
-        }
-        dev {
-            debuggable true
-            signingConfig signingConfigs.config
-            zipAlignEnabled true
-            // HTTP请求HOST地址
-            buildConfigField "String", "HTTP_HOST", "\"http://120.77.0.141:8080/yhy-app-web/\""
-            manifestPlaceholders=["BD_MAP_API_KEY":"uiql0jn7Qb7vIgviocLLGK3TDkQAwgWi",
-//            manifestPlaceholders=["BD_MAP_API_KEY":"4Hdgcta1NN91CYHWoFm4B4001pY4vpw6",
-                                  "JPUSH_APP_KEY":"7b3abaa4ee27c789ad947b2b",
-//                                  "XFYUN_APPID":"582145d8"]
-                                  "XFYUN_APPID":"57b85e57"]
+                                  "XFYUN_APPID":"582145d8"]
         }
     }
+
 
     sourceSets {
         main {
@@ -67,15 +72,14 @@ android {
     //修改生成的apk名字
     applicationVariants.all{ variant->
         variant.outputs.each { output->
-            if(variant.buildType.name.equals("release") || variant.buildType.name.equals("dev")) {
+            if(variant.buildType.name.equals("release")) {
                 def oldFile = output.outputFile
-                def newName = '';
-//                def releaseApkName = 'CloudVision_' + variant.buildType.name + '_v' + getVersionNameFromManifest() + '_build' + getDate() + "_android_" + variant.productFlavors[0].name + '.apk'
-                def releaseApkName = 'CloudVision_' + variant.buildType.name + '_v' + versionName + '(' + versionCode + ')' + '_build' + getDate() + '.apk'
+                def releaseApkName = 'CloudVision_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '(' + versionCode + ')' + '_build' + getDate() + '.apk'
                 output.outputFile = new File(oldFile.parent, releaseApkName)
             }
         }
     }
+
 
     lintOptions {
         abortOnError false
