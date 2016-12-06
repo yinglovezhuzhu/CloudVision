@@ -461,7 +461,7 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
             if(mHandler.hasMessages(MSG_TIME_UPDATE)) {
                 mHandler.removeMessages(MSG_TIME_UPDATE);
             }
-            if(isWeatherDisabled()) {
+            if(!isWeatherDisabled()) {
                 // 延迟一秒
                 mHandler.sendEmptyMessage(MSG_TIME_UPDATE);
             }
