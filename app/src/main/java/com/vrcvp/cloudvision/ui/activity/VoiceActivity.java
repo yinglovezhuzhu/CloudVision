@@ -184,6 +184,7 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                         break;
                     case MotionEvent.ACTION_UP:
                         mWaveAnimDrawable.stop();
+                        mWaveAnimDrawable.selectDrawable(0);
                         mVoicePresenter.stopSpeech();
                         break;
                     default:
