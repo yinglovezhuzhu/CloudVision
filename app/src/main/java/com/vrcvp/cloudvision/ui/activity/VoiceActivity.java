@@ -1,17 +1,23 @@
 package com.vrcvp.cloudvision.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
+import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
 import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
@@ -138,11 +144,21 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                         openWebView(searchResultBean.getOutLink());
                         break;
                     case AdvertiseBean.TYPE_VIDEO:
-//                        playVideo(mData.getOutLink());
-                        playVideo(searchResultBean.getUrl(), searchResultBean.getContent());
+
+                        Spanned spanned;
+                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                            spanned = Html.fromHtml(searchResultBean.getContent());
+                        } else {
+                            try {
+                                spanned = Html.fromHtml(searchResultBean.getContent(), 0);
+                            } catch (Exception e) {
+                                spanned = Html.fromHtml(searchResultBean.getContent());
+                            }
+                        }
+                        playVideo(searchResultBean.getUrl(), spanned.toString());
                         break;
                     case AdvertiseBean.TYPE_PRODUCT:
-                        openWebView(searchResultBean.getOutLink());
+                        openProductDetail(searchResultBean);
                         break;
                     case AdvertiseBean.TYPE_CORPORATE:
                         openWebView(searchResultBean.getOutLink());
@@ -193,5 +209,27 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                 return false;
             }
         });
+    }
+
+    /**
+     * 打开进入产品详情
+     * @param bean 搜索数据
+     */
+    private void openProductDetail(VoiceSearchResultBean bean) {
+        Spanned spanned;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            spanned = Html.fromHtml(bean.getContent());
+        } else {
+            try {
+                spanned = Html.fromHtml(bean.getContent(), 0);
+            } catch (Exception e) {
+                spanned = Html.fromHtml(bean.getContent());
+            }
+        }
+        ProductBean product = new ProductBean();
+        product.setName(spanned.toString());
+        Intent intent = new Intent(this, ProductDetailActivity.class);
+        intent.putExtra(Config.EXTRA_DATA, product);
+        startActivity(intent);
     }
 }

@@ -2,6 +2,8 @@ package com.vrcvp.cloudvision.ui.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,7 +57,15 @@ public class VoiceSearchResultItemView extends LinearLayout {
             case AdvertiseBean.TYPE_VIDEO:
                 mIvPlay.setVisibility(View.VISIBLE);
                 loadImage(bean.getUrl());
-                mTvContent.setText(bean.getContent());
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    mTvContent.setText(Html.fromHtml(bean.getContent()));
+                } else {
+                    try {
+                        mTvContent.setText(Html.fromHtml(bean.getContent(), 0));
+                    } catch (Exception e) {
+                        mTvContent.setText(Html.fromHtml(bean.getContent()));
+                    }
+                }
                 break;
             case AdvertiseBean.TYPE_IMAGE:
             case AdvertiseBean.TYPE_PRODUCT:
@@ -63,7 +73,15 @@ public class VoiceSearchResultItemView extends LinearLayout {
             case AdvertiseBean.TYPE_OUTER_LINK:
                 mIvPlay.setVisibility(View.GONE);
                 loadImage(bean.getUrl());
-                mTvContent.setText(bean.getContent());
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    mTvContent.setText(Html.fromHtml(bean.getContent()));
+                } else {
+                    try {
+                        mTvContent.setText(Html.fromHtml(bean.getContent(), 0));
+                    } catch (Exception e) {
+                        mTvContent.setText(Html.fromHtml(bean.getContent()));
+                    }
+                }
                 break;
             default:
                 break;
