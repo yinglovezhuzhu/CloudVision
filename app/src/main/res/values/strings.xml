@@ -19,6 +19,8 @@
     <string name="str_installing_apk">正在安装升级包，请稍后&#8230;</string>
     <string name="str_install_background">后台更新</string>
 
+    <string name="str_index_format">%1$d/%2$d</string>
+
     <string name="str_need_request_permission">部分权限授权没有通过，没有这些权限，程序将可能无法正常运行，是否重新授权？</string>
     <string name="str_confirm">确定</string>
     <string name="str_cancel">取消</string>

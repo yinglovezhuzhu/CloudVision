@@ -16,4 +16,12 @@
         android:background="@color/transparent"
         android:src="@drawable/ic_back_round"
         android:contentDescription="@null"/>
+    <TextView
+        android:id="@+id/tv_720_view_image_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/contentPadding_level8"
+        android:textSize="@dimen/textSize_level10"
+        android:textColor="@color/colorTextGray"/>
 </FrameLayout>

@@ -122,6 +122,95 @@ public final class HttpRequest {
 	}
 
 	/**
+	 * HTTP POST请求
+	 * @param urlString URL地址
+	 * @param header 请求Header
+	 * @param params Map参数
+	 * @return 网络请求结果 {@linkplain HttpResult}类型
+	 * @throws MalformedURLException 异常
+	 * @throws UnsupportedEncodingException 不支持编码异常
+	 * @throws ProtocolException 协议异常
+	 * @throws IOException IO异常
+	 */
+	public static HttpResult<String> httpGetRequest(String urlString, Map<String, String> header,
+													Map<String, Object> params) throws IOException {
+
+		LogUtils.i(TAG, "HTTP request url: " + urlString);
+
+		String paramString = "";
+		if ((null != params) && (!params.isEmpty())) {
+			paramString = getParamsString(params, true, true);
+			LogUtils.i(TAG, "HTTP request parameter: " + paramString);
+		}
+
+		URL url = new URL(urlString + "?" + paramString);
+		HttpURLConnection connection = null;
+		HttpResult<String> httpResult;
+		try {
+			connection = (HttpURLConnection) url.openConnection();
+
+			connection.setRequestMethod("GET");
+			connection.setConnectTimeout(CONNECTION_TIMEOUT);
+			connection.setRequestProperty("Accept", "*/*");
+			connection.setRequestProperty("Connection", "Keep-Alive");
+			connection.setRequestProperty("Content-type", "text/html");
+			connection.setRequestProperty("Referer", urlString);
+			connection.setRequestProperty( "Accept-Encoding", "" );
+			// 设置用户代理
+			connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; "
+					+ "MSIE 8.0; Windows NT 5.2;"
+					+ " Trident/4.0; .NET CLR 1.1.4322;"
+					+ ".NET CLR 2.0.50727; " + ".NET CLR 3.0.04506.30;"
+					+ " .NET CLR 3.0.4506.2152; " + ".NET CLR 3.5.30729)");
+
+			if(null != header && !header.isEmpty()) {
+				final Set<Map.Entry<String, String>> entrySet = header.entrySet();
+				for (Map.Entry<String, String> entry : entrySet) {
+					connection.addRequestProperty(entry.getKey(), entry.getValue());
+				}
+			}
+
+			connection.connect();
+
+			String resultString = readFromStream(connection.getInputStream());
+
+			LogUtils.i(TAG, "HTTP request response data: " + resultString);
+
+			httpResult = new HttpResult<String>(connection.getResponseCode(),
+					connection.getResponseMessage());
+			httpResult.setResponseData(resultString);
+			return httpResult;
+		} catch (EOFException e) {
+			String resultString;
+			if (null != connection) {
+				resultString = readFromStream(connection.getErrorStream());
+				httpResult = new HttpResult<String>(connection.getResponseCode(),
+						connection.getResponseMessage());
+				httpResult.setResponseData(resultString);
+			} else {
+				httpResult = new HttpResult<String>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
+						+ e.getMessage());
+			}
+			return httpResult;
+		} catch (FileNotFoundException e) {
+			if (null != connection) {
+				String resultString = readFromStream(connection.getErrorStream());
+				httpResult = new HttpResult<String>(connection.getResponseCode(),
+						connection.getResponseMessage());
+				httpResult.setResponseData(resultString);
+			} else {
+				httpResult = new HttpResult<String>(HttpStatus.SC_NOT_FOUND, "Page not found:"
+						+ e.getMessage());
+			}
+			return httpResult;
+		} finally {
+			if (null != connection) {
+				connection.disconnect();
+			}
+		}
+	}
+
+	/**
 	 * 下载单个文件（不支持断点）
 	 * @param urlString 文件url地址
 	 * @param saveFolder 保存目录
