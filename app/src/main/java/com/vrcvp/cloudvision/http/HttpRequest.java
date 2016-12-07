@@ -41,9 +41,9 @@ import java.util.regex.Pattern;
  * Create by yinglovezhuzhu@gmail.com 2016/08/19
  */
 public final class HttpRequest {
-	
+
 	private static final String TAG = "HttpRequest";
-	
+
 	private static final String DEFAULT_CHARSET = "UTF-8";
 	private static final int CONNECTION_TIMEOUT = 16 * 1000;
 	private static final int READ_TIMEOUT = 10 * 1000;
@@ -51,7 +51,7 @@ public final class HttpRequest {
 	private static final int DOWNLOAD_BUFFER_SIZE = 1024 * 1024 * 8;
 
 	/**
-	 * HTTP GET请求
+	 * HTTP POST请求
 	 * @param urlString URL地址
 	 * @param params Map参数
 	 * @return 网络请求结果 {@linkplain HttpResult}类型
@@ -61,159 +61,64 @@ public final class HttpRequest {
 	 * @throws IOException IO异常
 	 */
 	public static HttpResult<String> httpPostRequest(String urlString, Map<String, Object> params)
-			throws MalformedURLException, UnsupportedEncodingException, ProtocolException, IOException {
+			throws IOException {
 
+		String paramString = getParamsString(params, true, true);
+
+		return httpPostRequest(urlString, paramString);
+	}
+
+	/**
+	 * HTTP POST 请求
+	 * @param urlString 请求地址
+	 * @param params 参数字符串
+	 * @return 请求结果
+	 * @throws IOException
+	 */
+	public static HttpResult<String> httpPostRequest(String urlString, String params) throws IOException {
 		LogUtils.i(TAG, "HTTP request url: " + urlString);
-		
-		URL url = new URL(urlString);
+		HttpResult<String> httpResult;
 		HttpURLConnection connection = null;
 		OutputStream os = null;
-		HttpResult<String> httpResult;
 		try {
+			final URL url = new URL(urlString);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setConnectTimeout(CONNECTION_TIMEOUT);
 			connection.setReadTimeout(READ_TIMEOUT);
-			connection.setRequestProperty("Accept", "*/*");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			connection.connect();
-			if ((null != params) && (!params.isEmpty())) {
-				String paramString = getParamsString(params, true, true);
-				LogUtils.i(TAG, "HTTP request parameter: " + paramString);
+//			String params = getWXPayCreateOrderReqParams(data);
+			LogUtils.i(TAG, "HTTP request parameter: " + params);
+			if(!StringUtils.isEmpty(params)) {
 				os = connection.getOutputStream();
-				os.write(paramString.getBytes(DEFAULT_CHARSET));
+				os.write(params.getBytes("UTF-8"));
 				os.flush();
 			}
 			String resultString = readFromStream(connection.getInputStream());
 
 			LogUtils.i(TAG, "HTTP request response data: " + resultString);
 
-			httpResult = new HttpResult<String>(connection.getResponseCode(),
+			httpResult = new HttpResult<>(connection.getResponseCode(),
 					connection.getResponseMessage());
 			httpResult.setResponseData(resultString);
-			return httpResult;
-		} catch (EOFException e) {
-			String resultString;
-			if (null != connection) {
-				resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
-						connection.getResponseMessage());
-				httpResult.setResponseData(resultString);
-			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
-						+ e.getMessage());
-			}
-			return httpResult;
-		} catch (FileNotFoundException e) {
-			if (null != connection) {
-				String resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
-						connection.getResponseMessage());
-				httpResult.setResponseData(resultString);
-			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_NOT_FOUND, "Page not found:"
-						+ e.getMessage());
-			}
-			return httpResult;
+		} catch (IOException e) {
+			httpResult = new HttpResult<>(HttpStatus.SC_EXPECTATION_FAILED, e.getMessage());
+			throw new IOException(e);
 		} finally {
 			if (null != os) {
-				os.close();
+				try {
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			if (null != connection) {
 				connection.disconnect();
 			}
 		}
-	}
-
-	/**
-	 * HTTP POST请求
-	 * @param urlString URL地址
-     * @param header 请求Header
-	 * @param params Map参数
-	 * @return 网络请求结果 {@linkplain HttpResult}类型
-	 * @throws MalformedURLException 异常
-	 * @throws UnsupportedEncodingException 不支持编码异常
-	 * @throws ProtocolException 协议异常
-	 * @throws IOException IO异常
-	 */
-	public static HttpResult<String> httpGetRequest(String urlString, Map<String, String> header,
-                                                    Map<String, Object> params)
-			throws MalformedURLException, UnsupportedEncodingException, ProtocolException, IOException {
-
-		LogUtils.i(TAG, "HTTP request url: " + urlString);
-
-		String paramString = "";
-		if ((null != params) && (!params.isEmpty())) {
-			paramString = getParamsString(params, true, true);
-			LogUtils.i(TAG, "HTTP request parameter: " + paramString);
-		}
-
-		URL url = new URL(urlString + "?" + paramString);
-		HttpURLConnection connection = null;
-		HttpResult<String> httpResult;
-		try {
-			connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(CONNECTION_TIMEOUT);
-            connection.setRequestProperty("Accept", "*/*");
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-type", "text/html");
-            connection.setRequestProperty("Referer", urlString);
-            connection.setRequestProperty( "Accept-Encoding", "" );
-            // 设置用户代理
-            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; "
-                    + "MSIE 8.0; Windows NT 5.2;"
-                    + " Trident/4.0; .NET CLR 1.1.4322;"
-                    + ".NET CLR 2.0.50727; " + ".NET CLR 3.0.04506.30;"
-                    + " .NET CLR 3.0.4506.2152; " + ".NET CLR 3.5.30729)");
-
-            if(null != header && !header.isEmpty()) {
-                final Set<Map.Entry<String, String>> entrySet = header.entrySet();
-                for (Map.Entry<String, String> entry : entrySet) {
-                    connection.addRequestProperty(entry.getKey(), entry.getValue());
-                }
-            }
-
-			connection.connect();
-
-            String resultString = readFromStream(connection.getInputStream());
-
-			LogUtils.i(TAG, "HTTP request response data: " + resultString);
-
-			httpResult = new HttpResult<String>(connection.getResponseCode(),
-					connection.getResponseMessage());
-			httpResult.setResponseData(resultString);
-			return httpResult;
-		} catch (EOFException e) {
-			String resultString;
-			if (null != connection) {
-				resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
-						connection.getResponseMessage());
-				httpResult.setResponseData(resultString);
-			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
-						+ e.getMessage());
-			}
-			return httpResult;
-		} catch (FileNotFoundException e) {
-			if (null != connection) {
-				String resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
-						connection.getResponseMessage());
-				httpResult.setResponseData(resultString);
-			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_NOT_FOUND, "Page not found:"
-						+ e.getMessage());
-			}
-			return httpResult;
-		} finally {
-			if (null != connection) {
-				connection.disconnect();
-			}
-		}
+		return httpResult;
 	}
 
 	/**
@@ -316,29 +221,50 @@ public final class HttpRequest {
 			return "";
 		}
 		StringBuilder sb = new StringBuilder();
-		TreeMap<String, Object> sortedMap = new TreeMap<String, Object>(params);
-		Set<String> keys = sortedMap.keySet();
-		for (String key : keys) {
-			Object value = params.get(key);
-			if ((null != value) || (includeEmptyValue)) {
-                final String stringValue;
-                if(null == value) {
-                    stringValue = "";
-                } else if(value instanceof Collection || value instanceof Map) {
-                    stringValue = new Gson().toJson(value);
-                } else {
-                    stringValue = String.valueOf(value);
-                }
+		Object value;
+		String stringValue;
+		for(Map.Entry<String, Object> entry : params.entrySet()) {
+			if ((null != entry.getValue()) || (includeEmptyValue)) {
+				value = entry.getValue();
+				if(null == value) {
+					stringValue = "";
+				} else if(value instanceof List || value instanceof Map) {
+					stringValue = new Gson().toJson(value);
+				} else {
+					stringValue = String.valueOf(value);
+				}
 				if (!StringUtils.isEmpty(stringValue) || (includeEmptyValue)) {
 					if (sb.length() > 0) {
 						sb.append("&");
 					}
-					sb.append(key)
+					sb.append(entry.getKey())
 							.append("=")
 							.append(encodeByURLEncoder ? URLEncoder.encode(stringValue, "UTF-8") : stringValue);
 				}
 			}
 		}
+//		Set<String> keys = params.keySet();
+//		for (String key : keys) {
+//			Object value = params.get(key);
+//			if ((null != value) || (includeEmptyValue)) {
+//                final String stringValue;
+//                if(null == value) {
+//                    stringValue = "";
+////                } else if(value instanceof List || value instanceof Map) {
+////                    stringValue = new Gson().toJson(value);
+//                } else {
+//                    stringValue = String.valueOf(value);
+//                }
+//				if (!StringUtils.isEmpty(stringValue) || (includeEmptyValue)) {
+//					if (sb.length() > 0) {
+//						sb.append("&");
+//					}
+//					sb.append(key)
+//							.append("=")
+//							.append(encodeByURLEncoder ? URLEncoder.encode(stringValue, "UTF-8") : stringValue);
+//				}
+//			}
+//		}
 		return sb.toString();
 	}
 
@@ -394,11 +320,11 @@ public final class HttpRequest {
 			return new String(data, DEFAULT_CHARSET);
 		} finally {
 			if (null != baos) {
-                try {
-				    baos.close();
-                } catch (Exception e) {
-                    // do nothing
-                }
+				try {
+					baos.close();
+				} catch (Exception e) {
+					// do nothing
+				}
 			}
 		}
 	}
@@ -440,78 +366,84 @@ public final class HttpRequest {
 	/**
 	 * 通过拼接的方式构造请求内容，实现参数传输以及文件传输
 	 *
-	 * @param actionUrl 访问的服务器URL
+	 * @param url 访问的服务器URL
 	 * @param params    普通参数
 	 * @param files     文件参数
-	 * @return
+	 * @return 服务器返回结果
 	 * @throws IOException
 	 */
-	public static HttpResult<String> httpPostMultipleEntityRequest(String actionUrl, Map<String, String> params, Map<String, File> files) throws IOException {
-
-
-		String BOUNDARY = java.util.UUID.randomUUID().toString();
-		String PREFIX = "--", LINEND = "\r\n";
-		String MULTIPART_FROM_DATA = "multipart/form-data";
-		String CHARSET = "UTF-8";
+	public static HttpResult<String> httpPostMultipleEntityRequest(String url, Map<String, String> params,
+																   Map<String, File> files) throws IOException {
+		LogUtils.d(TAG, "httpPostMultipleEntityRequest--url：" + url);
+		final String boundary = java.util.UUID.randomUUID().toString();
+		final String prefix = "--";
+		final String lineEnd = "\r\n";
+		final String multipartFromData = "multipart/form-data";
 		HttpResult<String> httpResult;
 		HttpURLConnection connection = null;
 		DataOutputStream outStream = null;
 		try {
-			URL uri = new URL(actionUrl);
+			URL uri = new URL(url);
 			connection = (HttpURLConnection) uri.openConnection();
-			connection.setReadTimeout(5 * 1000); // 缓存的最长时间
+			connection.setReadTimeout(READ_TIMEOUT); // 缓存的最长时间
 			connection.setDoInput(true);// 允许输入
 			connection.setDoOutput(true);// 允许输出
 			connection.setUseCaches(false); // 不允许使用缓存
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("connection", "keep-alive");
-			connection.setRequestProperty("Charsert", "UTF-8");
-			connection.setRequestProperty("Content-Type", MULTIPART_FROM_DATA + ";boundary=" + BOUNDARY);
+			connection.setRequestProperty("Charsert", DEFAULT_CHARSET);
+			connection.setRequestProperty("Content-Type", multipartFromData + ";boundary=" + boundary);
 
 			// 首先组拼文本类型的参数
-			StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder();
 			for (Map.Entry<String, String> entry : params.entrySet()) {
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINEND);
-				sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + LINEND);
-				sb.append("Content-Type: text/plain; charset=" + CHARSET + LINEND);
-				sb.append("Content-Transfer-Encoding: 8bit" + LINEND);
-				sb.append(LINEND);
+				sb.append(prefix);
+				sb.append(boundary);
+				sb.append(lineEnd);
+				sb.append("Content-Disposition: form-data; name=\"").append(entry.getKey()).append("\"").append(lineEnd);
+				sb.append("Content-Type: text/plain; charset=").append(DEFAULT_CHARSET).append(lineEnd);
+				sb.append("Content-Transfer-Encoding: 8bit").append(lineEnd);
+				sb.append(lineEnd);
 				sb.append(entry.getValue());
-				sb.append(LINEND);
+				sb.append(lineEnd);
 			}
 
 			outStream = new DataOutputStream(connection.getOutputStream());
 			outStream.write(sb.toString().getBytes());
-			InputStream in = null;
 			// 发送文件数据
 			if (files != null) {
-				for (Map.Entry<String, File> file : files.entrySet()) {
-					StringBuilder sb1 = new StringBuilder();
-					sb1.append(PREFIX);
-					sb1.append(BOUNDARY);
-					sb1.append(LINEND);
+				final int fileCount = files.size();
+				int fileIndex = 0;
+				File currentFile;
+				LogUtils.d(TAG, "请求中共有" + fileCount + "个文件需要上传");
+				InputStream is;
+				for (Map.Entry<String, File> entry : files.entrySet()) {
+					currentFile = entry.getValue();
+					LogUtils.e(TAG, "正在上传第" + (fileIndex + 1) + "个文件：" + currentFile.getPath());
+					sb.delete(0, sb.length());
+					sb.append(prefix);
+					sb.append(boundary);
+					sb.append(lineEnd);
 					// name是post中传参的键 filename是文件的名称
-					sb1.append("Content-Disposition: form-data; name=\"" + file.getKey() + "\"; filename=\"" + file.getValue().getName() + "\"" + LINEND);
-					sb1.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINEND);
-					sb1.append(LINEND);
-					outStream.write(sb1.toString().getBytes());
+					sb.append("Content-Disposition: form-data; name=\"").append(entry.getKey()).append("\"; filename=\"").append(entry.getValue().getName()).append("\"").append(lineEnd);
+					sb.append("Content-Type: application/octet-stream; charset=").append(DEFAULT_CHARSET).append(lineEnd);
+					sb.append(lineEnd);
+					outStream.write(sb.toString().getBytes());
 
-					InputStream is = new FileInputStream(file.getValue());
-					byte[] buffer = new byte[1024];
+					is = new FileInputStream(entry.getValue());
+					byte[] buffer = new byte[HTTP_BUFFER_SIZE];
 					int len = 0;
 					while ((len = is.read(buffer)) != -1) {
 						outStream.write(buffer, 0, len);
 					}
 
 					is.close();
-					outStream.write(LINEND.getBytes());
+					outStream.write(lineEnd.getBytes());
+					fileIndex++;
 				}
 
-
 				// 请求结束标志
-				byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINEND).getBytes();
+				byte[] end_data = (prefix + boundary + prefix + lineEnd).getBytes();
 				outStream.write(end_data);
 				outStream.flush();
 			}
@@ -520,36 +452,43 @@ public final class HttpRequest {
 
 			LogUtils.i(TAG, "HTTP request response data: " + resultString);
 
-			httpResult = new HttpResult<String>(connection.getResponseCode(),
+			httpResult = new HttpResult<>(connection.getResponseCode(),
 					connection.getResponseMessage());
 			httpResult.setResponseData(resultString);
+			LogUtils.d(TAG, "httpPostMultipleEntityRequest result：------" + httpResult);
 			return httpResult;
 		} catch (EOFException e) {
 			String resultString;
 			if (null != connection) {
 				resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
+				httpResult = new HttpResult<>(connection.getResponseCode(),
 						connection.getResponseMessage());
 				httpResult.setResponseData(resultString);
 			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
+				httpResult = new HttpResult<>(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Internal server error:"
 						+ e.getMessage());
 			}
+			LogUtils.d(TAG, "httpPostMultipleEntityRequest result：------" + httpResult);
 			return httpResult;
 		} catch (FileNotFoundException e) {
 			if (null != connection) {
 				String resultString = readFromStream(connection.getErrorStream());
-				httpResult = new HttpResult<String>(connection.getResponseCode(),
+				httpResult = new HttpResult<>(connection.getResponseCode(),
 						connection.getResponseMessage());
 				httpResult.setResponseData(resultString);
 			} else {
-				httpResult = new HttpResult<String>(HttpStatus.SC_NOT_FOUND, "File not found:"
+				httpResult = new HttpResult<>(HttpStatus.SC_NOT_FOUND, "File not found:"
 						+ e.getMessage());
 			}
+			LogUtils.d(TAG, "httpPostMultipleEntityRequest result：------" + httpResult);
 			return httpResult;
 		} finally {
 			if (null != outStream) {
-				outStream.close();
+				try {
+					outStream.close();
+				} catch (Exception e) {
+					// do nothing
+				}
 			}
 			if (null != connection) {
 				connection.disconnect();
