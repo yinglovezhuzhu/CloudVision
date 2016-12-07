@@ -7,7 +7,6 @@ import android.view.View;
 import com.opensource.widget.LockableViewPager;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
-import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.presenter.Img720ViewPresenter;
 import com.vrcvp.cloudvision.ui.adapter.Img720ViewAdapter;
 import com.vrcvp.cloudvision.view.IImg720ViewView;
@@ -58,7 +57,7 @@ public class Img720ViewActivity extends BaseActivity implements IImg720ViewView 
         Intent intent = getIntent();
         if(null != intent) {
             final int position = intent.getIntExtra(Config.EXTRA_POSITION, 0);
-            final ArrayList<ImageBean> images = intent.getParcelableArrayListExtra(Config.EXTRA_DATA);
+            final ArrayList<String> images = intent.getStringArrayListExtra(Config.EXTRA_DATA);
             mAdapter.addAll(images, true);
             viewPager.setCurrentItem(position, false);
         }

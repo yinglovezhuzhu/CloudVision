@@ -2,10 +2,8 @@ package com.vrcvp.cloudvision.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +22,12 @@ import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AttrBean;
 import com.vrcvp.cloudvision.bean.AttrValueBean;
-import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.bean.resp.QueryProductDetailResp;
 import com.vrcvp.cloudvision.bean.resp.QuerySkuPriceResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
-import com.vrcvp.cloudvision.ui.adapter.ProductDetailAttrAdapter;
 import com.vrcvp.cloudvision.presenter.ProductDetailPresenter;
+import com.vrcvp.cloudvision.ui.adapter.ProductDetailAttrAdapter;
 import com.vrcvp.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.vrcvp.cloudvision.ui.widget.NoScrollListView;
 import com.vrcvp.cloudvision.ui.widget.PageControlBar;
@@ -287,12 +284,12 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     }
 
     private void viewPic(int position) {
-        final List<ImageBean> images = mProduct.getDetailImages();
+        final List<String> images = mProduct.getDetailImages();
         if(null == images || images.isEmpty()) {
             return;
         }
         Intent intent = new Intent(this, Img720ViewActivity.class);
-        intent.putParcelableArrayListExtra(Config.EXTRA_DATA, new ArrayList<Parcelable>(images));
+        intent.putExtra(Config.EXTRA_DATA, new ArrayList<>(images));
         intent.putExtra(Config.EXTRA_POSITION, position);
         startActivity(intent);
     }

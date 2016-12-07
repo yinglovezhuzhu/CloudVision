@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.ui.fragment.ImageFragment;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.List;
 
 public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
 
-    private List<ImageBean> mData = new ArrayList<>();
+    private List<String> mData = new ArrayList<>();
 
     public ProductDetailImgAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void addAll(List<ImageBean> images, boolean notifyDataSetChanged) {
+    public void addAll(List<String> images, boolean notifyDataSetChanged) {
         if(null == images || images.isEmpty()) {
             return;
         }
@@ -42,11 +42,11 @@ public class ProductDetailImgAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        final ImageBean img = mData.get(position);
-        if(null == img) {
+        final String img = mData.get(position);
+        if(StringUtils.isEmpty(img)) {
             return null;
         }
-        return ImageFragment.newInstance(img.getImgUrl(), position, 400, 400);
+        return ImageFragment.newInstance(img, position, 400, 400);
     }
 
     @Override

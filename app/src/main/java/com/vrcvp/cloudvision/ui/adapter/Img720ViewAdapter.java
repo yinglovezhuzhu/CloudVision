@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.vrcvp.cloudvision.bean.ImageBean;
 import com.vrcvp.cloudvision.ui.fragment.Img720ViewFragment;
 
 import java.util.ArrayList;
@@ -16,13 +15,13 @@ import java.util.List;
  */
 public class Img720ViewAdapter extends FragmentStatePagerAdapter {
 
-    private List<ImageBean> mData = new ArrayList<>();
+    private List<String> mData = new ArrayList<>();
 
     public Img720ViewAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void addAll(List<ImageBean> data, boolean notifyDataSetChanged) {
+    public void addAll(List<String> data, boolean notifyDataSetChanged) {
         if(null == data || data.isEmpty()) {
             return;
         }
@@ -40,7 +39,7 @@ public class Img720ViewAdapter extends FragmentStatePagerAdapter {
     }
 
 
-    public ImageBean getItemData(int position) {
+    public String getItemData(int position) {
         return mData.get(position);
     }
 

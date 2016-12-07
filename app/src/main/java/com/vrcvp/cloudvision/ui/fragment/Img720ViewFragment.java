@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.opensource.widget.ZoomableImageView;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
-import com.vrcvp.cloudvision.bean.ImageBean;
+import com.vrcvp.cloudvision.utils.StringUtils;
 
 /**
  * 720看图Fragment
@@ -23,10 +23,10 @@ public class Img720ViewFragment extends BaseFragment {
      * @param image 图片数据
      * @return Img720ViewFragment实例对象
      */
-    public static Img720ViewFragment newInstance(ImageBean image) {
+    public static Img720ViewFragment newInstance(String image) {
         Img720ViewFragment fragment = new Img720ViewFragment();
         Bundle args = new Bundle();
-        args.putParcelable(Config.EXTRA_DATA, image);
+        args.putString(Config.EXTRA_DATA, image);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,10 +46,10 @@ public class Img720ViewFragment extends BaseFragment {
 
         Bundle args = getArguments();
         if(null != args && args.containsKey(Config.EXTRA_DATA)) {
-            final ImageBean image = args.getParcelable(Config.EXTRA_DATA);
+            final String image = args.getString(Config.EXTRA_DATA);
             // 显示图片
-            if(null != image) {
-                loadImage(image.getImgUrl(), R.drawable.default_img2, R.drawable.default_img2, imageView);
+            if(!StringUtils.isEmpty(image)) {
+                loadImage(image, R.drawable.default_img2, R.drawable.default_img2, imageView);
             }
         }
     }

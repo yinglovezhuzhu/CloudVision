@@ -18,7 +18,7 @@ public class ProductBean implements Parcelable {
     private String price;	// 价格
     private String orderWeight;	// 序号
     private String imageUrl;	// 图片url
-    private List<ImageBean> detailImages = new ArrayList<>(); // 细节图
+    private List<String> detailImages = new ArrayList<>(); // 细节图
     private String detail; // 产品详情
     private List<AttrBean> attrValues = new ArrayList<>(); // 属性名和属性值列表
 
@@ -33,7 +33,7 @@ public class ProductBean implements Parcelable {
         price = in.readString();
         orderWeight = in.readString();
         imageUrl = in.readString();
-        detailImages = in.createTypedArrayList(ImageBean.CREATOR);
+        detailImages = in.createStringArrayList();
         detail = in.readString();
         attrValues = in.createTypedArrayList(AttrBean.CREATOR);
     }
@@ -63,7 +63,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(price);
         dest.writeString(orderWeight);
         dest.writeString(imageUrl);
-        dest.writeTypedList(detailImages);
+        dest.writeStringList(detailImages);
         dest.writeString(detail);
         dest.writeTypedList(attrValues);
     }
@@ -100,7 +100,7 @@ public class ProductBean implements Parcelable {
         return imageUrl;
     }
 
-    public List<ImageBean> getDetailImages() {
+    public List<String> getDetailImages() {
         return detailImages;
     }
 
