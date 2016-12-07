@@ -3,6 +3,7 @@ package com.vrcvp.cloudvision.http;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.vrcvp.cloudvision.bean.resp.BaseResp;
 import com.vrcvp.cloudvision.utils.BeanRefUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
@@ -62,7 +63,7 @@ public class HttpAsyncTask<B extends BaseResp> {
 						errorResult.setHttpCode(httpResult.getResponseCode());
 						errorResult.setMsg(httpResult.getResponseMessage());
 					}
-				} catch (IOException|IllegalAccessException|InstantiationException e) {
+				} catch (IOException|IllegalAccessException|InstantiationException|JsonSyntaxException e) {
 					e.printStackTrace();
                     if(null != errorResult) {
                         errorResult.setHttpCode(HttpStatus.SC_EXPECTATION_FAILED);
