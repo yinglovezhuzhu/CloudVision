@@ -9,6 +9,7 @@ import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.CorporateBean;
 import com.vrcvp.cloudvision.presenter.CorporateIntroPresenter;
+import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.ICorporateIntroView;
 import com.vrcvp.cloudvision.ui.fragment.WebViewFragment;
 import com.vrcvp.cloudvision.ui.widget.CompanyTabItem;
@@ -97,7 +98,9 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         // 企业荣誉
         final Bundle honorArgs = new Bundle();
         if(null != mCorporateData) {
-            honorArgs.putString(Config.EXTRA_DATA, mCorporateData.getHonor());
+//            honorArgs.putString(Config.EXTRA_DATA, mCorporateData.getHonor());
+            honorArgs.putString(Config.EXTRA_DATA,
+                    StringUtils.formatHTMLContent(mCorporateData.getHonor(), getString(R.string.str_corporate_honor)));
         }
         tabHost.addTab(tabHost.newTabSpec("honorTab").setIndicator(honorTab),
                 WebViewFragment.class, honorArgs);
@@ -105,7 +108,9 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         // 企业文化
         final Bundle cultureArgs = new Bundle();
         if(null != mCorporateData) {
-            cultureArgs.putString(Config.EXTRA_DATA, mCorporateData.getCulture());
+//            cultureArgs.putString(Config.EXTRA_DATA, mCorporateData.getCulture());
+            cultureArgs.putString(Config.EXTRA_DATA,
+                    StringUtils.formatHTMLContent(mCorporateData.getCulture(), getString(R.string.str_corporate_culture)));
         }
         tabHost.addTab(tabHost.newTabSpec("cultureTab").setIndicator(cultureTab),
                 WebViewFragment.class, cultureArgs);
@@ -113,7 +118,9 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         // 企业形象
         final Bundle imageArgs = new Bundle();
         if(null != mCorporateData) {
-            imageArgs.putString(Config.EXTRA_DATA, mCorporateData.getFigure());
+//            imageArgs.putString(Config.EXTRA_DATA, mCorporateData.getFigure());
+            imageArgs.putString(Config.EXTRA_DATA,
+                    StringUtils.formatHTMLContent(mCorporateData.getFigure(), getString(R.string.str_corporate_image)));
         }
         tabHost.addTab(tabHost.newTabSpec("imageTab").setIndicator(imageTab),
                 WebViewFragment.class, imageArgs);
@@ -121,7 +128,8 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         // 企业简介
         final Bundle introArgs = new Bundle();
         if(null != mCorporateData) {
-            introArgs.putString(Config.EXTRA_DATA, mCorporateData.getSummary());
+            introArgs.putString(Config.EXTRA_DATA,
+                    StringUtils.formatHTMLContent(mCorporateData.getSummary(), getString(R.string.str_corporate_intro)));
         }
         tabHost.addTab(tabHost.newTabSpec("introTab").setIndicator(introTab),
                 WebViewFragment.class, introArgs);
@@ -129,7 +137,8 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         // 企业环境
         final Bundle environmentArgs = new Bundle();
         if(null != mCorporateData) {
-            environmentArgs.putString(Config.EXTRA_DATA, mCorporateData.getEnvironment());
+            environmentArgs.putString(Config.EXTRA_DATA,
+                    StringUtils.formatHTMLContent(mCorporateData.getEnvironment(), getString(R.string.str_corporate_environment)));
         }
         tabHost.addTab(tabHost.newTabSpec("environmentTab").setIndicator(environmentTab),
                 WebViewFragment.class, environmentArgs);

@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
@@ -34,6 +35,7 @@ import com.vrcvp.cloudvision.ui.adapter.ProductDetailImgAdapter;
 import com.vrcvp.cloudvision.ui.widget.NoScrollListView;
 import com.vrcvp.cloudvision.ui.widget.PageControlBar;
 import com.vrcvp.cloudvision.utils.NetworkManager;
+import com.vrcvp.cloudvision.utils.StringUtils;
 import com.vrcvp.cloudvision.view.IProductDetailView;
 
 import java.util.ArrayList;
@@ -281,7 +283,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
         mAttrAdapter.addAll(mProduct.getAttrValues(), true);
         mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
-        mWebView.loadData(mProduct.getDetail(), "text/html;charset=UTF-8", "UTF-8");
+        mWebView.loadData(StringUtils.formatHTMLContent(mProduct.getDetail(), mProduct.getName()), "text/html;charset=UTF-8", "UTF-8");
     }
 
     private void viewPic(int position) {
@@ -359,7 +361,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
-            return true;
+            return super.shouldOverrideUrlLoading(view, url);
         }
 
         //重写此方法可以让webview处理https请求。

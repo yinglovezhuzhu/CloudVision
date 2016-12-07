@@ -77,4 +77,28 @@ public class StringUtils {
 			}
 		}
 	}
+
+
+
+	/**
+	 * 格式化HTML格式化数据
+	 * @param content html原始数据
+	 * @param title 标题
+	 * @return 格式化后的HTML数据，以html标签开头
+	 */
+	public static String formatHTMLContent(String content, String title) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html><head>")
+				.append("<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>")
+				.append("<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>")
+				.append("<title>")
+				.append(title)
+				.append("</title></head>")
+				.append("<body style='margin: 0; padding: 0; word-break: break-all; text-align:left;'>")
+//                .append("<div style='font-size: 21px; line-height:32px; background-color:#f5f5f5; padding: 8px;'>")
+				.append(content)
+//                .append("</div>")
+				.append("</body></html>");
+		return sb.toString();
+	}
 }
