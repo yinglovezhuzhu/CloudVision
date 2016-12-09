@@ -84,7 +84,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                 showShortToast(R.string.str_no_more_data);
             } else {
                 mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                        R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                        R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                 mTipPageView.setVisibility(View.VISIBLE);
             }
         } else {
@@ -97,7 +97,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                             showShortToast(R.string.str_no_more_data);
                         } else {
                             mTipPageView.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                    R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                                    R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                             mTipPageView.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -116,7 +116,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                         showShortToast(R.string.str_network_error);
                     } else {
                         mTipPageView.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                                R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                                R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                         mTipPageView.setVisibility(View.VISIBLE);
                     }
                     break;

@@ -167,7 +167,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         if(null == result) {
             // 错误
             mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                    R.color.colorTextGray, R.string.str_touch_to_refresh, this);
             mTpvRecommendedProduct.setVisibility(View.VISIBLE);
         } else {
             switch (result.getHttpCode()) {
@@ -176,7 +176,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                     if(null == products || products.isEmpty()) {
                         // 请求成功，但是没有数据
                         mTpvRecommendedProduct.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                                R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                         mTpvRecommendedProduct.setVisibility(View.VISIBLE);
                     } else {
                         mRecommendedProductAdapter.addAll(products, true);
@@ -188,7 +188,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 default:
                     // 错误
                     mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                            R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                     mTpvRecommendedProduct.setVisibility(View.VISIBLE);
                     break;
             }
@@ -201,7 +201,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         if(null == result) {
             // 错误
             mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                    R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                    R.color.colorTextGray, R.string.str_touch_to_refresh, this);
             mTpvRecommendedVideo.setVisibility(View.VISIBLE);
         } else {
             switch (result.getHttpCode()) {
@@ -210,7 +210,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                     if(null == videos || videos.isEmpty()) {
                         // 请求成功，但是没有数据
                         mTpvRecommendedVideo.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                R.color.colorTextOrange, R.string.str_touch_to_refresh, this);
+                                R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                         mTpvRecommendedVideo.setVisibility(View.VISIBLE);
                     } else {
                         mRecommendedVideoAdapter.addAll(videos, true);
@@ -222,7 +222,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 default:
                     // 错误
                     mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
-                            R.color.colorTextLightRed, R.string.str_touch_to_refresh, this);
+                            R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                     mTpvRecommendedVideo.setVisibility(View.VISIBLE);
                     break;
             }
