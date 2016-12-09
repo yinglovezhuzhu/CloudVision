@@ -131,9 +131,9 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
             adapter.addAll(attr.getValues(), true);
             adapter.setOnCheckChangedListener(new ProductDetailAttrItemAdapter.OnCheckChangedListener() {
                 @Override
-                public void onCheckChanged(int subPosition, boolean isChecked) {
+                public void onCheckChanged(int subPosition, boolean isChecked, boolean done) {
                     if(null != mOnAttrCheckChangedListener) {
-                        mOnAttrCheckChangedListener.onAttrCheckChanged(position, subPosition, isChecked);
+                        mOnAttrCheckChangedListener.onAttrCheckChanged(position, subPosition, isChecked, done);
                     }
                 }
             });
@@ -156,7 +156,8 @@ public class ProductDetailAttrAdapter extends BaseAdapter {
          * @param position 属性索引
          * @param subPosition 属性值索引
          * @param isChecked 是否选中，true 选中， false没选中
+         * @param done 是否完成了流程
          */
-        void onAttrCheckChanged(int position, int subPosition, boolean isChecked);
+        void onAttrCheckChanged(int position, int subPosition, boolean isChecked, boolean done);
     }
 }

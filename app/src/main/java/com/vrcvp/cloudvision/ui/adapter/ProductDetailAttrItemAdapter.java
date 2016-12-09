@@ -121,14 +121,14 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
             mChecked.set(mLastCheckedPosition, !checked);
             mLastCheckedPosition = checked ? POSITION_INVALID : position;
             if(null != mOnCheckChangedListener) {
-                mOnCheckChangedListener.onCheckChanged(position, !checked);
+                mOnCheckChangedListener.onCheckChanged(position, !checked, true);
             }
         } else {
             if(POSITION_INVALID != mLastCheckedPosition && position < mChecked.size()) {
                 mChecked.set(mLastCheckedPosition, false);
                 mLastCheckedPosition = POSITION_INVALID;
                 if(null != mOnCheckChangedListener) {
-                    mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition, false);
+                    mOnCheckChangedListener.onCheckChanged(mLastCheckedPosition, false, false);
                 }
             }
             if(position >= mChecked.size() && position < mData.size()) {
@@ -137,7 +137,7 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
                     if(position == i) {
                         mLastCheckedPosition = position;
                         if(null != mOnCheckChangedListener) {
-                            mOnCheckChangedListener.onCheckChanged(position, true);
+                            mOnCheckChangedListener.onCheckChanged(position, true, true);
                         }
                     }
                 }
@@ -145,7 +145,7 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
                 mChecked.set(position, true);
                 mLastCheckedPosition = position;
                 if(null != mOnCheckChangedListener) {
-                    mOnCheckChangedListener.onCheckChanged(position, true);
+                    mOnCheckChangedListener.onCheckChanged(position, true, true);
                 }
             }
         }
@@ -162,7 +162,8 @@ public class ProductDetailAttrItemAdapter extends BaseAdapter {
          * 选中状态发生改变
          * @param position 选中position，当取值为 {@linkplain #POSITION_INVALID} = -1时，表示没有选中任何项
          * @param isChecked 是否选中
+         * @param done 是否完成了流程
          */
-        void onCheckChanged(int position, boolean isChecked);
+        void onCheckChanged(int position, boolean isChecked, boolean done);
     }
 }

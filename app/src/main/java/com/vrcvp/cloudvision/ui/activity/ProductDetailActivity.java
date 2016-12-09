@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
@@ -180,7 +181,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         findViewById(R.id.ibtn_product_detail_back).setOnClickListener(this);
         findViewById(R.id.ibtn_product_720_view_img).setOnClickListener(this);
 
-        int dmWidth = getResources().getDisplayMetrics().widthPixels;
+        final int dmWidth = getResources().getDisplayMetrics().widthPixels;
         int pageMargin = getResources().getDimensionPixelSize(R.dimen.product_detail_img_page_margin);
         mImgPager = (ViewPager) findViewById(R.id.vp_product_detail_img);
         ViewGroup.LayoutParams lp = mImgPager.getLayoutParams();
@@ -247,7 +248,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
             private AttrBean mmAttr;
             private int mmCount;
             @Override
-            public void onAttrCheckChanged(int position, int subPosition, boolean isChecked) {
+            public void onAttrCheckChanged(int position, int subPosition, boolean isChecked, boolean done) {
                 mmAttr = mAttrAdapter.getItem(position);
                 mmCount = mAttrAdapter.getCount();
                 if(isChecked) {
@@ -261,9 +262,9 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                     }
                 } else {
                     attrsMap.remove(mmAttr.getAttrId());
-                    if(attrsMap.size() < mmCount) {
-                        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
-                    }
+                }
+                if(done && attrsMap.size() < mmCount) {
+                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                 }
             }
         });
