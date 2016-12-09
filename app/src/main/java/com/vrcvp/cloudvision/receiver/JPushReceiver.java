@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.vrcvp.cloudvision.bean.JPushExtra;
@@ -51,6 +52,7 @@ public class JPushReceiver extends BroadcastReceiver {
             switch (extra.getType()) {
                 case JPushExtra.TYPE_CLOSE_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程关闭显示器背光指令：" + message.toString());
+                    Toast.makeText(context, "接收到远程关闭显示器背光指令", Toast.LENGTH_LONG).show();
                     if(Utils.smdtIsLCDLightOn(context)) {
                         Utils.smdtSetLCDLight(context, false);
                     } else {
@@ -59,6 +61,7 @@ public class JPushReceiver extends BroadcastReceiver {
                     break;
                 case JPushExtra.TYPE_OPEN_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程开启显示器背光指令：" + message.toString());
+                    Toast.makeText(context, "接收到远程开启显示器背光指令", Toast.LENGTH_LONG).show();
                     if(Utils.smdtIsLCDLightOn(context)) {
                         LogUtils.e(TAG, "设备显示器背光已经开启");
                     } else {

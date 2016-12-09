@@ -138,7 +138,6 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                 if(null == searchResultBean) {
                     return;
                 }
-                // FIXME 改为跳转
                 switch (searchResultBean.getType()) {
                     case AdvertiseBean.TYPE_IMAGE:
                         openWebView(searchResultBean.getOutLink());
