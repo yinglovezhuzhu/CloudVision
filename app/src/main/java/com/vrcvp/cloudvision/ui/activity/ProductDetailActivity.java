@@ -260,10 +260,10 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                         mProductDetailPresenter.querySkuPrice(mProduct.getId(), attrsMap.values());
                     }
                 } else {
+                    attrsMap.remove(mmAttr.getAttrId());
                     if(attrsMap.size() < mmCount) {
                         mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                     }
-                    attrsMap.remove(mmAttr.getAttrId());
                 }
             }
         });
