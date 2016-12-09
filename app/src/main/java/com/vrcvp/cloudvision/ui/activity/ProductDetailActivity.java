@@ -23,6 +23,7 @@ import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AttrBean;
 import com.vrcvp.cloudvision.bean.AttrValueBean;
 import com.vrcvp.cloudvision.bean.ProductBean;
+import com.vrcvp.cloudvision.bean.SkuPrice;
 import com.vrcvp.cloudvision.bean.resp.QueryProductDetailResp;
 import com.vrcvp.cloudvision.bean.resp.QuerySkuPriceResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
@@ -138,7 +139,12 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         } else {
             switch (result.getHttpCode()) {
                 case HttpStatus.SC_OK:
-                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), result.getPrice()));
+                    final SkuPrice price = result.getData();
+                    if(null == price || StringUtils.isEmpty(price.getPrice())) {
+                        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
+                    } else {
+                        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), price.getPrice()));
+                    }
                     break;
                 default:
                     mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
@@ -254,10 +260,10 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                         mProductDetailPresenter.querySkuPrice(mProduct.getId(), attrsMap.values());
                     }
                 } else {
+                    if(attrsMap.size() < mmCount) {
+                        mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
+                    }
                     attrsMap.remove(mmAttr.getAttrId());
-                }
-                if(attrsMap.size() < mmCount) {
-                    mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                 }
             }
         });

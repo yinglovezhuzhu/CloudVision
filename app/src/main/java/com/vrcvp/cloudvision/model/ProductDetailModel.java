@@ -105,6 +105,7 @@ public class ProductDetailModel implements IProductDetailModel {
         final QuerySkuPriceReq reqParam = new QuerySkuPriceReq();
         reqParam.setProductId(productId);
         reqParam.addAttrValues(attrValueList);
+        reqParam.setEnterpriseId(DataManager.getInstance().getCorporateId());
         reqParam.setToken(DataManager.getInstance().getToken());
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);

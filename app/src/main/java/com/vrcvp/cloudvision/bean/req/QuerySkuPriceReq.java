@@ -12,14 +12,19 @@ import java.util.List;
  */
 
 public class QuerySkuPriceReq extends BaseReq {
+    private String enterpriseId;
     private String productId;
-    private List<AttrValueBean> attrVaules = new ArrayList<>();
+    private List<AttrValueBean> list = new ArrayList<>();
 
     public QuerySkuPriceReq() {
     }
 
     public QuerySkuPriceReq(String token) {
         super(token);
+    }
+
+    public void setEnterpriseId(String enterpriseId) {
+        this.enterpriseId = enterpriseId;
     }
 
     public void setProductId(String productId) {
@@ -30,21 +35,22 @@ public class QuerySkuPriceReq extends BaseReq {
         if(null == attrValue) {
             return;
         }
-        this.attrVaules.add(attrValue);
+        this.list.add(attrValue);
     }
 
     public void addAttrValues(Collection<AttrValueBean> attrValues) {
         if(null == attrValues || attrValues.isEmpty()) {
             return;
         }
-        this.attrVaules.addAll(attrValues);
+        this.list.addAll(attrValues);
     }
 
     @Override
     public String toString() {
         return "QuerySkuPriceReq{" +
-                "productId='" + productId + '\'' +
-                ", attrVaules=" + attrVaules +
+                "enterpriseId='" + enterpriseId + '\'' +
+                ", productId='" + productId + '\'' +
+                ", list=" + list +
                 "} " + super.toString();
     }
 }
