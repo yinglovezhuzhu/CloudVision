@@ -196,7 +196,8 @@ public class Downloader {
 
         if(downloadEnd) {
             // 下载视频数据的尾部部分，否则播放器无法解析视频文件
-            downloadFileEnd(mContext, 1024 * 512);
+            final int lastSize = 1024 * 1024;
+            downloadFileEnd(mContext, mDownloadLog.getTotalSize() > lastSize ? lastSize : mDownloadLog.getTotalSize() );
         }
 
         if (null != listener) {
