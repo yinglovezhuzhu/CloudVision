@@ -81,5 +81,6 @@ public class Config {
     /**
      * 日期时间格式
      */
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_YMD = "yyyy-MM-dd";
 }

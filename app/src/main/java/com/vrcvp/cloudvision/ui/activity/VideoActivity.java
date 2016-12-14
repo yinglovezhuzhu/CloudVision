@@ -36,6 +36,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
     private TipPageView mTipPageView;
     private PullListView mLvVideo;
     private VideoAdapter mAdapter;
+    private boolean mRefresh = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,9 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                             mTipPageView.setVisibility(View.VISIBLE);
                         }
                     } else {
+                        if(mRefresh) {
+                            mAdapter.clear(false);
+                        }
                         mAdapter.addAll(video, true);
                         mTipPageView.setVisibility(View.GONE);
                     }
@@ -122,6 +126,7 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                     break;
             }
         }
+        mRefresh = false;
         cancelLoadingDialog();
     }
 
@@ -165,14 +170,14 @@ public class VideoActivity extends BaseActivity implements IVideoView {
             @Override
             public void onRefresh() {
                 // 刷新数据
-                mVideoPresenter.queryVideoFirstPage();
+                refresh();
             }
         });
         mLvVideo.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 // 加载下一页
-                mVideoPresenter.queryVideoNextPage();
+                loadMore();
             }
         });
     }
@@ -186,5 +191,23 @@ public class VideoActivity extends BaseActivity implements IVideoView {
             }
         });
         mVideoPresenter.queryVideoFirstPage();
+    }
+
+    /**
+     * 刷新
+     */
+    private void refresh() {
+        mRefresh = true;
+        mVideoPresenter.queryVideoFirstPage();
+    }
+
+
+
+    /**
+     * 加载更多
+     */
+    public void loadMore() {
+        mRefresh = false;
+        mVideoPresenter.queryVideoNextPage();
     }
 }

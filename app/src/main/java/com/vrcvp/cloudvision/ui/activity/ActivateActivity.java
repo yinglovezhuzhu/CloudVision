@@ -81,7 +81,7 @@ public class ActivateActivity extends BaseActivity implements IActivateView {
             case HttpStatus.SC_OK:
                 ActivateResp.ActivateRespData data = result.getData();
                 if(null != data) {
-                    Date date = Utils.parseTime(data.getEndTime(), Config.DATE_FORMAT);
+                    Date date = Utils.parseTime(data.getEndTime(), Config.DATE_FORMAT_YMD);
                     if(null != date && result.getTimestamp() > date.getTime()) {
                         showShortToast(R.string.str_invalid_activate_code);
                         return;

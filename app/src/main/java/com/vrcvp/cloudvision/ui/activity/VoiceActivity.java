@@ -187,6 +187,8 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
             }
             ivVoiceWave.setImageDrawable(mWaveAnimDrawable);
         }
+        mWaveAnimDrawable.stop();
+        mWaveAnimDrawable.selectDrawable(0);
 
         final ImageButton btnRecord = (ImageButton) findViewById(R.id.ibtn_voice_record);
         btnRecord.setOnTouchListener(new View.OnTouchListener() {

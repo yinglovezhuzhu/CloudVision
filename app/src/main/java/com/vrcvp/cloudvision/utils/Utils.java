@@ -134,28 +134,28 @@ public class Utils {
     }
 
 
-    /**
-     * 获取手机特征号(设备号)
-     * @return 设备特征号，平板等没有的可能返回空
-     */
-    public static String getDeviceId(Context context) {
-        String deviceId = "";
-        try {
-            TelephonyManager telephonyManager= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                deviceId = telephonyManager.getDeviceId();
-            } else {
-                try {
-                    deviceId = telephonyManager.getDeviceId(telephonyManager.getPhoneType());
-                } catch (NoSuchMethodError e) {
-                    deviceId = telephonyManager.getDeviceId();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null == deviceId ? "" : deviceId;
-    }
+//    /**
+//     * 获取手机特征号(设备号)
+//     * @return 设备特征号，平板等没有的可能返回空
+//     */
+//    public static String getDeviceId(Context context) {
+//        String deviceId = "";
+//        try {
+//            TelephonyManager telephonyManager= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//                deviceId = telephonyManager.getDeviceId();
+//            } else {
+//                try {
+//                    deviceId = telephonyManager.getDeviceId(telephonyManager.getPhoneType());
+//                } catch (NoSuchMethodError e) {
+//                    deviceId = telephonyManager.getDeviceId();
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null == deviceId ? "" : deviceId;
+//    }
 
     /**
      * 生成设备id
@@ -166,30 +166,39 @@ public class Utils {
         SharedPrefHelper sharedPrefHelper = SharedPrefHelper.newInstance(context, Config.SP_FILE_CONFIG);
         String clientId = sharedPrefHelper.getString(Config.SP_KEY_CLIENT_ID, "");
         if ("".equals(clientId)) {
-            String androidId = Settings.Secure.getString(context.getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
+//            String androidId = Settings.Secure.getString(context.getContentResolver(),
+//                    Settings.Secure.ANDROID_ID);
+//            try {
+//                String deviceId = getDeviceId(context);
+//                if (null != androidId && !"9774d56d682e549c".equals(androidId)
+//                        && null != deviceId && !"".equals(deviceId)
+//                        && !"000000000000000".equals(deviceId)) {
+//                    clientId = getMD5Hex(androidId + deviceId);
+//                } else if (null != androidId && !"9774d56d682e549c".equals(androidId)) {
+//                    clientId = getMD5Hex(androidId);
+//                } else if (null != deviceId && !"".equals(deviceId)
+//                        && !"000000000000000".equals(deviceId)) {
+//                    clientId = getMD5Hex(deviceId);
+//                } else {
+//                    clientId = getMD5Hex(context.getPackageName()
+//                            + new Random().nextLong() + System.currentTimeMillis());
+//                }
+//            } catch (NoSuchAlgorithmException e) {
+//                // 做最后的保障处理,基本不会到这里
+//                clientId = String.valueOf(System.currentTimeMillis());
+//            }
             try {
-                String deviceId = getDeviceId(context);
-                if (null != androidId && !"9774d56d682e549c".equals(androidId)
-                        && null != deviceId && !"".equals(deviceId)
-                        && !"000000000000000".equals(deviceId)) {
-                    clientId = getMD5Hex(androidId + deviceId);
-                } else if (null != androidId && !"9774d56d682e549c".equals(androidId)) {
-                    clientId = getMD5Hex(androidId);
-                } else if (null != deviceId && !"".equals(deviceId)
-                        && !"000000000000000".equals(deviceId)) {
-                    clientId = getMD5Hex(deviceId);
-                } else {
-                    clientId = getMD5Hex(context.getPackageName()
-                            + new Random().nextLong() + System.currentTimeMillis());
-                }
+                clientId = Utils.getMD5Hex(getMac(context));
             } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
                 // 做最后的保障处理,基本不会到这里
                 clientId = String.valueOf(System.currentTimeMillis());
             }
             sharedPrefHelper.saveString(Config.SP_KEY_CLIENT_ID, clientId);
         }
-        return clientId;
+//        return clientId;
+        // FIXME 打包返回上面的clientId
+        return "202227053078244";
     }
 
     /**

@@ -23,4 +23,6 @@ public class QueryProductResp extends BaseResp<List<ProductBean>> {
     public String toString() {
         return "QueryProductResp{} " + super.toString();
     }
+
+
 }

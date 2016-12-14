@@ -373,7 +373,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(null == infoBean) {
             return;
         }
-        Date endDate = Utils.parseTime(infoBean.getCloseTime(), Config.DATE_FORMAT);
+        Date endDate = Utils.parseTime(infoBean.getCloseTime(), Config.DATE_FORMAT_YMDHMS);
         if(null == endDate) {
             return;
         }
@@ -402,7 +402,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             return;
         }
         // FIXME 打包的时候去掉注释
-//        showUpdateDialog(updateInfo);
+        showUpdateDialog(updateInfo);
     }
 
     @Override

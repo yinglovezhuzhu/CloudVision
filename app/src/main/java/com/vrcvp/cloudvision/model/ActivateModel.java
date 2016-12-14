@@ -35,7 +35,7 @@ public class ActivateModel implements IActivateModel {
         final String url = Config.API_ACTIVATE;
         final ActivateReq reqParam = new ActivateReq();
         reqParam.setActivateCode(code);
-        reqParam.setEquipmentNo(Utils.getDeviceId(mContext));
+        reqParam.setEquipmentNo(Utils.getClientId(mContext));
         reqParam.setMac(Utils.getMac(mContext));
         try {
             reqParam.setAlias(Utils.getMD5Hex(Utils.getMac(mContext)));

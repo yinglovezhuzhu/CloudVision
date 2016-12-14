@@ -94,6 +94,8 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
                     if(null == mVideoCacheUri) {
                         mVideoCacheUri = Uri.fromFile(mModel.getSavedVideoFile());
                         mView.playVideo(mVideoCacheUri, 0);
+                    } else {
+                        playVideo(mVideoCacheUri);
                     }
                 }
             }
