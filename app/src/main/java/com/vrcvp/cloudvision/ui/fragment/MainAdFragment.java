@@ -113,6 +113,14 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         super.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mVideoPlayer.onDestroy();
+        if(null != mVideoView) {
+            mVideoView.stopPlayback();
+        }
+    }
 
     @Override
     public void setOnErrorListener(MediaPlayer.OnErrorListener listener) {
@@ -143,6 +151,9 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         mVideoView.setVideoURI(uri);
         mVideoView.seekTo(position);
         mVideoView.start();
+        if(isPlaying()) {
+            hideLoadingProgress();
+        }
     }
 
     @Override
@@ -151,6 +162,14 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
             return false;
         }
         return mVideoView.isPlaying();
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        if(null == mVideoView) {
+            return 0;
+        }
+        return mVideoView.getCurrentPosition();
     }
 
     @Override

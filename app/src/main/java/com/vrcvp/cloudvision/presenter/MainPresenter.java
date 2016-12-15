@@ -9,6 +9,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.vrcvp.cloudvision.bean.InfoBean;
 import com.vrcvp.cloudvision.bean.NoticeBean;
 import com.vrcvp.cloudvision.bean.UpdateInfo;
 import com.vrcvp.cloudvision.bean.WeatherInfo;
@@ -412,6 +413,13 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
 
             @Override
             public void onResult(FindInfoResp result) {
+                if(null != result) {
+                    InfoBean data = result.getData();
+                    if(null != data) {
+                        DataManager.getInstance().updateAndroidName(data.getAndroidName());
+                        DataManager.getInstance().updateAndroidGender(data.getVoiceSex());
+                    }
+                }
                 mMainView.onFindInfoResult(result);
             }
         });

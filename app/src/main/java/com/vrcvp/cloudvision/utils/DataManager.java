@@ -21,6 +21,9 @@ public class DataManager {
     private static final String SP_KEY_ACTIVATE_DATA = "activate_data";
     private static final String SP_KEY_TOKEN = "token";
     private static final String SP_KEY_CORPORATE_INFO = "corporate_info";
+    private static final String SP_KEY_ANDROID_NAME = "android_name";
+    /** 机器人性别（int） **/
+    private static final String SP_KEY_ANDROID_GENDER = "android_gender";
 
     private static DataManager mInstance = null;
 
@@ -32,6 +35,8 @@ public class DataManager {
     private ActivateResp.ActivateRespData mActivateData;
     private CorporateBean mCorporateInfo;
     private String mToken;
+    private String mAndroidName = "";
+    private int mAndroidGender = Config.GENDER_FEMALE;
 
     public static DataManager getInstance() {
         synchronized (DataManager.class) {
@@ -60,6 +65,10 @@ public class DataManager {
         getActivateData();
 
         getToken();
+
+        getAndroidName();
+
+        getAndroidGender();
     }
 
     /**
@@ -95,6 +104,8 @@ public class DataManager {
         }
         mActivateData = data;
         updateToken(data.getToken());
+        updateAndroidName(mActivateData.getAndroidName());
+        updateAndroidGender(mActivateData.getVoiceSex());
         return mSharedPrefHelper.saveString(SP_KEY_ACTIVATE_DATA, mGson.toJson(data));
     }
 
@@ -124,6 +135,7 @@ public class DataManager {
         }
         return mToken;
     }
+
 
     /**
      * 获取企业id
@@ -171,8 +183,11 @@ public class DataManager {
      * @return 机器人名称
      */
     public String getAndroidName() {
-        // FIXME 添加机器人名称
-        return "";
+        if(!mInitialized) {
+            return "";
+        }
+        mAndroidName = mSharedPrefHelper.getString(SP_KEY_ANDROID_NAME, "");
+        return mAndroidName;
     }
 
     /**
@@ -180,17 +195,38 @@ public class DataManager {
      * @return 机器人性别
      */
     public int getAndroidGender() {
-        // FIXME 添加机器人性别
-        return 1;
+        if(!mInitialized) {
+            return Config.GENDER_FEMALE;
+        }
+        mAndroidGender = mSharedPrefHelper.getInt(SP_KEY_ANDROID_GENDER, Config.GENDER_FEMALE);
+        return mAndroidGender;
     }
 
     /**
      * 更新机器人信息
      * @param androidName 机器人名称
-     * @param sex 机器人性别
+     * @return 是否更新成功
      */
-    public void updateAndroidName(String androidName, int sex) {
-        // FIXME 更新机器人名称，性别
+    public boolean updateAndroidName(String androidName) {
+
+        if(!mInitialized || StringUtils.isEmpty(androidName)) {
+            return false;
+        }
+        this.mAndroidName = androidName;
+        return mSharedPrefHelper.saveString(SP_KEY_ANDROID_NAME, mAndroidName);
+    }
+
+    /**
+     *
+     * @param gender 机器人性别
+     * @return
+     */
+    public boolean updateAndroidGender(int gender) {
+        if(!mInitialized || (Config.GENDER_FEMALE != gender && Config.GENDER_MALE != gender)) {
+            return false;
+        }
+        this.mAndroidGender = gender;
+        return mSharedPrefHelper.saveInt(SP_KEY_ANDROID_GENDER, mAndroidGender);
     }
 
     /**

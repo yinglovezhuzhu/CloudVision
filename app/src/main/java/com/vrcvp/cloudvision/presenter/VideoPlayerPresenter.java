@@ -30,13 +30,14 @@ import com.vrcvp.cloudvision.downloader.DownloadListener;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.model.IVideoPlayerModel;
 import com.vrcvp.cloudvision.model.VideoPlayerModel;
+import com.vrcvp.cloudvision.utils.LogUtils;
 import com.vrcvp.cloudvision.view.IVideoPlayerView;
 
 import java.io.File;
 
 
 public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
-        MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+        MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnInfoListener {
 
     private static final int CACHE_MIN_SIZE = 1024 * 1024;
 
@@ -59,6 +60,8 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
 
     private final Handler mHandler = new Handler();
 
+    private boolean mDestroyed = true;
+
     private final Runnable mPlayingChecker = new Runnable() {
         public void run() {
             if (mView.isPlaying()) {
@@ -75,25 +78,30 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         this.mModel = new VideoPlayerModel(context, new DownloadListener() {
             @Override
             public void onProgressUpdate(int downloadedSize, int totalSize) {
-                Log.e("VideoPlayerPresenter", downloadedSize + " / " + totalSize);
+//                Log.e("VideoPlayerPresenter", downloadedSize + " / " + totalSize);
                 if(mOnError) {
+                    mCurrentPosition = mView.getCurrentPosition();
                     if(!mCaching) {
                         mStartCachingSize = downloadedSize;
                         mCaching = true;
                     }
-                    if(downloadedSize - mStartCachingSize > CACHE_MIN_SIZE) {
+                    if(downloadedSize - mStartCachingSize > totalSize / 20) {
                         if(null == mVideoCacheUri) {
                             mVideoCacheUri = Uri.fromFile(mModel.getSavedVideoFile());
                         }
                         mCaching = false;
                         mOnError = false;
-                        mView.playVideo(mVideoCacheUri, mCurrentPosition);
-                        mView.hideLoadingProgress();
+                        if(!mDestroyed) {
+                            mView.playVideo(mVideoCacheUri, mCurrentPosition);
+                            mView.hideLoadingProgress();
+                        }
                     }
                 } else {
                     if(null == mVideoCacheUri) {
                         mVideoCacheUri = Uri.fromFile(mModel.getSavedVideoFile());
-                        mView.playVideo(mVideoCacheUri, 0);
+                        if(!mDestroyed) {
+                            mView.playVideo(mVideoCacheUri, 0);
+                        }
                     } else {
                         playVideo(mVideoCacheUri);
                     }
@@ -119,10 +127,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+        mOnError = true;
         mHandler.removeCallbacksAndMessages(null);
         mView.showLoadingProgress();
         mCurrentPosition = mp.getCurrentPosition();
-        mOnError = true;
         if(mModel.isDownloadStopped()) {
             mModel.downloadVideo(mVideoUri.toString());
         }
@@ -138,7 +146,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-
+        LogUtils.d("VideoPlayerPresenter", "MediaPlayer onPrepared------------------");
+//        if(!mDestroyed && !mView.isPlaying() && null != mVideoCacheUri) {
+//            mView.playVideo(mVideoCacheUri, 0);
+//        }
     }
 
     /**
@@ -152,6 +163,7 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         // For streams that we expect to be slow to start up, show a
         // progress spinner until playback starts.
         mVideoUri = videoUri;
+//        mView.playVideo(mVideoUri, 0);
         String scheme = mVideoUri.getScheme();
         if (null != scheme && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")
                 || scheme.equalsIgnoreCase("ftp") || "rtsp".equalsIgnoreCase(scheme))) {
@@ -163,7 +175,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
                 // 网络视频，且已经有下载记录,并且缓存存在，直接播放缓存
                 mView.hideLoadingProgress();
                 mVideoCacheUri = Uri.fromFile(cacheFile);
-                mView.playVideo(mVideoCacheUri, 0);
+
+                if(!mDestroyed) {
+                    mView.playVideo(mVideoCacheUri, 0);
+                }
             } else {
                 // 网络视频，没有下载记录（未下载完成或者还没有开始下载）
                 mHandler.postDelayed(mPlayingChecker, 250);
@@ -172,7 +187,10 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
                     cacheFile = new File(log.getSavedFile());
                     if(cacheFile.exists()) {
                         mVideoCacheUri = Uri.fromFile(cacheFile);
-                        mView.playVideo(mVideoCacheUri, 0);
+
+                        if(!mDestroyed) {
+                            mView.playVideo(mVideoCacheUri, 0);
+                        }
                     } else {
                         // 缓存文件丢失，删除下载日志
                         DownloadDBUtils.deleteLog(mContext, url);
@@ -185,7 +203,9 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         } else {
             mVideoCacheUri = videoUri;
             mView.hideLoadingProgress();
-            mView.playVideo(mVideoCacheUri, 0);
+            if(!mDestroyed) {
+                mView.playVideo(mVideoCacheUri, 0);
+            }
         }
     }
 
@@ -197,6 +217,7 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
     }
 
     public void onCreate() {
+        mDestroyed = false;
         mModel.onCreate();
     }
 
@@ -210,7 +231,16 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
     }
 
     public void onDestroy() {
+        if(mDestroyed) {
+            return;
+        }
+        mDestroyed = true;
         mModel.onDestroy();
+    }
+
+    @Override
+    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+        return false;
     }
 
 //    private String formatDuration(final Context context, int durationMs) {
