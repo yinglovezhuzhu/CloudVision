@@ -167,6 +167,33 @@ public class DataManager {
     }
 
     /**
+     * 获取机器人名称
+     * @return 机器人名称
+     */
+    public String getAndroidName() {
+        // FIXME 添加机器人名称
+        return "";
+    }
+
+    /**
+     * 获取机器人性别
+     * @return 机器人性别
+     */
+    public int getAndroidGender() {
+        // FIXME 添加机器人性别
+        return 1;
+    }
+
+    /**
+     * 更新机器人信息
+     * @param androidName 机器人名称
+     * @param sex 机器人性别
+     */
+    public void updateAndroidName(String androidName, int sex) {
+        // FIXME 更新机器人名称，性别
+    }
+
+    /**
      * 保存公告设置
      * @param disabled 是否关闭， true 关闭， false 开启
      * @return 是否保存成功

@@ -24,6 +24,7 @@ import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
 import com.vrcvp.cloudvision.http.HttpAsyncTask;
 import com.vrcvp.cloudvision.http.HttpStatus;
+import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.xfyun.XFOperation;
 import com.vrcvp.cloudvision.xfyun.bean.XFSemantic;
 import com.vrcvp.cloudvision.xfyun.bean.XFSemanticResp;
@@ -40,6 +41,7 @@ import com.vrcvp.cloudvision.view.IVoiceView;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,7 +56,7 @@ public class VoicePresenter {
     private final IVoiceView mVoiceView;
     private final IVoiceModel mVoiceModel;
 
-    private final String mStrAndroidStartWord;
+//    private final String mStrAndroidStartWord;
     private final String mStrAndroidUnknownWhat;
     private final String mStrAndroidNotFound;
     private final String mStrSearching;
@@ -71,7 +73,7 @@ public class VoicePresenter {
     public VoicePresenter(Context context, IVoiceView voiceView) {
         this.mVoiceView = voiceView;
         this.mVoiceModel = new VoiceModel(context);
-        mStrAndroidStartWord = context.getString(R.string.str_voice_android_start);
+//        mStrAndroidStartWord = context.getString(R.string.str_voice_android_start_format);
         mStrAndroidUnknownWhat = context.getString(R.string.str_voice_unknown_what_to_do);
         mStrAndroidNotFound = context.getString(R.string.str_voice_search_not_found);
         mStrSearching = context.getString(R.string.str_searching);
@@ -80,8 +82,13 @@ public class VoicePresenter {
 
         initEngine(context);
 
-        mVoiceView.onNewVoiceData(new VoiceBean(VoiceBean.TYPE_ANDROID, mStrAndroidStartWord), IVoiceView.ACTION_NONE);
-        startSpeak(mStrAndroidStartWord);
+        final String defaultAndroidName = context.getString(R.string.str_voice_android_name_default);
+        String androidName = DataManager.getInstance().getAndroidName();
+        final String startWord = String.format(Locale.getDefault(),
+                context.getString(R.string.str_voice_android_start_format),
+                StringUtils.isEmpty(androidName) ? defaultAndroidName : androidName);
+        mVoiceView.onNewVoiceData(new VoiceBean(VoiceBean.TYPE_ANDROID, startWord), IVoiceView.ACTION_NONE);
+        startSpeak(startWord);
     }
 
     /**
@@ -274,7 +281,16 @@ public class VoicePresenter {
         });
         mSpeechRecognizerInitialized = true;
         //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
-        mSpeechSynthesizer.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");//设置发音人
+//        小燕 青年女声 中英文（普通话） xiaoyan 默认
+//        小宇 青年男声 中英文（普通话） xiaoyu
+        // FIXME 设置发音人，设置性别
+        String voiceName = "xiaoyan";
+        if(1 == DataManager.getInstance().getAndroidGender()) {
+            voiceName = "xiaoyan";
+        } else {
+            voiceName = "xiaoyu";
+        }
+        mSpeechSynthesizer.setParameter(SpeechConstant.VOICE_NAME, voiceName);//设置发音人
         mSpeechSynthesizer.setParameter(SpeechConstant.SPEED, "50");//设置语速
         mSpeechSynthesizer.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
         mSpeechSynthesizer.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
