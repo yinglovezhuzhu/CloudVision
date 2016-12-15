@@ -140,9 +140,13 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
         if(null == mVideoView || null == uri) {
             return;
         }
-        mVideoView.setVideoURI(uri);
-        mVideoView.seekTo(position);
-        mVideoView.start();
+        try {
+            mVideoView.setVideoURI(uri);
+            mVideoView.seekTo(position);
+            mVideoView.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
