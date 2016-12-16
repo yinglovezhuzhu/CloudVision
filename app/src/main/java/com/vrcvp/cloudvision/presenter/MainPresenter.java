@@ -230,9 +230,9 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
                     saveDir = Environment.getExternalStorageDirectory();
                 }
 
-                mApkDownloader = new Downloader(mContext, saveDir, null);
+                mApkDownloader = new Downloader(mContext, updateInfo.getDownloadUrl(), false, saveDir, null);
                 try {
-                    mApkDownloader.download(updateInfo.getDownloadUrl(), ".apk", false, new DownloadListener() {
+                    mApkDownloader.download(".apk", new DownloadListener() {
                         @Override
                         public void onProgressUpdate(final int downloadedSize, final int totalSize) {
                             mHandler.post(new Runnable() {

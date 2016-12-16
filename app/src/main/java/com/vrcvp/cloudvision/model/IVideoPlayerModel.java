@@ -18,6 +18,8 @@
 
 package com.vrcvp.cloudvision.model;
 
+import android.net.Uri;
+
 import java.io.File;
 
 /**
@@ -27,10 +29,12 @@ import java.io.File;
 
 public interface IVideoPlayerModel {
 
+    void setVideoUri(Uri videoUri);
+
     /**
      * 下载视频文件
      */
-    void downloadVideo(String url);
+    void downloadVideo();
 
     /**
      * 获取本地缓存的视频文件地址

@@ -26,7 +26,6 @@ package com.vrcvp.cloudvision.downloader;
 public interface DownloadListener {
 
     int CODE_EXCEPTION = -100;
-	int CODE_EMPTY_URL = -101;
 	
 	/**
 	 * The callback to listen downloadVideo size
@@ -36,7 +35,7 @@ public interface DownloadListener {
 	void onProgressUpdate(int downloadedSize, int totalSize);
 
     /**
-	 * 下载错误
+     * 下载错误
      * @param code 错误码
      * @param message 说明文字
      */

@@ -107,14 +107,16 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     /**
      * 播放视频
      * @param videoUrl 视频url地址
+     * @param thumb 缩略图地址
      * @param name 视频名称
      */
-    protected void playVideo(String videoUrl, String name) {
+    protected void playVideo(String videoUrl, String thumb, String name) {
         if(StringUtils.isEmpty(videoUrl)) {
             return;
         }
         Intent i = new Intent(getActivity(), VideoPlayerActivity.class);
         i.setData(Uri.parse(videoUrl));
+        i.putExtra(Config.EXTRA_THUMB_URL, thumb);
         i.putExtra(Config.EXTRA_TITLE_STR, name);
         startActivity(i);
     }

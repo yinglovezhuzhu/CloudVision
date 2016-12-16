@@ -40,14 +40,14 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
 
         initView(mContentView);
 
-        mVideoPlayer = new VideoPlayerPresenter(getActivity(), this, new VideoPlayListener() {
+        mVideoPlayer = new VideoPlayerPresenter(getActivity(), this, null, new VideoPlayListener() {
             @Override
             public void onCompletion() {
                 if(null == mData || AdvertiseBean.TYPE_VIDEO != mData.getType()) {
                     return;
                 }
                 if(null != mVideoPlayer) {
-                    mVideoPlayer.replayVideo();
+                    mVideoPlayer.play();
                 }
             }
 
@@ -214,7 +214,8 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 if(null != mVideoPlayer && !StringUtils.isEmpty(url)) {
 //                        Uri uri = Uri.parse("http://120.24.234.204/static/upload/video/FUKESI.mp4");
                     final Uri uri = Uri.parse(url);
-                    mVideoPlayer.playVideo(uri);
+                    mVideoPlayer.setVideoUri(uri);
+                    mVideoPlayer.play();
                 } else {
                     mIvPlay.setVisibility(View.VISIBLE);
                 }
@@ -263,7 +264,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                             mVideoView.setVisibility(View.VISIBLE);
                             mIvImage.setVisibility(View.GONE);
                             mIvPlay.setVisibility(View.GONE);
-                            mVideoPlayer.replayVideo();
+                            mVideoPlayer.play();
                         }
                         break;
                     default:

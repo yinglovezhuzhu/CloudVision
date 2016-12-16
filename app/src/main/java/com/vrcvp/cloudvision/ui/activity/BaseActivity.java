@@ -232,15 +232,17 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
 	/**
 	 * 播放视频
 	 * @param videoUrl 视频url地址
+	 * @param thumbUrl 缩略图地址
 	 * @param name 视频名称
 	 */
-	protected void playVideo(String videoUrl, String name) {
+	protected void playVideo(String videoUrl, String thumbUrl, String name) {
 		if(StringUtils.isEmpty(videoUrl)) {
 			return;
 		}
 		Intent i = new Intent(this, VideoPlayerActivity.class);
 		i.setData(Uri.parse(videoUrl));
 		i.putExtra(Config.EXTRA_TITLE_STR, name);
+		i.putExtra(Config.EXTRA_THUMB_URL, thumbUrl);
 		startActivity(i);
 	}
 }

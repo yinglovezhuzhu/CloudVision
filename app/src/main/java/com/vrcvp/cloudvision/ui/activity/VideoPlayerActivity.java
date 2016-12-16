@@ -43,6 +43,7 @@ import com.vrcvp.cloudvision.view.IVideoPlayerView;
 public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerView {
 
     private VideoView mVideoView;
+    private ImageView mIvThumb;
     private View mProgressView;
     private ImageView mIvPlay;
 
@@ -54,6 +55,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         setContentView(R.layout.activity_video_player);
 
         mVideoView = (VideoView) findViewById(R.id.video_player_surface_view);
+        mIvThumb = (ImageView) findViewById(R.id.iv_video_player_thumb);
         mProgressView = findViewById(R.id.video_player_progress_indicator);
         mIvPlay = (ImageView) findViewById(R.id.iv_video_player_play);
         findViewById(R.id.ibtn_video_player_back).setOnClickListener(this);
@@ -67,7 +69,11 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
         Intent intent = getIntent();
 
-        mVideoPlayer = new VideoPlayerPresenter(this, this, new VideoPlayListener() {
+        if(intent.hasExtra(Config.EXTRA_THUMB_URL)) {
+            loadImage(intent.getStringExtra(Config.EXTRA_THUMB_URL), mIvThumb, R.drawable.default_img, R.drawable.default_img);
+        }
+
+        mVideoPlayer = new VideoPlayerPresenter(this, this, intent.getData(), new VideoPlayListener() {
             @Override
             public void onCompletion() {
                 finish();
@@ -77,17 +83,23 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
             public void onError(int what, String msg) {
                 switch (what) {
                     case VideoPlayListener.WHAT_DOWNLOAD_ERROR:
-                        hideLoadingProgress();
-                        mIvPlay.setVisibility(View.VISIBLE);
+                        showShortToast(R.string.str_network_error);
+                        break;
+                    case VideoPlayListener.WHAT_URI_EMPTY:
+                        showShortToast(R.string.str_video_play_failed);
                         break;
                     default:
                         break;
                 }
+                hideLoadingProgress();
+                mIvPlay.setVisibility(View.VISIBLE);
+                mIvThumb.setVisibility(View.VISIBLE);
             }
         });
         mVideoPlayer.onCreate();
+        mIvThumb.setVisibility(View.GONE);
         mIvPlay.setVisibility(View.GONE);
-        mVideoPlayer.playVideo(intent.getData());
+        mVideoPlayer.play();
 
         if (intent.hasExtra(MediaStore.EXTRA_SCREEN_ORIENTATION)) {
             int orientation = intent.getIntExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -164,7 +176,9 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
                 exit();
                 break;
             case R.id.iv_video_player_play:
-                mVideoPlayer.replayVideo();
+                mIvThumb.setVisibility(View.GONE);
+                mIvPlay.setVisibility(View.GONE);
+                mVideoPlayer.play();
                 break;
             default:
                 break;

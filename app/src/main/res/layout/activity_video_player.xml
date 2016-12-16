@@ -28,6 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
+    <ImageView
+        android:id="@+id/iv_video_player_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:contentDescription="@null"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/tv_video_player_title"
         android:layout_width="match_parent"
@@ -71,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:contentDescription="@null"
+        android:background="@color/transparent"
         android:visibility="gone"/>
 
     <ImageButton

@@ -26,6 +26,8 @@ public interface VideoPlayListener {
 
     /** 视频文件下载错误 **/
     int WHAT_DOWNLOAD_ERROR = 1;
+    /** 播放的视频URI为空 **/
+    int WHAT_URI_EMPTY = 2;
 
     void onCompletion();
 

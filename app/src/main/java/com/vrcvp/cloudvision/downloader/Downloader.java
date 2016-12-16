@@ -21,6 +21,7 @@ package com.vrcvp.cloudvision.downloader;
 import android.content.Context;
 import android.util.Log;
 
+
 import com.vrcvp.cloudvision.bean.DownloadLog;
 import com.vrcvp.cloudvision.db.DownloadDBUtils;
 import com.vrcvp.cloudvision.utils.StringUtils;
@@ -41,8 +42,8 @@ import java.util.regex.Pattern;
 
 /**
  * usage Downloader class
- * @author yinglovezhuzhu@gmail.com
  *
+ * @author yinglovezhuzhu@gmail.com
  */
 public class Downloader {
 
@@ -60,15 +61,21 @@ public class Downloader {
     private DownloadLog mDownloadLog; // The data downloadVideo state
     private String mUrl; // The url of the file which to downloadVideo.
 
+    private boolean mNeedDownloadEnd = false; // Need download file end first
+
     /**
      * Constructor<br><br>
      *
      * @param context     Context对象
+     * @param downloadUrl 下载地址
+     * @param needDownloadEnd 是否先下载文件尾部
      * @param saveFolder  保存目录
      * @param fileName    保存文件名称，可以为null，如果为null，将从服务器解析文件名，如果解析失败，则随机生成一个文件名称
      */
-    public Downloader(Context context, File saveFolder, String fileName) {
+    public Downloader(Context context, String downloadUrl, boolean needDownloadEnd, File saveFolder, String fileName) {
         this.mContext = context;
+        this.mUrl = downloadUrl;
+        this.mNeedDownloadEnd = needDownloadEnd;
         this.mSaveFolder = saveFolder;
         this.mFileName = fileName;
 
@@ -76,20 +83,28 @@ public class Downloader {
     }
 
     /**
+     * 设置下载url
+     * @param url 下载url地址
+     */
+    public void setUrl(String url) {
+        this.mUrl = url;
+    }
+
+    /**
      * Download file，this method has network, don't use it on ui thread.
      *
-     * @param downloadUrl 下载地址
-     * @param defaultSuffix 默认后缀，没有设置文件名的时候生效，带点，例如".mp4"
-     * @param downloadEnd 是否需要先下载文件尾部， true需要， false不需要
      * @param listener      The listener to listen downloadVideo state, can be null if not need.
+     * @param defaultSuffix 默认后缀，没有设置文件名的时候生效，带点，例如".mp4"
      * @return The size that downloaded.
      * @throws Exception The error happened when downloading.
      */
-    public File download(String downloadUrl, String defaultSuffix, boolean downloadEnd,
-                         DownloadListener listener) throws Exception {
-
-        this.mUrl = downloadUrl;
-
+    public File download(String defaultSuffix, DownloadListener listener) throws Exception {
+        if(StringUtils.isEmpty(mUrl)) {
+            if(null != listener) {
+                listener.onError(DownloadListener.CODE_EXCEPTION, "download url is empty");
+            }
+            return mSavedFile;
+        }
         if (null != mDownloadLog && mDownloadLog.isLocked()) {
             Log.e(TAG, "File downloading now. url = " + mUrl);
             return mSavedFile;
@@ -105,6 +120,10 @@ public class Downloader {
             mDownloadLog.unlock();
             mStop = true;
             Log.w(TAG, "File downloadVideo finished!");
+            return mSavedFile;
+        }
+
+        if(mStop) {
             return mSavedFile;
         }
 
@@ -202,10 +221,9 @@ public class Downloader {
             return mSavedFile;
         }
 
-        if(downloadEnd) {
-            // 下载视频数据的尾部部分，否则播放器无法解析视频文件
-            final int lastSize = 1024 * 512;
-            downloadFileEnd(mContext, mDownloadLog.getTotalSize() > lastSize ? lastSize : mDownloadLog.getTotalSize() );
+        // 下载视频数据的尾部部分，否则播放器无法解析视频文件
+        if(mNeedDownloadEnd) {
+            downloadFileEnd(mContext, 1024 * 512);
         }
 
         if(mStop) {

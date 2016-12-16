@@ -22,7 +22,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
 
 import com.vrcvp.cloudvision.bean.DownloadLog;
 import com.vrcvp.cloudvision.db.DownloadDBUtils;
@@ -45,7 +44,7 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
     private IVideoPlayerView mView;
     private IVideoPlayerModel mModel;
 
-    private Uri mVideoCacheUri; // 视频缓存地址（播放文件地址）
+    private Uri mCachedUri; // 视频缓存地址（播放文件地址）
     private Uri mVideoUri; // 视频地址，如果是本地视频，跟缓存地址一样，在线视频为在线地址
     /** 当前播放进度 **/
     private int mCurrentPosition = 0;
@@ -72,38 +71,39 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         }
     };
 
-    public VideoPlayerPresenter(Context context, IVideoPlayerView view, VideoPlayListener listener) {
+    public VideoPlayerPresenter(final Context context, IVideoPlayerView view,
+                                Uri videoUri, VideoPlayListener listener) {
         this.mContext = context;
         this.mView = view;
-        this.mModel = new VideoPlayerModel(context, new DownloadListener() {
+        this.mVideoUri = videoUri;
+        this.mModel = new VideoPlayerModel(context, videoUri, new DownloadListener() {
             @Override
             public void onProgressUpdate(int downloadedSize, int totalSize) {
-//                Log.e("VideoPlayerPresenter", downloadedSize + " / " + totalSize);
+                LogUtils.e("VideoPlayerPresenter", downloadedSize + " / " + totalSize);
                 if(mOnError) {
-                    mCurrentPosition = mView.getCurrentPosition();
                     if(!mCaching) {
                         mStartCachingSize = downloadedSize;
                         mCaching = true;
                     }
-                    if(downloadedSize - mStartCachingSize > totalSize / 20) {
-                        if(null == mVideoCacheUri) {
-                            mVideoCacheUri = Uri.fromFile(mModel.getSavedVideoFile());
+                    if(downloadedSize - mStartCachingSize > CACHE_MIN_SIZE || downloadedSize >= totalSize) {
+                        if(null == mCachedUri) {
+                            mCachedUri = Uri.fromFile(mModel.getSavedVideoFile());
                         }
                         mCaching = false;
                         mOnError = false;
+
                         if(!mDestroyed) {
-                            mView.playVideo(mVideoCacheUri, mCurrentPosition);
+                            mView.playVideo(mCachedUri, mCurrentPosition);
                             mView.hideLoadingProgress();
                         }
                     }
                 } else {
-                    if(null == mVideoCacheUri) {
-                        mVideoCacheUri = Uri.fromFile(mModel.getSavedVideoFile());
+                    if(null == mCachedUri) {
+                        mCachedUri = Uri.fromFile(mModel.getSavedVideoFile());
+
                         if(!mDestroyed) {
-                            mView.playVideo(mVideoCacheUri, 0);
+                            mView.playVideo(mCachedUri, 0);
                         }
-                    } else {
-                        playVideo(mVideoCacheUri);
                     }
                 }
             }
@@ -121,18 +121,81 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         mView.setOnPreparedListener(this);
         mView.setOnErrorListener(this);
         mView.setOnCompletionListener(this);
-
-
     }
+
+    public void setVideoUri(Uri videoUri) {
+        this.mVideoUri = videoUri;
+        mModel.setVideoUri(mVideoUri);
+    }
+
+    /**
+     * 播放
+     */
+    public void play() {
+        // For streams that we expect to be slow to start up, show a
+        // progress spinner until playback starts.
+        if(null == mVideoUri) {
+            if(null != mPlayListener) {
+                mPlayListener.onError(VideoPlayListener.WHAT_URI_EMPTY,
+                        "Video uri is null");
+            }
+            return;
+        }
+        String scheme = mVideoUri.getScheme();
+        if (null != scheme && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")
+                || scheme.equalsIgnoreCase("ftp") || "rtsp".equalsIgnoreCase(scheme))) {
+            // 网络视频
+            final String url = mVideoUri.toString();
+            File cacheFile;
+            DownloadLog history = DownloadDBUtils.getHistoryByUrl(mContext, url);
+            if(null != history && (cacheFile = new File(history.getSavedFile())).exists()) {
+                // 网络视频，且已经有下载记录,并且缓存存在，直接播放缓存
+                mView.hideLoadingProgress();
+                mCachedUri = Uri.fromFile(cacheFile);
+
+                if(!mDestroyed) {
+                    mView.playVideo(mCachedUri, 0);
+                }
+            } else {
+                // 网络视频，没有下载记录（未下载完成或者还没有开始下载）
+                mHandler.postDelayed(mPlayingChecker, 250);
+                DownloadLog log = DownloadDBUtils.getLogByUrl(mContext, url);
+                if(null != log) {
+                    cacheFile = new File(log.getSavedFile());
+                    if(cacheFile.exists()) {
+                        mCachedUri = Uri.fromFile(cacheFile);
+
+                        if(!mDestroyed) {
+                            mView.playVideo(mCachedUri, 0);
+                        }
+                    } else {
+                        // 缓存文件丢失，删除下载日志
+                        DownloadDBUtils.deleteLog(mContext, url);
+                    }
+                }
+
+                mModel.downloadVideo();
+            }
+
+        } else {
+            mCachedUri = mVideoUri;
+            mView.hideLoadingProgress();
+
+            if(!mDestroyed) {
+                mView.playVideo(mCachedUri, 0);
+            }
+        }
+    }
+
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        mOnError = true;
         mHandler.removeCallbacksAndMessages(null);
         mView.showLoadingProgress();
         mCurrentPosition = mp.getCurrentPosition();
+        mOnError = true;
         if(mModel.isDownloadStopped()) {
-            mModel.downloadVideo(mVideoUri.toString());
+            mModel.downloadVideo();
         }
         return true;
     }
@@ -146,74 +209,7 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        LogUtils.d("VideoPlayerPresenter", "MediaPlayer onPrepared------------------");
-//        if(!mDestroyed && !mView.isPlaying() && null != mVideoCacheUri) {
-//            mView.playVideo(mVideoCacheUri, 0);
-//        }
-    }
 
-    /**
-     * 播放视频
-     * @param videoUri 视频地址
-     */
-    public void playVideo(Uri videoUri) {
-        if(null == videoUri) {
-            return;
-        }
-        // For streams that we expect to be slow to start up, show a
-        // progress spinner until playback starts.
-        mVideoUri = videoUri;
-//        mView.playVideo(mVideoUri, 0);
-        String scheme = mVideoUri.getScheme();
-        if (null != scheme && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")
-                || scheme.equalsIgnoreCase("ftp") || "rtsp".equalsIgnoreCase(scheme))) {
-            // 网络视频
-            final String url = mVideoUri.toString();
-            File cacheFile;
-            DownloadLog history = DownloadDBUtils.getHistoryByUrl(mContext, url);
-            if(null != history && (cacheFile = new File(history.getSavedFile())).exists()) {
-                // 网络视频，且已经有下载记录,并且缓存存在，直接播放缓存
-                mView.hideLoadingProgress();
-                mVideoCacheUri = Uri.fromFile(cacheFile);
-
-                if(!mDestroyed) {
-                    mView.playVideo(mVideoCacheUri, 0);
-                }
-            } else {
-                // 网络视频，没有下载记录（未下载完成或者还没有开始下载）
-                mHandler.postDelayed(mPlayingChecker, 250);
-                DownloadLog log = DownloadDBUtils.getLogByUrl(mContext, url);
-                if(null != log) {
-                    cacheFile = new File(log.getSavedFile());
-                    if(cacheFile.exists()) {
-                        mVideoCacheUri = Uri.fromFile(cacheFile);
-
-                        if(!mDestroyed) {
-                            mView.playVideo(mVideoCacheUri, 0);
-                        }
-                    } else {
-                        // 缓存文件丢失，删除下载日志
-                        DownloadDBUtils.deleteLog(mContext, url);
-                    }
-                }
-
-                mModel.downloadVideo(url);
-            }
-
-        } else {
-            mVideoCacheUri = videoUri;
-            mView.hideLoadingProgress();
-            if(!mDestroyed) {
-                mView.playVideo(mVideoCacheUri, 0);
-            }
-        }
-    }
-
-    /**
-     * 重新播放
-     */
-    public void replayVideo() {
-        playVideo(mVideoUri);
     }
 
     public void onCreate() {
@@ -238,17 +234,4 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         mModel.onDestroy();
     }
 
-//    private String formatDuration(final Context context, int durationMs) {
-//        int duration = durationMs / 1000;
-//        int h = duration / 3600;
-//        int m = (duration - h * 3600) / 60;
-//        int s = duration - (h * 3600 + m * 60);
-//        String durationValue;
-//        if (h == 0) {
-//            durationValue = String.format(context.getString(R.string.details_ms), m, s);
-//        } else {
-//            durationValue = String.format(context.getString(R.string.details_hms), h, m, s);
-//        }
-//        return durationValue;
-//    }
 }

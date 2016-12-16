@@ -181,6 +181,7 @@ public class VideoSearchActivity extends BaseActivity implements IVideoSearchVie
                 }
                 Intent i = new Intent(VideoSearchActivity.this, VideoPlayerActivity.class);
                 i.setData(Uri.parse(videoUrl));
+                i.putExtra(Config.EXTRA_THUMB_URL, video.getImageUrl());
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

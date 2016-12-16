@@ -56,7 +56,8 @@ public class VoiceSearchResultItemView extends LinearLayout {
         switch (bean.getType()) {
             case AdvertiseBean.TYPE_VIDEO:
                 mIvPlay.setVisibility(View.VISIBLE);
-                loadImage(bean.getUrl());
+                // FIXME 对于语音搜索结果，哪个个字段是缩略图
+                loadImage(bean.getOutLink());
                 if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     mTvContent.setText(Html.fromHtml(bean.getContent()));
                 } else {

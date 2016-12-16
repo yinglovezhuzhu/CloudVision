@@ -154,7 +154,8 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                                 spanned = Html.fromHtml(searchResultBean.getContent());
                             }
                         }
-                        playVideo(searchResultBean.getUrl(), spanned.toString());
+                        // FIXME 对于语音搜索结果，哪个个字段是缩略图，哪个字段是视频地址
+                        playVideo(searchResultBean.getUrl(), searchResultBean.getOutLink(), spanned.toString());
                         break;
                     case AdvertiseBean.TYPE_PRODUCT:
                         openProductDetail(searchResultBean);
