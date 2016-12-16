@@ -37,11 +37,7 @@ public class ActivateModel implements IActivateModel {
         reqParam.setActivateCode(code);
         reqParam.setEquipmentNo(Utils.getClientId(mContext));
         reqParam.setMac(Utils.getMac(mContext));
-        try {
-            reqParam.setAlias(Utils.getMD5Hex(Utils.getMac(mContext)));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        reqParam.setAlias(Utils.getClientId(mContext));
         final Gson gson = new Gson();
         final String key = gson.toJson(reqParam);
         if(NetworkManager.getInstance().isNetworkConnected()) {

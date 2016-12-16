@@ -196,9 +196,9 @@ public class Utils {
             }
             sharedPrefHelper.saveString(Config.SP_KEY_CLIENT_ID, clientId);
         }
-//        return clientId;
+        return clientId;
         // FIXME 打包返回上面的clientId
-        return "202227053078244";
+//        return "202227053078244";
     }
 
     /**

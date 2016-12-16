@@ -283,7 +283,7 @@ public class VoicePresenter {
         //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
 //        小燕 青年女声 中英文（普通话） xiaoyan 默认
 //        小宇 青年男声 中英文（普通话） xiaoyu
-        // FIXME 设置发音人，设置性别
+        // 设置发音人，设置性别
         String voiceName = "xiaoyan";
         if(1 == DataManager.getInstance().getAndroidGender()) {
             voiceName = "xiaoyan";

@@ -45,19 +45,9 @@ public class CVApplication extends Application {
             // 失败后重试3次（共4次），重试3次后不再重试
             return;
         }
-        String mac = Utils.getMac(this);
-        if(StringUtils.isEmpty(mac)) {
-            LogUtils.e(TAG, "Get mac address failed, JPush alias set failed");
-        }
-        String alias = null;
-        try {
-            alias = Utils.getMD5Hex(mac);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        if(StringUtils.isEmpty(alias)) {
-            LogUtils.e(TAG, "Get mac address MD5 failed, JPush alias set failed");
-        }
+
+        // 用ClientID当做alias
+        final String alias = Utils.getClientId(this);
 
         JPushInterface.setAlias(this, alias, new TagAliasCallback() {
             @Override
