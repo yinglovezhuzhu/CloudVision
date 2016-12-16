@@ -112,8 +112,8 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:backgroundDimAmount">1.0</item>
-        <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:background">@color/transparent</item>
+        <item name="android:windowBackground">@color/colorVideoPlayerBackground</item>
+        <item name="android:background">@color/colorVideoPlayerBackground</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
 

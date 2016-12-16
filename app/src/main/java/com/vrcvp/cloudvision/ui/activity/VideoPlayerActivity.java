@@ -115,28 +115,24 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
 
     @Override
     public void onPause() {
+        super.onPause();
         mVideoPlayer.onPause();
         if(null != mVideoView) {
             mVideoView.suspend();
         }
-        super.onPause();
     }
 
     @Override
     public void onResume() {
+        super.onResume();
         mVideoPlayer.onResume();
         if(null != mVideoView) {
             mVideoView.resume();
         }
-        super.onResume();
     }
 
     @Override
     public void onDestroy() {
-        mVideoPlayer.onDestroy();
-        if(null != mVideoView) {
-            mVideoView.stopPlayback();
-        }
         super.onDestroy();
     }
 
@@ -165,7 +161,7 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ibtn_video_player_back:
-                finish(RESULT_CANCELED, null);
+                exit();
                 break;
             case R.id.iv_video_player_play:
                 mVideoPlayer.replayVideo();
@@ -173,6 +169,11 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
     }
 
     @Override
@@ -194,6 +195,14 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
     }
 
     @Override
+    public int getCurrentPosition() {
+        if(null == mVideoView) {
+            return 0;
+        }
+        return mVideoView.getCurrentPosition();
+    }
+
+    @Override
     public void showLoadingProgress() {
         if(null == mProgressView) {
             return;
@@ -207,5 +216,13 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
             return;
         }
         mProgressView.setVisibility(View.GONE);
+    }
+
+    private void exit() {
+        mVideoPlayer.onDestroy();
+        if(null != mVideoView) {
+            mVideoView.stopPlayback();
+        }
+        finish(RESULT_CANCELED, null);
     }
 }

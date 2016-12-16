@@ -83,4 +83,11 @@ public class Config {
      */
     public static final String DATE_FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_YMD = "yyyy-MM-dd";
+
+    /** 性别：男 **/
+    public static final int GENDER_MALE = 1;
+    /** 性别：女 **/
+    public static final int GENDER_FEMALE = 2;
+
+
 }

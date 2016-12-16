@@ -37,6 +37,8 @@ public interface IVideoPlayerView {
 
     boolean isPlaying();
 
+    int getCurrentPosition();
+
     void showLoadingProgress();
 
     void hideLoadingProgress();

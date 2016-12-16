@@ -276,7 +276,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                     return;
                 }
                 Intent i = new Intent(CorporateActivity.this, VideoPlayerActivity.class);
-                i.setData(Uri.parse(BuildConfig.HTTP_HOST + videoUrl));
+                i.setData(Uri.parse(videoUrl));
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
                 startActivity(i);
             }

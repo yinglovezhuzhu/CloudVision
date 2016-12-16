@@ -21,6 +21,7 @@ package com.vrcvp.cloudvision.model;
 import android.content.Context;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.os.Looper;
 
 import com.vrcvp.cloudvision.bean.DownloadLog;
 import com.vrcvp.cloudvision.db.DownloadDBUtils;
@@ -43,7 +44,7 @@ public class VideoPlayerModel implements IVideoPlayerModel {
     private Downloader mDownloader;
     private DownloadListener mDownloadListener;
     private String mUrl;
-    private final Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private NetworkObserver mNetworkObserver = new NetworkObserver() {
         @Override
