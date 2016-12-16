@@ -37,7 +37,7 @@ import java.io.File;
 
 
 public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
-        MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnInfoListener {
+        MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
 
     private static final int CACHE_MIN_SIZE = 1024 * 1024;
 
@@ -236,11 +236,6 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
         }
         mDestroyed = true;
         mModel.onDestroy();
-    }
-
-    @Override
-    public boolean onInfo(MediaPlayer mp, int what, int extra) {
-        return false;
     }
 
 //    private String formatDuration(final Context context, int durationMs) {
