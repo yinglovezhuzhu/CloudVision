@@ -8,7 +8,7 @@ package com.vrcvp.cloudvision.bean;
 public class VoiceSearchResultBean {
     private String id;
     private String content;
-    private int action;
+    private String action;
     private int type;
     private String outLink;
     private String url;
@@ -23,7 +23,7 @@ public class VoiceSearchResultBean {
         return content;
     }
 
-    public int getAction() {
+    public String getAction() {
         return action;
     }
 

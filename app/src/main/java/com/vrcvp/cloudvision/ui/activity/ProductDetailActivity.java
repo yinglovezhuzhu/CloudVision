@@ -309,6 +309,9 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setSupportMultipleWindows(true);
+        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         // 根据网络状态来设定缓存模式
         if(NetworkManager.getInstance().isNetworkConnected()) {
@@ -318,7 +321,7 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
         }
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 
         webView.setWebChromeClient(new CusWebChromeClient());
         webView.setWebViewClient(new CusWebViewClient());
