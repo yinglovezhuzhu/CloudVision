@@ -76,7 +76,9 @@ public class VideoPlayerActivity extends BaseActivity implements IVideoPlayerVie
         mVideoPlayer = new VideoPlayerPresenter(this, this, intent.getData(), new VideoPlayListener() {
             @Override
             public void onCompletion() {
-                finish();
+                mIvThumb.setVisibility(View.GONE);
+                mIvPlay.setVisibility(View.GONE);
+                mVideoPlayer.play();
             }
 
             @Override

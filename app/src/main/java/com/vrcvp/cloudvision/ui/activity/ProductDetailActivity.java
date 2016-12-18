@@ -83,6 +83,15 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != mWebView) {
+            mWebView.destroy();
+            mWebView = null;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ibtn_product_detail_back:

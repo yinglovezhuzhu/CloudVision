@@ -27,7 +27,7 @@ import com.vrcvp.cloudvision.utils.NetworkManager;
 public class WebViewActivity extends BaseActivity {
 
     private ProgressBar mPbLoadProgress;
-
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,16 @@ public class WebViewActivity extends BaseActivity {
 
         initView();
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != mWebView) {
+            mWebView.destroy();
+            mWebView = null;
+        }
     }
 
     @Override
@@ -52,15 +62,15 @@ public class WebViewActivity extends BaseActivity {
 
     private void initView() {
         mPbLoadProgress = (ProgressBar) findViewById(R.id.pb_webview_activity_progress);
-        final WebView webView = (WebView) findViewById(R.id.wv_webview_activity_web);
-        settingWebView(webView);
+        mWebView = (WebView) findViewById(R.id.wv_webview_activity_web);
+        settingWebView(mWebView);
 
         Intent intent = getIntent();
 
         if(null != intent) {
             Uri uri = intent.getData();
             if(null != uri) {
-                webView.loadUrl(uri.toString());
+                mWebView.loadUrl(uri.toString());
             }
         }
     }
@@ -73,7 +83,9 @@ public class WebViewActivity extends BaseActivity {
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setSupportMultipleWindows(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
         // 根据网络状态来设定缓存模式
         if(NetworkManager.getInstance().isNetworkConnected()) {
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 缓存模式：默认模式

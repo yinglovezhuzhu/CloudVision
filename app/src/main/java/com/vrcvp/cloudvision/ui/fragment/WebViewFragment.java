@@ -29,6 +29,7 @@ import com.vrcvp.cloudvision.utils.StringUtils;
 public class WebViewFragment extends BaseFragment {
 
     private ProgressBar mPbLoadProgress;
+    private WebView mWebView;
 
     private String mData;
     private String mUrl;
@@ -53,15 +54,24 @@ public class WebViewFragment extends BaseFragment {
         return contentView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(null != mWebView) {
+            mWebView.destroy();
+            mWebView = null;
+        }
+    }
+
     private void initView(View contentView) {
         mPbLoadProgress = (ProgressBar) contentView.findViewById(R.id.pb_webview_fragment_progress);
-        final WebView webView = (WebView) contentView.findViewById(R.id.wv_webview_fragment_web);
-        settingWebView(webView);
+        mWebView = (WebView) contentView.findViewById(R.id.wv_webview_fragment_web);
+        settingWebView(mWebView);
 
         if(!StringUtils.isEmpty(mUrl)) {
-            webView.loadUrl(mUrl);
+            mWebView.loadUrl(mUrl);
         } else if(!StringUtils.isEmpty(mData)) {
-            webView.loadData(mData, "text/html;charset=UTF-8", "UTF-8");
+            mWebView.loadData(mData, "text/html;charset=UTF-8", "UTF-8");
         }
     }
 
@@ -73,7 +83,9 @@ public class WebViewFragment extends BaseFragment {
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setSupportMultipleWindows(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
         // 根据网络状态来设定缓存模式
         if(NetworkManager.getInstance().isNetworkConnected()) {
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT); // 缓存模式：默认模式
