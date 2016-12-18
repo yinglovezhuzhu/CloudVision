@@ -425,7 +425,7 @@ public class VoicePresenter {
 
             final Set<String> resultKeySet = resultMap.keySet();
 
-            if(handleSearch(resultMap, resultKeySet)) {
+            if(handleSearch(bean.getText(), resultMap, resultKeySet)) {
                 return;
             }
             // TODO 处理其他请求，比如打开网页等等
@@ -439,11 +439,12 @@ public class VoicePresenter {
 
     /**
      * 处理查询
+     * @param text 输入文本
      * @param resultMap 语义结果Map
      * @param resultKeySet 语义结果Map keySet
      * @return 是否已处理
      */
-    private boolean handleSearch(final Map<String, XFSemanticResp> resultMap, final Set<String> resultKeySet) {
+    private boolean handleSearch(final String text, final Map<String, XFSemanticResp> resultMap, final Set<String> resultKeySet) {
         String keywords = null;
         for (String key : resultKeySet) {
             if(key.matches(QUERY_REGULAR_EXPRESSION)) {
@@ -462,8 +463,9 @@ public class VoicePresenter {
             }
         }
 
+
         if(StringUtils.isEmpty(keywords)) {
-            return false;
+            keywords = text;
         }
         search(keywords);
         return true;
