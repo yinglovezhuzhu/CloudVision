@@ -53,6 +53,8 @@ public class Downloader {
 
     private static final int RESPONSE_OK = 200;
 
+    private static final int DEFAULT_END_SIZE = 1024 * 1024;
+
     private Context mContext;
     private boolean mStop = true; // The flag of stopped.
     private File mSaveFolder;
@@ -223,7 +225,11 @@ public class Downloader {
 
         // 下载视频数据的尾部部分，否则播放器无法解析视频文件
         if(mNeedDownloadEnd) {
-            downloadFileEnd(mContext, 1024 * 512);
+            int endSize = DEFAULT_END_SIZE;
+            if(mDownloadLog.getTotalSize() < endSize) {
+                endSize = mDownloadLog.getTotalSize();
+            }
+            downloadFileEnd(mContext, endSize);
         }
 
         if(mStop) {
