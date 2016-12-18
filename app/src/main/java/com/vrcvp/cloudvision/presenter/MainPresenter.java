@@ -255,6 +255,12 @@ public class MainPresenter implements Handler.Callback, BDLocationListener {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mMainView.onDownloadApkError(updateInfo, HttpStatus.SC_EXPECTATION_FAILED, "下载apk文件出现异常");
+                        }
+                    });
                 }
                 if(mApkDownloader.isFinished()) {
                     final File savedFile = mApkDownloader.getSavedFile();
