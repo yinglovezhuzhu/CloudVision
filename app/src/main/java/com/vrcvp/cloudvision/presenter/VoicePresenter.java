@@ -286,9 +286,9 @@ public class VoicePresenter {
         // 设置发音人，设置性别
         String voiceName = "xiaoyan";
         if(1 == DataManager.getInstance().getAndroidGender()) {
-            voiceName = "xiaoyan";
-        } else {
             voiceName = "xiaoyu";
+        } else {
+            voiceName = "xiaoyan";
         }
         mSpeechSynthesizer.setParameter(SpeechConstant.VOICE_NAME, voiceName);//设置发音人
         mSpeechSynthesizer.setParameter(SpeechConstant.SPEED, "50");//设置语速

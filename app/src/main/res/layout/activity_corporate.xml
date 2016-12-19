@@ -48,6 +48,32 @@
         android:background="@color/colorWhite">
         <Button
             style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_culture"
+            android:text="@string/str_corporate_product"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
+            android:id="@+id/btn_corporate_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_corporate_culture"
+            android:text="@string/str_corporate_video"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightGray"/>
+        <Button
+            style="@style/CorporateTopBarTheme"
             android:id="@+id/btn_corporate_culture"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,52 +87,74 @@
             android:background="@color/colorLightGray"/>
         <Button
             style="@style/CorporateTopBarTheme"
-            android:id="@+id/btn_corporate_honor"
+            android:id="@+id/btn_corporate_news"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:drawableTop="@drawable/ic_corporate_honor"
-            android:text="@string/str_corporate_honor"/>
+            android:text="@string/str_corporate_news"/>
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/colorLightGray"/>
         <Button
             style="@style/CorporateTopBarTheme"
-            android:id="@+id/btn_corporate_environment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:drawableTop="@drawable/ic_corporate_environment"
-            android:text="@string/str_corporate_environment"/>
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorLightGray"/>
-        <Button
-            style="@style/CorporateTopBarTheme"
-            android:id="@+id/btn_corporate_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:drawableTop="@drawable/ic_corporate_image"
-            android:text="@string/str_corporate_image"/>
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorLightGray"/>
-        <Button
-            style="@style/CorporateTopBarTheme"
-            android:id="@+id/btn_corporate_intro"
+            android:id="@+id/btn_corporate_about_us"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:drawableTop="@drawable/ic_corporate_intro"
-            android:text="@string/str_corporate_intro"/>
+            android:text="@string/str_corporate_about_us"/>
+        <!--<Button-->
+            <!--style="@style/CorporateTopBarTheme"-->
+            <!--android:id="@+id/btn_corporate_honor"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_corporate_honor"-->
+            <!--android:text="@string/str_corporate_honor"/>-->
+        <!--<View-->
+            <!--android:layout_width="0.5dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorLightGray"/>-->
+        <!--<Button-->
+            <!--style="@style/CorporateTopBarTheme"-->
+            <!--android:id="@+id/btn_corporate_environment"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_corporate_environment"-->
+            <!--android:text="@string/str_corporate_environment"/>-->
+        <!--<View-->
+            <!--android:layout_width="0.5dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorLightGray"/>-->
+        <!--<Button-->
+            <!--style="@style/CorporateTopBarTheme"-->
+            <!--android:id="@+id/btn_corporate_image"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_corporate_image"-->
+            <!--android:text="@string/str_corporate_image"/>-->
+        <!--<View-->
+            <!--android:layout_width="0.5dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorLightGray"/>-->
+        <!--<Button-->
+            <!--style="@style/CorporateTopBarTheme"-->
+            <!--android:id="@+id/btn_corporate_intro"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_corporate_intro"-->
+            <!--android:text="@string/str_corporate_intro"/>-->
     </LinearLayout>
 
     <FrameLayout
@@ -166,16 +214,16 @@
                             android:layout_height="match_parent"
                             android:visibility="gone"/>
                     </FrameLayout>
-                    <Button
-                        android:id="@+id/btn_corporate_all_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/contentPadding_level6"
-                        android:minHeight="@dimen/corporate_btn_more_product_height"
-                        android:background="@drawable/selector_btn_corporate_all_product"
-                        android:textColor="@color/colorTextRed"
-                        android:textSize="@dimen/textSize_level7"
-                        android:text="@string/str_view_all_product"/>
+                    <!--<Button-->
+                        <!--android:id="@+id/btn_corporate_all_product"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_margin="@dimen/contentPadding_level6"-->
+                        <!--android:minHeight="@dimen/corporate_btn_more_product_height"-->
+                        <!--android:background="@drawable/selector_btn_corporate_all_product"-->
+                        <!--android:textColor="@color/colorTextRed"-->
+                        <!--android:textSize="@dimen/textSize_level7"-->
+                        <!--android:text="@string/str_view_all_product"/>-->
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
@@ -215,17 +263,17 @@
                             android:layout_height="match_parent"
                             android:visibility="gone"/>
                     </FrameLayout>
-                    <Button
-                        android:id="@+id/btn_corporate_all_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/contentPadding_level6"
-                        android:layout_marginBottom="@dimen/contentPadding_level8"
-                        android:minHeight="@dimen/corporate_btn_more_product_height"
-                        android:background="@drawable/selector_btn_corporate_all_product"
-                        android:textColor="@color/colorTextRed"
-                        android:textSize="@dimen/textSize_level7"
-                        android:text="@string/str_view_all_video"/>
+                    <!--<Button-->
+                        <!--android:id="@+id/btn_corporate_all_video"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="@dimen/contentPadding_level6"-->
+                        <!--android:layout_marginBottom="@dimen/contentPadding_level8"-->
+                        <!--android:minHeight="@dimen/corporate_btn_more_product_height"-->
+                        <!--android:background="@drawable/selector_btn_corporate_all_product"-->
+                        <!--android:textColor="@color/colorTextRed"-->
+                        <!--android:textSize="@dimen/textSize_level7"-->
+                        <!--android:text="@string/str_view_all_video"/>-->
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

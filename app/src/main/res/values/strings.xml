@@ -51,16 +51,19 @@
 
     <!-- 企业主界面 -->
     <string name="str_back_with_arrow_left">&lt; 返回</string>
+    <string name="str_corporate_product">企业产品</string>
+    <string name="str_corporate_video">企业视频</string>
     <string name="str_corporate_honor">企业荣誉</string>
     <string name="str_corporate_culture">企业文化</string>
     <string name="str_corporate_image">企业形象</string>
-    <string name="str_corporate_intro">企业简介</string>
+    <string name="str_corporate_news">企业新闻</string>
     <string name="str_corporate_environment">企业环境</string>
+    <string name="str_corporate_intro">企业简介</string>
+    <string name="str_corporate_about_us">关于我们</string>
     <string name="str_recommended_product">推荐产品</string>
     <string name="str_recommended_video">推荐视频</string>
     <string name="str_view_all_product">查看所有产品</string>
     <string name="str_view_all_video">查看所有视频</string>
-    <string name="str_corporate_video">企业视频</string>
 
     <!-- 产品界面 -->
     <string name="str_search">搜索</string>
