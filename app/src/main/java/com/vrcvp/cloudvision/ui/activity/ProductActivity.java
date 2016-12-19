@@ -116,7 +116,6 @@ public class ProductActivity extends BaseActivity implements IProductView {
                             mProductData.clear();
                         }
                         mProductData.addAll(products);
-                        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
                         mTipPageView.setVisibility(View.GONE);
                     }
                     break;
@@ -139,6 +138,7 @@ public class ProductActivity extends BaseActivity implements IProductView {
         }
         mRefresh = false;
         cancelLoadingDialog();
+        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
     }
 
     /**
