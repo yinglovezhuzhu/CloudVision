@@ -136,9 +136,9 @@ public class ProductActivity extends BaseActivity implements IProductView {
                     break;
             }
         }
+        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
         mRefresh = false;
         cancelLoadingDialog();
-        mProductObservable.notifyQueryProductResult(mRefresh, mProductPresenter.hasMore(), result);
     }
 
     /**
