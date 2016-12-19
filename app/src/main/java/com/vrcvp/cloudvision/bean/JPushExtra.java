@@ -15,14 +15,22 @@ public class JPushExtra implements Parcelable {
     /** 类型：开机/重启 **/
     public static final String TYPE_OPEN_LCD_BACKLIGHT = "2";
 
-    private String type;
-    private String code;
-    private String extrasMessage;
+    private String messageType;
+    private String extraCode;
+    private String mac;
+    private String title;
+    private String startTime;
+    private String closeTime;
+    private String currentTime;
 
     protected JPushExtra(Parcel in) {
-        type = in.readString();
-        code = in.readString();
-        extrasMessage = in.readString();
+        messageType = in.readString();
+        extraCode = in.readString();
+        mac = in.readString();
+        title = in.readString();
+        startTime = in.readString();
+        closeTime = in.readString();
+        currentTime = in.readString();
     }
 
     public static final Creator<JPushExtra> CREATOR = new Creator<JPushExtra>() {
@@ -37,25 +45,32 @@ public class JPushExtra implements Parcelable {
         }
     };
 
-    public String getType() {
-        return type;
+    public String getMessageType() {
+        return messageType;
     }
 
-    public String getCode() {
-        return code;
+    public String getExtraCode() {
+        return extraCode;
     }
 
-    public String getExtrasMessage() {
-        return extrasMessage;
+    public String getMac() {
+        return mac;
     }
 
-    @Override
-    public String toString() {
-        return "JPushExtra{" +
-                "type='" + type + '\'' +
-                ", code='" + code + '\'' +
-                ", extrasMessage='" + extrasMessage + '\'' +
-                '}';
+    public String getTitle() {
+        return title;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
     }
 
     @Override
@@ -65,8 +80,12 @@ public class JPushExtra implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(type);
-        dest.writeString(code);
-        dest.writeString(extrasMessage);
+        dest.writeString(messageType);
+        dest.writeString(extraCode);
+        dest.writeString(mac);
+        dest.writeString(title);
+        dest.writeString(startTime);
+        dest.writeString(closeTime);
+        dest.writeString(currentTime);
     }
 }

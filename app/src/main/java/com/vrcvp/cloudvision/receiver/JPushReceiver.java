@@ -45,11 +45,12 @@ public class JPushReceiver extends BroadcastReceiver {
             if(null == message) {
                 return;
             }
-            JPushExtra extra = message.getExtra();
+
+            final JPushExtra extra = message.getExtra();
             if(null == extra) {
                 return;
             }
-            switch (extra.getType()) {
+            switch (extra.getMessageType()) {
                 case JPushExtra.TYPE_CLOSE_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程关闭显示器背光指令：" + message.toString());
                     Toast.makeText(context, "接收到远程关闭显示器背光指令", Toast.LENGTH_LONG).show();
