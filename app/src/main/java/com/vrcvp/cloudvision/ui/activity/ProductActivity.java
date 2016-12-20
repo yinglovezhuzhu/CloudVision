@@ -122,6 +122,9 @@ public class ProductActivity extends BaseActivity implements IProductView {
                 case HttpStatus.SC_NO_MORE_DATA:
                     showShortToast(R.string.str_no_more_data);
                     break;
+                case HttpStatus.SC_UNAUTHORIZED:
+                    finish(RESULT_UNAUTHORIZED, null);
+                    break;
                 case HttpStatus.SC_CACHE_NOT_FOUND:
                     // 无网络，读取缓存错误或者没有缓存
                 default:

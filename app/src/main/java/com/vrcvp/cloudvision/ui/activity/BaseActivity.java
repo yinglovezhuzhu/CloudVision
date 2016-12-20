@@ -28,6 +28,23 @@ import java.util.List;
  */
 public class BaseActivity extends FragmentActivity implements View.OnClickListener {
 
+	/** 请求码：打开语音界面的RequestCode **/
+	public static final int RC_VOICE_PAGE = 0x101;
+
+	/** 请求码：打开注册页面 **/
+    public static final int RC_ACTIVATE_PAGE = 0x102;
+
+	/** 请求码：打开企业首页 **/
+    public static final int RC_CORPORATE_PAGE = 0x103;
+
+	/** 请求码：产品页面 **/
+    public static final int RC_PRODUCT_PAGE = 0x104;
+	/** 请求码：视频页面 **/
+    public static final int RC_VIDEO_PAGE = 0x105;
+
+	/** 请求码：动态申请权限 **/
+    public static final int RC_REQUEST_PERMISSIONS = 0x201;
+
 	public static final int RESULT_UNAUTHORIZED = RESULT_FIRST_USER + 1;
 	
 	protected final String TAG = getClass().getSimpleName();

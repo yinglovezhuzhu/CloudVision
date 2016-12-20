@@ -62,19 +62,6 @@ import java.util.Set;
  */
 public class MainActivity extends BaseActivity implements IMainView {
 
-    /** 打开语音界面的RequestCode **/
-    private static final int RC_VOICE_PAGE = 0x001;
-
-    /** 打开注册页面 **/
-    private static final int RC_ACTIVATE_PAGE = 0x002;
-
-    /** 打开企业首页 **/
-    private static final int RC_CORPERATE_PAGE = 0x003;
-
-    /** 动态申请权限 **/
-    private static final int RC_REQUEST_PERMISSIONS = 0x004;
-
-
     private static final List<String> DANGEROUS_PERMISSIONS = new ArrayList<>();
     static {
         DANGEROUS_PERMISSIONS.add(Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -169,7 +156,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                     resetAndActivate();
                 }
                 break;
-            case RC_CORPERATE_PAGE:
+            case RC_CORPORATE_PAGE:
                 if(RESULT_UNAUTHORIZED == resultCode) {
                     // 需要登录
                     resetAndActivate();
@@ -207,7 +194,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         switch (v.getId()) {
             case R.id.btn_main_menu_home:
                 // 企业首页
-                startActivityForResult(new Intent(this, CorporateActivity.class), RC_CORPERATE_PAGE);
+                startActivityForResult(new Intent(this, CorporateActivity.class), RC_CORPORATE_PAGE);
                 break;
             case R.id.btn_main_menu_setting_logout:
 //                mMainPresenter.logout();

@@ -1,6 +1,7 @@
 package com.vrcvp.cloudvision.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -79,6 +80,12 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
         initView();
 
+        showLoadingDialog(null, true, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
         mProductDetailPresenter.queryProductDetail(mProduct.getId());
     }
 
@@ -113,33 +120,37 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
 
     @Override
     public void onCanceled(String key) {
-
+        cancelLoadingDialog();
     }
 
     @Override
     public void onQueryProductDetailResult(QueryProductDetailResp result) {
         if(null == result) {
-
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    final ProductBean product = result.getData();
-                    if(null == product) {
-                        // TODO 错误
-                    } else {
-                        // TODO 设置数据
-                        mProduct = product;
-                        updateUI();
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
-                default:
-                    // TODO 错误
-                    break;
-            }
+            cancelLoadingDialog();
+            return;
         }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                final ProductBean product = result.getData();
+                if(null == product) {
+                    // TODO 错误
+                } else {
+                    // TODO 设置数据
+                    mProduct = product;
+                    updateUI();
+                }
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                finish(RESULT_UNAUTHORIZED, null);
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // TODO 无网络，读取缓存错误
+                break;
+            default:
+                // TODO 错误
+                break;
+        }
+        cancelLoadingDialog();
     }
 
     @Override

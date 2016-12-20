@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.ProductBean;
+import com.vrcvp.cloudvision.ui.activity.BaseActivity;
 import com.vrcvp.cloudvision.ui.activity.ProductDetailActivity;
 
 /**
@@ -74,7 +75,7 @@ public class RecommendedProductPagerFragment extends BaseFragment {
                         // 点击事件
                         Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                         intent.putExtra(Config.EXTRA_DATA, product);
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, BaseActivity.RC_PRODUCT_PAGE);
                     }
                 });
             }

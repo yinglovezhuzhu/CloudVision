@@ -72,13 +72,34 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RC_PRODUCT_PAGE:
+                if(RESULT_UNAUTHORIZED == resultCode) {
+                    // 需要登录
+                    finish(RESULT_UNAUTHORIZED, null);
+                }
+                break;
+            case RC_VIDEO_PAGE:
+                if(RESULT_UNAUTHORIZED == resultCode) {
+                    // 需要登录
+                    finish(RESULT_UNAUTHORIZED, null);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_corporate_product:
-                startActivity(new Intent(this, ProductActivity.class));
+                startActivityForResult(new Intent(this, ProductActivity.class), RC_PRODUCT_PAGE);
                 break;
             case R.id.btn_corporate_video:
-                startActivity(new Intent(this, VideoActivity.class));
+                startActivityForResult(new Intent(this, VideoActivity.class), RC_VIDEO_PAGE);
                 break;
             case R.id.btn_corporate_culture:
                 gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_CULTURE);
@@ -307,7 +328,7 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
                 i.setData(Uri.parse(videoUrl));
                 i.putExtra(Config.EXTRA_THUMB_URL, video.getImageUrl());
                 i.putExtra(Config.EXTRA_TITLE_STR, video.getName());
-                startActivity(i);
+                startActivityForResult(i, RC_VIDEO_PAGE);
             }
         });
         mTpvRecommendedVideo = (TipPageView) findViewById(R.id.tpv_recommended_video);
