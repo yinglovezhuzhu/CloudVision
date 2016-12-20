@@ -167,6 +167,9 @@ public class ProductDetailActivity extends BaseActivity implements IProductDetai
                         mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), price.getPrice()));
                     }
                     break;
+                case HttpStatus.SC_UNAUTHORIZED:
+                    finish(RESULT_UNAUTHORIZED, null);
+                    break;
                 default:
                     mTvPrice.setText(String.format(getString(R.string.str_price_format_with_currency), mProduct.getPrice()));
                     break;
