@@ -507,7 +507,6 @@ public class VoicePresenter {
 //                        mVoiceView.updateLastAndroid(mStrSearchResult);
                         mVoiceView.updateLastAndroid(String.format(mStrSearchResultAbout, keywords));
                         startSpeak(String.format(mStrSearchResultAbout, keywords));
-                        mVoiceView.onVoiceSearchResult(datas);
                         final VoiceBean bean = new VoiceBean(VoiceBean.TYPE_SEARCH_RESULT, null);
                         bean.addSearchResult(datas);
                         mVoiceView.onNewVoiceData(bean, IVoiceView.ACTION_NONE);
@@ -518,6 +517,8 @@ public class VoicePresenter {
                         startSpeak(mStrAndroidNotFound);
                         break;
                 }
+
+                mVoiceView.onVoiceSearchResult(result);
             }
         });
     }

@@ -48,7 +48,7 @@ public interface IVoiceView extends IView {
      * 语音搜索结果
      * @param result 结果数据
      */
-    void onVoiceSearchResult(List<VoiceSearchResultBean> result);
+    void onVoiceSearchResult(VoiceSearchResp result);
 
     /**
      * 清除列表数据

@@ -68,8 +68,12 @@ public class MainActivity extends BaseActivity implements IMainView {
     /** 打开注册页面 **/
     private static final int RC_ACTIVATE_PAGE = 0x002;
 
+    /** 打开企业首页 **/
+    private static final int RC_CORPERATE_PAGE = 0x003;
+
     /** 动态申请权限 **/
-    private static final int RC_REQUEST_PERMISSIONS = 0x003;
+    private static final int RC_REQUEST_PERMISSIONS = 0x004;
+
 
     private static final List<String> DANGEROUS_PERMISSIONS = new ArrayList<>();
     static {
@@ -160,6 +164,16 @@ public class MainActivity extends BaseActivity implements IMainView {
         switch (requestCode) {
             case RC_VOICE_PAGE:
                 mCbVoice.setChecked(false);
+                if(RESULT_UNAUTHORIZED == resultCode) {
+                    // 需要登录
+                    resetAndActivate();
+                }
+                break;
+            case RC_CORPERATE_PAGE:
+                if(RESULT_UNAUTHORIZED == resultCode) {
+                    // 需要登录
+                    resetAndActivate();
+                }
                 break;
             case RC_ACTIVATE_PAGE:
                 if(RESULT_OK == resultCode) {
@@ -193,7 +207,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         switch (v.getId()) {
             case R.id.btn_main_menu_home:
                 // 企业首页
-                startActivity(new Intent(this, CorporateActivity.class));
+                startActivityForResult(new Intent(this, CorporateActivity.class), RC_CORPERATE_PAGE);
                 break;
             case R.id.btn_main_menu_setting_logout:
 //                mMainPresenter.logout();
@@ -369,24 +383,38 @@ public class MainActivity extends BaseActivity implements IMainView {
         if(null == result) {
             return;
         }
-        final InfoBean infoBean = result.getData();
-        if(null == infoBean) {
-            return;
-        }
-        Date endDate = Utils.parseTime(infoBean.getCloseTime(), Config.DATE_FORMAT_YMDHMS);
-        if(null == endDate) {
-            return;
-        }
-        final long timeLimit = endDate.getTime() - result.getTimestamp();
-        if(timeLimit < 0) {
-            LogUtils.e(TAG, "激活码已经过期");
-            // 激活码过期
-            activateCodeTimeout();
-            return;
-        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                final InfoBean infoBean = result.getData();
+                if(null == infoBean) {
+                    return;
+                }
+                Date endDate = Utils.parseTime(infoBean.getCloseTime(), Config.DATE_FORMAT_YMDHMS);
+                if(null == endDate) {
+                    return;
+                }
+                final long timeLimit = endDate.getTime() - result.getTimestamp();
+                if(timeLimit < 0) {
+                    LogUtils.e(TAG, "激活码已经过期");
+                    // 激活码过期
+                    activateCodeTimeout();
+                    return;
+                }
 
-        LogUtils.d(TAG, "激活码剩余时间：" + Utils.printTime(this, timeLimit));
-        showActivateCodeTimeLimit(timeLimit);
+                LogUtils.d(TAG, "激活码剩余时间：" + Utils.printTime(this, timeLimit));
+                showActivateCodeTimeLimit(timeLimit);
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                // 需要登录
+                resetAndActivate();
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // TODO 无网络，读取缓存错误
+                break;
+            default:
+                // TODO 错误
+                break;
+        }
     }
 
     @Override

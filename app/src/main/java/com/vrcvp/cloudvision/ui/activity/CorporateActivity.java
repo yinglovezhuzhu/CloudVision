@@ -148,29 +148,31 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
     @Override
     public void onQueryCorporateInfoResult(QueryCorporateResp result) {
         if(null == result) {
-
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    final CorporateBean corporate = result.getData();
-                    if(null == corporate) {
-                        // TODO 错误
-                    } else {
-                        DataManager.getInstance().updateCorporateInfo(corporate);
-                        mTvCorporateName.setText(corporate.getName());
-                        final String logo = corporate.getLogo();
-                        if(!StringUtils.isEmpty(logo)) {
-                            loadImage(logo, mIvCorporateLogo, R.drawable.default_logo, R.drawable.default_logo);
-                        }
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // TODO 无网络，读取缓存错误
-                    break;
-                default:
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                final CorporateBean corporate = result.getData();
+                if(null == corporate) {
                     // TODO 错误
-                    break;
-            }
+                } else {
+                    DataManager.getInstance().updateCorporateInfo(corporate);
+                    mTvCorporateName.setText(corporate.getName());
+                    final String logo = corporate.getLogo();
+                    if(!StringUtils.isEmpty(logo)) {
+                        loadImage(logo, mIvCorporateLogo, R.drawable.default_logo, R.drawable.default_logo);
+                    }
+                }
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                finish(RESULT_UNAUTHORIZED, null);
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // TODO 无网络，读取缓存错误
+                break;
+            default:
+                // TODO 错误
+                break;
         }
     }
 
@@ -181,29 +183,33 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
             mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
                     R.color.colorTextGray, R.string.str_touch_to_refresh, this);
             mTpvRecommendedProduct.setVisibility(View.VISIBLE);
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    List<ProductBean> products = result.getData();
-                    if(null == products || products.isEmpty()) {
-                        // 请求成功，但是没有数据
-                        mTpvRecommendedProduct.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                R.color.colorTextGray, R.string.str_touch_to_refresh, this);
-                        mTpvRecommendedProduct.setVisibility(View.VISIBLE);
-                    } else {
-                        mRecommendedProductAdapter.addAll(products, true);
-                        mTpvRecommendedProduct.setVisibility(View.GONE);
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // 无网络，读取缓存错误或者没有缓存
-                default:
-                    // 错误
-                    mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+            cancelLoadingDialog();
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                List<ProductBean> products = result.getData();
+                if(null == products || products.isEmpty()) {
+                    // 请求成功，但是没有数据
+                    mTpvRecommendedProduct.setTips(R.drawable.ic_no_data, R.string.str_no_data,
                             R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                     mTpvRecommendedProduct.setVisibility(View.VISIBLE);
-                    break;
-            }
+                } else {
+                    mRecommendedProductAdapter.addAll(products, true);
+                    mTpvRecommendedProduct.setVisibility(View.GONE);
+                }
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                finish(RESULT_UNAUTHORIZED, null);
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // 无网络，读取缓存错误或者没有缓存
+            default:
+                // 错误
+                mTpvRecommendedProduct.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                        R.color.colorTextGray, R.string.str_touch_to_refresh, this);
+                mTpvRecommendedProduct.setVisibility(View.VISIBLE);
+                break;
         }
         cancelLoadingDialog();
     }
@@ -215,29 +221,33 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
             mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
                     R.color.colorTextGray, R.string.str_touch_to_refresh, this);
             mTpvRecommendedVideo.setVisibility(View.VISIBLE);
-        } else {
-            switch (result.getHttpCode()) {
-                case HttpStatus.SC_OK:
-                    List<VideoBean> videos = result.getData();
-                    if(null == videos || videos.isEmpty()) {
-                        // 请求成功，但是没有数据
-                        mTpvRecommendedVideo.setTips(R.drawable.ic_no_data, R.string.str_no_data,
-                                R.color.colorTextGray, R.string.str_touch_to_refresh, this);
-                        mTpvRecommendedVideo.setVisibility(View.VISIBLE);
-                    } else {
-                        mRecommendedVideoAdapter.addAll(videos, true);
-                        mTpvRecommendedVideo.setVisibility(View.GONE);
-                    }
-                    break;
-                case HttpStatus.SC_CACHE_NOT_FOUND:
-                    // 无网络，读取缓存错误或者没有缓存
-                default:
-                    // 错误
-                    mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+            cancelLoadingDialog();
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_OK:
+                List<VideoBean> videos = result.getData();
+                if(null == videos || videos.isEmpty()) {
+                    // 请求成功，但是没有数据
+                    mTpvRecommendedVideo.setTips(R.drawable.ic_no_data, R.string.str_no_data,
                             R.color.colorTextGray, R.string.str_touch_to_refresh, this);
                     mTpvRecommendedVideo.setVisibility(View.VISIBLE);
-                    break;
-            }
+                } else {
+                    mRecommendedVideoAdapter.addAll(videos, true);
+                    mTpvRecommendedVideo.setVisibility(View.GONE);
+                }
+                break;
+            case HttpStatus.SC_UNAUTHORIZED:
+                finish(RESULT_UNAUTHORIZED, null);
+                break;
+            case HttpStatus.SC_CACHE_NOT_FOUND:
+                // 无网络，读取缓存错误或者没有缓存
+            default:
+                // 错误
+                mTpvRecommendedVideo.setTips(R.drawable.ic_network_error, R.string.str_network_error,
+                        R.color.colorTextGray, R.string.str_touch_to_refresh, this);
+                mTpvRecommendedVideo.setVisibility(View.VISIBLE);
+                break;
         }
         cancelLoadingDialog();
     }

@@ -21,6 +21,7 @@ import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.bean.VoiceBean;
 import com.vrcvp.cloudvision.bean.VoiceSearchResultBean;
 import com.vrcvp.cloudvision.bean.resp.VoiceSearchResp;
+import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.VoicePresenter;
 import com.vrcvp.cloudvision.ui.adapter.VoiceAdapter;
 import com.vrcvp.cloudvision.utils.LogUtils;
@@ -103,8 +104,16 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
     }
 
     @Override
-    public void onVoiceSearchResult(List<VoiceSearchResultBean> result) {
-
+    public void onVoiceSearchResult(VoiceSearchResp result) {
+        if (null == result) {
+            return;
+        }
+        switch (result.getHttpCode()) {
+            case HttpStatus.SC_UNAUTHORIZED:
+                finish(RESULT_UNAUTHORIZED, null);
+            default:
+                break;
+        }
     }
 
     @Override

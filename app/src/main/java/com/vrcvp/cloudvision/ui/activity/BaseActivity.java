@@ -27,6 +27,8 @@ import java.util.List;
  * Created by yinglovezhuzhu@gmail.com on 2016/8/19.
  */
 public class BaseActivity extends FragmentActivity implements View.OnClickListener {
+
+	public static final int RESULT_UNAUTHORIZED = RESULT_FIRST_USER + 1;
 	
 	protected final String TAG = getClass().getSimpleName();
 
