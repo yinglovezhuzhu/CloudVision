@@ -1,12 +1,17 @@
 package com.vrcvp.cloudvision.receiver;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.JPushExtra;
 import com.vrcvp.cloudvision.bean.JPushMessage;
 import com.vrcvp.cloudvision.utils.LogUtils;
@@ -29,8 +34,10 @@ public class JPushReceiver extends BroadcastReceiver {
 
     private static final String TAG = "JPushReceiver";
 
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         LogUtils.d(TAG, "[JPushReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
@@ -46,28 +53,45 @@ public class JPushReceiver extends BroadcastReceiver {
                 return;
             }
 
-            final JPushExtra extra = message.getExtra();
-            if(null == extra) {
+            final String msgData = message.getMessage();
+            if(StringUtils.isEmpty(msgData)) {
                 return;
             }
-            switch (extra.getMessageType()) {
+
+            JPushExtra extraData = null;
+            try {
+                extraData = new Gson().fromJson(msgData, JPushExtra.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if(null == extraData) {
+                return;
+            }
+
+            switch (extraData.getMessageType()) {
                 case JPushExtra.TYPE_CLOSE_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程关闭显示器背光指令：" + message.toString());
                     Toast.makeText(context, "接收到远程关闭显示器背光指令", Toast.LENGTH_LONG).show();
-                    if(Utils.smdtIsLCDLightOn(context)) {
-                        Utils.smdtSetLCDLight(context, false);
-                    } else {
+                    if(!Utils.smdtIsLCDLightOn(context)) {
                         LogUtils.e(TAG, "设备显示器背光已经关闭");
                     }
+//                    Utils.smdtSetLCDLight(context, false);
+                    // 延迟3秒，显示Toast
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.smdtSetLCDLight(context, false);
+                        }
+                    }, 1000 * 3);
                     break;
                 case JPushExtra.TYPE_OPEN_LCD_BACKLIGHT:
                     LogUtils.d(TAG, "接收到远程开启显示器背光指令：" + message.toString());
                     Toast.makeText(context, "接收到远程开启显示器背光指令", Toast.LENGTH_LONG).show();
                     if(Utils.smdtIsLCDLightOn(context)) {
                         LogUtils.e(TAG, "设备显示器背光已经开启");
-                    } else {
-                        Utils.smdtSetLCDLight(context, true);
                     }
+                    Utils.smdtSetLCDLight(context, true);
                     break;
                 default:
                     break;
@@ -122,11 +146,7 @@ public class JPushReceiver extends BroadcastReceiver {
         if(bundle.containsKey(JPushInterface.EXTRA_EXTRA)) {
             final String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
             if(!StringUtils.isEmpty(extra)) {
-                try {
-                    message.setExtra(new Gson().fromJson(extra, JPushExtra.class));
-                } catch (Exception e) {
-                    // do nothing
-                }
+                message.setExtra(extra);
             }
         }
         if(bundle.containsKey(JPushInterface.EXTRA_CONTENT_TYPE)) {

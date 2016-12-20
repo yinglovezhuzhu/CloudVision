@@ -3,6 +3,8 @@ package com.vrcvp.cloudvision.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 /**
  * JPush推送消息（通知和自定义消息）
  * Created by yinglovezhuzhu@gmail.com on 2016/11/11.
@@ -13,7 +15,7 @@ public class JPushMessage implements Parcelable {
     private String title;
     private String message;
     private String alert;
-    private JPushExtra extra; // JSON字符串
+    private String extra; // JSON字符串
     private String contentType;
     private String appKey;
 
@@ -26,7 +28,7 @@ public class JPushMessage implements Parcelable {
         title = in.readString();
         message = in.readString();
         alert = in.readString();
-        extra = in.readParcelable(JPushExtra.class.getClassLoader());
+        extra = in.readString();
         contentType = in.readString();
         appKey = in.readString();
     }
@@ -67,11 +69,11 @@ public class JPushMessage implements Parcelable {
         this.message = message;
     }
 
-    public JPushExtra getExtra() {
+    public String getExtra() {
         return extra;
     }
 
-    public void setExtra(JPushExtra extra) {
+    public void setExtra(String extra) {
         this.extra = extra;
     }
 
@@ -114,7 +116,7 @@ public class JPushMessage implements Parcelable {
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(message);
-        dest.writeParcelable(extra, flags);
+        dest.writeString(extra);
         dest.writeString(alert);
         dest.writeString(contentType);
         dest.writeString(appKey);

@@ -116,7 +116,7 @@ public class CorporateIntroActivity extends BaseActivity implements ICorporateIn
         if(null != mCorporateData) {
             // FIXME 修改显示内容
             newsArgs.putString(Config.EXTRA_DATA,
-                    StringUtils.formatHTMLContent(mCorporateData.getCulture(), getString(R.string.str_corporate_news)));
+                    StringUtils.formatHTMLContent(mCorporateData.getHonor(), getString(R.string.str_corporate_news)));
         }
         tabHost.addTab(tabHost.newTabSpec("newsTab").setIndicator(newsTab),
                 WebViewFragment.class, newsArgs);
