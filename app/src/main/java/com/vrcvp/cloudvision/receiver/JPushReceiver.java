@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -75,13 +77,37 @@ public class JPushReceiver extends BroadcastReceiver {
                     Toast.makeText(context, "接收到远程关闭显示器背光指令", Toast.LENGTH_LONG).show();
                     if(!Utils.smdtIsLCDLightOn(context)) {
                         LogUtils.e(TAG, "设备显示器背光已经关闭");
+                        return;
                     }
 //                    Utils.smdtSetLCDLight(context, false);
+                    // FIXME 收到关机指令后，显示警告对话框
+                    final AlertDialog dialog = new AlertDialog.Builder(context)
+                            .setTitle(R.string.str_tips)
+                            .setMessage("设备即将关闭")
+                            .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Utils.smdtSetLCDLight(context, false);
+                                }
+                            })
+                            .create();
+                    final Window window = dialog.getWindow();
+                    if(null != window) {
+                        window.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    }
+                    dialog.setCanceledOnTouchOutside(false);
+                    try {
+                        dialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     // 延迟3秒，显示Toast
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             Utils.smdtSetLCDLight(context, false);
+                            dialog.cancel();
                         }
                     }, 1000 * 3);
                     break;

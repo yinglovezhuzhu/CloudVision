@@ -66,6 +66,7 @@
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
     <uses-permission android:name="android.permission.MODIFY_SOUND_SETTINGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
