@@ -23,15 +23,31 @@
             android:src="@drawable/ic_video_play"
             android:contentDescription="@null"/>
     </FrameLayout>
-    <TextView
-        android:id="@+id/tv_item_voice_search_result_content"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/contentPadding_level3"
-        android:layout_marginStart="@dimen/contentPadding_level3"
-        android:textSize="@dimen/textSize_level8"
-        android:textColor="@color/colorTextBlack"
-        android:maxLines="4"/>
+        android:layout_weight="1" >
 
+        <TextView
+            android:id="@+id/tv_item_voice_search_result_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level3"
+            android:layout_marginStart="@dimen/contentPadding_level3"
+            android:textSize="@dimen/textSize_level8"
+            android:textColor="@color/colorTextBlack"
+            android:maxLines="1"
+            android:text="XXXXxXXXXXXX"/>
+        <TextView
+            android:id="@+id/tv_item_voice_search_result_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/contentPadding_level3"
+            android:layout_marginStart="@dimen/contentPadding_level3"
+            android:textSize="@dimen/textSize_level6"
+            android:textColor="@color/colorTextGray"
+            android:maxLines="2"
+            android:text="XXXXXXXXXXX"/>
+    </LinearLayout>
 </LinearLayout>

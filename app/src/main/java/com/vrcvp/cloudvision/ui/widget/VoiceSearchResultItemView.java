@@ -26,6 +26,7 @@ public class VoiceSearchResultItemView extends LinearLayout {
 
     private ImageView mIvImage;
     private ImageView mIvPlay;
+    private TextView mTvTitle;
     private TextView mTvContent;
 
     public VoiceSearchResultItemView(Context context) {
@@ -56,17 +57,7 @@ public class VoiceSearchResultItemView extends LinearLayout {
         switch (bean.getType()) {
             case AdvertiseBean.TYPE_VIDEO:
                 mIvPlay.setVisibility(View.VISIBLE);
-                // FIXME 对于语音搜索结果，哪个个字段是缩略图
                 loadImage(bean.getOutLink());
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    mTvContent.setText(Html.fromHtml(bean.getContent()));
-                } else {
-                    try {
-                        mTvContent.setText(Html.fromHtml(bean.getContent(), 0));
-                    } catch (Exception e) {
-                        mTvContent.setText(Html.fromHtml(bean.getContent()));
-                    }
-                }
                 break;
             case AdvertiseBean.TYPE_IMAGE:
             case AdvertiseBean.TYPE_PRODUCT:
@@ -74,19 +65,27 @@ public class VoiceSearchResultItemView extends LinearLayout {
             case AdvertiseBean.TYPE_OUTER_LINK:
                 mIvPlay.setVisibility(View.GONE);
                 loadImage(bean.getUrl());
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    mTvContent.setText(Html.fromHtml(bean.getContent()));
-                } else {
-                    try {
-                        mTvContent.setText(Html.fromHtml(bean.getContent(), 0));
-                    } catch (Exception e) {
-                        mTvContent.setText(Html.fromHtml(bean.getContent()));
-                    }
-                }
                 break;
             default:
                 break;
         }
+
+        final String title = bean.getName();
+        mTvTitle.setVisibility(StringUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
+        mTvTitle.setText(bean.getName());
+
+        final String content = bean.getContent();
+        mTvContent.setVisibility(StringUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            mTvContent.setText(Html.fromHtml(content));
+        } else {
+            try {
+                mTvContent.setText(Html.fromHtml(content, 0));
+            } catch (Exception e) {
+                mTvContent.setText(Html.fromHtml(content));
+            }
+        }
+
     }
 
     private void initView(Context context) {
@@ -94,6 +93,7 @@ public class VoiceSearchResultItemView extends LinearLayout {
 
         mIvImage = (ImageView) findViewById(R.id.iv_item_voice_search_result_img);
         mIvPlay = (ImageView) findViewById(R.id.iv_item_voice_search_result_play);
+        mTvTitle = (TextView) findViewById(R.id.tv_item_voice_search_result_title);
         mTvContent = (TextView) findViewById(R.id.tv_item_voice_search_result_content);
     }
 

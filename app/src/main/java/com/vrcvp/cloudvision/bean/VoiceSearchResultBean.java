@@ -7,6 +7,7 @@ package com.vrcvp.cloudvision.bean;
 
 public class VoiceSearchResultBean {
     private String id;
+    private String name;
     private String content;
     private String action;
     private int type;
@@ -17,6 +18,10 @@ public class VoiceSearchResultBean {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getContent() {
@@ -51,8 +56,9 @@ public class VoiceSearchResultBean {
     public String toString() {
         return "VoiceSearchResultBean{" +
                 "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
-                ", action=" + action +
+                ", action='" + action + '\'' +
                 ", type=" + type +
                 ", outLink='" + outLink + '\'' +
                 ", url='" + url + '\'' +
