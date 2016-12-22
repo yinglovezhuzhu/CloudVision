@@ -13,14 +13,12 @@ public class CorporateBean implements Parcelable{
     private String industryName; // 行业名称
     private String name; // 企业名称
     private String logo;
-    private String summary; // 企业简介
-    private String culture; // 企业文化
-    private String honor; // 企业荣誉
-    private String environment; // 企业环境
-    private String figure; // 企业形象
+    private String address; // 地址
     private String contacts; // 联系人
     private String telnumber; // 联系电话
-    private String address; // 地址
+    private String about;
+    private String culture; // 企业文化
+    private String news;
 
     public CorporateBean() {}
 
@@ -29,14 +27,12 @@ public class CorporateBean implements Parcelable{
         industryName = in.readString();
         name = in.readString();
         logo = in.readString();
-        summary = in.readString();
-        culture = in.readString();
-        honor = in.readString();
-        environment = in.readString();
-        figure = in.readString();
+        address = in.readString();
         contacts = in.readString();
         telnumber = in.readString();
-        address = in.readString();
+        about = in.readString();
+        culture = in.readString();
+        news = in.readString();
     }
 
     public static final Creator<CorporateBean> CREATOR = new Creator<CorporateBean>() {
@@ -50,27 +46,6 @@ public class CorporateBean implements Parcelable{
             return new CorporateBean[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(industryName);
-        dest.writeString(name);
-        dest.writeString(logo);
-        dest.writeString(summary);
-        dest.writeString(culture);
-        dest.writeString(honor);
-        dest.writeString(environment);
-        dest.writeString(figure);
-        dest.writeString(contacts);
-        dest.writeString(telnumber);
-        dest.writeString(address);
-    }
 
     public String getId() {
         return id;
@@ -88,24 +63,8 @@ public class CorporateBean implements Parcelable{
         return logo;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public String getCulture() {
-        return culture;
-    }
-
-    public String getHonor() {
-        return honor;
-    }
-
-    public String getEnvironment() {
-        return environment;
-    }
-
-    public String getFigure() {
-        return figure;
+    public String getAddress() {
+        return address;
     }
 
     public String getContacts() {
@@ -116,25 +75,34 @@ public class CorporateBean implements Parcelable{
         return telnumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAbout() {
+        return about;
+    }
+
+    public String getCulture() {
+        return culture;
+    }
+
+    public String getNews() {
+        return news;
     }
 
     @Override
-    public String toString() {
-        return "CorporateBean{" +
-                "id='" + id + '\'' +
-                ", industryName='" + industryName + '\'' +
-                ", name='" + name + '\'' +
-                ", logo='" + logo + '\'' +
-                ", summary='" + summary + '\'' +
-                ", culture='" + culture + '\'' +
-                ", honor='" + honor + '\'' +
-                ", environment='" + environment + '\'' +
-                ", figure='" + figure + '\'' +
-                ", contacts='" + contacts + '\'' +
-                ", telnumber='" + telnumber + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(industryName);
+        dest.writeString(name);
+        dest.writeString(logo);
+        dest.writeString(address);
+        dest.writeString(contacts);
+        dest.writeString(telnumber);
+        dest.writeString(about);
+        dest.writeString(culture);
+        dest.writeString(news);
     }
 }

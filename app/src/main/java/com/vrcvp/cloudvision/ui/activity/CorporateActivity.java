@@ -110,24 +110,6 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
             case R.id.btn_corporate_about_us:
                 gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_ABOUT_US);
                 break;
-//            case R.id.btn_corporate_honor:
-//                gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_HONOR);
-//                break;
-//            case R.id.btn_corporate_environment:
-//                gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_ENVIRONMENT);
-//                break;
-//            case R.id.btn_corporate_image:
-//                gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_IMAGE);
-//                break;
-//            case R.id.btn_corporate_intro:
-//                gotoCorporateIntro(CorporateIntroActivity.PAGE_CORPORATE_INTRO);
-//                break;
-//            case R.id.btn_corporate_all_product:
-//                startActivity(new Intent(this, ProductActivity.class));
-//                break;
-//            case R.id.btn_corporate_all_video:
-//                startActivity(new Intent(this, VideoActivity.class));
-//                break;
             case R.id.ibtn_corporate_back:
                 finish(RESULT_CANCELED, null);
                 break;
@@ -284,12 +266,6 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
         findViewById(R.id.btn_corporate_news).setOnClickListener(this);
         findViewById(R.id.btn_corporate_about_us).setOnClickListener(this);
 
-//        findViewById(R.id.btn_corporate_honor).setOnClickListener(this);
-//        findViewById(R.id.btn_corporate_environment).setOnClickListener(this);
-//        findViewById(R.id.btn_corporate_image).setOnClickListener(this);
-//        findViewById(R.id.btn_corporate_intro).setOnClickListener(this);
-//        findViewById(R.id.btn_corporate_all_product).setOnClickListener(this);
-//        findViewById(R.id.btn_corporate_all_video).setOnClickListener(this);
         findViewById(R.id.ibtn_corporate_back).setOnClickListener(this);
 
         // 推荐产品ViewPager高度设置
@@ -341,10 +317,6 @@ public class CorporateActivity extends BaseActivity implements ICorporateView {
      * @see CorporateIntroActivity#PAGE_CORPORATE_CULTURE
      * @see CorporateIntroActivity#PAGE_CORPORATE_NEWS
      * @see CorporateIntroActivity#PAGE_CORPORATE_ABOUT_US
-//     * @see CorporateIntroActivity#PAGE_CORPORATE_HONOR
-//     * @see CorporateIntroActivity#PAGE_CORPORATE_IMAGE
-//     * @see CorporateIntroActivity#PAGE_CORPORATE_INTRO
-//     * @see CorporateIntroActivity#PAGE_CORPORATE_ENVIRONMENT
      */
     private void gotoCorporateIntro(int page) {
         Intent intent = new Intent(this, CorporateIntroActivity.class);
