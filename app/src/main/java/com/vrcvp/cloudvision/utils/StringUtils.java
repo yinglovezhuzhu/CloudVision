@@ -101,4 +101,17 @@ public class StringUtils {
 				.append("</body></html>");
 		return sb.toString();
 	}
+
+	/**
+	 * 替换所有的标点符号
+	 * @param input 输入字符串
+	 * @param placeHolder 替代标点符号的占位符
+     * @return 替换掉所有标点号后的字符串
+     */
+	public static String replaceAllPunctuation(String input, String placeHolder) {
+		if(StringUtils.isEmpty(input)) {
+			return "";
+		}
+		return input.replaceAll("\\p{P}" , placeHolder);
+	}
 }

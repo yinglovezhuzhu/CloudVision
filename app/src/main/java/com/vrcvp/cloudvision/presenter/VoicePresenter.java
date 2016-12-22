@@ -465,7 +465,8 @@ public class VoicePresenter {
 
 
         if(StringUtils.isEmpty(keywords)) {
-            keywords = text;
+
+            keywords = StringUtils.replaceAllPunctuation(text, "");
         }
         search(keywords);
         return true;
