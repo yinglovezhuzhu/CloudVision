@@ -238,7 +238,9 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
             }
         }
         ProductBean product = new ProductBean();
-        product.setName(spanned.toString());
+        product.setId(bean.getId());
+        product.setName(bean.getName());
+        product.setDetail(bean.getContent());
         Intent intent = new Intent(this, ProductDetailActivity.class);
         intent.putExtra(Config.EXTRA_DATA, product);
         startActivity(intent);

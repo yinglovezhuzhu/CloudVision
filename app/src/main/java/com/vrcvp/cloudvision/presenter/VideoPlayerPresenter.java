@@ -85,6 +85,7 @@ public class VideoPlayerPresenter implements MediaPlayer.OnErrorListener,
                         mStartCachingSize = downloadedSize;
                         mCaching = true;
                     }
+                    final int cacheSize = totalSize / 20 > CACHE_MIN_SIZE ? totalSize / 20 : CACHE_MIN_SIZE;
                     if(downloadedSize - mStartCachingSize > CACHE_MIN_SIZE || downloadedSize >= totalSize) {
                         if(null == mCachedUri) {
                             mCachedUri = Uri.fromFile(mModel.getSavedVideoFile());

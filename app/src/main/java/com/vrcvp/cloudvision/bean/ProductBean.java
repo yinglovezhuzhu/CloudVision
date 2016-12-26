@@ -108,6 +108,10 @@ public class ProductBean implements Parcelable {
         return detail;
     }
 
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     public List<AttrBean> getAttrValues() {
         return attrValues;
     }

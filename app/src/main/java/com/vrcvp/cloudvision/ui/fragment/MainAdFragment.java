@@ -13,6 +13,7 @@ import android.widget.VideoView;
 
 import com.vrcvp.cloudvision.R;
 import com.vrcvp.cloudvision.bean.AdvertiseBean;
+import com.vrcvp.cloudvision.bean.ProductBean;
 import com.vrcvp.cloudvision.listener.VideoPlayListener;
 import com.vrcvp.cloudvision.presenter.VideoPlayerPresenter;
 import com.vrcvp.cloudvision.utils.StringUtils;
@@ -267,6 +268,11 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                             mVideoPlayer.play();
                         }
                         break;
+                    case AdvertiseBean.TYPE_PRODUCT:
+                        final ProductBean product = new ProductBean();
+                        product.setId(mData.getId());
+                        gotoProductDetail(product);
+                        break;
                     default:
                         openWebView(mData.getOutLink());
                         break;
@@ -281,7 +287,7 @@ public class MainAdFragment extends BaseFragment implements IVideoPlayerView {
                 }
                 switch (mData.getType()) {
                     case AdvertiseBean.TYPE_VIDEO:
-//                        playVideo(mData.getOutLink());
+                        playVideo(Uri.parse(mData.getUrl()), 0);
                         break;
                     case AdvertiseBean.TYPE_PRODUCT:
                         openWebView(mData.getOutLink());

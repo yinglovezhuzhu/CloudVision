@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso;
 import com.vrcvp.cloudvision.BuildConfig;
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
+import com.vrcvp.cloudvision.bean.ProductBean;
+import com.vrcvp.cloudvision.ui.activity.ProductDetailActivity;
 import com.vrcvp.cloudvision.ui.activity.VideoActivity;
 import com.vrcvp.cloudvision.ui.activity.VideoPlayerActivity;
 import com.vrcvp.cloudvision.ui.activity.WebViewActivity;
@@ -102,6 +104,20 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
         Intent i = new Intent(getActivity(), WebViewActivity.class);
         i.setData(Uri.parse(url));
         startActivity(i);
+    }
+
+    /**
+     * 进入产品详情
+     * @param product
+     */
+    protected void gotoProductDetail(ProductBean product) {
+        if(null == product) {
+            return;
+        }
+
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        intent.putExtra(Config.EXTRA_DATA, product);
+        startActivity(intent);
     }
 
     /**
