@@ -62,6 +62,7 @@
     <dimen name="voice_android_text_marginLeft">50dp</dimen>
     <dimen name="voice_search_result_img_width">300dp</dimen>
     <dimen name="voice_search_result_img_height">200dp</dimen>
+    <dimen name="voice_wave_img_minHeight">150dp</dimen>
 
     <!-- 企业首页 -->
     <dimen name="corporate_header_logo_size">200dp</dimen>

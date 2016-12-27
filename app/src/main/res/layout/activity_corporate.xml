@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:drawableTop="@drawable/ic_corporate_culture"
+            android:drawableTop="@drawable/ic_corporate_product"
             android:text="@string/str_corporate_product"/>
         <View
             android:layout_width="0.5dp"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:drawableTop="@drawable/ic_corporate_culture"
+            android:drawableTop="@drawable/ic_corporate_video"
             android:text="@string/str_corporate_video"/>
         <View
             android:layout_width="0.5dp"

@@ -163,7 +163,6 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                                 spanned = Html.fromHtml(searchResultBean.getContent());
                             }
                         }
-                        // FIXME 对于语音搜索结果，哪个个字段是缩略图，哪个字段是视频地址
                         playVideo(searchResultBean.getUrl(), searchResultBean.getOutLink(), spanned.toString());
                         break;
                     case AdvertiseBean.TYPE_PRODUCT:
@@ -182,7 +181,7 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         });
         mLvVoice.setAdapter(mAdapter);
 
-        // FIXME 改为动画
+        // 改为动画
         final ImageView ivVoiceWave = (ImageView) findViewById(R.id.iv_voice_voice_wave);
         mWaveAnimDrawable = (AnimationDrawable) ivVoiceWave.getDrawable();
         if(null == mWaveAnimDrawable) {
@@ -199,6 +198,7 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
         }
         mWaveAnimDrawable.stop();
         mWaveAnimDrawable.selectDrawable(0);
+        ivVoiceWave.setVisibility(View.INVISIBLE);
 
         final ImageButton btnRecord = (ImageButton) findViewById(R.id.ibtn_voice_record);
         btnRecord.setOnTouchListener(new View.OnTouchListener() {
@@ -207,11 +207,13 @@ public class VoiceActivity extends BaseActivity implements IVoiceView {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mWaveAnimDrawable.start();
+                        ivVoiceWave.setVisibility(View.VISIBLE);
                         mVoicePresenter.startSpeech();
                         break;
                     case MotionEvent.ACTION_UP:
                         mWaveAnimDrawable.stop();
                         mWaveAnimDrawable.selectDrawable(0);
+                        ivVoiceWave.setVisibility(View.INVISIBLE);
                         mVoicePresenter.stopSpeech();
                         break;
                     default:
