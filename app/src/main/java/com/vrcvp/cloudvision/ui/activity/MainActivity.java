@@ -445,16 +445,22 @@ public class MainActivity extends BaseActivity implements IMainView {
                 showDownloadDialog(updateInfo);
             }
         });
-        builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
-                    // 强制更新，取消下载退出程序
+        if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+            // 强制更新，取消下载退出程序
+            builder.setNegativeButton(R.string.str_exit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     reset();
                     finish(RESULT_CANCELED, null);
                 }
-            }
-        });
+            });
+        } else {
+            builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+        }
         builder.show();
     }
 
@@ -835,7 +841,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
         if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
-            builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.str_exit, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     reset();
@@ -854,7 +860,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         builder.show();
     }
 
-    private View mDownloadView;
     private TextView mTvProgress;
     private ProgressBar mPbProgress;
 
@@ -863,30 +868,34 @@ public class MainActivity extends BaseActivity implements IMainView {
      * @param updateInfo 更新信息
      */
     private void showDownloadDialog(final UpdateInfo updateInfo) {
-        if(null == mDownloadView) {
-            mDownloadView = View.inflate(this, R.layout.layout_download, null);
-            mTvProgress = (TextView) mDownloadView.findViewById(R.id.tv_download_progress);
-            mPbProgress = (ProgressBar) mDownloadView.findViewById(R.id.pb_download_progress);
-            mTvProgress.setText(String.format(Locale.getDefault(), getString(R.string.str_progress_text_format), 0));
-            mPbProgress.setProgress(0);
-        }
+        final View downloadView = View.inflate(this, R.layout.layout_download, null);
+        mTvProgress = (TextView) downloadView.findViewById(R.id.tv_download_progress);
+        mPbProgress = (ProgressBar) downloadView.findViewById(R.id.pb_download_progress);
+        mTvProgress.setText(String.format(Locale.getDefault(), getString(R.string.str_progress_text_format), 0));
+        mPbProgress.setProgress(0);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle(R.string.str_downloading_new_apk);
-        builder.setView(mDownloadView);
-        builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
-                    // 强制更新，取消下载退出程序
+        builder.setView(downloadView);
+        if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+            // 强制更新，取消下载退出程序
+            builder.setNegativeButton(R.string.str_exit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     reset();
                     finish(RESULT_CANCELED, null);
-                } else {
-                    // 非强制更新，取消下载
+                }
+            });
+        } else {
+            // 非强制更新，取消下载
+            builder.setNegativeButton(R.string.str_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                     mMainPresenter.cancelDownloadApk();
                 }
-            }
-        });
+            });
+        }
         mDownloadApkDialog = builder.show();
         mMainPresenter.downloadApk(updateInfo);
     }

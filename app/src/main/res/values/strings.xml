@@ -24,6 +24,7 @@
     <string name="str_need_request_permission">部分权限授权没有通过，没有这些权限，程序将可能无法正常运行，是否重新授权？</string>
     <string name="str_confirm">确定</string>
     <string name="str_cancel">取消</string>
+    <string name="str_exit">退出</string>
     <string name="str_no_data">没有相关数据</string>
     <string name="str_network_error">网络连接失败</string>
     <string name="str_touch_to_refresh">点击刷新</string>
