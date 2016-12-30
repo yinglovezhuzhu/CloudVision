@@ -38,8 +38,8 @@ android {
 
         dev {
 //            applicationIdSuffix 'dev'
-            versionCode 14
-            versionName "0.0.14"
+            versionCode 17
+            versionName "0.0.17"
             // HTTP请求HOST地址
             buildConfigField "String", "HTTP_HOST", "\"http://120.77.0.141:8080/yhy-app-web/\""
 //            buildConfigField "String", "HTTP_HOST", "\"http://10.35.22.122:8090/\""
