@@ -2,6 +2,7 @@ package com.vrcvp.cloudvision.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +12,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.MotionEvent;
@@ -41,6 +44,7 @@ import com.vrcvp.cloudvision.bean.resp.QueryAdvertiseResp;
 import com.vrcvp.cloudvision.bean.resp.QueryNoticeResp;
 import com.vrcvp.cloudvision.http.HttpStatus;
 import com.vrcvp.cloudvision.presenter.MainPresenter;
+import com.vrcvp.cloudvision.service.RestartService;
 import com.vrcvp.cloudvision.ui.fragment.MainAdFragment;
 import com.vrcvp.cloudvision.utils.DataManager;
 import com.vrcvp.cloudvision.utils.LogUtils;
@@ -103,6 +107,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private MainAdFragment mAdThree;
 
     private AlertDialog mDownloadApkDialog;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -468,11 +473,27 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onDownloadApkFinished(UpdateInfo updateInfo, String path) {
         LogUtils.d(TAG, "apk下载完成：" + path);
         dismissDownloadApkDialog();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle(R.string.str_tips);
         builder.setMessage(R.string.str_installing_apk);
-        if(UpdateInfo.TYPE_NORMAL_UPDATE == updateInfo.getUpdateType()) {
+        if(UpdateInfo.TYPE_FORCE_UPDATE == updateInfo.getUpdateType()) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    builder.setCancelable(false);
+                    builder.setMessage(R.string.str_update_finished);
+                    builder.setPositiveButton(R.string.str_restart_app, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            restartApp();
+                        }
+                    });
+                    builder.show();
+                }
+            }, 1000 * 10);
+        } else {
             builder.setPositiveButton(R.string.str_install_background, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -908,5 +929,17 @@ public class MainActivity extends BaseActivity implements IMainView {
             mDownloadApkDialog.dismiss();
         }
         mDownloadApkDialog = null;
+    }
+
+    /**
+     * 重启程序
+     */
+    public void restartApp(){
+        /**开启一个新的服务，用来重启本APP*/
+        Intent intent=new Intent(getApplicationContext(), RestartService.class);
+        intent.putExtra(RestartService.EXTRA_PACKAGE_NAME, getPackageName());
+        intent.putExtra(RestartService.EXTRA_DELAY_TIME, 1000L);
+        startService(intent);
+        android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
     }
 }

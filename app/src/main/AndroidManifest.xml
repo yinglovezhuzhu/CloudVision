@@ -123,6 +123,9 @@
         <activity android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
 
+        <service android:name=".service.RestartService"
+            android:enabled="true" />
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote" />
 
         <!-- 百度定位key:开发者申请的Key -->

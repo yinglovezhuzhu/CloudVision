@@ -2,9 +2,11 @@ package com.vrcvp.cloudvision.utils;
 
 import android.app.smdt.SmdtManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -13,10 +15,12 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.vrcvp.cloudvision.Config;
 import com.vrcvp.cloudvision.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -278,12 +282,19 @@ public class Utils {
      * @param context Context对象
      * @param apkPath apk文件路径（必须保证apk存在并且完整可用）
      */
-    public static void smdtSilentInstallApk(Context context, String apkPath) {
+    public static boolean smdtSilentInstallApk(Context context, String apkPath) {
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setDataAndType(Uri.fromFile(new File(apkPath)),"application/vnd.android.package-archive");
+//        context.startActivity(intent);
+        // FIXME 打包安装用SDK
         SmdtManager smdtManager = SmdtManager.create(context);
         if(null == smdtManager) {
-            return;
+            Toast.makeText(context, "apk安装失败", Toast.LENGTH_LONG).show();
+            return false;
         }
         smdtManager.smdtSilentInstall(apkPath, context);
+        return true;
     }
 
     /**
