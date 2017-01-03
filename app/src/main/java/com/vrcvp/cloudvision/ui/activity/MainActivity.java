@@ -492,7 +492,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                     });
                     builder.show();
                 }
-            }, 1000 * 10);
+            }, 1000 * 30);
         } else {
             builder.setPositiveButton(R.string.str_install_background, new DialogInterface.OnClickListener() {
                 @Override
