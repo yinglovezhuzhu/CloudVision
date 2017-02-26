@@ -215,6 +215,21 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.str_tips)
+                .setMessage(R.string.str_exit_app)
+                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish(RESULT_CANCELED, null);
+                    }
+                })
+                .setNegativeButton(R.string.str_cancel, null)
+                .show();
+    }
+
+    @Override
     public void onTimeUpdate(String time) {
         mTvTopBarTime.setText(time);
     }
