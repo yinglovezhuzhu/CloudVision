@@ -204,7 +204,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.btn_main_menu_setting_logout:
 //                mMainPresenter.logout();
 //                startActivity(new Intent(this, ActivateActivity.class));
-                finish();
+                logout();
                 break;
             case R.id.btn_main_menu_setting_switch:
                 switchAccount();
@@ -216,17 +216,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.str_tips)
-                .setMessage(R.string.str_exit_app)
-                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish(RESULT_CANCELED, null);
-                    }
-                })
-                .setNegativeButton(R.string.str_cancel, null)
-                .show();
+        logout();
     }
 
     @Override
@@ -784,7 +774,17 @@ public class MainActivity extends BaseActivity implements IMainView {
      * 切换账号
      */
     private void switchAccount() {
-        resetAndActivate();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.str_tips)
+                .setMessage(R.string.str_switch_activate_code)
+                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        resetAndActivate();
+                    }
+                })
+                .setNegativeButton(R.string.str_cancel, null)
+                .show();
 //                finish();
     }
 
@@ -956,5 +956,22 @@ public class MainActivity extends BaseActivity implements IMainView {
         intent.putExtra(RestartService.EXTRA_DELAY_TIME, 1000L);
         startService(intent);
         android.os.Process.killProcess(android.os.Process.myPid());  //结束进程之前可以把你程序的注销或者退出代码放在这段代码之前
+    }
+
+    /**
+     * 退出app
+     */
+    private void logout() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.str_tips)
+                .setMessage(R.string.str_exit_app)
+                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish(RESULT_CANCELED, null);
+                    }
+                })
+                .setNegativeButton(R.string.str_cancel, null)
+                .show();
     }
 }
