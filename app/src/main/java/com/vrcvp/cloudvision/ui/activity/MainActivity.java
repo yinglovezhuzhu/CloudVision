@@ -777,7 +777,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.str_tips)
                 .setMessage(R.string.str_switch_activate_code)
-                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.str_switch, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         resetAndActivate();
@@ -965,7 +965,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.str_tips)
                 .setMessage(R.string.str_exit_app)
-                .setPositiveButton(R.string.str_confirm, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.str_exit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish(RESULT_CANCELED, null);
