@@ -373,7 +373,7 @@ public class Downloader {
      */
     private void downloadFileEnd(Context context, int byteSize) {
         if (null == mDownloadLog || mDownloadLog.isEndDownloaded()
-                | mDownloadLog.getDownloadedSize() >= mDownloadLog.getTotalSize()) {
+                || mDownloadLog.getDownloadedSize() >= mDownloadLog.getTotalSize()) {
             return;
         }
         HttpURLConnection conn = null;
